@@ -26,6 +26,7 @@ public class RunFlashPoint {
 	private JPanel loginSuperPanel;
 	private JPanel startMenuSuperPanel;
 	private JPanel createLobbySuperPanel;
+	private JPanel findLobbySuperPanel; 
 
 	/**
 	 * Launch the application.
