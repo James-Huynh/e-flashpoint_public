@@ -45,8 +45,12 @@ public class GameLobby extends JFrame {
 	private JLabel lblPlayer1;
 	private JLabel lblPlayer2;
 	private JLabel lblPlayer3;
+	private JLabel lblPlayer4;
+	private JLabel lblPlayer5;
+	private JLabel lblPlayer6;
 	private JLabel lblMode;
 	private JLabel lblDifficulty;
+	private JLabel[] arrLblPlayers = {lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6};
 
 	private ArrayList<String> listPlayers = new ArrayList<String>();
 	private InGame inGame;
@@ -237,12 +241,18 @@ public class GameLobby extends JFrame {
 	private void initializeBasicStuff() {
 		listPlayers.add("James");
 		listPlayers.add("Zaid");
-		//listPlayers.add("Ben");
+		listPlayers.add("Ben");		
 	}
 
 	private void updateGameLobby() {
 		// OBSERVER DP: get state, set state
 
+	}
+	
+	private void displayPlayers() {
+		for(int i = 0; i < listPlayers.size(); i++) {
+			
+		}
 	}
 
 }
