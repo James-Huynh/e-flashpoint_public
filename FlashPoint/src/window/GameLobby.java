@@ -256,3 +256,10 @@ public class GameLobby extends JFrame {
 	}
 
 }
+
+
+
+/*
+DO FIND LOBBY, connected to actual game lobby
+
+*/
