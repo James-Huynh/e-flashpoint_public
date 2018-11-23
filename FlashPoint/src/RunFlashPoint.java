@@ -38,7 +38,7 @@ public class RunFlashPoint {
 
 
 	//========================================JAMES STUFF===========================================//
-	private JPanel panel;
+	private JPanel panel_PlayersDisplay;
 	private JButton btnBackToMain;
 	private JButton btnStartGame;
 	private JLabel lblChat;
@@ -47,7 +47,7 @@ public class RunFlashPoint {
 	private JTextField txtFieldChat;
 	private JPanel panel_1;
 	private JButton btnChat;
-	private JFrame mainMenu;
+	//private JFrame mainMenu;
 	private JLabel lblPlayer1;
 	private JLabel lblPlayer2;
 	private JLabel lblPlayer3;
@@ -108,7 +108,7 @@ public class RunFlashPoint {
 		loginSuperPanel = new JPanel();
 		frame.getContentPane().add(loginSuperPanel, BorderLayout.CENTER);
 		loginSuperPanel.setLayout(null);	
-
+		
 		JPanel headingPanel = new JPanel();
 		headingPanel.setBounds(369, 197, 552, 213);
 		loginSuperPanel.add(headingPanel);
@@ -344,6 +344,8 @@ public class RunFlashPoint {
 		createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//				lobbyPage(); #To be implemented by James
+				createLobbySuperPanel.setVisible(false);
+				frame.getContentPane().remove(createLobbySuperPanel);
 				createLobbyPage();
 				
 			}
@@ -357,24 +359,34 @@ public class RunFlashPoint {
 	
 	
 	private void createLobbyPage() {
-		createLobbySuperPanel.setVisible(false);
+		int offsetX = 100;
+		int offsetY = 100;
+		//int playerSpacing = 50;
 		
 		
 		lobbyPageSuperPanel = new JPanel();
-		lobbyPageSuperPanel.setBounds(70, 44, 1126, 746);
-		loginSuperPanel.add(lobbyPageSuperPanel, BorderLayout.CENTER);
+		frame.getContentPane().add(lobbyPageSuperPanel, BorderLayout.CENTER);
 		lobbyPageSuperPanel.setLayout(null);
+
+		JPanel headingPanel = new JPanel();
+		headingPanel.setBounds(46, 36, 417, 108);
+		lobbyPageSuperPanel.add(headingPanel);
+		headingPanel.setLayout(null);
+
+		JLabel gameLabel = new JLabel("FLASHPOINT");
+		gameLabel.setBounds(0, 0, 405, 69);
+		headingPanel.add(gameLabel);
+		gameLabel.setForeground(new Color(255, 0, 0));
+		gameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		gameLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 58));
 		
 		
-		lobbyPageSuperPanel.setVisible(true);
-		
-		
+		//==================================CHAT_START=====================================
 		panel_1 = new JPanel();
-		panel_1.setBounds(695, 10, 337, 576);
+		panel_1.setBounds(695 + offsetX, 10 + offsetY, 337, 576);
 		lobbyPageSuperPanel.add(panel_1);
 		panel_1.setLayout(null);
-
-
+	
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 337, 537);
 		panel_1.add(scrollPane);
@@ -391,7 +403,7 @@ public class RunFlashPoint {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					//sendMessage();
+					sendMessage();
 				}
 			}
 		});
@@ -404,13 +416,16 @@ public class RunFlashPoint {
 		btnChat = new JButton(">");
 		btnChat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//sendMessage();
+				sendMessage();
 			}
 		});
 		btnChat.setBounds(288, 536, 50, 40);
 		panel_1.add(btnChat);
 		btnChat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		//==================================CHAT_END=====================================
 
+		
 		btnStartGame = new JButton("Start Game");
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -418,40 +433,37 @@ public class RunFlashPoint {
 			}
 		});
 		btnStartGame.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnStartGame.setBounds(496, 508, 176, 78);
+		btnStartGame.setBounds(496 + offsetX, 508 + offsetY, 176, 78);
 		lobbyPageSuperPanel.add(btnStartGame);
 
 		btnBackToMain = new JButton("Back");
 		btnBackToMain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				backToFindLobby();
 				//mainMenu.setVisible(true);
 				//dispose();
 			}
 		});
 		btnBackToMain.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBackToMain.setBounds(10, 508, 192, 78);
+		btnBackToMain.setBounds(10 + offsetX, 508 + offsetY, 192, 78);
 		lobbyPageSuperPanel.add(btnBackToMain);
 
-		panel = new JPanel();
-		panel.setBounds(10, 10, 662, 372);
-		lobbyPageSuperPanel.add(panel);
-		panel.setLayout(null);
+		//=====================================
+		
+		
+		panel_PlayersDisplay = new JPanel();
+		panel_PlayersDisplay.setBounds(10 + offsetX, 10 + offsetY, 662, 372);
+		lobbyPageSuperPanel.add(panel_PlayersDisplay);
+		panel_PlayersDisplay.setLayout(null);
 
 		JLabel lblPlayers = new JLabel("Players");
 		lblPlayers.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlayers.setBounds(0, 0, 73, 28);
-		panel.add(lblPlayers);
+		panel_PlayersDisplay.add(lblPlayers);
 		lblPlayers.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		lblPlayer1 = new JLabel("Player 1");
-		lblPlayer1.setBackground(Color.YELLOW);
-		lblPlayer1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPlayer1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblPlayer1.setBounds(0, 38, 662, 43);
-		panel.add(lblPlayer1);
-
 		panelLobbyDescription = new JPanel();
-		panelLobbyDescription.setBounds(10, 394, 662, 84);
+		panelLobbyDescription.setBounds(10 + offsetX, 394 + offsetY, 662, 84);
 		lobbyPageSuperPanel.add(panelLobbyDescription);
 		panelLobbyDescription.setLayout(null);
 
@@ -473,16 +485,22 @@ public class RunFlashPoint {
 		lblDifficulty.setBounds(537, 0, 125, 84);
 		panelLobbyDescription.add(lblDifficulty);
 
-
+		//===================================== Player Labels ============================
+		lblPlayer1 = new JLabel("Player 1");
 		lblPlayer1.setOpaque(true);
-
+		lblPlayer1.setBackground(Color.YELLOW);
+		lblPlayer1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPlayer1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPlayer1.setBounds(0, 38, 662, 43);
+		panel_PlayersDisplay.add(lblPlayer1);
+		
 		lblPlayer2 = new JLabel("Player 2");
 		lblPlayer2.setOpaque(true);
 		lblPlayer2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlayer2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPlayer2.setBackground(Color.MAGENTA);
 		lblPlayer2.setBounds(0, 92, 662, 43);
-		panel.add(lblPlayer2);
+		panel_PlayersDisplay.add(lblPlayer2);
 
 		lblPlayer3 = new JLabel("Player 3");
 		lblPlayer3.setOpaque(true);
@@ -490,10 +508,53 @@ public class RunFlashPoint {
 		lblPlayer3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPlayer3.setBackground(Color.GREEN);
 		lblPlayer3.setBounds(0, 145, 662, 43);
-		panel.add(lblPlayer3);
+		panel_PlayersDisplay.add(lblPlayer3);
+		
+		lblPlayer4 = new JLabel("Player 4");
+		lblPlayer4.setOpaque(true);
+		lblPlayer4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPlayer4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPlayer4.setBackground(Color.RED);
+		lblPlayer4.setBounds(0, 195, 662, 43);
+		panel_PlayersDisplay.add(lblPlayer4);
 
+		lblPlayer5 = new JLabel("Player 5");
+		lblPlayer5.setOpaque(true);
+		lblPlayer5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPlayer5.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPlayer5.setBackground(Color.WHITE);
+		lblPlayer5.setBounds(0, 245, 662, 43);
+		panel_PlayersDisplay.add(lblPlayer5);
+		
+		lblPlayer6 = new JLabel("Player 6");
+		lblPlayer6.setOpaque(true);
+		lblPlayer6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPlayer6.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPlayer6.setBackground(Color.ORANGE);
+		lblPlayer6.setBounds(0, 295, 662, 43);
+		panel_PlayersDisplay.add(lblPlayer6);
+		//===================================== Player Labels ============================
+	}
+
+	
+	//===================================== James Methods ============================
+	
+	
+	private void backToFindLobby() {
+		lobbyPageSuperPanel.setVisible(false);
+		startMenu();
 		
 	}
+
+	private void sendMessage() {
+		String playerName; // game.state.sendServer
+		String message = txtFieldChat.getText();
+		lblChat.setText(lblChat.getText()+ message + "<br>");
+		txtFieldChat.setText("");
+
+	}
+	
+	//===================================== James Methods ============================
 	
 	
 }	// END
