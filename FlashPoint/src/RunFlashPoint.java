@@ -729,6 +729,7 @@ public class RunFlashPoint {
 		 * what object to create?
 		 */
 		this.frame.dispose();
+		FlashPoint window = new FlashPoint();
 	}
 	
 	/**
