@@ -596,5 +596,4 @@ public class RunFlashPoint {
 	
 	//===================================== James Methods ============================
 	
-	
 }	// END
