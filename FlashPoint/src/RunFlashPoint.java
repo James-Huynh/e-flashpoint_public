@@ -18,6 +18,10 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class RunFlashPoint {
 
@@ -63,10 +67,10 @@ public class RunFlashPoint {
 	//Sets the master frame to visible and does the first step i.e. login
 	private void run() {
 		frame.setVisible(true);
-		login();
+//		login();s
 //		startMenu();  //Use this space to write the method (i.e. the panel) you want to be displayed in 'Design'
 //		createLobby(); //In final version (with current design), this method will only have the first two lines
-		
+		findLobby();
 	}
 	
 	//Sets up login and all related panel/headers/labels/buttons
@@ -163,7 +167,9 @@ public class RunFlashPoint {
 		JButton findBtn = new JButton("Find Lobby");
 		findBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				findLobby(); #To be implemented by Zaid
+				startMenuSuperPanel.setVisible(false);
+				frame.getContentPane().remove(startMenuSuperPanel);
+				findLobby(); 
 			}
 		});
 		findBtn.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
@@ -312,7 +318,172 @@ public class RunFlashPoint {
 			}
 		});
 		createBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
-		createBtn.setBounds(617, 623, 140, 54);
+		createBtn.setBounds(764, 623, 140, 54);
 		createLobbySuperPanel.add(createBtn);
+		
+		JButton backBtn = new JButton("BACK");
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				createLobbySuperPanel.setVisible(false);
+				frame.getContentPane().remove(createLobbySuperPanel);
+				startMenu();
+			}
+		});
+		backBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
+		backBtn.setBounds(432, 623, 140, 54);
+		createLobbySuperPanel.add(backBtn);
+	}
+	
+	private void findLobby() {
+		findLobbySuperPanel = new JPanel();
+		frame.getContentPane().add(findLobbySuperPanel, BorderLayout.CENTER);
+		findLobbySuperPanel.setLayout(null);
+		
+		JPanel headingPanel = new JPanel();
+		headingPanel.setBounds(46, 36, 417, 108);
+		findLobbySuperPanel.add(headingPanel);
+		headingPanel.setLayout(null);
+		
+		JLabel gameLabel = new JLabel("FLASHPOINT");
+		gameLabel.setBounds(0, 0, 405, 69);
+		headingPanel.add(gameLabel);
+		gameLabel.setForeground(new Color(255, 0, 0));
+		gameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		gameLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 58));
+		
+		JLabel findLobbyLabel = new JLabel("Select a lobby");
+		findLobbyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		findLobbyLabel.setBounds(593, 202, 216, 53);
+		findLobbySuperPanel.add(findLobbyLabel);
+		findLobbyLabel.setFont(new Font("SansSerif", Font.PLAIN, 24));
+		
+		JPanel lobbiesPanel = new JPanel();
+		lobbiesPanel.setBounds(347, 267, 696, 392);
+		findLobbySuperPanel.add(lobbiesPanel);
+		lobbiesPanel.setLayout(null);
+		
+		JPanel lobbyOne = new JPanel();
+		lobbyOne.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+//				lobbyPage();
+			}
+		});
+		lobbyOne.setBackground(UIManager.getColor("ToolTip.background"));
+		lobbyOne.setBounds(0, 57, 696, 68);
+		lobbiesPanel.add(lobbyOne);
+		lobbyOne.setLayout(null);
+		
+		JLabel lobOneName = new JLabel("The Killaz");
+		lobOneName.setBounds(6, 6, 160, 38);
+		lobOneName.setOpaque(true);
+		lobbyOne.add(lobOneName);
+		lobOneName.setBackground(new Color(255, 127, 80));
+		lobOneName.setFont(new Font("Menlo", Font.ITALIC, 25));
+		
+		JLabel lobOneHost = new JLabel("Host: matwillsaveya");
+		lobOneHost.setHorizontalAlignment(SwingConstants.CENTER);
+		lobOneHost.setOpaque(true);
+		lobOneHost.setFont(new Font("Menlo", Font.ITALIC, 12));
+		lobOneHost.setBackground(new Color(255, 215, 0));
+		lobOneHost.setBounds(6, 48, 147, 14);
+		lobbyOne.add(lobOneHost);
+		
+		JLabel lobOneMode = new JLabel("Mode: Legendary");
+		lobOneMode.setOpaque(true);
+		lobOneMode.setHorizontalAlignment(SwingConstants.CENTER);
+		lobOneMode.setFont(new Font("Menlo", Font.ITALIC, 12));
+		lobOneMode.setBackground(new Color(255, 215, 0));
+		lobOneMode.setBounds(180, 48, 147, 14);
+		lobbyOne.add(lobOneMode);
+		
+		JLabel lobOnePlayers = new JLabel("Players: 5/6");
+		lobOnePlayers.setOpaque(true);
+		lobOnePlayers.setHorizontalAlignment(SwingConstants.CENTER);
+		lobOnePlayers.setFont(new Font("Menlo", Font.ITALIC, 12));
+		lobOnePlayers.setBackground(new Color(255, 215, 0));
+		lobOnePlayers.setBounds(365, 48, 147, 14);
+		lobbyOne.add(lobOnePlayers);
+		
+		JLabel lobOneSpec = new JLabel("Speciality: Available");
+		lobOneSpec.setOpaque(true);
+		lobOneSpec.setHorizontalAlignment(SwingConstants.CENTER);
+		lobOneSpec.setFont(new Font("Menlo", Font.ITALIC, 12));
+		lobOneSpec.setBackground(new Color(255, 215, 0));
+		lobOneSpec.setBounds(537, 48, 153, 14);
+		lobbyOne.add(lobOneSpec);
+		
+		JPanel lobbyTwo = new JPanel();
+		lobbyTwo.setLayout(null);
+		lobbyTwo.setBackground(UIManager.getColor("ToolTip.background"));
+		lobbyTwo.setBounds(0, 137, 696, 68);
+		lobbiesPanel.add(lobbyTwo);
+		
+		JLabel lobTwoName = new JLabel("Fire in the Hole");
+		lobTwoName.setOpaque(true);
+		lobTwoName.setFont(new Font("Menlo", Font.ITALIC, 25));
+		lobTwoName.setBackground(new Color(255, 127, 80));
+		lobTwoName.setBounds(6, 6, 252, 38);
+		lobbyTwo.add(lobTwoName);
+		
+		JLabel lobTwoHost = new JLabel("Host: caotherescuer");
+		lobTwoHost.setOpaque(true);
+		lobTwoHost.setHorizontalAlignment(SwingConstants.CENTER);
+		lobTwoHost.setFont(new Font("Menlo", Font.ITALIC, 12));
+		lobTwoHost.setBackground(new Color(255, 215, 0));
+		lobTwoHost.setBounds(6, 48, 147, 14);
+		lobbyTwo.add(lobTwoHost);
+		
+		JLabel lobTwoMode = new JLabel("Mode: Family");
+		lobTwoMode.setOpaque(true);
+		lobTwoMode.setHorizontalAlignment(SwingConstants.CENTER);
+		lobTwoMode.setFont(new Font("Menlo", Font.ITALIC, 12));
+		lobTwoMode.setBackground(new Color(255, 215, 0));
+		lobTwoMode.setBounds(180, 48, 147, 14);
+		lobbyTwo.add(lobTwoMode);
+		
+		JLabel lobTwoPlayers = new JLabel("Players: FULL");
+		lobTwoPlayers.setOpaque(true);
+		lobTwoPlayers.setHorizontalAlignment(SwingConstants.CENTER);
+		lobTwoPlayers.setFont(new Font("Menlo", Font.ITALIC, 12));
+		lobTwoPlayers.setBackground(new Color(255, 215, 0));
+		lobTwoPlayers.setBounds(365, 48, 147, 14);
+		lobbyTwo.add(lobTwoPlayers);
+		
+		JLabel lobTwoSpec = new JLabel("Speciality: None");
+		lobTwoSpec.setOpaque(true);
+		lobTwoSpec.setHorizontalAlignment(SwingConstants.CENTER);
+		lobTwoSpec.setFont(new Font("Menlo", Font.ITALIC, 12));
+		lobTwoSpec.setBackground(new Color(255, 215, 0));
+		lobTwoSpec.setBounds(537, 48, 153, 14);
+		lobbyTwo.add(lobTwoSpec);
+		
+		JPanel lobbyThree = new JPanel();
+		lobbyThree.setLayout(null);
+		lobbyThree.setBackground(UIManager.getColor("ToolTip.background"));
+		lobbyThree.setBounds(0, 217, 696, 68);
+		lobbiesPanel.add(lobbyThree);
+		
+		JPanel lobbyFour = new JPanel();
+		lobbyFour.setLayout(null);
+		lobbyFour.setBackground(UIManager.getColor("ToolTip.background"));
+		lobbyFour.setBounds(0, 297, 696, 68);
+		lobbiesPanel.add(lobbyFour);
+		
+		JButton backBtn = new JButton("BACK");
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				findLobbySuperPanel.setVisible(false);
+				frame.getContentPane().remove(findLobbySuperPanel);
+				startMenu();
+			}
+		});
+		backBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
+		backBtn.setBounds(609, 692, 140, 54);
+		findLobbySuperPanel.add(backBtn);
+
+
+		
+		
 	}
 }
