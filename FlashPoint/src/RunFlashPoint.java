@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
@@ -41,23 +42,22 @@ public class RunFlashPoint {
 	private JPanel panel_PlayersDisplay;
 	private JButton btnBackToMain;
 	private JButton btnStartGame;
-	private JLabel lblChat;
+	private JTextArea textAreaChat;
 	private JPanel panelLobbyDescription;
-	private JLabel lblRules;
+	private JTextArea textAreaRules;
+	private JTextArea textAreaMode;
+	private JTextArea textAreaDifficulty;
 	private JTextField txtFieldChat;
-	private JPanel panel_1;
+	private JPanel panel_chat;
 	private JButton btnChat;
-	//private JFrame mainMenu;
 	private JLabel lblPlayer1;
 	private JLabel lblPlayer2;
 	private JLabel lblPlayer3;
 	private JLabel lblPlayer4;
 	private JLabel lblPlayer5;
 	private JLabel lblPlayer6;
-	private JLabel lblMode;
-	private JLabel lblDifficulty;
-	private JLabel[] arrLblPlayers = {lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6};
 	
+	private JLabel[] arrLblPlayers = {lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6};
 	private ArrayList<String> listPlayers = new ArrayList<String>();
 	//========================================JAMES STUFF===========================================//
 
@@ -382,21 +382,20 @@ public class RunFlashPoint {
 		
 		
 		//==================================CHAT_START=====================================
-		panel_1 = new JPanel();
-		panel_1.setBounds(695 + offsetX, 10 + offsetY, 337, 576);
-		lobbyPageSuperPanel.add(panel_1);
-		panel_1.setLayout(null);
+		panel_chat = new JPanel();
+		panel_chat.setBounds(695 + offsetX, 10 + offsetY, 337, 576);
+		lobbyPageSuperPanel.add(panel_chat);
+		panel_chat.setLayout(null);
 	
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 337, 537);
-		panel_1.add(scrollPane);
+		panel_chat.add(scrollPane);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		lblChat = new JLabel("Chat");
-		lblChat.setVerticalAlignment(SwingConstants.TOP);
-		scrollPane.setViewportView(lblChat);
-		lblChat.setHorizontalAlignment(SwingConstants.LEFT);
-		lblChat.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblChat.setText("<html>");
+		textAreaChat = new JTextArea("");
+		textAreaChat.setEditable(false);
+		textAreaChat.setLineWrap(true);
+		scrollPane.setViewportView(textAreaChat);
+		textAreaChat.setFont(new Font("Tahoma", Font.PLAIN, 22));
 
 		txtFieldChat = new JTextField();
 		txtFieldChat.addKeyListener(new KeyAdapter() {
@@ -408,7 +407,7 @@ public class RunFlashPoint {
 			}
 		});
 		txtFieldChat.setBounds(0, 536, 289, 40);
-		panel_1.add(txtFieldChat);
+		panel_chat.add(txtFieldChat);
 		txtFieldChat.setBackground(Color.ORANGE);
 		txtFieldChat.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtFieldChat.setColumns(10);
@@ -420,7 +419,7 @@ public class RunFlashPoint {
 			}
 		});
 		btnChat.setBounds(288, 536, 50, 40);
-		panel_1.add(btnChat);
+		panel_chat.add(btnChat);
 		btnChat.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		//==================================CHAT_END=====================================
@@ -429,7 +428,7 @@ public class RunFlashPoint {
 		btnStartGame = new JButton("Start Game");
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//startGame();
+				startGame();
 			}
 		});
 		btnStartGame.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -467,23 +466,26 @@ public class RunFlashPoint {
 		lobbyPageSuperPanel.add(panelLobbyDescription);
 		panelLobbyDescription.setLayout(null);
 
-		lblRules = new JLabel("Rules: ");
-		lblRules.setVerticalAlignment(SwingConstants.TOP);
-		lblRules.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblRules.setBounds(0, 0, 125, 84);
-		panelLobbyDescription.add(lblRules);
+		textAreaRules = new JTextArea("Rules: ");
+		textAreaRules.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		textAreaRules.setBounds(0, 0, 200, 100);
+		textAreaRules.setEditable(false);
+		textAreaRules.setLineWrap(true);
+		panelLobbyDescription.add(textAreaRules);
 
-		lblMode = new JLabel("Mode:");
-		lblMode.setVerticalAlignment(SwingConstants.TOP);
-		lblMode.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblMode.setBounds(242, 0, 125, 84);
-		panelLobbyDescription.add(lblMode);
+		textAreaMode = new JTextArea("Mode:");
+		textAreaMode.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		textAreaMode.setBounds(220, 0, 200, 100);
+		textAreaMode.setEditable(false);
+		textAreaMode.setLineWrap(true);
+		panelLobbyDescription.add(textAreaMode);
 
-		lblDifficulty = new JLabel("Difficulty:");
-		lblDifficulty.setVerticalAlignment(SwingConstants.TOP);
-		lblDifficulty.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDifficulty.setBounds(537, 0, 125, 84);
-		panelLobbyDescription.add(lblDifficulty);
+		textAreaDifficulty = new JTextArea("Difficulty:");
+		textAreaDifficulty.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		textAreaDifficulty.setBounds(440, 0, 200, 100);
+		textAreaMode.setEditable(false);
+		textAreaDifficulty.setLineWrap(true);
+		panelLobbyDescription.add(textAreaDifficulty);
 
 		//===================================== Player Labels ============================
 		lblPlayer1 = new JLabel("Player 1");
@@ -534,24 +536,62 @@ public class RunFlashPoint {
 		lblPlayer6.setBounds(0, 295, 662, 43);
 		panel_PlayersDisplay.add(lblPlayer6);
 		//===================================== Player Labels ============================
+		
+		
+		updateLobbyDescription();
 	}
 
 	
 	//===================================== James Methods ============================
+	/**
+	 * StartGame will proceed to the next phase of the application which is the main game.
+	 */
+	private void startGame() {
+		/*
+		 * @Junha and @Cao, will call all the method that will set up the game board
+		 * what to pass in parameter?
+		 * what object to create?
+		 */
+		this.frame.dispose();
+	}
 	
-	
+	/**
+	 * backToFindLobby will return to the main lobby while disposing of itself.
+	 */
 	private void backToFindLobby() {
-		lobbyPageSuperPanel.setVisible(false);
+		this.frame.remove(lobbyPageSuperPanel);
 		startMenu();
 		
 	}
 
+	/**
+	 * sendMessage will read the typed local text and send the message to the server
+	 */
 	private void sendMessage() {
-		String playerName; // game.state.sendServer
+		String playerName = "James"; // game.state.sendServer
 		String message = txtFieldChat.getText();
-		lblChat.setText(lblChat.getText()+ message + "<br>");
+		textAreaChat.append("[" + playerName + "]: " + message + "\n");
 		txtFieldChat.setText("");
 
+	}
+
+	/**
+	 * updateLobbyDescription will set the lobby's display accordingly to the game state and setting chosen on the previous page
+	 */
+	private void updateLobbyDescription() {
+		// would get a string or object from the parameter and simply append it
+		textAreaRules.setText("Rules:\n");
+		textAreaRules.append("- Turn limit: 200\n");
+		textAreaRules.append("- The winner is crowned King of The North\n");
+		textAreaRules.append("- The loser is crowned Loser of The South\n");
+		
+		textAreaMode.setText("Mode:\n");
+		textAreaMode.append("- Family\n");
+		textAreaMode.append("- Easter eggs\n");
+		
+		
+		textAreaDifficulty.setText("Difficulty:\n");
+		textAreaDifficulty.append("- Impossible\n");
 	}
 	
 	//===================================== James Methods ============================
