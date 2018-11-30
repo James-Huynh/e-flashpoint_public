@@ -183,7 +183,7 @@ public class RunFlashPoint {
 		startMenuSuperPanel.setLayout(null);
 
 		JPanel menuPanel = new JPanel();
-		menuPanel.setBounds(395, 182, 540, 297);
+		menuPanel.setBounds(395, 182, 540, 369);
 		startMenuSuperPanel.add(menuPanel);
 		menuPanel.setLayout(null);
 
@@ -210,9 +210,14 @@ public class RunFlashPoint {
 		findBtn.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
 		findBtn.setBounds(67, 120, 423, 49);
 		menuPanel.add(findBtn);
+		
+		JButton loadBtn = new JButton("Load Game");
+		loadBtn.setBounds(67, 206, 423, 49);
+		menuPanel.add(loadBtn);
+		loadBtn.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
 
 		JButton rulesBtn = new JButton("Rules");
-		rulesBtn.setBounds(67, 206, 423, 49);
+		rulesBtn.setBounds(67, 292, 423, 49);
 		menuPanel.add(rulesBtn);
 		rulesBtn.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
 
