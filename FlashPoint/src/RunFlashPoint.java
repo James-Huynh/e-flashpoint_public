@@ -9,6 +9,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -540,7 +543,7 @@ public class RunFlashPoint {
 		int offsetX = 100;
 		int offsetY = 100;
 		//int playerSpacing = 50;
-		
+		Timer timer = new Timer();
 		
 		lobbyPageSuperPanel = new JPanel();
 		frame.getContentPane().add(lobbyPageSuperPanel, BorderLayout.CENTER);
@@ -570,7 +573,21 @@ public class RunFlashPoint {
 		panel_chat.add(scrollPane);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		textAreaChat = new JTextArea("");
-		textAreaChat.setEditable(false);
+		textAreaChat.append("[Mateusz Pyla] Let's start quickly guys!\n");
+		timer.schedule(new TimerTask() {
+			  @Override
+			  public void run() {
+			    textAreaChat.append("[Eric Cao] Where's Zaid??!!\n");
+			  }
+			}, 3*1000);
+		timer.schedule(new TimerTask() {
+			  @Override
+			  public void run() {
+			    textAreaChat.append("[Junha Park] Probably sleeping haha\n");
+			    textAreaChat.setEditable(false);
+			  }
+			}, 6*1000);
+//		textAreaChat.setEditable(false);
 		textAreaChat.setLineWrap(true);
 		scrollPane.setViewportView(textAreaChat);
 		textAreaChat.setFont(new Font("Tahoma", Font.PLAIN, 22));

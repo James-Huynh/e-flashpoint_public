@@ -37,6 +37,8 @@ import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import java.awt.Component;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class FlashPoint {
 
@@ -652,16 +654,26 @@ public class FlashPoint {
 		);
 		chatBox.setLayout(gl_chatBox);
 		
+		Timer timer = new Timer();
+		
 		Font font = new Font("Verdana", Font.BOLD, 11);
 		textArea.setFont(font);
 		textArea.setForeground(new Color(254, 254, 255));
 		textArea.setBackground(new Color(52, 59, 67));
 		textArea.append("[Flash Point] Welcome to FlashPoint.\nPlease start your chat here.\n");
-		textArea.setEditable(false);
+		textArea.append("[Ben Ruddock] Lets go guys!\n");
+//		textArea.setEditable(false);
 		
 		textField.addMouseListener(new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
-		textField.setText("");
+			timer.schedule(new TimerTask() {
+			  @Override
+			  public void run() {
+			    textArea.append("[Eric Cao] Hope for the best!!\n");
+			    textArea.setEditable(false);
+			  }
+			}, 3*1000);
+			textField.setText("");
 		}	
 		});
 		
