@@ -1,8 +1,6 @@
-package m5_final;
+package tile;
 
-// Start of user code for imports
-import java.util.*;
-// End of user code
+import token.Vehicle;
 
 /**
  * ParkingSpot class definition.

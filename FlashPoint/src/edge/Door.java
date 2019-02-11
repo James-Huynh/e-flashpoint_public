@@ -1,4 +1,4 @@
-package m5_final;
+package edge;
 
 // Start of user code for imports
 import java.util.*;

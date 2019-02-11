@@ -1,8 +1,8 @@
-package m5_final;
+package tile;
 
-// Start of user code for imports
-import java.util.*;
-// End of user code
+import edge.Edge;
+import token.Firefighter;
+import token.Poi;
 
 /**
  * Tile class definition.
