@@ -39,7 +39,7 @@ public class GameState {
     }
 
     public Poi retrievePOI() {
-        /* TODO: No message view defined */
+        
         return null;
     }
 
@@ -88,7 +88,7 @@ public class GameState {
     }
 
     public void updatePOI() {
-        /* TODO: No message view defined */
+        /* TODO:fined */
     }
 
     public void setSavedCount(int saveCount) {
