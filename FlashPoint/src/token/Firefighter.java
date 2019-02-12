@@ -16,14 +16,16 @@ abstract public class Firefighter extends Token {
 	protected boolean carryingVictim;
 
 	/**
-	 * 
-	 * @param target
+	 * updateLocation sets the coordinates of the firefighter to the tile
+	 * @param target The tile that the firefighter is on
 	 */
 	public void updateLocation(Tile target) {
 		this.x = target.getCoords()[0];
 		this.y = target.getCoords()[1];
 	}
 
+
+	//------------------------ GETTERS -------------------------//
 	public int getAP() {
 		return this.AP;
 	}
@@ -31,7 +33,16 @@ abstract public class Firefighter extends Token {
 	public int getSavedAP() {
 		return this.savedAP;
 	}
+	
+	public Tile getCurrentPos() {
+		return this.tileOn;
+	}
 
+	public boolean getCarrying() {
+		return this.carryingVictim;
+	}
+	
+	//------------------------ SETTTERS -------------------------//
 	public void setAP(int AP) {
 		this.AP = AP;
 	}
@@ -40,13 +51,4 @@ abstract public class Firefighter extends Token {
 		this.savedAP = AP;
 	}
 
-	public Tile getCurrentPos() {
-		/* TODO: No message view defined */
-		return null;
-	}
-
-	public boolean getCarrying() {
-		/* TODO: No message view defined */
-		return false;
-	}
 }

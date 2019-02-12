@@ -1,6 +1,10 @@
 package token;
 
-public class Token {
-int x;
-int y;
+import tile.Tile;
+
+abstract public class Token {
+	int x;
+	int y;
+
+	Tile tileOn;
 }
