@@ -1,8 +1,13 @@
-package m5_final;
+package actions;
 
 // Start of user code for imports
 import java.util.*;
 // End of user code
+
+import edge.Edge;
+import game.GameState;
+import tile.Tile;
+import token.Firefighter;
 
 /**
  * Chop class definition.
@@ -17,32 +22,32 @@ public class Chop extends Action {
         return direction;
     }
 
-    public void perform() {
-        Firefighter playingFirefighter = availableActions.getPlayingFirefighter();
-        int dmgCounter = availableActions.getDmgCounter();
-        availableActions.updateDmgCounter();
+    public void perform(GameState gs) {
+        Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        Tile currPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
-        playingFirefighter.setSavedAP();
-        Tile currPosition = playingFirefighter.getCurrPosition();
         Edge edge = currPosition.getEdge(this.direction);
-        Wall wall = edge.getType();
-        wall.chop();
+        int dmgCounter = edge.getDamage();
+        gs.MAX_WALL_DMGD--;
+        playingFirefighter.setSavedAP(aP - this.APcost);
+        
+        edge.chop();
     }
 
-    public boolean validate() {
+    public boolean validate(GameState gs) {
         boolean flag = false;
-        Firefighter playingFirefighter = availableActions.getPlayingFirefighter();
-        int dmgCounter = availableActions.getDmgCounter();
-        Tile currPosition = playingFirefighter.getCurrPosition();
+        Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        Tile currPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
         Edge edge = currPosition.getEdge(this.direction);
+        int dmgCounter = edge.getDamage();
         //Wall wall = edge.getType();
         //if (if wall == 'Wall') {
-        if (edge.isWall) {
-            int damage = wall.getDamage();
-            if (if damage > 0) {
-                if (if aP >= 2) {
-                    if (if dmgCounter + 1 < MAX_WALL_DMGD) {
+        if (edge.isWall()) {
+            int damage = edge.getDamage();
+            if (damage > 0) {
+                if (aP >= 2) {
+                    if (dmgCounter + 1 < gs.MAX_WALL_DMGD) {
                         flag = true;
                     }
                 }
@@ -50,4 +55,10 @@ public class Chop extends Action {
         }
         return flag;
     }
+
+	@Override
+	public boolean validate() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

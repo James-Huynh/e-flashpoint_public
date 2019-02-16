@@ -1,4 +1,4 @@
-package m5_final;
+package token;
 
 /**
  * Vehicle enumeration definition.

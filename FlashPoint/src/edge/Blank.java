@@ -1,4 +1,4 @@
-package m5_final;
+package edge;
 
 // Start of user code for imports
 import java.util.*;
@@ -12,5 +12,8 @@ public class Blank {
     
     public Blank() {
         /* TODO: No message view defined */
+    }
+    public boolean isBlank() {
+    	return true;
     }
 }

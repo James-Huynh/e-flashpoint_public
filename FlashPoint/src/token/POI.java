@@ -1,6 +1,6 @@
 package token;
 
-public class Poi {
+public class POI {
     
     protected boolean revealed;
     protected boolean isVictim;
@@ -10,7 +10,7 @@ public class Poi {
      * Constructor for Poi
      * @param isVictim Determines whether or not the POI is in fact a victim
      */
-    public Poi(boolean isVictim) {
+    public POI(boolean isVictim) {
        this.isVictim  = isVictim;
     }
 

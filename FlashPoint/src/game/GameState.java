@@ -2,10 +2,11 @@ package game;
 
 import java.util.ArrayList;
 
+import actions.Action;
 import edge.Edge;
 import tile.Tile;
 import token.Firefighter;
-import token.Poi;
+import token.POI;
 
 public class GameState {
     
@@ -21,12 +22,19 @@ public class GameState {
     protected Tile[][] matTiles;
     protected int currTile;
     protected ArrayList<Action> availableActions;
+    protected ArrayList<Firefighter> listOfFireFighter;
+    public int MAX_WALL_DMGD = 30;
     
     
     // @James	
     /**
      * modified by @matekrk
      */
+    
+    public GameState() {
+    	
+    }
+    
     public GameState(TemplateGame template) {
     	this.isActiveGame = true;
     	
@@ -41,8 +49,7 @@ public class GameState {
         return null;
     }
 
-    public Poi retrievePOI() {
-        
+    public POI retrievePOI() {
         return null;
     }
 
@@ -76,9 +83,9 @@ public class GameState {
         return null;
     }
 
-    public Firefighter playingFireFighter() {
+    public Firefighter getPlayingFirefighter() {
         /* TODO: No message view defined */
-        return null;
+        return listOfFireFighter.get(activeFireFighterIndex);
     }
 
     public int getDamageCounter() {
@@ -116,5 +123,39 @@ public class GameState {
 
     public void initializeFires(TemplateGame defaultGame) {
         /* TODO: No message view defined */
+    }
+    
+    public ArrayList<Action> getAvailableActions(){
+    	return availableActions;
+    }
+  //WHY HERE
+    boolean containsAvailableActions(GameState a) {
+        /* TODO: No message view defined */
+        return a.getAvailableActions().contains(a);
+    }
+
+    int sizeOfAvailableActions(GameState a) {
+        /* TODO: No message view defined */
+        return a.getAvailableActions().size();
+    }
+    
+    //left: 0, top: 1, right: 2, down: 3
+    public Tile getNeighbour(Tile tile, int direction) {
+    	int[] coords = tile.getCoords();
+    	if (direction == 0) {
+    		return matTiles[coords[0]-1][coords[1]];
+    	}
+    	else if (direction == 1) {
+    		return matTiles[coords[0]][coords[1]-1];
+    	}
+    	else if (direction == 2) {
+    		return matTiles[coords[0]+1][coords[1]];
+    	}
+    	else if (direction == 3) {
+    		return matTiles[coords[0]][coords[1]+1];
+    	}
+    	else { //self
+    		return tile;
+    	}
     }
 }

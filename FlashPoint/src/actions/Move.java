@@ -1,8 +1,10 @@
-package m5_final;
+package actions;
 
-// Start of user code for imports
-import java.util.*;
-// End of user code
+import edge.Edge;
+import game.GameState;
+import tile.Tile;
+import token.Firefighter;
+import token.POI;
 
 /**
  * Move class definition.
@@ -17,40 +19,21 @@ public class Move extends Action {
         return direction;
     }
 
-    public boolean validate() {
+    @Override
+    public boolean validate(GameState gs) {
         boolean flag = false;
-        Firefighter playingFirefighter = availableActions.getPlayingFirefighter();
-        Tile currPosition = playingFirefighter.getCurrPosition();
-        currPosition = location;
-        playingFirefighter = Firefighters;
-        Edge edge = currPosition.getEdge(this.direction);
-        Tile neighbour = currPosition.getNeighbour(this.direction);
-        /*
-        neighbour = target;
-        edge = edges;
-        BlankEdge typeDoor = edge.getType();
-        Wall typeEmpty = edge.getType();
-        Door typeWall = edge.getType();
-        if (if typeDoor == 'Door') {
-            boolean status = typeWall.getStatus();
-            if (if status == true) {
-                int fire = neighbour.getFire();
-                int aP = playingFirefighter.getAP();
-                if (if fire < 2) {
-                    if (if carry == true and aP >= 2) {
-                        flag = true;
-                    }
-                }
-            }
-        }
-        */
-        if (edge.isDoor) {
+        Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        Tile currentPosition = playingFirefighter.getCurrentPosition();
+        Edge edge = currentPosition.getEdge(direction);
+        Tile neighbour = gs.getNeighbour(currentPosition, direction);
+       
+        if ( edge.isDoor() ) {
         	boolean status = edge.getStatus();
         	if(status == true) {
-        		int fire = traget.getFire();
+        		int fire = neighbour.getFire();
         		int aP = playingFirefighter.getAP();
         		if (fire < 2) {
-        			if (carry == true && aP >= 2) {
+        			if (playingFirefighter.getCarrying() == true && aP >= 2) {
         				flag = true;
         			}
         		}
@@ -59,18 +42,25 @@ public class Move extends Action {
         return flag;
     }
 
-    public void perform() {
-        Firefighter playingFirefighter = availableActions.getPlayingFirefighter();
-        Tile currPosition = playingFirefighter.getCurrPosition();
+    @Override
+    public void perform(GameState gs) {
+        Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        Tile currentPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
-        playingFirefighter.setSavedAP();
-        Tile neighbour = currPosition.getNeighbour(this.direction);
-        playingFirefighter.setCurrPosition(neighbour);
+        playingFirefighter.setSavedAP(aP - this.APcost);
+        Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
+        playingFirefighter.setCurrentPosition(neighbour);
         boolean carrying = playingFirefighter.getCarrying();
-        if (if carrying == True) {
-            POI pOIList = currPosition.getPOIList();
-            currPosition.setPOI(pOIList);
-            neighbour.setPOI(pOIList);
+        if (carrying == true) {
+            POI[] pOIList = currentPosition.getPoiList();
+            currentPosition.setPOIList(pOIList);
+            neighbour.setPOIList(pOIList);
         }
     }
+
+	@Override
+	public boolean validate() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

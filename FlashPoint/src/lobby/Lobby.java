@@ -1,4 +1,4 @@
-package m5_final;
+package lobby;
 
 // Start of user code for imports
 import java.util.*;

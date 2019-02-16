@@ -36,10 +36,12 @@ public class Door {
     public void change() {
         /* TODO: No message view defined */
     }
-    public boolean ifDoor() {
+    
+    public boolean isDoor() {
     	return true;
     }
-    public Wall getDoor() {
+    
+    public Door getDoor() {
         return this;
     }
 }

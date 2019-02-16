@@ -1,4 +1,4 @@
-package m5_final;
+package edge;
 
 // Start of user code for imports
 import java.util.*;
@@ -32,10 +32,17 @@ public class Wall extends Edge{
     public void destroyWall() {
         /* TODO: No message view defined */
     }
-    public boolean ifWall() {
+    
+    public boolean isWall() {
     	return true;
     }
+    
     public Wall getWall() {
         return this;
     }
+	@Override
+	public boolean getStatus() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

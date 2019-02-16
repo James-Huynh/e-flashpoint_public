@@ -2,7 +2,8 @@ package tile;
 
 import edge.Edge;
 import token.Firefighter;
-import token.Poi;
+import token.POI;
+import game.GameState;
 
 /**
  * Tile class definition.
@@ -13,7 +14,11 @@ public class Tile{
     protected int fire;
     protected int[] coords;
     protected boolean interior;
-    protected Edge[] adjEdges;
+    protected Edge[] adjacentEdges;
+    protected Firefighter[] listOfFirefighters;
+    protected int x;
+    protected int y;
+    protected POI[] poiList;
     
     public Tile(boolean isParkingspot, int[] coords) {
         /* TODO: No message view defined */
@@ -43,12 +48,16 @@ public class Tile{
         return false;
     }
 
-    public Poi[] getPoiList() {
+    public POI[] getPoiList() {
         /* TODO: No message view defined */
         return null;
     }
 
-    public void addPoi(Poi newPoi) {
+    public void setPOIList(POI[] poiList) {
+    	this.poiList = poiList;
+    }
+    
+    public void addPoi(POI newPoi) {
         /* TODO: No message view defined */
     }
 
@@ -67,11 +76,6 @@ public class Tile{
         return null;
     }
 
-    public Edge getEdge(int direction) {
-        /* TODO: No message view defined */
-        return null;
-    }
-
     public void updateFFList(Firefighter target) {
         /* TODO: No message view defined */
     }
@@ -86,15 +90,28 @@ public class Tile{
         return false;
     }
 
-    public void updatePoiList(Poi target) {
+    public void updatePoiList(POI target) {
         /* TODO: No message view defined */
     }
 
-    public void setPoi(Poi target) {
+    public void setPoi(POI target) {
         /* TODO: No message view defined */
     }
 
     public void setCoords(int[] coords) {
         /* TODO: No message view defined */
+    }
+    
+    //left: 0, top: 1, right: 2, down: 3
+    public Edge getEdge(int direction) {
+    	return adjacentEdges[direction];
+    }
+    
+    public int getX() {
+    	return x;
+    }
+    
+    public int getY() {
+    	return y;
     }
 }

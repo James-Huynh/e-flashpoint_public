@@ -1,10 +1,12 @@
-package m5_final;
+package managers;
 
 // Start of user code for imports
 import java.util.*;
 // End of user code
 
-import m5_final.Tile;
+import actions.Action;
+import game.GameState;
+import tile.Tile;
 
 /**
  * GameManager class definition.
@@ -12,6 +14,8 @@ import m5_final.Tile;
  */
 public class GameManager {
     
+	private final GameState gs = new GameState();
+	
     public void explosion(Tile target) {
         /* TODO: No message view defined */
     }

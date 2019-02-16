@@ -7,7 +7,7 @@ import tile.Tile;
 /**
  * 
  * @author James
- *
+ * modified by @matekrk
  */
 abstract public class Firefighter extends Token {
 
@@ -34,7 +34,7 @@ abstract public class Firefighter extends Token {
 		return this.savedAP;
 	}
 	
-	public Tile getCurrentPos() {
+	public Tile getCurrentPosition() {
 		return this.tileOn;
 	}
 
@@ -49,6 +49,10 @@ abstract public class Firefighter extends Token {
 
 	public void setSavedAP(int AP) {
 		this.savedAP = AP;
+	}
+	
+	public void setCurrentPosition(Tile tile) {
+		this.tileOn = tile;
 	}
 
 }

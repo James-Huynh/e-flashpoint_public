@@ -3,7 +3,7 @@ package actions;
 import edge.Edge;
 import tile.Tile;
 import token.Firefighter;
-import token.Poi;
+import token.POI;
 import game.GameState;
 
 // Start of user code for imports
@@ -18,32 +18,30 @@ import java.util.*;
 public abstract class Action {
     
     protected int APcost;
-    public void perform() {
-        
-    }
+    public abstract void perform(GameState gs);
+    public abstract boolean validate(GameState gs);
 
     public int getCost() {
         /* TODO: No message view defined */
         return APcost;
     }
 
-    public abstract boolean validate() {
-        /* TODO: No message view defined */
-    }
+    public abstract boolean validate();
 
     boolean removeAvailableActions(GameState a) {
         /* TODO: No message view defined */
-        if (a.availableActions.contains(this)) {
-        	a.availableActions.remove(this);
+        if (a.getAvailableActions().contains(this)) {
+        	a.getAvailableActions().remove(this);
+        	return true;
         }
         else {
-        	return False;
+        	return false;
         }
     }
 
     boolean addAvailableActions(GameState a) {
         /* TODO: No message view defined */
-    	a.availableActions.add(this);
+    	a.getAvailableActions().add(this);
         return true;
     }
 
@@ -51,19 +49,4 @@ public abstract class Action {
         /* TODO: No message view defined */
     }
 
-    //WHY HERE
-    boolean containsAvailableActions(GameState a) {
-        /* TODO: No message view defined */
-        return a.availableActions.contains(a);
-    }
-
-    int sizeOfAvailableActions(GameState a) {
-        /* TODO: No message view defined */
-        return a.availableActions.size();
-    }
-
-    ArrayList<Action> getAvailableActions() {
-        /* TODO: No message view defined */
-    	return a.availableActions.size();
-    }
 }
