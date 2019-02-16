@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 import edge.Edge;
 import tile.Tile;
 import token.Firefighter;
@@ -18,11 +20,12 @@ public class GameState {
     protected Edge[][] matEdges;
     protected Tile[][] matTiles;
     protected int currTile;
+    protected ArrayList<Action> availableActions;
     
     
     // @James	
     /**
-     * 
+     * modified by @matekrk
      */
     public GameState(TemplateGame template) {
     	this.isActiveGame = true;
