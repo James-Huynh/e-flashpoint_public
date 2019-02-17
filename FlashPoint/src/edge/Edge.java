@@ -11,23 +11,11 @@ import tile.Tile;
  * and modified by @matekrk
  */
 public abstract class Edge {
-    // THIS IS HOW IT WAS:
-    public Wall getWall() {
-        /* TODO: No message view defined */
-        return null;
-    }
-
-    public Door getDoor() {
-        /* TODO: No message view defined */
-        return null;
-    }
-
-    public Blank getBlank() {
-        /* TODO: No message view defined */
-        return null;
-    }
-    // THIS IS HOW IT IS GONNA BE:
+    
+    // MODIFIED - earlier it was public Wall getWall <- not natural with inheritance (but natural with touchcore)
+	
     private Tile[] tiles;
+    
     public Tile[] getTiles() { //do we need that?
     	return tiles;
     }

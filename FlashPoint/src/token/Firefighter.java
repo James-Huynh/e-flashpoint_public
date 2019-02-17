@@ -14,6 +14,7 @@ abstract public class Firefighter extends Token {
 	protected int AP;
 	protected int savedAP;
 	protected boolean carryingVictim;
+	protected POI victim;
 
 	/**
 	 * updateLocation sets the coordinates of the firefighter to the tile
@@ -42,6 +43,10 @@ abstract public class Firefighter extends Token {
 		return this.carryingVictim;
 	}
 	
+	public POI getVictim() {
+		return victim;
+	}
+	
 	//------------------------ SETTTERS -------------------------//
 	public void setAP(int AP) {
 		this.AP = AP;
@@ -53,6 +58,10 @@ abstract public class Firefighter extends Token {
 	
 	public void setCurrentPosition(Tile tile) {
 		this.tileOn = tile;
+	}
+	
+	public void setVictim(POI victim) {
+		this.victim = victim;
 	}
 
 }

@@ -18,11 +18,11 @@ import java.util.*;
 public abstract class Action {
     
     protected int APcost;
+    
     public abstract void perform(GameState gs);
     public abstract boolean validate(GameState gs);
 
     public int getCost() {
-        /* TODO: No message view defined */
         return APcost;
     }
 
@@ -40,13 +40,12 @@ public abstract class Action {
     }
 
     boolean addAvailableActions(GameState a) {
-        /* TODO: No message view defined */
     	a.getAvailableActions().add(this);
         return true;
     }
 
-    Action() {
-        /* TODO: No message view defined */
+    public Action() {
+        
     }
 
 }

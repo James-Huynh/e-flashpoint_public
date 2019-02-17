@@ -16,21 +16,24 @@ public class Wall extends Edge{
     public Wall() {
     	this.damage = 0;
     }
+    
     public Wall(int damage) {
     	this.damage = damage;
     }
 
+    //always chopping by 1
     public void chop() {
-        /* TODO: No message view defined */
+        if (damage > 0) {
+        	damage--;
+        }
     }
 
     public int getDamage() {
-        /* TODO: No message view defined */
-        return 0;
+        return damage;
     }
 
     public void destroyWall() {
-        /* TODO: No message view defined */
+        damage = 0;
     }
     
     public boolean isWall() {
@@ -40,6 +43,7 @@ public class Wall extends Edge{
     public Wall getWall() {
         return this;
     }
+    
 	@Override
 	public boolean getStatus() {
 		// TODO Auto-generated method stub

@@ -18,6 +18,14 @@ public class Chop extends Action {
     
     protected int direction;
     
+    public Chop() {
+    	this.APcost = 2;
+    }
+    
+    public Chop(int cost) {
+    	this.APcost = cost;
+    }
+    
     public int getDirection() {
         return direction;
     }
@@ -27,10 +35,9 @@ public class Chop extends Action {
         Tile currPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
         Edge edge = currPosition.getEdge(this.direction);
-        int dmgCounter = edge.getDamage();
-        gs.MAX_WALL_DMGD--;
-        playingFirefighter.setSavedAP(aP - this.APcost);
         
+        gs.updateDamageCounter();
+        playingFirefighter.setSavedAP(aP - this.APcost);
         edge.chop();
     }
 
@@ -41,8 +48,7 @@ public class Chop extends Action {
         int aP = playingFirefighter.getAP();
         Edge edge = currPosition.getEdge(this.direction);
         int dmgCounter = edge.getDamage();
-        //Wall wall = edge.getType();
-        //if (if wall == 'Wall') {
+        
         if (edge.isWall()) {
             int damage = edge.getDamage();
             if (damage > 0) {

@@ -18,6 +18,14 @@ public class Extinguish extends Action {
     
     protected int direction;
     
+    public Extinguish() {
+    	this.APcost = 1;
+    }
+    
+    public Extinguish(int cost) {
+    	this.APcost = cost;
+    }
+    
     public int getDirection() {
         return direction;
     }
@@ -31,33 +39,30 @@ public class Extinguish extends Action {
         Edge edge = currentPosition.getEdge(this.direction);
         int fire = neighbour.getFire();
         int cost = super.getCost();
+        
         if (fire >= 1 && fire <= cost) {
-            if (currentPosition == neighbour) {
+            if (currentPosition.equals(neighbour)) { //in other words: direction -1
                 if (aP >= cost) {
                     flag = true;
                 }
             }
         } 
         else {
-            //Door typeDoor = edge.getType();
-            //Wall typeWall = edge.getType();
-            //BlankEdge typeBlank = edge.getType();
-            //if (if typeBlank == 'BlankEdge') {
         	if (edge.isBlank()) {
                 if (aP >= cost) {
                     flag = true;
                 }
-            } //else if (if typeDoor = 'Door') {
+        	}
         	else if (edge.isDoor()) {
-                boolean status = edge.getStatus(); //typeDoor.getStatus();
+                boolean status = edge.getStatus();
                 if (status == true) {
                     if (aP >= cost) {
                         flag = true;
                     }
                 }
-            } //else if (if typeWall = 'Wall') {
+            } 
         	else if (edge.isWall()) { 
-                int damage = edge.getDamage(); //typeWall.getDamage();
+                int damage = edge.getDamage();
                 if (damage == 0) {
                     if (aP >= cost) {
                         flag = true;

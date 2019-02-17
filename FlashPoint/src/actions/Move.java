@@ -52,9 +52,8 @@ public class Move extends Action {
         playingFirefighter.setCurrentPosition(neighbour);
         boolean carrying = playingFirefighter.getCarrying();
         if (carrying == true) {
-            POI[] pOIList = currentPosition.getPoiList();
-            currentPosition.setPOIList(pOIList);
-            neighbour.setPOIList(pOIList);
+        	currentPosition.removeFromPoiList( playingFirefighter.getVictim() );
+        	neighbour.addPoi( playingFirefighter.getVictim() );
         }
     }
 
