@@ -6,8 +6,10 @@ import java.util.*;
 
 import actions.Action;
 import game.GameState;
+import tile.ParkingSpot;
 import tile.Tile;
-import token.POI;
+import token.*;
+import edge.*;
 
 /**
  * GameManager class definition.
@@ -18,33 +20,175 @@ public class GameManager {
     
 	private final GameState gs = GameState.getInstance();
 	
-    public void explosion(Tile target) {
+	//Ben and eric, skeleton code 
+    public void explosion(Tile targetTile) {
         /* TODO: No message view defined */
+    	for(int direction = 0; direction < 4; direction++) {
+    		boolean checkBarriers = targetTile.checkBarriers(direction);
+    		Edge targetEdge;
+    		Wall targetWall;
+    		Door targetDoor;
+    		if(checkBarriers == true) {
+    			targetEdge = targetTile.getEdge(direction);
+    			if(targetEdge.getClass() == Door) {
+    				targetDoor = targetEdge.getMyDoor();
+    				targetDoor.destroyDoor();
+    				continue;
+    			} else if(targetEdge.getClass() == Wall) {
+    				targetWall = targetEdge.getMyWall();
+    				targetWall.explosionBlast();
+    				gs.updateDamageCounter();
+    				continue;
+    			}else {
+    				//ERROR
+    			}
+    			Tile tempTile = targetTile.getAdjtile(direction);
+    			while(tempTile.checkBarriers(direction) == false) {
+    				if(tempTile.getFire()<2) {
+    					tempTile.setFire(2);
+    					break;
+    				}else {}
+    				boolean barCheck = tempTile.checkBarriers(direction);
+    				if(barCheck = true) {
+    					targetEdge = tempTile.getEdge(direction);
+    					if(targetEdge.getClass() == Door) {
+    						targetDoor = targetEdge.getMyDoor();
+    						targetDoor.destroyDoor();
+    						break;
+    					} else if(targetEdge.getClass() == Wall) {
+    						targetWall = targetEdge.getMyWall();
+    						targetWall.explosionBlast();
+    						gs.updateDamageCounter();
+    						break;
+    					}
+    				}
+    			}
+    		}
+    	}
     }
 
+  //Ben and eric, skeleton code 
     public void resolveFlashOver() {
         /* TODO: No message view defined */
+    	Tile targetTile = gs.returnTile(1,1);
+    	while(targetTile.getCoords() != {8,10}) {
+    		int curFire = targetTile.getFire();
+    		if(curFire == 1) {
+    			for(int direction=0; direction<4;direction++) {
+    				boolean checkBarriers = targetTile.checkBarriers(direction);
+    				Tile adjTile =  targetTile.getAdjTile(direction);
+    				int fireCheck = getFire();
+    				if(fireCheck == 2) {
+    					targetTile.setFire(2);
+    					targetTile.returnTile(0,1);
+    					break;
+    				}
+    			}
+    			targetTile = gs.nextTile(targetTile);
+    		}
+    	}
     }
 
+  //Ben and eric, skeleton code 
     public void checkKnockDowns() {
         /* TODO: No message view defined */
+    	//Select Tile
+    	Tile targetTile = gs.returnTile(1, 1);
+    	//Check Tile contents
+    	boolean containsFireFighter = targetTile.containsFirefighter();
+    	boolean containsPOI = targetTile.containsPOI();
+    	//cycle through all the tile, need a better check.
+    	while(gs.nextTile(targetTile) != null){
+    		int curFire = targetTile.getFire();
+    		//knockdown all firefighters on tiles with fire
+    		if(containsFireFighter == true) {
+    			if(curFire == 2) {
+    				ParkingSpot respawnTile = targetTile.getNearestAmbulance();
+    				ArrayList<token.Firefighter> Firefighters  = targetTile.getFirefighterList();
+    				Firefighter tempFire = Firefighters.remove(0);
+    				tempFire.updateLocation(respawnTile);
+    			}
+    		}
+    		//kill and remove all POI found on tiles with fire
+    		if(containsPOI == true) {
+    			if(curFire == 2) {
+    				ArrayList<POI> POIs = gs.getPOIList();
+    				POI tempPOI = POIs.remove(0);
+    				gs.updateLostPOI(tempPOI);
+    			}
+    		}
+    		//check if this tile still have POI or firefighters
+    		containsFireFighter = targetTile.containsFirefighter();
+        	containsPOI = targetTile.containsPOI();
+        	//select next tile if current tile is empty
+        	if(containsFireFighter == false && containsPOI == false) {
+        		gs.nextTile();
+        		containsFireFighter = targetTile.containsFirefighter();
+            	containsPOI = targetTile.containsPOI();
+        	}
+    		
+    	}
     }
 
+  //Ben and eric, skeleton code 
     public void placePOI() {
-        boolean flag = true;
-        while (flag) {
-        	Tile t = gs.rollForTile();
-        	if (t.getFire()==0) {
-        		flag = false;
-        		POI newPOI = gs.generatePOI();
-        		t.addPoi(newPOI);
-        		gs.updatePOI(newPOI);
+        int currentPOI = gs.getCurrentPOI();
+        while (currentPOI < 3) {
+        	Tile targetTile = gs.rollForTile();
+        	POI newPOI = gs.generatePOI();
+        	boolean containsPOI = targetTile.containsPOI();
+        	boolean containsFireFighter = targetTile.containsFirefighter();
+        	int curFire = targetTile.getFire();
+        	if(containsPOI == false) {
+        		if(curFire != 0) {
+        			targetTile.setFire(0);
+        			targetTile.updatePOIList(newPOI);
+        			gs.updateNewPOI(newPOI);
+        			if(containsFireFighter == true) {
+        				newPOI.reveal();
+        				if(newPOI.isVictim() == false) {
+        					gs.updateSavePOI(newPOI);
+        					newPOI.destroy();
+        				}
+        			}
+        		}
+        		else if(curFire == 0) {
+        			targetTile.updatePOIList(POI);
+        			gs.updateNewPOI(POI);
+        			if(containsFireFighter == true) {
+        				newPOI.reveal();
+        				if(newPOI.isVictim() == false) {
+        					gs.updateSavedPOI(newPOI);
+        					newPOI.destroy();
+        				}
+        			}
+        		}
+        		currentPOI = gs.getCurrentPOI();
         	}
+        	targetTile.addPoi(newPOI);
+        		gs.updatePOI(newPOI);
         }
     }
 
+    //Ben and eric, skeleton code 
     public void advanceFire() {
         /* TODO: No message view defined */
+    	//gs.endTurn();
+    	Tile targetTile = gs.rollForTile();
+    	int curFire = targetTile.getFire();
+    	if(curFire < 2) {
+    		targetTile.setFire(curFire+1);
+    	}else {
+    		explosion(targetTile);
+    	}
+    	resolveFlashOver();
+    	checkKnockDowns();
+    	placePOI();
+    	int wallCheck = gs.getDamageCounter();
+    	//int victimCheck = gs.getVictims();
+    	if(wallCheck == 24 /*|| victimCheck == 4*/) {
+    		//gs.setGameOver(true);
+    	}
     }
 
     public void takeATurn() {
