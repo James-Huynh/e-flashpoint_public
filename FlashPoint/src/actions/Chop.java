@@ -26,10 +26,19 @@ public class Chop extends Action {
     	this.APcost = cost;
     }
     
+    /*
+     * GETTERS
+     */
+    
     public int getDirection() {
         return direction;
     }
 
+    /*
+     * @Override
+     */
+    
+    @Override
     public void perform(GameState gs) {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currPosition = playingFirefighter.getCurrentPosition();
@@ -41,6 +50,7 @@ public class Chop extends Action {
         edge.chop();
     }
 
+    @Override
     public boolean validate(GameState gs) {
         boolean flag = false;
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
@@ -61,10 +71,4 @@ public class Chop extends Action {
         }
         return flag;
     }
-
-	@Override
-	public boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

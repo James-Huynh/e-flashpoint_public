@@ -27,19 +27,12 @@ public class Tile{
         /* TODO: No message view defined */
     }
 
-    public void setFire(int amount) {
-    	if (amount <= 2 && amount >=0) {
-    		fire = amount;
-    	}
-    }
-
+    /*
+     * GETTERS
+     */
+    
     public int getFire() {
         return fire;
-    }
-
-    public boolean checkBarriers(int direction) {
-        /* TODO: No message view defined */
-        return false;
     }
 
     public boolean containsFirefighter() {
@@ -56,43 +49,16 @@ public class Tile{
         return poiList;
     }
 
-    public void setPOIList(ArrayList<POI> poiList) {
-    	this.poiList = poiList;
-    }
-    
-    public void addPoi(POI newPoi) {
-        poiList.add(newPoi);
-    }
-
     public ArrayList<Firefighter> getFirefighterList() {
         return listOfFirefighters;
     }
-
-    //good shit!
-    public ParkingSpot getNearestAmbulance() {
-        /* TODO: No message view defined */
-        return null;
-    }
-
-    public void removeFromFirefighterList(Firefighter target) {
-        listOfFirefighters.remove(target);
-    }
-
+    
     public int[] getCoords() {
         return new int[] {x,y};
     }
 
     public boolean getInterior() {
     	return interior;
-    }
-
-    public void removeFromPoiList(POI target) {
-        poiList.remove(target);
-    }
-
-    public void setCoords(int[] coords) {
-        x = coords[0];
-        y = coords[1];
     }
     
     //left: 0, top: 1, right: 2, down: 3
@@ -107,4 +73,53 @@ public class Tile{
     public int getY() {
     	return y;
     }
+    
+    /*
+     * SETTERS
+     */
+    
+    public void setFire(int amount) {
+    	if (amount <= 2 && amount >=0) {
+    		fire = amount;
+    	}
+    }
+
+    public void setPOIList(ArrayList<POI> poiList) {
+    	this.poiList = poiList;
+    }
+    
+    public void addPoi(POI newPoi) {
+        poiList.add(newPoi);
+    }
+
+    public void removeFromFirefighterList(Firefighter target) {
+        listOfFirefighters.remove(target);
+    }
+
+    public void setCoords(int[] coords) {
+        x = coords[0];
+        y = coords[1];
+    }
+    
+    /*
+     * some algos/methods
+     */
+    
+
+    public boolean checkBarriers(int direction) {
+        /* TODO: No message view defined */
+        return false;
+    }
+
+    //good shit!
+    public ParkingSpot getNearestAmbulance() {
+        /* TODO: No message view defined */
+        return null;
+    }
+
+
+    public void removeFromPoiList(POI target) {
+        poiList.remove(target);
+    }
+
 }

@@ -56,10 +56,4 @@ public class Move extends Action {
         	neighbour.addPoi( playingFirefighter.getVictim() );
         }
     }
-
-	@Override
-	public boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

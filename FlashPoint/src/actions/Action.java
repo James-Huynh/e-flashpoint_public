@@ -21,12 +21,20 @@ public abstract class Action {
     
     public abstract void perform(GameState gs);
     public abstract boolean validate(GameState gs);
+    // public abstract boolean validate();
+    
 
+    /*
+     * GETTERS
+     */
+    
     public int getCost() {
         return APcost;
     }
 
-    public abstract boolean validate();
+    /*
+     * INTERACTION WITH GAMESTATE
+     */
 
     boolean removeAvailableActions(GameState a) {
         /* TODO: No message view defined */
@@ -42,10 +50,6 @@ public abstract class Action {
     boolean addAvailableActions(GameState a) {
     	a.getAvailableActions().add(this);
         return true;
-    }
-
-    public Action() {
-        
     }
 
 }

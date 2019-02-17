@@ -14,6 +14,10 @@ public class POI {
        this.isVictim  = isVictim;
     }
 
+    /*
+     * GETTERS
+     */
+    
     /**
      * Check if the POI is a victim
      * @return isVictim
@@ -22,6 +26,10 @@ public class POI {
         return this.isVictim;
     }
 
+    /*
+     * SETTERS
+     */
+    
     public void reveal() {
         // changes the image of the token on the board
     }

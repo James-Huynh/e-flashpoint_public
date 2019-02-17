@@ -11,8 +11,17 @@ import java.util.*;
 public class Player {
     
     protected String userName;
+    private String password;
+    
+    /*
+     * GETTERS
+     */
     
     public String getUserName() {
         return this.userName;
+    }
+    
+    public boolean validatePassword(String s) {
+    	return (s.equals(this.password));
     }
 }

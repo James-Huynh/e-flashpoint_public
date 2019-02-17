@@ -16,9 +16,18 @@ public abstract class Edge {
 	
     private Tile[] tiles;
     
+    /*
+     * Getters
+     */
+    
     public Tile[] getTiles() { //do we need that?
     	return tiles;
     }
+    
+    /*
+     * Questions
+     */
+    
     public boolean isWall() {
     	return false;
     }

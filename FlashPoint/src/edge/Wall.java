@@ -21,6 +21,18 @@ public class Wall extends Edge{
     	this.damage = damage;
     }
 
+    /*
+     * Getters
+     */
+    
+    public int getDamage() {
+        return damage;
+    }
+    
+    /*
+     * Setters
+     */
+    
     //always chopping by 1
     public void chop() {
         if (damage > 0) {
@@ -28,13 +40,14 @@ public class Wall extends Edge{
         }
     }
 
-    public int getDamage() {
-        return damage;
-    }
 
     public void destroyWall() {
         damage = 0;
     }
+    
+    /*
+     * Questions
+     */
     
     public boolean isWall() {
     	return true;

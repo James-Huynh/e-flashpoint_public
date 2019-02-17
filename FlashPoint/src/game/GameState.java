@@ -48,6 +48,10 @@ public class GameState {
      * me: ¯\_(ツ)_/¯
      */
     
+    /*
+     * SINGLETON
+     */
+    
     //@matekrk - private is key word here
     private GameState() {
     	/*
@@ -63,6 +67,9 @@ public class GameState {
     	return instance;
     }
     
+    /*
+     * UPDATE/LOADING
+     */
     
     public void updateGameStateFromTemplate(TemplateGame template) {
     	this.isActiveGame = true;
@@ -77,15 +84,11 @@ public class GameState {
     	
     }
 
-    public Tile rollForTile() {
-        //random:
-    	Random r = new Random();
-    	int i = r.nextInt(matTiles.length);
-    	int j = r.nextInt(matEdges[0].length);
-    	return returnTile(i,j);
-    }
-
-    //ALWAYS 3!
+    /*
+     * GETTERS
+     */
+    
+  //ALWAYS 3!
     public POI[] retrievePOI() {
         return poiList;
     }
@@ -100,8 +103,8 @@ public class GameState {
     	}
     	else return false;
     }
-
-    //QUESTION
+    
+  //QUESTION
     public Tile nextTile() {
         /* only advanced version right? */
         return null;
@@ -133,14 +136,23 @@ public class GameState {
     public int getActiveFireFighterIndex() {
     	return activeFireFighterIndex;
     }
+   
+    public int getDamageCounter() {
+    	return wallsDamaged;
+    }
+    
+    public ArrayList<Action> getAvailableActions(){
+    	return availableActions;
+    }
+    
+    /*
+     * SETTERS
+     */
     
     public void setActiveFireFighterIndex(int i) {
     	activeFireFighterIndex = i;
     }
     
-    public int getDamageCounter() {
-    	return wallsDamaged;
-    }
 
     public void updateDamageCounter() {
         this.wallsDamaged = this.wallsDamaged + 1;
@@ -193,10 +205,46 @@ public class GameState {
         /* TODO: No message view defined */
     }
     
-    public ArrayList<Action> getAvailableActions(){
-    	return availableActions;
+    /*
+     * RANDOM
+     */
+    
+    public Tile rollForTile() {
+        //random:
+    	Random r = new Random();
+    	int i = r.nextInt(matTiles.length);
+    	int j = r.nextInt(matEdges[0].length);
+    	return returnTile(i,j);
     }
-  
+    
+    /*
+     * POIs
+     */
+
+  //based on current state - randomly new POI
+    public POI generatePOI() {
+    	int x = remainingFalseAlarms + remainingVictims;
+    	Random r = new Random();
+    	int y = r.nextInt(x);
+    	POI newPOI;
+    	
+    	//shit: what if x==0? @matekrk
+    	
+    	if (y < remainingFalseAlarms) {
+    		newPOI = new POI(false);
+    		remainingFalseAlarms--;
+    	}
+    	else {
+    		newPOI = new POI(true);
+    		remainingVictims--;
+    	}
+    	return newPOI;
+    }
+    
+    /*
+     * Available ACTIONS
+     */
+    
     boolean containsAvailableActions(GameState a) {
         return a.getAvailableActions().contains(a);
     }
@@ -216,6 +264,10 @@ public class GameState {
     void addAvailableActions(Action a) {
     	getAvailableActions().add(a);
     }
+    
+    /*
+     * NAVIGATION
+     */
     
     //left: 0, top: 1, right: 2, down: 3
     public Tile getNeighbour(Tile tile, int direction) {
@@ -237,23 +289,4 @@ public class GameState {
     	}
     }
     
-    //based on current state - randomly new POI
-    public POI generatePOI() {
-    	int x = remainingFalseAlarms + remainingVictims;
-    	Random r = new Random();
-    	int y = r.nextInt(x);
-    	POI newPOI;
-    	
-    	//shit: what if x==0? @matekrk
-    	
-    	if (y < remainingFalseAlarms) {
-    		newPOI = new POI(false);
-    		remainingFalseAlarms--;
-    	}
-    	else {
-    		newPOI = new POI(true);
-    		remainingVictims--;
-    	}
-    	return newPOI;
-    }
 }

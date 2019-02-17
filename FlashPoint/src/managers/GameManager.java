@@ -20,6 +20,46 @@ public class GameManager {
     
 	private final GameState gs = GameState.getInstance();
 	
+	// MAIN
+    public void runFlashpoint() {
+    	gs.updateGameStateFromLobby();
+    	setup();
+    	doTurns();
+    }
+    
+    public void setup() {
+    	// we have board at this stage
+    	// in order:
+    	// DOOR, FIRE, POI, DAMAGE_TOKENS, PLAYERS' POSITION
+    	
+        /* TODO: No message view defined */
+    }
+	
+    public void doTurns() {
+    	while(!gs.isGameTerminated()) {
+    		gs.getPlayingFirefighter().setAP( Math.min(6, gs.getPlayingFirefighter().getAP() + 4) );
+    		takeATurn();
+    		advanceFire();
+    		gs.setActiveFireFighterIndex( (gs.getActiveFireFighterIndex() + 1)%(gs.getFireFighterList().size()) );
+    	}
+    	System.out.println(gs.isGameWon());
+    }
+    
+    public void takeATurn() {
+    	ArrayList<Action> availableActions = getAllAvailableActions();
+    	// pass to GUI
+    	// GUI passes which action
+    	// perform 
+    	// if it was end of turn die, if not recursion (but GameState is different now!)	
+    }
+    
+    //TODO: Zaid + Mat based on validations
+    public ArrayList<Action> getAllAvailableActions() {
+        /* TODO: No message view defined */
+        return null;
+    }
+    
+    
 	//Ben and eric, skeleton code 
     public void explosion(Tile targetTile) {
         /* TODO: No message view defined */
@@ -191,29 +231,6 @@ public class GameManager {
     	}
     }
 
-    public void takeATurn() {
-    	ArrayList<Action> availableActions = getAllAvailableActions();
-    	// pass to GUI
-    	// GUI passes which action
-    	// perform 
-    	// if it was end of turn die, if not recursion (but GameState is different now!)
-    	
-    }
-
-    //TODO: Zaid + Mat based on validations
-    public ArrayList<Action> getAllAvailableActions() {
-        /* TODO: No message view defined */
-        return null;
-    }
-
-    public void setup() {
-    	// we have board at this stage
-    	// in order:
-    	// DOOR, FIRE, POI, DAMAGE_TOKENS, PLAYERS' POSITION
-    	
-        /* TODO: No message view defined */
-    }
-
     //This one I save for our next meeting. key word *serialization*
     public void saveGame() {
         /* TODO: No message view defined */
@@ -223,22 +240,5 @@ public class GameManager {
     public void setOptions() {
         /* TODO: No message view defined */
     }
-
-    
-    public void doTurns() {
-    	while(!gs.isGameTerminated()) {
-    		gs.getPlayingFirefighter().setAP( Math.min(6, gs.getPlayingFirefighter().getAP() + 4) );
-    		takeATurn();
-    		advanceFire();
-    		gs.setActiveFireFighterIndex( (gs.getActiveFireFighterIndex() + 1)%(gs.getFireFighterList().size()) );
-    	}
-    	System.out.println(gs.isGameWon());
-    }
-    
-    // MAIN
-    public void runFlashpoint() {
-    	gs.updateGameStateFromLobby();
-    	setup();
-    	doTurns();
-    }
+ 
 }

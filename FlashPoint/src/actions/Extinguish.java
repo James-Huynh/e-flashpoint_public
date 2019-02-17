@@ -26,10 +26,19 @@ public class Extinguish extends Action {
     	this.APcost = cost;
     }
     
+    /*
+     * GETTERS
+     */
+    
     public int getDirection() {
         return direction;
     }
 
+    /*
+     * @OVERRIDE
+     */
+    
+    @Override
     public boolean validate(GameState gs) {
         boolean flag = false;
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
@@ -73,6 +82,7 @@ public class Extinguish extends Action {
         return flag;
     }
 
+    @Override
     public void perform(GameState gs) {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
@@ -81,10 +91,4 @@ public class Extinguish extends Action {
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
         neighbour.setFire(this.APcost);
     }
-
-	@Override
-	public boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

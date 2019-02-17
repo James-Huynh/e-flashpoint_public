@@ -13,6 +13,11 @@ public class Blank {
     public Blank() {
         /* TODO: No message view defined */
     }
+    
+    /*
+     * Questions
+     */
+    
     public boolean isBlank() {
     	return true;
     }

@@ -18,24 +18,33 @@ public class Door {
         /* TODO: No message view defined */
     }
 
+    /*
+     * GETTERS
+     */
+    
     public boolean isDestroyed() {
-        /* TODO: No message view defined */
-        return false;
-    }
-
-    public boolean destroyDoor() {
-        /* TODO: No message view defined */
-        return false;
+        return destroyed;
     }
 
     public boolean getStatus() {
-        /* TODO: No message view defined */
-        return false;
+        return isOpen;
+    }
+    
+    /*
+     * SETTERS
+     */
+    
+    public void destroyDoor() {
+        destroyed = true;
     }
 
     public void change() {
-        /* TODO: No message view defined */
+        isOpen = !isOpen;
     }
+    
+    /*
+     * Questions
+     */
     
     public boolean isDoor() {
     	return true;
