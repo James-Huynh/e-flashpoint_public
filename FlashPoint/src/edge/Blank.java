@@ -21,4 +21,9 @@ public class Blank {
     public boolean isBlank() {
     	return true;
     }
+    
+    @Override
+    public String toString() {
+    	return "BlankEdge[]";
+    }
 }

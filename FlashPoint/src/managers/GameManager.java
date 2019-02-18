@@ -1,5 +1,12 @@
 package managers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 // Start of user code for imports
 import java.util.*;
 // End of user code
@@ -231,10 +238,57 @@ public class GameManager {
     	}
     }
 
-    //This one I save for our next meeting. key word *serialization*
+    /*
+     * SAVING AND READING
+     */
+    
+    //This one I save for our next meeting. key word *serialization* @matekrk
     public void saveGame() {
-        /* TODO: No message view defined */
+    	try {
+			FileOutputStream fo = new FileOutputStream(new File("myGameState.txt"));
+			ObjectOutputStream oo = new ObjectOutputStream(fo);
+
+			// Write object to file
+			oo.writeObject(gs);
+
+			oo.close();
+			fo.close();
+
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+		} catch (IOException e) {
+			System.out.println("Error initializing stream");
+		}
     }
+    
+    public GameState loadGame() {
+    	try {
+    		FileInputStream fi = new FileInputStream(new File("myGameState.txt"));
+			ObjectInputStream oi = new ObjectInputStream(fi);
+			// Read objects
+			GameState gs1 = (GameState) oi.readObject();
+
+			System.out.println(gs1.toString());
+
+			oi.close();
+			fi.close();
+			
+			gs.updateGameStateFromObject(gs1);
+			return gs1; //if not void
+			
+			} catch (FileNotFoundException e) {
+				System.out.println("File not found");
+			} catch (IOException e) {
+				System.out.println("Error initializing stream");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	return null;
+    }
+    
+    
 
     //any volunteers? I guess we can do that when GUI is done
     public void setOptions() {

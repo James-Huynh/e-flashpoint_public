@@ -59,7 +59,11 @@ public class Wall extends Edge{
     
 	@Override
 	public boolean getStatus() {
-		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Wall [damage=" + damage + "]";
 	}
 }

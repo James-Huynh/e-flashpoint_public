@@ -1,7 +1,10 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.io.Serializable;
 
 import actions.Action;
 import edge.Edge;
@@ -9,7 +12,7 @@ import tile.Tile;
 import token.Firefighter;
 import token.POI;
 
-public class GameState {
+public class GameState implements Serializable {
     
     protected int remainingVictims; //start with 12
     protected int remainingFalseAlarms; //start with 6
@@ -29,6 +32,7 @@ public class GameState {
     public int MAX_WALL_DMGD;
     protected POI[] poiList; //@matekrk: this is important (fixed array) it is on purpose. 
     						 //you can't remove poi so easily. you need to replace with new one!
+    private static final long serialVersionUID = 1L; //serialization
     
     
     /**
@@ -70,6 +74,27 @@ public class GameState {
     /*
      * UPDATE/LOADING
      */
+    
+    //copy constructor
+    public void updateGameStateFromObject(GameState gs1) {
+    	remainingVictims = gs1.remainingVictims;
+    	remainingFalseAlarms = gs1.remainingFalseAlarms;
+    	wallsDamaged = gs1.wallsDamaged;
+    	lostVictims = gs1.wallsDamaged;
+    	savedVictims = gs1.savedVictims;
+    	remainingPoi = gs1.remainingPoi;
+    	gameTerminated = gs1.gameTerminated;
+    	gameWon = gs1.gameWon;
+    	activeFireFighterIndex = gs1.activeFireFighterIndex;
+    	isActiveGame = gs1.isActiveGame;
+    	matEdges = gs1.matEdges;
+    	matTiles = gs1.matTiles;
+    	currentTile = gs1.currentTile;
+    	availableActions = gs1.availableActions;
+    	listOfFireFighter = gs1.listOfFireFighter;
+    	MAX_WALL_DMGD = gs1.MAX_WALL_DMGD;
+    	poiList = gs1.poiList; 	
+    }
     
     public void updateGameStateFromTemplate(TemplateGame template) {
     	this.isActiveGame = true;
@@ -289,4 +314,19 @@ public class GameState {
     	}
     }
     
+    /*
+     * SAVING
+     */
+    
+    @Override
+	public String toString() {
+		return "GameState [remainingVictims=" + remainingVictims + ", remainingFalseAlarms=" + remainingFalseAlarms
+				+ ", wallsDamaged=" + wallsDamaged + ", lostVictims=" + lostVictims + ", savedVictims=" + savedVictims
+				+ ", remainingPoi=" + remainingPoi + ", gameTerminated=" + gameTerminated + ", gameWon=" + gameWon
+				+ ", activeFireFighterIndex=" + activeFireFighterIndex + ", isActiveGame=" + isActiveGame
+				+ ", matEdges=" + Arrays.toString(matEdges) + ", matTiles=" + Arrays.toString(matTiles)
+				+ ", currentTile=" + currentTile + ", availableActions=" + availableActions.stream().map(Object::toString).collect(Collectors.joining(", ")) + ", listOfFireFighter="
+				+ listOfFireFighter.stream().map(Object::toString).collect(Collectors.joining(", ")) + ", MAX_WALL_DMGD=" + MAX_WALL_DMGD + ", poiList=" + Arrays.toString(poiList)
+				+ "]";
+	}
 }

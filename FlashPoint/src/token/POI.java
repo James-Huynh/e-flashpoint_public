@@ -37,4 +37,9 @@ public class POI {
     public void checkStatus() {
       // #Q what does this do?
     }
+
+	@Override
+	public String toString() {
+		return "POI [revealed=" + revealed + ", isVictim=" + isVictim + ", isRescued=" + isRescued + "]";
+	}
 }

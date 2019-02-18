@@ -71,4 +71,11 @@ public class Chop extends Action {
         }
         return flag;
     }
+
+	@Override
+	public String toString() {
+		return "Chop [direction=" + direction + "]";
+	}
+    
+    
 }

@@ -91,4 +91,11 @@ public class Extinguish extends Action {
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
         neighbour.setFire(this.APcost);
     }
+
+	@Override
+	public String toString() {
+		return "Extinguish [direction=" + direction + "]";
+	}
+    
+    
 }

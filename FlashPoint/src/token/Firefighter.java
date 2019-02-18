@@ -64,4 +64,11 @@ abstract public class Firefighter extends Token {
 		this.victim = victim;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Firefighter [AP=" + AP + ", savedAP=" + savedAP + ", carryingVictim=" + carryingVictim + ", victim="
+				+ victim.toString() + "]";
+	}
+
 }

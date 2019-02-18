@@ -53,4 +53,9 @@ public class Door {
     public Door getDoor() {
         return this;
     }
+
+	@Override
+	public String toString() {
+		return "Door [destroyed=" + destroyed + ", isOpen=" + isOpen + "]";
+	}
 }

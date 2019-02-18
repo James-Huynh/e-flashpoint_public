@@ -12,8 +12,8 @@ import token.POI;
  * and modified by @matekrk
  */
 public class Move extends Action {
-    
-    protected int direction;
+
+	protected int direction;
     
     public int getDirection() {
         return direction;
@@ -56,4 +56,9 @@ public class Move extends Action {
         	neighbour.addPoi( playingFirefighter.getVictim() );
         }
     }
+    
+    @Override
+	public String toString() {
+		return "Move [direction=" + direction + "]";
+	}
 }
