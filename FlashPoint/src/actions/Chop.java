@@ -43,11 +43,11 @@ public class Chop extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
-        Edge edge = currPosition.getEdge(this.direction);
+        Edge edge = currPosition.getEdge(this.direction); //type Wall wall? 
         
-        gs.updateDamageCounter();
-        playingFirefighter.setSavedAP(aP - this.APcost);
         edge.chop();
+        playingFirefighter.setSavedAP(aP - this.APcost);
+        gs.updateDamageCounter();
     }
 
     @Override

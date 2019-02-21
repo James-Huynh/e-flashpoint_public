@@ -46,17 +46,18 @@ public class Extinguish extends Action {
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
         Edge edge = currentPosition.getEdge(this.direction);
-        int fire = neighbour.getFire();
         int cost = super.getCost();
         
-        if (fire >= 1 && fire <= cost) {
+        
+        int fire = neighbour.getFire();
+        if (fire >= 1 && fire <= cost) { //fire <= cost? GoogleDoc
             if (currentPosition.equals(neighbour)) { //in other words: direction -1
                 if (aP >= cost) {
                     flag = true;
                 }
             }
         } 
-        else {
+        else { //shouldn't be here? else if(edge.isBlank()) joined to above if
         	if (edge.isBlank()) {
                 if (aP >= cost) {
                     flag = true;
@@ -94,7 +95,8 @@ public class Extinguish extends Action {
 
 	@Override
 	public String toString() {
-		return "Extinguish [direction=" + direction + "]";
+		return "Extinguish [direction=" + direction + "] by AP = " + this.APcost + "."; 
+		//Add "Fire was converted to smoke/..", another level of detail that might help in debugging and game terminal
 	}
     
     

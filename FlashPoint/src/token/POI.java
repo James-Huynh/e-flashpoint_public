@@ -23,7 +23,7 @@ public class POI {
      * @return isVictim
      */
     public boolean isVictim() {
-        return this.isVictim;
+        return isVictim;
     }
 
     /*
@@ -35,7 +35,7 @@ public class POI {
     }
 
     public void checkStatus() {
-      // #Q what does this do?
+      	return revealed;
     }
 
 	@Override

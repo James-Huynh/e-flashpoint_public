@@ -14,7 +14,7 @@ public class Wall extends Edge{
     protected int damage; //domain: 0,1,2
     
     public Wall() {
-    	this.damage = 0;
+    	this.damage = 0; //2 because 0 signifies destruction?
     }
     
     public Wall(int damage) {
