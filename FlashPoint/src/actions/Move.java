@@ -26,14 +26,64 @@ public class Move extends Action {
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Edge edge = currentPosition.getEdge(direction);
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
-       
+        int fire = neighbour.getFire();
+        int aP = playingFirefighter.getAP();
+        
         if ( edge.isDoor() ) {
         	boolean status = edge.getStatus();
         	if(status == true) {
-        		int fire = neighbour.getFire();
-        		int aP = playingFirefighter.getAP();
+//        		int fire = neighbour.getFire();
+//        		int aP = playingFirefighter.getAP();
+        		
         		if (fire < 2) {
         			if (playingFirefighter.getCarrying() == true && aP >= 2) {
+        				flag = true;
+        			}
+        			else if( aP >= 1) {
+        				flag = true; //Not carrying, but can still move
+        			}
+        		}
+        		
+        	   else if (fire == 2) {
+        		   if(playingFirefighter.getCarrying() == false && aP >=2) {
+        			   flag = true;
+        		   }
+        	   }
+        		
+        	}
+        }
+        
+        else if( edge.isBlank() ) {
+        	if( fire < 2) {
+        		if(playingFirefighter.getCarrying() == true && aP >= 2) {
+        			flag = true;
+        		}
+        		else if(aP >= 1) {
+        			flag = true;
+        		}
+        	}
+        	
+        	else if( fire == 2) {
+        		if(playingFirefighter.getCarrying() == false && aP > =2) {
+        			flag = true;
+        		}
+        	}
+        }
+        
+        else if( edge.isWall() ) {
+        	int damage = edge.getDamage();
+        	if(damage == 0) {
+        		if( fire < 2) {
+        			if(playingFirefighter.getCarrying() == true && aP >= 2) {
+        				flag = true;
+        			}
+        			else if(aP >= 1) {
+        				flag = true;
+        			}
+        		}
+        		
+        		else if( fire == 2) {
+        			if(playingFirefighter.getCarrying() == false && aP > =2) {
         				flag = true;
         			}
         		}
@@ -50,6 +100,24 @@ public class Move extends Action {
         playingFirefighter.setSavedAP(aP - this.APcost);
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
         playingFirefighter.setCurrentPosition(neighbour);
+        currentPosition.removeFromFirefighterList(playingFirefighter);
+        neighbour.addToFirefighterList(playingFirefighter);
+        
+        if(neighbour.containsPOI() == true) {
+        	ArrayList<POI> Pois = neighbour.getPoiList();
+        	for(POI poi:Pois) {
+        		if(poi.checkStatus() == false) {
+        			poi.reveal();
+        			if(poi.isVictim() == true) {
+        				//Update GameState remainingVictims
+        			}
+        			else {
+        				//Update GameState False Alarms
+        			}
+        		}
+        	}
+        }
+        
         boolean carrying = playingFirefighter.getCarrying();
         if (carrying == true) {
         	currentPosition.removeFromPoiList( playingFirefighter.getVictim() );

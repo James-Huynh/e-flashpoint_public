@@ -14,9 +14,9 @@ import token.POI;
 
 public class GameState implements Serializable {
     
-    protected int remainingVictims; //start with 12
-    protected int remainingFalseAlarms; //start with 6
-    protected int wallsDamaged; //start with 26
+    protected int remainingVictims; //start with 12  //10 for Family 
+    protected int remainingFalseAlarms; //start with 6 //5 for Family
+    protected int wallsDamaged; //start with 24
     protected int lostVictims; //if 4 lost lose!
     protected int savedVictims; //if 7 rescued win!
     protected int remainingPoi; //DO WE NEED THIS? =remainingVictims+remainingFalseAlarms
@@ -61,6 +61,7 @@ public class GameState implements Serializable {
     	/*
     	 * I wonder what arguments passed - question probably to init team
     	 */
+    	
     }
     
     //preventing from creating other instances

@@ -95,6 +95,10 @@ public class Tile{
     public void removeFromFirefighterList(Firefighter target) {
         listOfFirefighters.remove(target);
     }
+    
+    public void addToFirefighterList(Firefighter target) {
+    	listOfFirefighters.add(target);
+    }
 
     public void setCoords(int[] coords) {
         x = coords[0];

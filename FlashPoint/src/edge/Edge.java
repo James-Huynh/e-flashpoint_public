@@ -28,7 +28,7 @@ public abstract class Edge {
      * Questions
      */
     
-    public boolean isWall() {
+    public boolean isWall() {	//change these to getType and alter classes accordingly?
     	return false;
     }
     public boolean isDoor() {
@@ -38,8 +38,9 @@ public abstract class Edge {
     	return false;
     }
     
-    public abstract boolean getStatus();
-    public abstract int getDamage();
+    public abstract boolean getStatus();    
+    public abstract int getDamage();	//If getType done properly, then in if/else checks we can intialize of that object and then make edge specific checks
+    									//wouldn't need to declare edge specific methods here								
     public abstract void chop();
     
 }
