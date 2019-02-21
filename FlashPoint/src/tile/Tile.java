@@ -24,7 +24,8 @@ public class Tile{
     protected ArrayList<POI> poiList;
     
     public Tile(boolean isParkingspot, int[] coords) {
-        /* TODO: No message view defined */
+        this.x = coords[0];
+        this.y = coords[1];
     }
 
     /*
@@ -125,5 +126,10 @@ public class Tile{
     public void removeFromPoiList(POI target) {
         poiList.remove(target);
     }
+
+	public void increaseToFire() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

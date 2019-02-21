@@ -26,6 +26,7 @@ public class GameState implements Serializable {
     protected boolean isActiveGame;
     protected Edge[][] matEdges;
     protected Tile[][] matTiles;
+    
     protected int currentTile; // ??
     protected ArrayList<Action> availableActions;
     protected ArrayList<Firefighter> listOfFireFighter;
@@ -97,12 +98,12 @@ public class GameState implements Serializable {
     	poiList = gs1.poiList; 	
     }
     
-    public void updateGameStateFromTemplate(TemplateGame template) {
+    public void updateGameStateFromTemplate() {
     	this.isActiveGame = true;
     	
-    	initializeEdges(template);
-    	initializeFires(template);
-    	initializeTiles(template);
+    	initializeEdges();
+    	initializeFires();
+    	initializeTiles();
     	
     }
     
@@ -218,9 +219,18 @@ public class GameState implements Serializable {
     public void placeFireFighter(Firefighter f, Tile t) {
         f.setCurrentPosition(t);
     }
-
-    public void initializeTiles(TemplateGame defaultGame) {
-        /* TODO: No message view defined */
+    
+    public void initializeTiles() {
+    	
+    	//creating 10 x 8 tiles
+    	matTiles = new Tile[][];
+    	for (int i=0; i<=9; i++) {
+    		for (int j=0; j<=7; j++) {
+    			matTiles[i][j] = new Tile(false, {i,j});
+    		}
+    	}
+    	
+    	//creating parking spots 
     }
 
     public void initializeEdges(TemplateGame defaultGame) {

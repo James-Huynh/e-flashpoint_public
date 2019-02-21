@@ -12,8 +12,14 @@ import java.util.*;
 public class Lobby {
     
     protected boolean isClickable;
+    protected GameState gameInstance;
     
     public void createNewGame(int numberOfPlayers) {
-        
+    	
+    	gameInstance = new GameState();
+    	gameInsatnce.updateGameStateFromTemplate();
+    	
+    	
+    	
     }
 }

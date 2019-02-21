@@ -43,4 +43,9 @@ public class POI {
 	public String toString() {
 		return "POI [revealed=" + revealed + ", isVictim=" + isVictim + ", isRescued=" + isRescued + "]";
 	}
+
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
 }
