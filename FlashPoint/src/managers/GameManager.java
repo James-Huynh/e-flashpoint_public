@@ -79,6 +79,7 @@ public class GameManager {
     		
     		
     		boolean checkBarriers = targetTile.checkBarriers(direction);
+    		
     		Edge targetEdge;
     		Wall targetWall;
     		Door targetDoor;
@@ -95,9 +96,10 @@ public class GameManager {
     			else if(targetEdge.getClass() == Wall) {
     				
     				targetWall = targetEdge.getMyWall();
-    				targetWall.explosionWall();
+    				
+    				targetWall.destroyWall();
     				gs.updateDamageCounter();
-    				houseDamage+= 2;
+    				houseDamage+= 2;//do we do this to calculate the termination of game?
     				break;
     			}
     		
@@ -108,7 +110,9 @@ public class GameManager {
     			
     			while(tempTile.checkBarriers(direction) == false) {
     				if(tempTile.getFire()<2) {
-    					tempTile.setFire(2);
+    					
+    					tempTile.increaseToFire();
+    					
     					break;
     				}
     				
@@ -119,12 +123,19 @@ public class GameManager {
     					
     					if(targetEdge.getClass() == Door) {
     						targetDoor = targetEdge.getMyDoor();
+    						
     						targetDoor.destroyDoor();
+    						
     						break;
-    					} else if(targetEdge.getClass() == Wall) {
+    					} 
+    					else if(targetEdge.getClass() == Wall) {
+    						
     						targetWall = targetEdge.getMyWall();
-    						targetWall.explosionBlast();
+    						
+    						targetWall.destroywall();
+    						
     						gs.updateDamageCounter();
+    						
     						break;
     					}
     				}
@@ -138,22 +149,34 @@ public class GameManager {
     public void resolveFlashOver() {
         /* TODO: No message view defined */
     	Tile targetTile = gs.returnTile(1,1);
-    	while(targetTile.getCoords() != {8,10}) {
+    	
+    	while(targetTile.getCoords() != {8,10}) {       // so only inner Tile count in the game right now?@Eric
     		int curFire = targetTile.getFire();
+    		
     		if(curFire == 1) {
+    			
     			for(int direction=0; direction<4;direction++) {
+    				
     				boolean checkBarriers = targetTile.checkBarriers(direction);
     				Tile adjTile =  targetTile.getAdjTile(direction);
     				int fireCheck = getFire();
+    				
     				if(fireCheck == 2) {
     					targetTile.setFire(2);
+    					
     					targetTile.returnTile(0,1);
+    					
+    					
     					break;
     				}
+    			
     			}
+    			
     			targetTile = gs.nextTile(targetTile);
-    		}
+    		}	
+    		
     	}
+    	
     }
 
   //Ben and eric, skeleton code 
@@ -170,13 +193,20 @@ public class GameManager {
     	//cycle through all the tile, need a better check.
     	
     	while(gs.nextTile(targetTile) != null){
+    		
     		int curFire = targetTile.getFire();
+    		
     		//knockdown all firefighters on tiles with fire
+    		
     		if(containsFireFighter == true) {
+    			
     			if(curFire == 2) {
     				ParkingSpot respawnTile = targetTile.getNearestAmbulance();
+    				
     				ArrayList<token.Firefighter> Firefighters  = targetTile.getFirefighterList();
+    				
     				Firefighter tempFire = Firefighters.remove(0);
+    				
     				tempFire.updateLocation(respawnTile);
     			}
     		}
@@ -185,7 +215,7 @@ public class GameManager {
     			if(curFire == 2) {
     				ArrayList<POI> POIs = gs.getPOIList();
     				POI tempPOI = POIs.remove(0);
-    				gs.updateLostPOI(tempPOI);
+    				gs.updatePOI(tempPOI);
     			}
     		}
     		//check if this tile still have POI or firefighters
@@ -214,11 +244,15 @@ public class GameManager {
         		if(curFire != 0) {
         			targetTile.setFire(0);
         			targetTile.updatePOIList(newPOI);
+        			
         			gs.updateNewPOI(newPOI);
+        			
         			if(containsFireFighter == true) {
         				newPOI.reveal();
         				if(newPOI.isVictim() == false) {
+        					
         					gs.updateSavePOI(newPOI);
+        					
         					newPOI.destroy();
         				}
         			}
@@ -251,7 +285,7 @@ public class GameManager {
     	int curFire = targetTile.getFire();
     	
     	if(curFire < 2) {
-    		targetTile.increaseToFire());
+    		targetTile.increaseToFire();
     	}
     	  else {
     		explosion(targetTile);

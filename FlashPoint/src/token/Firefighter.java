@@ -2,6 +2,7 @@ package token;
 
 import java.util.*;
 
+import tile.ParkingSpot;
 import tile.Tile;
 
 /**
@@ -18,11 +19,11 @@ abstract public class Firefighter extends Token {
 
 	/**
 	 * updateLocation sets the coordinates of the firefighter to the tile
-	 * @param target The tile that the firefighter is on
+	 * @param respawnTile The tile that the firefighter is on
 	 */
-	public void updateLocation(Tile target) {
-		this.x = target.getCoords()[0];
-		this.y = target.getCoords()[1];
+	public void updateLocation(ParkingSpot respawnTile) {
+		this.x = respawnTile.getCoords()[0];
+		this.y = respawnTile.getCoords()[1];
 	}
 
 

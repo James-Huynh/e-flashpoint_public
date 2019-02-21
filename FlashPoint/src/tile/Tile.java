@@ -127,4 +127,9 @@ public class Tile{
         poiList.remove(target);
     }
 
+	public void increaseToFire() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
