@@ -45,41 +45,42 @@ public class Extinguish extends Action {
         int aP = playingFirefighter.getAP();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
-        Edge edge = currentPosition.getEdge(this.direction);
         int cost = super.getCost();
         
-        
+        //We cannot extinguish by 2 where have only smoke
         int fire = neighbour.getFire();
-        if (fire >= 1 && fire <= cost) { //fire <= cost? GoogleDoc
+
+        if (fire >= 1 && fire >= cost) { 
             if (currentPosition.equals(neighbour)) { //in other words: direction -1
                 if (aP >= cost) {
                     flag = true;
                 }
             }
-        } 
-        else { //shouldn't be here? else if(edge.isBlank()) joined to above if
-        	if (edge.isBlank()) {
-                if (aP >= cost) {
-                    flag = true;
-                }
-        	}
-        	else if (edge.isDoor()) {
-                boolean status = edge.getStatus();
-                if (status == true) {
+            else {
+            	Edge edge = currentPosition.getEdge(this.direction);
+            	if (edge.isBlank()) {
                     if (aP >= cost) {
                         flag = true;
                     }
-                }
-            } 
-        	else if (edge.isWall()) { 
-                int damage = edge.getDamage();
-                if (damage == 0) {
-                    if (aP >= cost) {
-                        flag = true;
+            	}
+            	else if (edge.isDoor()) {
+                    boolean status = edge.getStatus();
+                    if (status == true) {
+                        if (aP >= cost) {
+                            flag = true;
+                        }
+                    }
+                } 
+            	else if (edge.isWall()) { 
+                    int damage = edge.getDamage();
+                    if (damage == 0) {
+                        if (aP >= cost) {
+                            flag = true;
+                        }
                     }
                 }
             }
-        }
+        } 
         return flag;
     }
 
@@ -87,7 +88,8 @@ public class Extinguish extends Action {
     public void perform(GameState gs) {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
-        playingFirefighter.setSavedAP(aP-this.APcost);
+//        playingFirefighter.setSavedAP(aP-this.APcost);
+        playingFirefighter.setSavedAP(aP - this.APcost);
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
         neighbour.setFire(this.APcost);

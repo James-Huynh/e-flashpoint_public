@@ -46,7 +46,8 @@ public class Chop extends Action {
         Edge edge = currPosition.getEdge(this.direction); //type Wall wall? 
         
         edge.chop();
-        playingFirefighter.setSavedAP(aP - this.APcost);
+//        playingFirefighter.setSavedAP(aP - this.APcost);
+        playingFirefighter.setAP(aP - this.APcost);
         gs.updateDamageCounter();
     }
 

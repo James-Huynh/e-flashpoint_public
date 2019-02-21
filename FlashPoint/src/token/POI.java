@@ -31,7 +31,8 @@ public class POI {
      */
     
     public void reveal() {
-        // changes the image of the token on the board
+        //Invoke placing POI
+    	revealed = true;
     }
 
     public void checkStatus() {

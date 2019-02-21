@@ -38,6 +38,7 @@ public abstract class Edge {
     	return false;
     }
     
+    
     public abstract boolean getStatus();    
     public abstract int getDamage();	//If getType done properly, then in if/else checks we can intialize of that object and then make edge specific checks
     									//wouldn't need to declare edge specific methods here								

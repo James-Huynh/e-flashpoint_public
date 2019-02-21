@@ -44,7 +44,7 @@ public class GameManager {
 	
     public void doTurns() {
     	while(!gs.isGameTerminated()) {
-    		gs.getPlayingFirefighter().setAP( Math.min(6, gs.getPlayingFirefighter().getAP() + 4) );
+    		gs.getPlayingFirefighter().setAP( Math.min(8, gs.getPlayingFirefighter().getAP() + 4) );
     		takeATurn();
     		advanceFire();
     		gs.setActiveFireFighterIndex( (gs.getActiveFireFighterIndex() + 1)%(gs.getFireFighterList().size()) );
