@@ -1,14 +1,17 @@
 package game;
 
-public class FamilyGameTemplate extends TemplateGame {
+public class FamilyGame extends TemplateGame {
 	
-	public FamilyGameTemplate() {
-		//Constructor
+	protected int[][] fireLocationAndPOILocations;
+	protected int[][] edgeLocations;
+	
+	
+	public FamilyGame() {
+		
 	}
+
 	
-	protected int[][] fireLocationAndPOILocations = new int[10][8];
-	protected int[][] edgeLocations = new int[21][9];
-	
+	//21/9 10/8
 	
 	//Set initially no fire & no POI in tile
 	for (int i=0; i<=9; i++) {
@@ -16,6 +19,7 @@ public class FamilyGameTemplate extends TemplateGame {
 			fireLocationAndPOILocations[i][j] = 0;
 		}
 	}
+	
 	//10 Fire locations
 	fireLocationAndPOILocations[2][2] = 1;
 	fireLocationAndPOILocations[3][2] = 1;
@@ -111,3 +115,4 @@ public class FamilyGameTemplate extends TemplateGame {
     
     
 }
+

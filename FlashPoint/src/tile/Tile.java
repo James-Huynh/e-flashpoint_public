@@ -62,6 +62,9 @@ public class Tile{
     	return interior;
     }
     
+    public void setEdge(int direction, Edge e) {
+    	adjacentEdges[direction] = e;
+    }
     //left: 0, top: 1, right: 2, down: 3
     public Edge getEdge(int direction) {
     	return adjacentEdges[direction];

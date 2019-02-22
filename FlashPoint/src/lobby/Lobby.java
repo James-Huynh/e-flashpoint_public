@@ -2,6 +2,8 @@ package lobby;
 
 // Start of user code for imports
 import java.util.*;
+
+import game.GameState;
 // End of user code
 
 /**
@@ -12,12 +14,11 @@ import java.util.*;
 public class Lobby {
     
     protected boolean isClickable;
-    protected GameState gameInstance;
+    protected GameState gameInsatnce = new GameState();
     
     public void createNewGame(int numberOfPlayers) {
     	
-    	gameInstance = new GameState();
-    	gameInsatnce.updateGameStateFromTemplate();
+		gameInsatnce.updateGameStateFromTemplate();
     	
     	
     	

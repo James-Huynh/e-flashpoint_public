@@ -8,9 +8,15 @@ import java.io.Serializable;
 
 import actions.Action;
 import edge.Edge;
+import tile.ParkingSpot;
 import tile.Tile;
 import token.Firefighter;
 import token.POI;
+import token.Vehicle;
+import game.FamilyGame;
+import edge.Door;
+import edge.Wall;
+import edge.Blank;
 
 public class GameState implements Serializable {
     
@@ -58,7 +64,7 @@ public class GameState implements Serializable {
      */
     
     //@matekrk - private is key word here
-    private GameState() {
+    public GameState() {
     	/*
     	 * I wonder what arguments passed - question probably to init team
     	 */
@@ -71,7 +77,8 @@ public class GameState implements Serializable {
     //but everybody can access it
     public static GameState getInstance() {
     	return instance;
-    }
+    } 
+  
     
     /*
      * UPDATE/LOADING
@@ -223,18 +230,120 @@ public class GameState implements Serializable {
     public void initializeTiles() {
     	
     	//creating 10 x 8 tiles
-    	matTiles = new Tile[][];
+    	
     	for (int i=0; i<=9; i++) {
     		for (int j=0; j<=7; j++) {
-    			matTiles[i][j] = new Tile(false, {i,j});
+    			int[] position = {i,j};
+    			if((i==0 && (j==5||j==6))||(j==0 && (i==3||i==5)) || (i==9 && (j==3||j==4)) || (j==7 && (i==3||i==4)) )
+    				matTiles[i][j] = new ParkingSpot(true, position, Vehicle.Ambulance );
+    			else if((i==0 && (j==7||j==8)) || (j==0 && (i==1||i==2)) || (i==9 && (i==5||i==6)) || (j==7 && (i==1||i==2)) ) 
+    				matTiles[i][j] = new ParkingSpot(true, position, Vehicle.Engine );
+    			else{ 
+    				matTiles[i][j] = new Tile(false, position);
+    			}
     		}
     	}
+    	
+    	//
     	
     	//creating parking spots 
     }
 
-    public void initializeEdges(TemplateGame defaultGame) {
-        /* TODO: No message view defined */
+    public void initializeEdges() {
+    	
+    	FamilyGame template = new FamilyGame();
+    	int[][] edgePos = template.getEdgeLocations();
+    	
+    	for (int i=0; i<=20; i++) {
+    		for (int j=0; j<=8; j++) {
+    			
+    			int edgeChecker = edgePos[i][j];
+    			
+    			if (edgeChecker == 2) {
+    				if (i%2 == 1) { // if left/right edge
+    					if (j == 0) { //if the edge has no upper tile
+    						matTiles[i/2][j-1].setEdge(3, new Door());
+    					}
+    					else if(j == 8){ //if the edge has no lower tile
+    						matTiles[i/2][j].setEdge(1, new Door());
+    					}
+    					else {
+    					matTiles[i/2][j].setEdge(1, new Door());
+    					matTiles[i/2][j-1].setEdge(3, new Door());
+    					}
+    				}
+    				else if (i%2 == 0) { //if top/down edge
+    					if(i==0) { //if the edge has no left tile
+    						matTiles[i/2][j].setEdge(2, new Door());
+    					}
+    					else if(i==20) { //if the edge has no right tile
+    						matTiles[(i/2)-1][j].setEdge(0, new Door());
+    					}
+    					else {
+    					matTiles[i/2][j].setEdge(2, new Door());
+    					matTiles[(i/2)-1][j].setEdge(0, new Door());
+    					}
+    				}
+    			}
+    				
+    			if (edgeChecker == 1) {
+    				if (i%2 == 1) { // if left/right edge
+    					if (j == 0) { //if the edge has no upper tile
+    						matTiles[i/2][j-1].setEdge(3, new Wall());
+    					}
+    					else if(j == 8){ //if the edge has no lower tile
+    						matTiles[i/2][j].setEdge(1, new Wall());
+    					}
+    					else {
+    					matTiles[i/2][j].setEdge(1, new Wall());
+    					matTiles[i/2][j-1].setEdge(3, new Wall());
+    					}
+    				}
+    				else if (i%2 == 0) { //if top/down edge
+    					if(i==0) { //if the edge has no left tile
+    						matTiles[i/2][j].setEdge(2, new Wall());
+    					}
+    					else if(i==20) { //if the edge has no right tile
+    						matTiles[(i/2)-1][j].setEdge(0, new Wall());
+    					}
+    					else {
+    					matTiles[i/2][j].setEdge(2, new Wall());
+    					matTiles[(i/2)-1][j].setEdge(0, new Wall());
+    					}
+    				}
+    				
+    			}
+    			if (edgeChecker == 0){
+    				if (i%2 == 1) { // if left/right edge
+    					if (j == 0) { //if the edge has no upper tile
+    						matTiles[i/2][j-1].setEdge(3, new Blank());
+    					}
+    					else if(j == 8){ //if the edge has no lower tile
+    						matTiles[i/2][j].setEdge(1, new Blank());
+    					}
+    					else {
+    					matTiles[i/2][j].setEdge(1, new Blank());
+    					matTiles[i/2][j-1].setEdge(3, new Blank());
+    					}
+    				}
+    				else if (i%2 == 0) { //if top/down edge
+    					if(i==0) { //if the edge has no left tile
+    						matTiles[i/2][j].setEdge(2, new Blank());
+    					}
+    					else if(i==20) { //if the edge has no right tile
+    						matTiles[(i/2)-1][j].setEdge(0, new Blank());
+    					}
+    					else {
+    					matTiles[i/2][j].setEdge(2, new Blank());
+    					matTiles[(i/2)-1][j].setEdge(0, new Blank());
+    					}
+    				}
+    			}
+    			//didnt cover case edgeChecker == -1
+    		}
+    	}
+    	
+    	
     }
 
     public void initializeFires(TemplateGame defaultGame) {
