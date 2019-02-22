@@ -43,7 +43,7 @@ public class GameState implements Serializable {
     
     
     /**
-     * modified by @matekrk
+     * modified by @matekrk :)
      */
     
     //good question - how to init the game. 
