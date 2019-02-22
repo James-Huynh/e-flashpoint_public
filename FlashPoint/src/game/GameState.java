@@ -235,7 +235,9 @@ public class GameState implements Serializable {
     	t.addToFirefighterList(f);
     	f.setCurrentPosition(t);
     }
-    
+    /**
+     * This method initializes 2D array of tiles and place ambulance/engine spot in the right place. 
+     */
     public void initializeTiles() {
     	
     	//creating 10 x 8 tiles
@@ -257,7 +259,9 @@ public class GameState implements Serializable {
     	
     	//creating parking spots 
     }
-
+    /**
+     * This method initializes Edges and puts them in to adjacentEdge array of each Tile.
+     */
     public void initializeEdges() {
     	
     	FamilyGame template = new FamilyGame();
