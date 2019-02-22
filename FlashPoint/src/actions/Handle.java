@@ -1,5 +1,6 @@
 package actions;
 
+import edge.Door;
 import edge.Edge;
 import game.GameState;
 import tile.Tile;
@@ -35,7 +36,7 @@ public class Handle extends Action{
 	public void perform(GameState gs) {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
-        Door door = currentPosition.getEdge(direction);
+        Edge door = currentPosition.getEdge(direction);
         door.change();
 	}
 }

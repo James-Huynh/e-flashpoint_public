@@ -1,21 +1,10 @@
 package server;
 
-package com.way.chat.server;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.way.chat.common.bean.TextMessage;
-import com.way.chat.common.bean.User;
-import com.way.chat.common.tran.bean.TranObject;
-import com.way.chat.common.tran.bean.TranObjectType;
-import com.way.chat.common.util.Constants;
-import com.way.chat.common.util.MyDate;
-import com.way.chat.dao.UserDao;
-import com.way.chat.dao.impl.UserDaoFactory;
 
 /**
  * 

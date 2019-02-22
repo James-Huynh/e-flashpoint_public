@@ -44,4 +44,16 @@ public class Blank extends Edge{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void destroyDoor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void destroyWall() {
+		// TODO Auto-generated method stub
+		
+	}
 }

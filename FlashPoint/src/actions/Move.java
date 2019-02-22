@@ -1,5 +1,7 @@
 package actions;
 
+import java.util.ArrayList;
+
 import edge.Edge;
 import game.GameState;
 import tile.Tile;
@@ -61,7 +63,7 @@ public class Move extends Action {
         	}
         	
         	else if( fire == 2) {
-        		if(playingFirefighter.getCarrying() == false && aP > =2) {
+        		if(playingFirefighter.getCarrying() == false && aP >= 2) {
         			flag = true;
         		}
         	}
@@ -80,7 +82,7 @@ public class Move extends Action {
         		}
         		
         		else if( fire == 2) {
-        			if(playingFirefighter.getCarrying() == false && aP > =2) {
+        			if(playingFirefighter.getCarrying() == false && aP >= 2) {
         				flag = true;
         			}
         		}
@@ -105,7 +107,7 @@ public class Move extends Action {
         if(neighbour.containsPOI() == true) {
         	ArrayList<POI> Pois = neighbour.getPoiList();
         	for(POI poi:Pois) {
-        		if(poi.checkStatus() == false) {
+        		if(!poi.isVictim()) {
         			poi.reveal();
         		}
         	}

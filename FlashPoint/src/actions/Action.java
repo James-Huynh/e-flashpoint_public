@@ -18,7 +18,6 @@ import java.util.*;
 public abstract class Action {
     
     protected int APcost;
-    
     public abstract void perform(GameState gs);
     public abstract boolean validate(GameState gs);
     // public abstract boolean validate();

@@ -87,25 +87,20 @@ public class GameManager {
     		if(checkBarriers == true) {
     			targetEdge = targetTile.getEdge(direction);
     			
-    			if(targetEdge.getClass() == Door) {
+    			if(targetEdge.isDoor()) {
     				
-    				targetDoor = targetEdge.getMyDoor();
-    				targetDoor.destroyDoor();
+    				targetEdge.destroyDoor();
     				break;
     			} 
-    			else if(targetEdge.getClass() == Wall) {
-    				
-    				targetWall = targetEdge.getMyWall();
-    				
-    				targetWall.destroyWall();
+    			else if(targetEdge.isWall()) {
+    				targetEdge.destroyWall();
     				gs.updateDamageCounter();
-    				houseDamage+= 2;//do we do this to calculate the termination of game?
+    				gs.updateDamageCounter();
     				break;
     			}
-    		
+    	
     			
-    			
-    			Tile tempTile=targetTile.getadjTile(direction);//this method is missing from Tile
+    			Tile tempTile = gs.getNeighbour(tile, direction);
     			
     			
     			while(tempTile.checkBarriers(direction) == false) {
@@ -243,7 +238,7 @@ public class GameManager {
         	if(containsPOI == false) {
         		if(curFire != 0) {
         			targetTile.setFire(0);
-        			targetTile.updatePOIList(newPOI);
+        			targetTile.addPoi(newPOI);
         			
         			gs.updateNewPOI(newPOI);
         			

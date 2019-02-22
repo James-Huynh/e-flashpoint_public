@@ -1,7 +1,5 @@
 package dao;
 
-package com.way.chat.dao.impl;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,13 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.way.chat.common.bean.User;
-import com.way.chat.common.util.Constants;
-import com.way.chat.common.util.DButil;
-import com.way.chat.common.util.MyDate;
-import com.way.chat.dao.UserDao;
-
-public class UserDaoImpl implements UserDao {
+//public class UserDaoImpl implements UserDao {
 
 	/*igore this CLASS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 * (non-Javadoc)
@@ -24,7 +16,7 @@ public class UserDaoImpl implements UserDao {
 	 */
 	
 	
-	
+	/*
 	@Override
 	public void setanswer(int id,int num) {
 		Connection con = DButil.connect();
@@ -98,10 +90,14 @@ public class UserDaoImpl implements UserDao {
 		}
 		return null;
 	}
-
+	*/
+	
+	
 	/**
 	 * 閿熸枻鎷烽敓鏂ゆ嫹閿熺殕纭锋嫹
 	 */
+	
+	/*
 	public User findMe(int id) {
 		User me = new User();
 		Connection con = DButil.connect();
@@ -193,11 +189,14 @@ public class UserDaoImpl implements UserDao {
 			DButil.close(con);
 		}
 	}
+	*/
 
-	@Override
+	//@Override
 	/**
 	 * 閿熸枻鎷烽敓绔潻鎷烽敓鏂ゆ嫹鐘舵�佷负閿熸枻鎷烽敓鏂ゆ嫹
 	 */
+	
+	/*
 	public void logout(int id) {
 		Connection con = DButil.connect();
 		try {
@@ -237,6 +236,8 @@ public class UserDaoImpl implements UserDao {
 	 * 
 	 * @param id
 	 */
+	
+	/*
 	public void updateAllOn(int id) {
 		Connection con = DButil.connect();
 		try {
@@ -309,3 +310,4 @@ public class UserDaoImpl implements UserDao {
 	}
 
 }
+*/

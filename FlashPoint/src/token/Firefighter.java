@@ -36,9 +36,7 @@ abstract public class Firefighter extends Token {
 		return this.savedAP;
 	}
 	
-	public Tile getCurrentPosition() {
-		return this.tileOn;
-	}
+	
 
 	public boolean getCarrying() {
 		return this.carryingVictim;
@@ -55,10 +53,6 @@ abstract public class Firefighter extends Token {
 
 	public void setSavedAP(int AP) {
 		this.savedAP = AP;
-	}
-	
-	public void setCurrentPosition(Tile tile) {
-		this.tileOn = tile;
 	}
 	
 	public void setVictim(POI victim) {

@@ -66,4 +66,10 @@ public class Wall extends Edge{
 	public String toString() {
 		return "Wall [damage=" + damage + "]";
 	}
+
+	@Override
+	public void destroyDoor() {
+		// TODO Auto-generated method stub
+		
+	}
 }

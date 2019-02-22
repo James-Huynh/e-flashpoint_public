@@ -22,7 +22,7 @@ public class GameState implements Serializable {
     
     protected int remainingVictims; //start with 12  //10 for Family 
     protected int remainingFalseAlarms; //start with 6 //5 for Family
-    protected int wallsDamaged; //start with 24
+    protected int wallsDamaged; //start with 0 upto MAX_WALL_DMGD
     protected int lostVictims; //if 4 lost lose!
     protected int savedVictims; //if 7 rescued win!
     protected int remainingPoi; //DO WE NEED THIS? =remainingVictims+remainingFalseAlarms
@@ -259,6 +259,11 @@ public class GameState implements Serializable {
     	
     	//creating parking spots 
     }
+    
+    public void initializeFires(){
+    	
+    }
+    
     /**
      * This method initializes Edges and puts them in to adjacentEdge array of each Tile.
      */
@@ -402,6 +407,14 @@ public class GameState implements Serializable {
     		remainingVictims--;
     	}
     	return newPOI;
+    }
+    
+    public void newPOI(POI toBeAdded) {
+    	for (POI po : poiList) {
+    		if (po == null) {
+    			po = toBeAdded;
+    		}
+    	}
     }
     
     /*
