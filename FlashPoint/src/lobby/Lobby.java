@@ -20,7 +20,6 @@ public class Lobby {
     
     public void createNewGame(int numberOfPlayers) {
     	
-
 		gameInsatnce.updateGameStateFromTemplate();
 
     	

@@ -11,7 +11,7 @@ public class ParkingSpot extends Tile{
     protected Vehicle parkingType;
     
     public ParkingSpot(boolean isParkingspot, int[] coords, Vehicle vehicleType) {
-    	super(isParkingspot, coords);
+    	super(isParkingspot, false, coords);
     	this.parkingType = vehicleType;
     }
 
