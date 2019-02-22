@@ -108,10 +108,9 @@ public class GameState implements Serializable {
     public void updateGameStateFromTemplate() {
     	this.isActiveGame = true;
     	
+    	initializeTiles();
     	initializeEdges();
     	initializeFires();
-    	initializeTiles();
-    	
     }
     
     public void updateGameStateFromLobby() {
@@ -249,8 +248,11 @@ public class GameState implements Serializable {
     				matTiles[i][j] = new ParkingSpot(true, position, Vehicle.Ambulance );
     			else if((i==0 && (j==7||j==8)) || (j==0 && (i==1||i==2)) || (i==9 && (i==5||i==6)) || (j==7 && (i==1||i==2)) ) 
     				matTiles[i][j] = new ParkingSpot(true, position, Vehicle.Engine );
-    			else{ 
-    				matTiles[i][j] = new Tile(false, position);
+    			else if((j==0 && (i==0||i==1||i==2||i==3||i==4||i==5)) || (i==0 && (j==5||j==6||j==7)) || (j==7 && (i==5||i==6||i==7||i==8||i==9)) || (i==9 && (j==1||j==2)) ){
+    				matTiles[i][j] = new Tile(false, false, position); //create exterior tiles
+    			}
+    			else { 
+    				matTiles[i][j] = new Tile(false, true, position); //create interior tiles
     			}
     		}
     	}

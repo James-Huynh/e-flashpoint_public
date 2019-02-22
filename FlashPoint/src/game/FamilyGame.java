@@ -8,7 +8,7 @@ public class FamilyGame extends TemplateGame {
 	
 	public FamilyGame() {
 		
-	}
+	
 
 	
 	//21/9 10/8
@@ -39,7 +39,7 @@ public class FamilyGame extends TemplateGame {
 	//Set initially with all no edges except bottom edge
 		for (int i=0; i<=20; i++) {
 			for (int j=0; j<=8; j++) {
-			if (j=8 && ((i+1)%2 == 0) ) edgeLocations[i][j] = -1; //if side edges of bottom edge, then set unused edges -1
+			if (j==8 && ((i+1)%2 == 0) ) edgeLocations[i][j] = -1; //if side edges of bottom edge, then set unused edges -1
 				else edgeLocations[i][j] = 0;
 			}
 		}
@@ -55,7 +55,7 @@ public class FamilyGame extends TemplateGame {
 		
 		edgeLocations[7][3] = 1;
 		edgeLocations[9][3] = 1;
-		edgeLocations[11]3] = 1;
+		edgeLocations[11][3] = 1;
 		edgeLocations[13][3] = 1;
 		edgeLocations[15][3] = 1;
 	
@@ -105,6 +105,7 @@ public class FamilyGame extends TemplateGame {
 		edgeLocations[6][12] = 2;
 		edgeLocations[6][16] = 2;
 	
+	}
 	//Getters and setters
 	public int[][] getFireLocationAndPOILocations() {
         return fireLocationAndPOILocations;

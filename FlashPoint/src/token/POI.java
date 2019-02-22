@@ -35,7 +35,7 @@ public class POI {
     	revealed = true;
     }
 
-    public void checkStatus() {
+    public boolean checkStatus() {
       	return revealed;
     }
 
