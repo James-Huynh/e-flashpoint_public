@@ -97,6 +97,7 @@ public class Tile{
         listOfFirefighters.remove(target);
     }
     
+    
     public void addToFirefighterList(Firefighter target) {
     	listOfFirefighters.add(target);
     }
