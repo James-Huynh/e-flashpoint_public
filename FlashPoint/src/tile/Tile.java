@@ -22,10 +22,12 @@ public class Tile{
     protected int x;
     protected int y;
     protected ArrayList<POI> poiList;
+    protected boolean isInterior;
     
-    public Tile(boolean isParkingspot, int[] coords) {
+    public Tile(boolean isParkingspot, boolean isInterior, int[] coords) {
         this.x = coords[0];
         this.y = coords[1];
+        this.isInterior = isInterior;
     }
 
     /*

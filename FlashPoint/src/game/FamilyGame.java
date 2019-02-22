@@ -7,9 +7,6 @@ public class FamilyGame extends TemplateGame {
 	
 	
 	public FamilyGame() {
-		
-	
-
 	
 	//21/9 10/8
 	
