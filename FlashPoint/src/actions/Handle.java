@@ -7,7 +7,7 @@ import token.Firefighter;
 import token.POI;
 
 
-public class DoorAction extends Action{
+public class Handle extends Action{
 	
 	protected int direction;
     
@@ -27,7 +27,7 @@ public class DoorAction extends Action{
         		flag = true;
         	}
         }
-		
+        
 		return flag;
 	}
 	

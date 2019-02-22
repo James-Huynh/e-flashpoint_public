@@ -32,9 +32,6 @@ public class Move extends Action {
         if ( edge.isDoor() ) {
         	boolean status = edge.getStatus();
         	if(status == true) {
-//        		int fire = neighbour.getFire();
-//        		int aP = playingFirefighter.getAP();
-        		
         		if (fire < 2) {
         			if (playingFirefighter.getCarrying() == true && aP >= 2) {
         				flag = true;
@@ -97,7 +94,9 @@ public class Move extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
-        playingFirefighter.setSavedAP(aP - this.APcost);
+//        playingFirefighter.setSavedAP(aP - this.APcost);
+        playingFirefighter.setAP(aP - this.APcost);
+        
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
         playingFirefighter.setCurrentPosition(neighbour);
         currentPosition.removeFromFirefighterList(playingFirefighter);
@@ -108,12 +107,6 @@ public class Move extends Action {
         	for(POI poi:Pois) {
         		if(poi.checkStatus() == false) {
         			poi.reveal();
-        			if(poi.isVictim() == true) {
-        				//Update GameState remainingVictims
-        			}
-        			else {
-        				//Update GameState False Alarms
-        			}
         		}
         	}
         }
@@ -123,6 +116,8 @@ public class Move extends Action {
         	currentPosition.removeFromPoiList( playingFirefighter.getVictim() );
         	neighbour.addPoi( playingFirefighter.getVictim() );
         }
+        
+        //Do when move saves the victim
     }
     
     @Override

@@ -223,8 +223,17 @@ public class GameState implements Serializable {
     }
 
     //@matekrk question about efficiency, do we need this?
+    
+    // @James
+    /**
+     * This method is used only once at the start of the game for each player.
+     * @param f
+     * @param t
+     */
     public void placeFireFighter(Firefighter f, Tile t) {
-        f.setCurrentPosition(t);
+    	//listOfFireFighter.add(f);
+    	t.addToFirefighterList(f);
+    	f.setCurrentPosition(t);
     }
     
     public void initializeTiles() {
@@ -346,8 +355,13 @@ public class GameState implements Serializable {
     	
     }
 
-    public void initializeFires(TemplateGame defaultGame) {
-        /* TODO: No message view defined */
+    // @James
+    /**
+     * Tokens such as fires and POI will be initialized unto the board. Modular design
+     * @param defaultGame
+     */
+    public void initializeBasicTokens(TemplateGame defaultGame) {
+     
     }
     
     /*
