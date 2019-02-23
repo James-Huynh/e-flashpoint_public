@@ -133,14 +133,14 @@ public class GameManager {
     				break;
     			} 
     			else if(targetEdge.isWall()) {
-    				targetEdge.destroyWall();
-    				gs.updateDamageCounter();
+    				//wall is only damaged 1 for family game
+    				targetEdge.chop();
     				gs.updateDamageCounter();
     				break;
     			}
     	
     			
-    			Tile tempTile = gs.getNeighbour(tile, direction);
+    			Tile tempTile = gs.getNeighbour(targetTile, direction);
     			
     			
     			while(tempTile.checkBarriers(direction) == false) {
@@ -156,25 +156,24 @@ public class GameManager {
     				if(barCheck = true) {
     					targetEdge = tempTile.getEdge(direction);
     					
-    					if(targetEdge.getClass() == Door) {
-    						targetDoor = targetEdge.getMyDoor();
+    					if(targetEdge.isDoor()) {
     						
-    						targetDoor.destroyDoor();
+    						targetEdge.destroyDoor();
     						
+    						//may need to be a continue
     						break;
     					} 
-    					else if(targetEdge.getClass() == Wall) {
+    					else if(targetEdge.isWall()) {
     						
-    						targetWall = targetEdge.getMyWall();
-    						
-    						targetWall.destroywall();
+    						targetEdge.chop();
     						
     						gs.updateDamageCounter();
     						
+    						//may need to be a continue
     						break;
     					}
     				}
-    				tempTile=tempTile.getadjTile(direction);
+    				tempTile = gs.getNeighbour(targetTile, direction);
     			}
     		}
     	}
@@ -184,8 +183,9 @@ public class GameManager {
     public void resolveFlashOver() {
         /* TODO: No message view defined */
     	Tile targetTile = gs.returnTile(1,1);
+    	int[] tempCoords = targetTile.getCoords();
     	
-    	while(targetTile.getCoords() != {8,10}) {       // so only inner Tile count in the game right now?@Eric
+    	while(tempCoords[0] != 8 && tempCoords[1] != 10) {       // so only inner Tile count in the game right now?@Eric
     		int curFire = targetTile.getFire();
     		
     		if(curFire == 1) {
@@ -193,21 +193,27 @@ public class GameManager {
     			for(int direction=0; direction<4;direction++) {
     				
     				boolean checkBarriers = targetTile.checkBarriers(direction);
-    				Tile adjTile =  targetTile.getAdjTile(direction);
-    				int fireCheck = getFire();
-    				
-    				if(fireCheck == 2) {
-    					targetTile.setFire(2);
-    					
-    					targetTile.returnTile(0,1);
-    					
-    					
-    					break;
+    				if(checkBarriers == false) {
+    					Tile adjTile =  gs.getNeighbour(targetTile,direction);
+        				int fireCheck = adjTile.getFire();
+        				
+        				if(fireCheck == 2) {
+        					targetTile.setFire(2);
+        					
+        					targetTile = gs.returnTile(0,1);
+        					
+        					
+        					continue;
+        				}
     				}
+    				
     			
     			}
-    			
-    			targetTile = gs.nextTile(targetTile);
+    			tempCoords = targetTile.getCoords();
+        		if(tempCoords[0] == 6 && tempCoords[1] == 8) {
+        			break;
+        		}
+        		targetTile = gs.returnTile(tempCoords[0], tempCoords[1]);
     		}	
     		
     	}
@@ -226,8 +232,9 @@ public class GameManager {
     	
     	boolean containsPOI = targetTile.containsPOI();
     	//cycle through all the tile, need a better check.
-    	
-    	while(gs.nextTile(targetTile) != null){
+    	int[] coords = targetTile.getCoords();
+    	boolean check = true;
+    	while(check){
     		
     		int curFire = targetTile.getFire();
     		
@@ -248,7 +255,7 @@ public class GameManager {
     		//kill and remove all POI found on tiles with fire
     		if(containsPOI == true) {
     			if(curFire == 2) {
-    				ArrayList<POI> POIs = gs.getPOIList();
+    				ArrayList<POI> POIs = targetTile.getPoiList();
     				POI tempPOI = POIs.remove(0);
     				gs.updatePOI(tempPOI);
     			}
@@ -258,7 +265,13 @@ public class GameManager {
         	containsPOI = targetTile.containsPOI();
         	//select next tile if current tile is empty
         	if(containsFireFighter == false && containsPOI == false) {
-        		gs.nextTile();
+        		
+        		//need to add next tile code
+        		coords = targetTile.getCoords();
+        		if(coords[0] == 6 && coords[1] == 8) {
+        			break;
+        		}
+        		targetTile = gs.returnTile(coords[0], coords[1]);
         		containsFireFighter = targetTile.containsFirefighter();
             	containsPOI = targetTile.containsPOI();
         	}
@@ -279,34 +292,31 @@ public class GameManager {
         		if(curFire != 0) {
         			targetTile.setFire(0);
         			targetTile.addPoi(newPOI);
-        			
-        			gs.updateNewPOI(newPOI);
+        			gs.updatePOI(newPOI);
         			
         			if(containsFireFighter == true) {
         				newPOI.reveal();
         				if(newPOI.isVictim() == false) {
-        					
-        					gs.updateSavePOI(newPOI);
+        					//change to remove POI
         					
         					newPOI.destroy();
         				}
         			}
         		}
         		else if(curFire == 0) {
-        			targetTile.updatePOIList(POI);
-        			gs.updateNewPOI(POI);
+        			targetTile.addPoi(newPOI);
+        			gs.updatePOI(newPOI);
         			if(containsFireFighter == true) {
         				newPOI.reveal();
         				if(newPOI.isVictim() == false) {
-        					gs.updateSavedPOI(newPOI);
+        					//change to remove POI
+        					
         					newPOI.destroy();
         				}
         			}
         		}
         		currentPOI = gs.getCurrentPOI();
         	}
-        	targetTile.addPoi(newPOI);
-        		gs.updatePOI(newPOI);
         }
     }
 
@@ -339,6 +349,22 @@ public class GameManager {
     	}
     }
    
+    public int[] nextTile(int x, int y, int direction) {
+    	int[] result = new int[2];
+    	if(y==8) {
+    		if(x == 6) {
+    			result[0] = 1;
+    			result [1] = 1;
+    			return result;
+    		}
+    		result[0] = x+1;
+    		result[1] = 1;
+    		return result;
+    	}
+    	result[0] = x;
+    	result[1] = y+1;
+    	return result;
+    }
 
     /*
      * SAVING AND READING
