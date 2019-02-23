@@ -22,8 +22,9 @@ abstract public class Firefighter extends Token {
 	 * @param respawnTile The tile that the firefighter is on
 	 */
 	public void updateLocation(ParkingSpot respawnTile) {
-		this.x = respawnTile.getCoords()[0];
-		this.y = respawnTile.getCoords()[1];
+		this.x = respawnTile.getTiles()[0].getX(); // @matekrk - (imo) this algo should return the closest tile 
+													// with non-null pointer to parkingSpot
+		this.y = respawnTile.getTiles()[0].getY();
 	}
 
 

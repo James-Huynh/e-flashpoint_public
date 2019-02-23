@@ -1,6 +1,7 @@
 package tile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import edge.Edge;
 import token.Firefighter;
@@ -23,8 +24,9 @@ public class Tile{
     protected int y;
     protected ArrayList<POI> poiList;
     protected boolean isInterior;
+    protected ParkingSpot pointerParkingSpot; 
     
-    public Tile(boolean isParkingspot, boolean isInterior, int[] coords) {
+    public Tile(boolean isInterior, int[] coords) {
         this.x = coords[0];
         this.y = coords[1];
         this.isInterior = isInterior;
@@ -80,6 +82,10 @@ public class Tile{
     	return y;
     }
     
+    public ParkingSpot getParkingSpot() {
+    	return pointerParkingSpot;
+    }
+    
     /*
      * SETTERS
      */
@@ -112,6 +118,10 @@ public class Tile{
         y = coords[1];
     }
     
+    public void setParkingSpot(ParkingSpot pointerParkingSpot) {
+    	this.pointerParkingSpot = pointerParkingSpot;
+    }
+    
     /*
      * some algos/methods
      */
@@ -138,4 +148,13 @@ public class Tile{
 		
 	}
 
+	@Override
+	public String toString() {
+		return "Tile [fire=" + fire + ", coords=" + Arrays.toString(coords) + ", interior=" + interior
+				+ ", adjacentEdges=" + Arrays.toString(adjacentEdges) + ", listOfFirefighters=" + listOfFirefighters
+				+ ", x=" + x + ", y=" + y + ", poiList=" + poiList + ", isInterior=" + isInterior
+				+ ", pointerParkingSpot=" + pointerParkingSpot + "]";
+	}
+
+	
 }

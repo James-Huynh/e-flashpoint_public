@@ -43,8 +43,6 @@ public class Door extends Edge{
         isOpen = !isOpen;
     }
     
-    publiasf;
-    
     /*
      * Questions
      */
@@ -76,7 +74,6 @@ public class Door extends Edge{
 
 	@Override
 	public void destroyWall() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 }
