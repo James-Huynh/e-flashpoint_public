@@ -107,7 +107,7 @@ public class GameManager {
     }
     
     
-	//Ben and eric, skeleton code 
+	//Ben and eric, ready for testing
     public void explosion(Tile targetTile) {
         /*
          * Ben: Can u remember how we consider the tile check? From the first tile or the 0th Tile?
@@ -121,8 +121,6 @@ public class GameManager {
     		boolean checkBarriers = targetTile.checkBarriers(direction);
     		
     		Edge targetEdge;
-    		Wall targetWall;
-    		Door targetDoor;
     		
     		if(checkBarriers == true) {
     			targetEdge = targetTile.getEdge(direction);
@@ -130,20 +128,21 @@ public class GameManager {
     			if(targetEdge.isDoor()) {
     				
     				targetEdge.destroyDoor();
-    				break;
+    				//continue instead of break, to check the next direction but continue the explosion
+    				continue;
     			} 
     			else if(targetEdge.isWall()) {
     				//wall is only damaged 1 for family game
     				targetEdge.chop();
     				gs.updateDamageCounter();
-    				break;
+    				//continue instead of break, to check the next direction but continue the explosion
+    				continue;
     			}
-    	
     			
     			Tile tempTile = gs.getNeighbour(targetTile, direction);
     			
     			
-    			while(tempTile.checkBarriers(direction) == false) {
+    			while(true) {
     				if(tempTile.getFire()<2) {
     					
     					tempTile.increaseToFire();
@@ -153,14 +152,12 @@ public class GameManager {
     				
     				boolean barCheck = tempTile.checkBarriers(direction);
     				
-    				if(barCheck = true) {
+    				if(barCheck == true) {
     					targetEdge = tempTile.getEdge(direction);
     					
     					if(targetEdge.isDoor()) {
     						
     						targetEdge.destroyDoor();
-    						
-    						//may need to be a continue
     						break;
     					} 
     					else if(targetEdge.isWall()) {
@@ -179,12 +176,11 @@ public class GameManager {
     	}
     }
 
-  //Ben and eric, skeleton code 
+  //Ben and eric, ready for testing
     public void resolveFlashOver() {
         /* TODO: No message view defined */
     	Tile targetTile = gs.returnTile(1,1);
     	int[] tempCoords = targetTile.getCoords();
-    	
     	while(tempCoords[0] != 8 && tempCoords[1] != 10) {       // so only inner Tile count in the game right now?@Eric
     		int curFire = targetTile.getFire();
     		
@@ -201,13 +197,10 @@ public class GameManager {
         					targetTile.setFire(2);
         					
         					targetTile = gs.returnTile(0,1);
-        					
-        					
+        		
         					continue;
         				}
     				}
-    				
-    			
     			}
     			tempCoords = targetTile.getCoords();
         		if(tempCoords[0] == 6 && tempCoords[1] == 8) {
@@ -227,15 +220,14 @@ public class GameManager {
     	Tile targetTile = gs.returnTile(1, 1);
     	
     	//Check Tile contents
-    	
     	boolean containsFireFighter = targetTile.containsFirefighter();
-    	
     	boolean containsPOI = targetTile.containsPOI();
+    	
     	//cycle through all the tile, need a better check.
     	int[] coords = targetTile.getCoords();
     	boolean check = true;
-    	while(check){
-    		
+    
+    	while(check){	
     		int curFire = targetTile.getFire();
     		
     		//knockdown all firefighters on tiles with fire
@@ -245,9 +237,7 @@ public class GameManager {
     			if(curFire == 2) {
     				ParkingSpot respawnTile = targetTile.getNearestAmbulance();
     				
-    				ArrayList<token.Firefighter> Firefighters  = targetTile.getFirefighterList();
-    				
-    				Firefighter tempFire = Firefighters.remove(0);
+    				Firefighter tempFire = targetTile.removeFirstFireFighter();
     				
     				tempFire.updateLocation(respawnTile);
     			}
@@ -255,21 +245,24 @@ public class GameManager {
     		//kill and remove all POI found on tiles with fire
     		if(containsPOI == true) {
     			if(curFire == 2) {
-    				ArrayList<POI> POIs = targetTile.getPoiList();
-    				POI tempPOI = POIs.remove(0);
-    				gs.updatePOI(tempPOI);
+    				POI tempPOI = targetTile.removeFirstPoi();
+    				gs.removePOI(tempPOI);
+    				if(tempPOI.isVictim()) {
+    					gs.updateLostCount();
+    				}
     			}
     		}
+    		
     		//check if this tile still have POI or firefighters
     		containsFireFighter = targetTile.containsFirefighter();
         	containsPOI = targetTile.containsPOI();
+        	
         	//select next tile if current tile is empty
         	if(containsFireFighter == false && containsPOI == false) {
-        		
-        		//need to add next tile code
         		coords = targetTile.getCoords();
         		if(coords[0] == 6 && coords[1] == 8) {
-        			break;
+        			//break the loop
+        			check = false;
         		}
         		targetTile = gs.returnTile(coords[0], coords[1]);
         		containsFireFighter = targetTile.containsFirefighter();
@@ -289,6 +282,7 @@ public class GameManager {
         	boolean containsFireFighter = targetTile.containsFirefighter();
         	int curFire = targetTile.getFire();
         	if(containsPOI == false) {
+        		//could skip this if else and just set fire to 0 every time, could also write this to check tile and so on and only add the poi if the tile does not contain a firefighter or if it does and the poi is a victim.
         		if(curFire != 0) {
         			targetTile.setFire(0);
         			targetTile.addPoi(newPOI);
@@ -298,7 +292,8 @@ public class GameManager {
         				newPOI.reveal();
         				if(newPOI.isVictim() == false) {
         					//change to remove POI
-        					
+        					targetTile.removeFromPoiList(newPOI);
+        					gs.removePOI(newPOI);
         					newPOI.destroy();
         				}
         			}
@@ -310,7 +305,8 @@ public class GameManager {
         				newPOI.reveal();
         				if(newPOI.isVictim() == false) {
         					//change to remove POI
-        					
+        					targetTile.removeFromPoiList(newPOI);
+        					gs.removePOI(newPOI);
         					newPOI.destroy();
         				}
         			}

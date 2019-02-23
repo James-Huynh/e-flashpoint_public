@@ -25,6 +25,7 @@ public class Tile{
     protected ArrayList<POI> poiList;
     protected boolean isInterior;
     protected ParkingSpot pointerParkingSpot; 
+    protected ParkingSpot nearestAmbulance;
     
     public Tile(boolean isInterior, int[] coords) {
         this.x = coords[0];
@@ -103,6 +104,10 @@ public class Tile{
     public void addPoi(POI newPoi) {
         poiList.add(newPoi);
     }
+    
+    public POI removeFirstPoi() {
+    	return poiList.remove(0);
+    }
 
     public void removeFromFirefighterList(Firefighter target) {
         listOfFirefighters.remove(target);
@@ -111,6 +116,10 @@ public class Tile{
     
     public void addToFirefighterList(Firefighter target) {
     	listOfFirefighters.add(target);
+    }
+    
+    public Firefighter removeFirstFireFighter() {
+    	return listOfFirefighters.remove(0);
     }
 
     public void setCoords(int[] coords) {
@@ -133,9 +142,10 @@ public class Tile{
     }
 
     //good shit!
+    //may need to have this give two, in the chance that the player is equally in between two parking spots and should be given the choice of respawning.
     public ParkingSpot getNearestAmbulance() {
         /* TODO: No message view defined */
-        return null;
+        return this.nearestAmbulance;
     }
 
 
