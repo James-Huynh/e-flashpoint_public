@@ -12,6 +12,12 @@ import java.util.*;
 // End of user code
 
 import actions.Action;
+import actions.Chop;
+import actions.Extinguish;
+import actions.Finish;
+import actions.Handle;
+import actions.Move;
+import actions.MoveWithVictim;
 import game.GameState;
 import tile.ParkingSpot;
 import tile.Tile;
@@ -26,6 +32,7 @@ import edge.*;
 public class GameManager {
     
 	private final GameState gs = GameState.getInstance();
+	private Set<Action> possibleActions = generateAllPossibleActions();
 	
 	// MAIN
     public void runFlashpoint() {
@@ -53,17 +60,50 @@ public class GameManager {
     }
     
     public void takeATurn() {
-    	ArrayList<Action> availableActions = getAllAvailableActions();
+    	Set<Action> availableActions = getAllAvailableActions();
     	// pass to GUI
     	// GUI passes which action
     	// perform 
     	// if it was end of turn die, if not recursion (but GameState is different now!)	
     }
     
+    public Set<Action> generateAllPossibleActions(){
+    	
+    	Set<Action> allPossibleActions = new HashSet<Action>(30);
+    	
+    	//move + chop
+    	for (int dir : new int[]{0,1,2,3,} ) {
+    		allPossibleActions.add(new Move(dir));
+    		allPossibleActions.add(new MoveWithVictim(dir));
+    		allPossibleActions.add(new Chop(dir));
+    	}
+    	
+    	//extinguish
+    	for (int dir : new int[]{-1,0,1,2,3,} ) {
+    		allPossibleActions.add(new Extinguish(dir, 2));
+    		allPossibleActions.add(new Extinguish(dir, 4));
+    	}
+ 
+    	
+    	//handle
+    	allPossibleActions.add(new Handle());
+    	
+    	//finish
+    	allPossibleActions.add(new Finish());
+    	
+    	//
+    	return allPossibleActions;
+    }
+    
     //TODO: Zaid + Mat based on validations
-    public ArrayList<Action> getAllAvailableActions() {
-        /* TODO: No message view defined */
-        return null;
+    public Set<Action> getAllAvailableActions() {
+    	Set<Action> allValidActions = new HashSet<Action>(30);
+        for (Action a : possibleActions) {
+        	if (a.validate(gs)) {
+        		allValidActions.add(a);
+        	}
+        }
+        return allValidActions;
     }
     
     

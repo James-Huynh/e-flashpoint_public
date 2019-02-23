@@ -9,7 +9,7 @@ import token.POI;
 
 
 public class Handle extends Action{
-	
+
 	protected int direction;
     
     public int getDirection() {
@@ -38,5 +38,10 @@ public class Handle extends Action{
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Edge door = currentPosition.getEdge(direction);
         door.change();
+	}
+    
+    @Override
+	public String toString() {
+		return "Handle [direction=" + direction + ", APcost=" + APcost + "]";
 	}
 }

@@ -144,7 +144,7 @@ public class FlashPoint {
             public void mouseReleased(MouseEvent e) {
                 // 鼠标释放
 
-                // 如果是鼠标�?�键，则显示弹出�?��?�
+                // 如果是鼠标�?�键，则显示弹出�?��?�
                 
             }
             @Override
@@ -367,7 +367,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			                if (e.isMetaDown()) {
 			                    showPopupMenu(e.getComponent(), e.getX(), e.getY());
 			                
@@ -395,7 +395,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			                if (e.isMetaDown()) {
 			                    showPopupMenu(e.getComponent(), e.getX(), e.getY());
 			                }
@@ -423,7 +423,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			                if (e.isMetaDown()) {
 			                    showPopupMenu(e.getComponent(), e.getX(), e.getY());
 			                }
@@ -450,7 +450,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			            
 			            }
 			            @Override
@@ -475,7 +475,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			                if (e.isMetaDown()) {
 			                    showPopupMenuB(e.getComponent(), e.getX(), e.getY());
 			                }
@@ -502,7 +502,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			                if (e.isMetaDown()) {
 			                    showPopupMenuB(e.getComponent(), e.getX(), e.getY());
 			                }
@@ -529,7 +529,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			                if (e.isMetaDown()) {
 			                    showPopupMenuB(e.getComponent(), e.getX(), e.getY());
 			                }
@@ -557,7 +557,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			                if (e.isMetaDown()) {
 			                    showPopupMenuB(e.getComponent(), e.getX(), e.getY());
 			                }
@@ -584,7 +584,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			                if (e.isMetaDown()) {
 			                    showPopupMenuB(e.getComponent(), e.getX(), e.getY());
 			                }
@@ -611,7 +611,7 @@ public class FlashPoint {
 			            public void mouseReleased(MouseEvent e) {
 			                // 鼠标释放
 
-			                // 如果是鼠标�?�键，则显示弹出�?��?�
+			                // 如果是鼠标�?�键，则显示弹出�?��?�
 			                if (e.isMetaDown()) {
 			                    showPopupMenuB(e.getComponent(), e.getX(), e.getY());
 			                }
@@ -825,31 +825,31 @@ public class FlashPoint {
 	}
 	
 	public static void showPopupMenu(Component invoker, int x, int y) {
-        // 创建 弹出�?��?� 对象
+        // 创建 弹出�?��?� 对象
         JPopupMenu popupMenu = new JPopupMenu();
 
-        // 创建 一级�?��?�
+        // 创建 一级�?��?�
         JMenuItem movedown = new JMenuItem("move down");
         JMenuItem pasteMenuItem = new JMenuItem("chop walls");
         JMenuItem moveright = new JMenuItem("move right");
         JMenuItem moveleft= new JMenuItem("move left");
         JMenuItem fileMenu = new JMenuItem("exit");
 
-        // 创建 二级�?��?�
+        // 创建 二级�?��?�
        
-        // 添加 二级�?��?� 到 "编辑"一级�?��?�
+        // 添加 二级�?��?� 到 "编辑"一级�?��?�
      
 
-        // 添加 一级�?��?� 到 弹出�?��?�
+        // 添加 一级�?��?� 到 弹出�?��?�
         popupMenu.add(movedown);
         popupMenu.add(pasteMenuItem);
         popupMenu.add(moveright);
         popupMenu.add(moveleft);
-        popupMenu.addSeparator();       // 添加一�?�分隔符
+        popupMenu.addSeparator();       // 添加一�?�分隔符
       
         popupMenu.add(fileMenu);
 
-        // 添加�?��?�项的点击监�?�器
+        // 添加�?��?�项的点击监�?�器
         movedown.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -863,7 +863,7 @@ public class FlashPoint {
         
         // ......
 
-        // 在指定�?置显示弹出�?��?�
+        // 在指定�?置显示弹出�?��?�
         popupMenu.show(invoker, x, y);
     }
     public static void showPopupMenuB (Component invoker, int x, int y ) {

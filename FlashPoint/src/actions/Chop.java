@@ -43,12 +43,19 @@ public class Chop extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
-        Edge edge = currPosition.getEdge(this.direction); //type Wall wall? 
+        Edge edge = currPosition.getEdge(this.direction);
         
-        edge.chop();
-//        playingFirefighter.setSavedAP(aP - this.APcost);
+        if (this.APcost == 2) {
+        	edge.chop();
+        	gs.updateDamageCounter();
+        }
+        else { // == 4
+        	edge.destroyDoor();
+        	gs.updateDamageCounter();
+        	gs.updateDamageCounter();
+        }
+        
         playingFirefighter.setAP(aP - this.APcost);
-        gs.updateDamageCounter();
     }
 
     @Override
@@ -68,6 +75,11 @@ public class Chop extends Action {
                         flag = true;
                     }
                 }
+                if (APcost == 4 && damage == 2 && aP >= 4) {
+                	if (dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+                        flag = true;
+                    }
+                }
             }
         }
         return flag;
@@ -75,7 +87,7 @@ public class Chop extends Action {
 
 	@Override
 	public String toString() {
-		return "Chop [direction=" + direction + "]";
+		return "Chop [direction=" + direction + ", APcost=" + APcost + "]";
 	}
     
     

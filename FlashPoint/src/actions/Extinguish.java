@@ -23,7 +23,8 @@ public class Extinguish extends Action {
     	this.APcost = 1;
     }
     
-    public Extinguish(int cost) {
+    public Extinguish(int direction, int cost) {
+    	this.direction = direction;
     	this.APcost = cost;
     }
     
@@ -89,11 +90,11 @@ public class Extinguish extends Action {
     public void perform(GameState gs) {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
-//        playingFirefighter.setSavedAP(aP-this.APcost);
         playingFirefighter.setSavedAP(aP - this.APcost);
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
-        neighbour.setFire(this.APcost);
+        int prevFire = neighbour.getFire();
+        neighbour.setFire(prevFire - this.APcost/2);
     }
 
 	@Override

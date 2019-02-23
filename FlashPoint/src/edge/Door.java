@@ -34,6 +34,7 @@ public class Door extends Edge{
      * SETTERS
      */
     
+    
     public void destroyDoor() {
         destroyed = true;
     }
@@ -41,6 +42,8 @@ public class Door extends Edge{
     public void change() {
         isOpen = !isOpen;
     }
+    
+    publiasf;
     
     /*
      * Questions

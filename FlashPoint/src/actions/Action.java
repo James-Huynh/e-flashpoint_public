@@ -30,7 +30,7 @@ public abstract class Action {
     public int getCost() {
         return APcost;
     }
-
+    
     /*
      * INTERACTION WITH GAMESTATE
      */

@@ -16,6 +16,11 @@ import token.POI;
 public class Move extends Action {
 
 	protected int direction;
+	
+	public Move(int direction) {
+		this.direction = direction;
+		this.APcost = 1;
+	}
     
     public int getDirection() {
         return direction;
@@ -35,58 +40,41 @@ public class Move extends Action {
         	boolean status = edge.getStatus();
         	if(status == true) {
         		if (fire < 2) {
-        			if (playingFirefighter.getCarrying() == true && aP >= 2) {
+        			if( aP >= 1) {
         				flag = true;
-        			}
-        			else if( aP >= 1) {
-        				flag = true; //Not carrying, but can still move
         			}
         		}
         		
-        	   else if (fire == 2) {
-        		   if(playingFirefighter.getCarrying() == false && aP >=2) {
-        			   flag = true;
-        		   }
+        	   else if (fire == 2 && aP >= 2) {
+        		   flag = true;
+        		   this.APcost = 2;
         	   }
         		
         	}
         }
         
         else if( edge.isBlank() ) {
-        	if( fire < 2) {
-        		if(playingFirefighter.getCarrying() == true && aP >= 2) {
-        			flag = true;
-        		}
-        		else if(aP >= 1) {
-        			flag = true;
-        		}
+        	if( fire < 2 && aP >= 1) {
+        		flag = true;
         	}
         	
-        	else if( fire == 2) {
-        		if(playingFirefighter.getCarrying() == false && aP >= 2) {
-        			flag = true;
-        		}
+        	else if( fire == 2 && aP >= 2) {
+        		flag = true;
+        		this.APcost = 2;
         	}
         }
         
         else if( edge.isWall() ) {
         	int damage = edge.getDamage();
         	if(damage == 0) {
-        		if( fire < 2) {
-        			if(playingFirefighter.getCarrying() == true && aP >= 2) {
-        				flag = true;
-        			}
-        			else if(aP >= 1) {
-        				flag = true;
-        			}
+        		if( fire < 2 && aP >= 1) {
+        			flag = true;
         		}
         		
-        		else if( fire == 2) {
-        			if(playingFirefighter.getCarrying() == false && aP >= 2) {
+        		else if( fire == 2 && aP >= 2) {
         				flag = true;
         			}
         		}
-        	}
         }
         return flag;
     }
@@ -96,7 +84,6 @@ public class Move extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
-//        playingFirefighter.setSavedAP(aP - this.APcost);
         playingFirefighter.setAP(aP - this.APcost);
         
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
@@ -113,17 +100,11 @@ public class Move extends Action {
         	}
         }
         
-        boolean carrying = playingFirefighter.getCarrying();
-        if (carrying == true) {
-        	currentPosition.removeFromPoiList( playingFirefighter.getVictim() );
-        	neighbour.addPoi( playingFirefighter.getVictim() );
-        }
-        
         //Do when move saves the victim
     }
     
     @Override
 	public String toString() {
-		return "Move [direction=" + direction + "]";
+		return "Move [direction=" + direction + ", APcost=" + APcost + "]";
 	}
 }
