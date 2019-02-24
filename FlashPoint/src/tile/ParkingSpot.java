@@ -13,12 +13,12 @@ public class ParkingSpot{
     
     protected Vehicle parkingType;
     protected Tile[] tiles;
-    boolean car;
+    boolean isCar;
     
-    public ParkingSpot(boolean b, int[] position, Vehicle ambulance) {
+    public ParkingSpot(boolean b, int[] position, Vehicle type) {
     	this.tiles = position;
-    	this.parkingType  = b;
-    	this.car = ambulance;
+    	this.parkingType  = type;
+    	this.isCar = false;
     }
     
     /*
@@ -38,7 +38,7 @@ public class ParkingSpot{
     	return tiles;
     }
     public boolean getCar() {
-    	return car;
+    	return isCar;
     }
     
     /*
@@ -51,12 +51,12 @@ public class ParkingSpot{
     	this.tiles = tiles;
     }
     public void setCar(boolean car) {
-    	this.car = car;
+    	this.isCar = car;
     }
 
 	@Override
 	public String toString() {
-		return "ParkingSpot [parkingType=" + parkingType + ", tiles=" + Arrays.toString(tiles) + ", car=" + car + "]";
+		return "ParkingSpot [parkingType=" + parkingType + ", tiles=" + Arrays.toString(tiles) + ", car=" + isCar + "]";
 	}
     
     

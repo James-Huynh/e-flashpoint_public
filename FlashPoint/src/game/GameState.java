@@ -68,7 +68,7 @@ public class GameState implements Serializable {
 		/*
 		 * I wonder what arguments passed - question probably to init team
 		 */
-
+		matTiles = new Tile[10][8];
 	}
 
 	//preventing from creating other instances
@@ -240,7 +240,7 @@ public class GameState implements Serializable {
 	 * This method initializes 2D array of tiles and place ambulance/engine spot in the right place. 
 	 */
 	public void initializeTiles() {
-
+		
 		//creating 10 x 8 tiles
 
 		for (int i=0; i<=9; i++) {
@@ -476,7 +476,7 @@ public class GameState implements Serializable {
 	// @James
 	/**
 	 * 
-	 * @param familyTemplate
+	 * @param template
 	 */
 	public void loadTemplate(TemplateGame template) {
 		//this.matEdges = familyTemplate.getEdgeLocations();
@@ -485,7 +485,7 @@ public class GameState implements Serializable {
 
 		initializeTiles();
 		initializeEdges(template);
-		initializeTokens(template);
+		initializeBasicTokens(template);
 
 
 	}

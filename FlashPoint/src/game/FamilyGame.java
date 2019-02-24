@@ -2,8 +2,8 @@ package game;
 
 public class FamilyGame extends TemplateGame {
 	
-	protected int[][] tokenLocations;
-	protected int[][] edgeLocations;
+	protected int[][] tokenLocations = new int[10][8];
+	protected int[][] edgeLocations = new int[30][30]; 	// subject to change
 	
 	
 	public FamilyGame() {
