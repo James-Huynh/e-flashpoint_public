@@ -13,7 +13,7 @@ abstract public class TemplateGame {
 	protected int[][] fireLocationAndPOILocations;
     protected int[][] edgeLocations;
     
-    public abstract int[][] getFireLocationAndPOILocations();
+    public abstract int[][] getTokenLocations();
 
     public abstract int[][] getEdgeLocations();
 }

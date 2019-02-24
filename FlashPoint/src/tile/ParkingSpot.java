@@ -15,10 +15,10 @@ public class ParkingSpot{
     protected Tile[] tiles;
     boolean car;
     
-    public ParkingSpot(Vehicle vehicleType, Tile[] tiles, boolean car) {
-    	this.tiles = tiles;
-    	this.parkingType  = vehicleType;
-    	this.car = car;
+    public ParkingSpot(boolean b, int[] position, Vehicle ambulance) {
+    	this.tiles = position;
+    	this.parkingType  = b;
+    	this.car = ambulance;
     }
     
     /*

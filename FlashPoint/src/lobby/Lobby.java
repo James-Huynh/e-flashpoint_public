@@ -3,6 +3,7 @@ package lobby;
 // Start of user code for imports
 import java.util.*;
 
+import game.FamilyGame;
 import game.GameState;
 // End of user code
 
@@ -16,14 +17,13 @@ import game.GameState;
 public class Lobby {
     
     protected boolean isClickable;
-    protected GameState gameInsatnce = new GameState();
+    protected GameState gameInstance = new GameState();
     
     public void createNewGame(int numberOfPlayers) {
+    	FamilyGame familyTemplate = new FamilyGame();
     	
-		gameInsatnce.updateGameStateFromTemplate();
+    	gameInstance.loadTemplate(familyTemplate);
+		//gameInstance.updateGameStateFromTemplate();
 
-    	
-    	
-    	
     }
 }
