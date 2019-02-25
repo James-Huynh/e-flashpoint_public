@@ -38,6 +38,17 @@ public class Drive extends Action {
         //Tile destination = Vehicle.getTile().getOtherParkingSpots()[direction];
         //vehicle.setTile(destination);
         
+        /* Ride */
+        //ParkingSpots[] others = Vehicle.getTile().getOtherParkingSpots;
+        if(vehicle == Vehicle.Engine) {
+        	//for(ParkingSpot in others){
+       			//for(tile in ParkingSpot.getTiles()) {
+        			//if(tile.containsFirefighter) {
+        				//Prompt Firefighter if he wants to travel also
+        			//}
+        		//} 		
+        }
+        
         if(vehicle == Vehicle.Engine || moveWith == true) {
         	//playingFirefighter.setCurrPos(destination);
         }

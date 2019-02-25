@@ -57,13 +57,13 @@ public class FireGun extends Action {
 		//Here I can set up quadrantIndices -> setIndices(currentPosition.getCoords());
 		//Then I can use this array below, in rollDice and in perform
 		
-//		if(currentPosition.ParkingSpot == Vehicle.Engine) {
-//			Check associated quadrant based on FF location - if FF present, can't fire **Math required**
-//			int aP = playingFirefighter.getAP();
-//			if(aP >= 4) {
-//				flag = true;
-//			}
-//		}
+		/*if(currentPosition.ParkingSpot == Vehicle.Engine) {
+			Check associated quadrant based on FF location - if FF present, can't fire **Math required**
+			int aP = playingFirefighter.getAP();
+			if(aP >= 4) {
+				flag = true;
+			}
+		}*/
 		
 		return flag;
 	}
