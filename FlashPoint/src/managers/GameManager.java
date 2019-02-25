@@ -129,7 +129,10 @@ public class GameManager {
     				
     				targetEdge.destroyDoor();
     				//continue instead of break, to check the next direction but continue the explosion
-    				continue;
+    				if(!targetEdge.getStatus()) {
+						//may need to be a continue
+							continue;
+						}
     			} 
     			else if(targetEdge.isWall()) {
     				//wall is only damaged 1 for family game
@@ -166,8 +169,10 @@ public class GameManager {
     						
     						gs.updateDamageCounter();
     						
+    						if(!targetEdge.getStatus()) {
     						//may need to be a continue
-    						break;
+    							break;
+    						}
     					}
     				}
     				tempTile = gs.getNeighbour(targetTile, direction);
