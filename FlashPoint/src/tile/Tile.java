@@ -138,6 +138,11 @@ public class Tile{
 
     public boolean checkBarriers(int direction) {
         /* TODO: No message view defined */
+    	if(this.getEdge(direction).isDoor()) {
+    		return true;
+    	}else if(this.getEdge(direction).isWall()) {
+    		return true;
+    	}
         return false;
     }
 
