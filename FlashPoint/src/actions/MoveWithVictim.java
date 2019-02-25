@@ -31,13 +31,14 @@ public class MoveWithVictim extends Move{
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
-		boolean carrying = playingFirefighter.getCarrying();
+		boolean carrying = playingFirefighter.getCarrying(); //Is this check necessary? The action is Move w Victim - Z
 		Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
 		
         if (carrying == true) {
         	currentPosition.removeFromPoiList( playingFirefighter.getVictim() );
         	neighbour.addPoi( playingFirefighter.getVictim() );
         }
+        
 	}
 
 	@Override

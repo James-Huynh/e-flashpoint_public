@@ -80,8 +80,8 @@ public class GameManager {
     	
     	//extinguish
     	for (int dir : new int[]{-1,0,1,2,3,} ) {
-    		allPossibleActions.add(new Extinguish(dir, 2));
-    		allPossibleActions.add(new Extinguish(dir, 4));
+    		allPossibleActions.add(new Extinguish(dir, 2)); 
+    		allPossibleActions.add(new Extinguish(dir, 4)); //4? Shouldn't it be 1 or 2, smoke or fire? - Z
     	}
  
     	

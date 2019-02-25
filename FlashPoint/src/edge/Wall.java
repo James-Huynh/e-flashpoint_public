@@ -78,4 +78,8 @@ public class Wall extends Edge{
 		// TODO Auto-generated method stub
 		
 	}
+	
+   public boolean isDestroyed() {
+        return false;
+    }
 }

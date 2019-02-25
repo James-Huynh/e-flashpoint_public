@@ -62,4 +62,8 @@ public class Blank extends Edge{
 		// TODO Auto-generated method stub
 		
 	}
+	
+   public boolean isDestroyed() {
+        return false;
+    }
 }
