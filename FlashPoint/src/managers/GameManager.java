@@ -72,7 +72,7 @@ public class GameManager {
     	Set<Action> allPossibleActions = new HashSet<Action>(30);
     	
     	//move + chop
-    	for (int dir : new int[]{0,1,2,3,} ) {
+    	for (int dir : new int[]{0,1,2,3} ) {
     		allPossibleActions.add(new Move(dir));
     		allPossibleActions.add(new MoveWithVictim(dir));
     		allPossibleActions.add(new Chop(dir));
@@ -80,11 +80,10 @@ public class GameManager {
     	
     	//extinguish
     	for (int dir : new int[]{-1,0,1,2,3,} ) {
-    		allPossibleActions.add(new Extinguish(dir, 2)); 
-    		allPossibleActions.add(new Extinguish(dir, 4)); //4? Shouldn't it be 1 or 2, smoke or fire? - Z
+    		allPossibleActions.add(new Extinguish(dir, 1)); 
+    		allPossibleActions.add(new Extinguish(dir, 2));
     	}
  
-    	
     	//handle
     	allPossibleActions.add(new Handle());
     	

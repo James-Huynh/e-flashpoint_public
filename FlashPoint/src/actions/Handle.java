@@ -12,6 +12,10 @@ public class Handle extends Action{
 
 	protected int direction;
     
+	public Handle() {
+		this.APcost = 1;
+	}
+	
     public int getDirection() {
         return direction;
     }
