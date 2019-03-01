@@ -109,19 +109,7 @@ public class RunFlashPoint {
 	private void login() {
 		loginSuperPanel = new JPanel();
 		frame.getContentPane().add(loginSuperPanel, BorderLayout.CENTER);
-		loginSuperPanel.setLayout(null);	
-		
-		JPanel headingPanel = new JPanel();
-		headingPanel.setBounds(369, 197, 552, 213);
-		loginSuperPanel.add(headingPanel);
-		headingPanel.setLayout(null);
-
-		JLabel gameLabel = new JLabel("FLASHPOINT");
-		gameLabel.setBounds(6, 6, 540, 201);
-		headingPanel.add(gameLabel);
-		gameLabel.setForeground(new Color(255, 0, 0));
-		gameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		gameLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 99));
+		loginSuperPanel.setLayout(null);
 
 		JPanel loginPanel = new JPanel();
 		loginPanel.setBounds(487, 414, 354, 206);
@@ -172,9 +160,16 @@ public class RunFlashPoint {
 		tglBtn.setBounds(111, 112, 117, 29);
 		loginPanel.add(tglBtn);
 		
+				JLabel gameLabel = new JLabel("FLASHPOINT");
+				gameLabel.setBounds(218, 207, 937, 197);
+				loginSuperPanel.add(gameLabel);
+				gameLabel.setForeground(new Color(255, 0, 0));
+				gameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				gameLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 99));
+		
 	}
 
-	//Sets up start menu and all related panel/headers/labels/buttons
+
 	private void startMenu() {
 		startMenuSuperPanel = new JPanel();
 		frame.getContentPane().add(startMenuSuperPanel, BorderLayout.CENTER);
@@ -213,6 +208,7 @@ public class RunFlashPoint {
 		rulesBtn.setBounds(67, 206, 423, 49);
 		menuPanel.add(rulesBtn);
 		rulesBtn.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
+		rulesBtn.setEnabled(false);
 
 		JPanel headingPanel = new JPanel();
 		headingPanel.setBounds(46, 36, 417, 69);
@@ -227,7 +223,7 @@ public class RunFlashPoint {
 		gameLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 58));
 	}
 
-	//Sets up create lobby page and all related panel/headers/labels/buttons
+	
 	private void createLobby() {
 		createLobbySuperPanel = new JPanel();
 		frame.getContentPane().add(createLobbySuperPanel, BorderLayout.CENTER);
@@ -370,6 +366,7 @@ public class RunFlashPoint {
 		backBtn.setBounds(432, 623, 140, 54);
 		createLobbySuperPanel.add(backBtn);
 	}
+
 	
 	private void findLobby() {
 		findLobbySuperPanel = new JPanel();

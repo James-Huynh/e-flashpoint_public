@@ -18,7 +18,7 @@ import java.util.*;
 public class Table {
 
 		private final JFrame gameFrame;
-		private final int NUM_TILES = 80;
+		private final int NUM_TILES = 80;		// 8 x 10 (rows x columns)
 		private final BoardPanel boardPanel;
 		private final RightPanel rightPanel;
 		private final LeftPanel leftPanel;
@@ -442,7 +442,7 @@ public class Table {
 	        popupMenu.addSeparator();
 	        popupMenu.add(fileMenu);
 	        
-	        popupMenu.show(component, x, y);;
+	        popupMenu.show(component, x, y);		// very important
 		}
 		
 }
