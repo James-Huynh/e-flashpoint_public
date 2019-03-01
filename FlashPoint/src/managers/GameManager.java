@@ -19,6 +19,9 @@ import actions.Handle;
 import actions.Move;
 import actions.MoveWithVictim;
 import game.GameState;
+import gui.RunFlashPoint;
+import lobby.Lobby;
+import server.Player;
 import tile.ParkingSpot;
 import tile.Tile;
 import token.*;
@@ -36,7 +39,9 @@ public class GameManager {
 	
 	// MAIN
     public void runFlashpoint() {
-    	gs.updateGameStateFromLobby();
+    	// list of Players from lobby - somehow getLobby from Server-Client connection
+    	Lobby lobby = new Lobby(); //dumb lobby for now
+    	gs.updateGameStateFromLobby(lobby);
     	setup();
     	doTurns();
     }
@@ -50,6 +55,8 @@ public class GameManager {
     }
 	
     public void doTurns() {
+    	return;
+    	/*
     	while(!gs.isGameTerminated()) {
     		gs.getPlayingFirefighter().setAP( Math.min(8, gs.getPlayingFirefighter().getAP() + 4) );
     		takeATurn();
@@ -57,6 +64,7 @@ public class GameManager {
     		gs.setActiveFireFighterIndex( (gs.getActiveFireFighterIndex() + 1)%(gs.getFireFighterList().size()) );
     	}
     	System.out.println(gs.isGameWon());
+    	*/
     }
     
     public void takeATurn() {
@@ -421,6 +429,13 @@ public class GameManager {
     //any volunteers? I guess we can do that when GUI is done
     public void setOptions() {
         /* TODO: No message view defined */
+    }
+    
+    public static void main(String[] args) {
+    	GameManager gm = new GameManager();
+    	gm.runFlashpoint();
+    	gm.gs.toString();
+    	
     }
  
 }

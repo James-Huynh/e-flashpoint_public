@@ -15,18 +15,16 @@ public class ParkingSpot{
     protected Tile[] tiles;
     boolean isCar;
     
-    public ParkingSpot(boolean b, int[] position, Vehicle type) {
-    	this.tiles = position;
+    public ParkingSpot(Vehicle type, boolean b) {
     	this.parkingType  = type;
-    	this.isCar = false;
+    	this.isCar = b;
     }
     
-    /*
-    public ParkingSpot(boolean isParkingspot, int[] coords, Vehicle vehicleType) {
-    	super(isParkingspot, false, coords);
-    	this.parkingType = vehicleType;
+    public ParkingSpot(Tile[] position, Vehicle type, boolean b) {
+    	this.tiles = position;
+    	this.parkingType  = type;
+    	this.isCar = b;
     }
-    */
 
     /*
      * Getters
@@ -34,9 +32,11 @@ public class ParkingSpot{
     public Vehicle getParkingType() {
         return parkingType;
     }
+    
     public Tile[] getTiles() {
     	return tiles;
     }
+    
     public boolean getCar() {
     	return isCar;
     }
@@ -47,9 +47,20 @@ public class ParkingSpot{
     public void setParkingType(Vehicle parkingType) {
     	this.parkingType = parkingType;
     }
+    
     public void setTiles(Tile[] tiles) {
     	this.tiles = tiles;
     }
+    
+    public void setTile(Tile tile) {
+    	if (tiles[0] == null) {
+    		tiles[0] = tile;
+    	}
+    	else {
+    		tiles[1] = tile;
+    	}
+    }
+    
     public void setCar(boolean car) {
     	this.isCar = car;
     }

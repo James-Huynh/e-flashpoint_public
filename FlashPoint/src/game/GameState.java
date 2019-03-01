@@ -14,6 +14,8 @@ import token.Firefighter;
 import token.POI;
 import token.Vehicle;
 import game.FamilyGame;
+import lobby.Lobby;
+import server.Player;
 import edge.Door;
 import edge.Wall;
 import edge.Blank;
@@ -32,9 +34,13 @@ public class GameState implements Serializable {
 	protected boolean isActiveGame;
 	protected Edge[][] matEdges;
 	protected Tile[][] matTiles;
+	protected ParkingSpot[] engines;
+	protected ParkingSpot[] ambulances;
 
 	protected int currentTile; // ??
 	protected ArrayList<Action> availableActions;
+	
+
 	protected ArrayList<Firefighter> listOfFireFighter;
 	public int MAX_WALL_DMGD;
 	protected POI[] poiList; //@matekrk: this is important (fixed array) it is on purpose. 
@@ -62,13 +68,8 @@ public class GameState implements Serializable {
 	/*
 	 * SINGLETON
 	 */
-
-	//@matekrk - private is key word here
-	public GameState() {
-		/*
-		 * I wonder what arguments passed - question probably to init team
-		 */
-		matTiles = new Tile[10][8];
+	private GameState() {
+		
 	}
 
 	//preventing from creating other instances
@@ -115,8 +116,14 @@ public class GameState implements Serializable {
     }
 	 */
 
-	public void updateGameStateFromLobby() {
-
+	//ASSUME FOR DEMO THAT LOBBY GIVES ME ALWAYS FAMILY SETTINGS AND I HAVE LIST OF USERS
+	public void updateGameStateFromLobby(Lobby lobby) {
+		initializeTiles();
+		createAmbulances();
+		createEnginge();
+		setClosest();
+		initializeEdges(lobby.getTemplate());
+		initializeBasicTokens(lobby.getTemplate());
 	}
 
 	/*
@@ -137,6 +144,14 @@ public class GameState implements Serializable {
 			return gameWon;
 		}
 		else return false;
+	}
+	
+	public ParkingSpot[] getAmbulances() {
+		return ambulances;
+	}
+	
+	public ParkingSpot[] getEngines() {
+		return engines;
 	}
 
 	//QUESTION
@@ -222,6 +237,14 @@ public class GameState implements Serializable {
 	public void setIsActiveGame(boolean isActiveGame) {
 		this.isActiveGame = isActiveGame;
 	}
+	
+	public void setEngines(ParkingSpot[] engines) {
+		this.engines = engines;
+	}
+
+	public void setAmbulances(ParkingSpot[] ambulances) {
+		this.ambulances = ambulances;
+	}
 
 	//@matekrk question about efficiency, do we need this?
 
@@ -236,8 +259,28 @@ public class GameState implements Serializable {
 		t.addToFirefighterList(f);
 		f.setCurrentPosition(t);
 	}
+	
+	// @matekrk + Zaid
+	/**
+	 * 
+	 */
+	public void createAmbulances() {
+		this.ambulances = new ParkingSpot[4];
+		for (ParkingSpot forAmbulance : ambulances) {
+			forAmbulance = new ParkingSpot(Vehicle.Ambulance, false);
+		}
+	}
+	
+	public void createEnginge() {
+		this.engines = new ParkingSpot[4];
+		for (ParkingSpot forEngine : engines) {
+			forEngine = new ParkingSpot(Vehicle.Engine, false);
+		}
+	}
+	
 	/**
 	 * This method initializes 2D array of tiles and place ambulance/engine spot in the right place. 
+	 * It should be more general! Based on some template!!
 	 */
 	public void initializeTiles() {
 		
@@ -245,23 +288,87 @@ public class GameState implements Serializable {
 
 		for (int i=0; i<=9; i++) {
 			for (int j=0; j<=7; j++) {
-				int[] position = {i,j};
-				if((i==0 && (j==5||j==6))||(j==0 && (i==3||i==5)) || (i==9 && (j==3||j==4)) || (j==7 && (i==3||i==4)) )
-					matTiles[i][j].setParkingSpot(new ParkingSpot(true, position, Vehicle.Ambulance ));
-				else if((i==0 && (j==7||j==8)) || (j==0 && (i==1||i==2)) || (i==9 && (i==5||i==6)) || (j==7 && (i==1||i==2)) ) 
-					matTiles[i][j].setParkingSpot(new ParkingSpot(true, position, Vehicle.Engine ));
-				else if((j==0 && (i==0||i==1||i==2||i==3||i==4||i==5)) || (i==0 && (j==5||j==6||j==7)) || (j==7 && (i==5||i==6||i==7||i==8||i==9)) || (i==9 && (j==1||j==2)) ) {
-					matTiles[i][j] = new Tile(false, position); //create exterior tiles
+			
+				///// AMBULANCES
+				
+				if (i==0 && (j==5 || j==6)) {
+					matTiles[i][j] = new Tile(false, new int[] {i,j});
+					matTiles[i][j].setParkingSpot(ambulances[0]);
+					ambulances[0].setTile(matTiles[i][j]);
+				}
+				
+				else if ((i==3 || i==5) && j==0) {
+					matTiles[i][j] = new Tile(false, new int[] {i,j});
+					matTiles[i][j].setParkingSpot(ambulances[3]);
+					ambulances[0].setTile(matTiles[i][j]);
+				}
+				
+				else if (i==9 && (j==3 || j==4)) {
+					matTiles[i][j] = new Tile(false, new int[] {i,j});
+					matTiles[i][j].setParkingSpot(ambulances[1]);
+					ambulances[0].setTile(matTiles[i][j]);
+				}
+				
+				else if ((i==3 || i==4) && j==7) {
+					matTiles[i][j] = new Tile(false, new int[] {i,j});
+					matTiles[i][j].setParkingSpot(ambulances[2]);
+					ambulances[0].setTile(matTiles[i][j]);
+				}
+				
+				///////// ENGINES
+				
+				else if (i==0 && (j==7 || j==8)) {
+					matTiles[i][j] = new Tile(false, new int[] {i,j});
+					matTiles[i][j].setParkingSpot(engines[0]);
+					engines[0].setTile(matTiles[i][j]);
+				}
+				
+				else if ((i==1 || i==2) && j==0) {
+					matTiles[i][j] = new Tile(false, new int[] {i,j});
+					matTiles[i][j].setParkingSpot(engines[3]);
+					engines[0].setTile(matTiles[i][j]);
+				}
+				
+				else if (i==9 && (j==5 || j==6)) {
+					matTiles[i][j] = new Tile(false, new int[] {i,j});
+					matTiles[i][j].setParkingSpot(engines[1]);
+					engines[0].setTile(matTiles[i][j]);
+				}
+				
+				else if ((i==1 || i==2) && j==7) {
+					matTiles[i][j] = new Tile(false, new int[] {i,j});
+					matTiles[i][j].setParkingSpot(engines[2]);
+					engines[0].setTile(matTiles[i][j]);
+				}
+				
+				else if (i==0 || i==9 || j==0 || j==7) {
+					matTiles[i][j] = new Tile(false, new int[] {i,j}); //create exterior tiles
 				}
 				else { 
-					matTiles[i][j] = new Tile(true, position); //create interior tiles
+					matTiles[i][j] = new Tile(true, new int[] {i,j}); //create interior tiles
 				}
 			}
 		}
 
-		//
-
-		//creating parking spots 
+	}
+	
+	/*
+	 * This method indicates the closest ambulances and set its value
+	 * complexity big O (n^5)
+	 */
+	public void setClosest() {
+		for (int i=0; i<=matEdges.length; i++) {
+			for (int j=0; j<=matEdges[0].length; j++) {
+				int minDistance = (int)Double.POSITIVE_INFINITY;
+				for (ParkingSpot a : ambulances) {
+					for (Tile t: a.getTiles()) {
+						if (minDistance > Math.abs(t.getX()-i) + Math.abs(t.getY()-j)) {
+							returnTile(i,j).setNearestAmbulance(a);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**

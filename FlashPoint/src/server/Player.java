@@ -13,6 +13,11 @@ public class Player {
     protected String userName;
     private String password;
     
+    public Player(String userName, String password) {
+    	this.userName = userName;
+    	this.password = password;
+    }
+    
     /*
      * GETTERS
      */

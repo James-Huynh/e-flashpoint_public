@@ -34,7 +34,6 @@ public class Drive extends Action {
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
         playingFirefighter.setAP(aP - this.APcost);
-      
         //Tile destination = Vehicle.getTile().getOtherParkingSpots()[direction];
         //vehicle.setTile(destination);
         

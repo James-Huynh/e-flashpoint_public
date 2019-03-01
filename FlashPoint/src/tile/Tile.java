@@ -131,6 +131,10 @@ public class Tile{
     	this.pointerParkingSpot = pointerParkingSpot;
     }
     
+    public void setNearestAmbulance(ParkingSpot nearestAmbulance) {
+    	this.nearestAmbulance = nearestAmbulance;
+    }
+    
     /*
      * some algos/methods
      */
@@ -146,10 +150,9 @@ public class Tile{
         return false;
     }
 
-    //good shit!
+    //good shit! thank you
     //may need to have this give two, in the chance that the player is equally in between two parking spots and should be given the choice of respawning.
     public ParkingSpot getNearestAmbulance() {
-        /* TODO: No message view defined */
         return this.nearestAmbulance;
     }
 
