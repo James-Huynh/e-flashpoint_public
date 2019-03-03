@@ -6,6 +6,7 @@ import java.util.Arrays;
 import edge.Edge;
 import token.Firefighter;
 import token.POI;
+import token.Vehicle;
 import game.GameState;
 
 /**
@@ -26,11 +27,15 @@ public class Tile{
     protected boolean isInterior;
     protected ParkingSpot pointerParkingSpot; 
     protected ParkingSpot nearestAmbulance;
+    protected Vehicle ParkingType;
     
     public Tile(boolean isInterior, int[] coords) {
         this.x = coords[0];
         this.y = coords[1];
         this.isInterior = isInterior;
+        adjacentEdges = new Edge[4];
+        poiList = new ArrayList<POI>();
+        listOfFirefighters = new ArrayList<Firefighter>();
     }
 
     /*
@@ -63,6 +68,11 @@ public class Tile{
         return new int[] {x,y};
     }
 
+    public boolean checkInterior() {
+		return this.isInterior;
+    	
+    }
+    
     public boolean getInterior() {
     	return interior;
     }
@@ -125,6 +135,10 @@ public class Tile{
     public void setCoords(int[] coords) {
         x = coords[0];
         y = coords[1];
+    }
+    
+    public void setParkingType(Vehicle parkingType) {
+    	this.ParkingType = parkingType;
     }
     
     public void setParkingSpot(ParkingSpot pointerParkingSpot) {

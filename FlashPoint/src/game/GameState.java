@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.io.Serializable;
 
 import actions.Action;
+import token.Vehicle;
 import edge.Edge;
 import tile.ParkingSpot;
 import tile.Tile;
@@ -27,7 +28,7 @@ public class GameState implements Serializable {
 	protected int wallsDamaged; //start with 0 upto MAX_WALL_DMGD
 	protected int lostVictims; //if 4 lost lose!
 	protected int savedVictims; //if 7 rescued win!
-	protected int remainingPoi; //DO WE NEED THIS? =remainingVictims+remainingFalseAlarms
+	protected int currentPoi; //DO WE NEED THIS? =remainingVictims+remainingFalseAlarms
 	protected boolean gameTerminated;
 	protected boolean gameWon;
 	protected int activeFireFighterIndex;
@@ -42,7 +43,7 @@ public class GameState implements Serializable {
 	
 
 	protected ArrayList<Firefighter> listOfFireFighter;
-	public int MAX_WALL_DMGD;
+	public int MAX_WALL_DMGD = 24;
 	protected POI[] poiList; //@matekrk: this is important (fixed array) it is on purpose. 
 	//you can't remove poi so easily. you need to replace with new one!
 	private static final long serialVersionUID = 1L; //serialization
@@ -92,7 +93,7 @@ public class GameState implements Serializable {
 		wallsDamaged = gs1.wallsDamaged;
 		lostVictims = gs1.wallsDamaged;
 		savedVictims = gs1.savedVictims;
-		remainingPoi = gs1.remainingPoi;
+		currentPoi = gs1.currentPoi;
 		gameTerminated = gs1.gameTerminated;
 		gameWon = gs1.gameWon;
 		activeFireFighterIndex = gs1.activeFireFighterIndex;
@@ -105,7 +106,7 @@ public class GameState implements Serializable {
 		MAX_WALL_DMGD = gs1.MAX_WALL_DMGD;
 		poiList = gs1.poiList; 	
 	}
-
+	
 	/*
     public void updateGameStateFromTemplate() {
     	this.isActiveGame = true;
@@ -117,13 +118,27 @@ public class GameState implements Serializable {
 	 */
 
 	//ASSUME FOR DEMO THAT LOBBY GIVES ME ALWAYS FAMILY SETTINGS AND I HAVE LIST OF USERS
+	//added in basic family setting inits - ben
 	public void updateGameStateFromLobby(Lobby lobby) {
+		remainingVictims = 10;
+		remainingFalseAlarms = 5;
+		wallsDamaged = 0;
+		lostVictims = 0;
+		savedVictims = 0;
+		currentPoi = 0;
+		gameTerminated = false;
+		gameWon = false;
+		activeFireFighterIndex = 0;
+		isActiveGame = true;
+		matEdges = new Edge[21][9];
+		matTiles = new Tile[8][10];
 		initializeTiles();
 		createAmbulances();
 		createEnginge();
-		setClosest();
-		initializeEdges(lobby.getTemplate());
-		initializeBasicTokens(lobby.getTemplate());
+//		setClosest();
+		initializeEdges(lobby.getTemplate().getEdgeLocations());
+		initializeBasicTokens(lobby.getTemplate().getTokenLocations());
+		
 	}
 
 	/*
@@ -164,6 +179,10 @@ public class GameState implements Serializable {
 	public int getCurrentPOI() {
 		// what is that even?
 		return 0;
+	}
+	
+	public Tile[][] getMatTiles(){
+		return matTiles;
 	}
 
 	public Tile returnTile(int x, int y) {
@@ -282,66 +301,76 @@ public class GameState implements Serializable {
 	 * This method initializes 2D array of tiles and place ambulance/engine spot in the right place. 
 	 * It should be more general! Based on some template!!
 	 */
+	
+	//updated tiles, parking spots need a little bit of work - ben
 	public void initializeTiles() {
 		
 		//creating 10 x 8 tiles
 
-		for (int i=0; i<=9; i++) {
-			for (int j=0; j<=7; j++) {
+		for (int i=0; i<=7; i++) {
+			for (int j=0; j<=9; j++) {
 			
 				///// AMBULANCES
 				
 				if (i==0 && (j==5 || j==6)) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
-					matTiles[i][j].setParkingSpot(ambulances[0]);
-					ambulances[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingType(Vehicle.Ambulance);
+//					matTiles[i][j].setParkingSpot(ambulances[0]);
+//					ambulances[0].setTile(matTiles[i][j]);
 				}
 				
-				else if ((i==3 || i==5) && j==0) {
+				else if ((i==3 || i==4) && j==0) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
-					matTiles[i][j].setParkingSpot(ambulances[3]);
-					ambulances[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingType(Vehicle.Ambulance);
+//					matTiles[i][j].setParkingSpot(ambulances[3]);
+//					ambulances[0].setTile(matTiles[i][j]);
 				}
 				
-				else if (i==9 && (j==3 || j==4)) {
+				else if (i==8 && (j==3 || j==4)) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
-					matTiles[i][j].setParkingSpot(ambulances[1]);
-					ambulances[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingType(Vehicle.Ambulance);
+//					matTiles[i][j].setParkingSpot(ambulances[1]);
+//					ambulances[0].setTile(matTiles[i][j]);
 				}
 				
-				else if ((i==3 || i==4) && j==7) {
+				else if ((i==3 || i==4) && j==9) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
-					matTiles[i][j].setParkingSpot(ambulances[2]);
-					ambulances[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingType(Vehicle.Ambulance);
+//					matTiles[i][j].setParkingSpot(ambulances[2]);
+//					ambulances[0].setTile(matTiles[i][j]);
 				}
 				
 				///////// ENGINES
 				
 				else if (i==0 && (j==7 || j==8)) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
-					matTiles[i][j].setParkingSpot(engines[0]);
-					engines[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingType(Vehicle.Engine);
+//					matTiles[i][j].setParkingSpot(engines[0]);
+//					engines[0].setTile(matTiles[i][j]);
 				}
 				
 				else if ((i==1 || i==2) && j==0) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
-					matTiles[i][j].setParkingSpot(engines[3]);
-					engines[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingType(Vehicle.Engine);
+//					matTiles[i][j].setParkingSpot(engines[3]);
+//					engines[0].setTile(matTiles[i][j]);
 				}
 				
-				else if (i==9 && (j==5 || j==6)) {
+				else if (i==8 && (j==5 || j==6)) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
-					matTiles[i][j].setParkingSpot(engines[1]);
-					engines[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingType(Vehicle.Engine);
+//					matTiles[i][j].setParkingSpot(engines[1]);
+//					engines[0].setTile(matTiles[i][j]);
 				}
 				
-				else if ((i==1 || i==2) && j==7) {
+				else if ((i==1 || i==2) && j==9) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
-					matTiles[i][j].setParkingSpot(engines[2]);
-					engines[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingType(Vehicle.Engine);
+//					matTiles[i][j].setParkingSpot(engines[2]);
+//					engines[0].setTile(matTiles[i][j]);
 				}
 				
-				else if (i==0 || i==9 || j==0 || j==7) {
+				else if (i==0 || i==7 || j==0 || j==9) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j}); //create exterior tiles
 				}
 				else { 
@@ -374,95 +403,142 @@ public class GameState implements Serializable {
 	/**
 	 * This method initializes Edges and puts them in to adjacentEdge array of each Tile.
 	 */
-	public void initializeEdges(TemplateGame template) {
+	//updated the math for edges, the arrays were flipped - ben
+	public void initializeEdges(/*TemplateGame template*/ int[][] edgeStartingPos) {
 
-		int[][] edgePos = template.getEdgeLocations();
+//		int[][] edgePos = template.getEdgeLocations();
+		int[][] edgePos = edgeStartingPos;
 
-		for (int i=0; i<=20; i++) {
-			for (int j=0; j<=8; j++) {
-
+		for (int i=0; i<9; i++) {
+			for (int j=0; j<21; j++) {
+//				Tile tempTile;
 				int edgeChecker = edgePos[i][j];
 
 				if (edgeChecker == 2) {
-					if (i%2 == 1) { // if left/right edge
-						if (j == 0) { //if the edge has no upper tile
-							matTiles[i/2][j-1].setEdge(3, new Door());
-						}
-						else if(j == 8){ //if the edge has no lower tile
-							matTiles[i/2][j].setEdge(1, new Door());
-						}
-						else {
-							matTiles[i/2][j].setEdge(1, new Door());
-							matTiles[i/2][j-1].setEdge(3, new Door());
+					if ((j+1)%2 == 0) { // if left/right edge
+						if(j == 1) {
+							if (i == 0) { //if the edge has no upper tile
+								matTiles[i][j/2].setEdge(1, new Door());
+							}
+							else if(i == 8){ //if the edge has no lower tile
+								matTiles[i-1][j/2].setEdge(3, new Door());
+							}
+							else {
+								matTiles[i][j/2].setEdge(1, new Door());
+								matTiles[i-1][j/2].setEdge(3, new Door());
+							}
+						} else {
+							if (i == 0) { //if the edge has no upper tile
+								matTiles[i][j/2].setEdge(1, new Door());
+							}
+							else if(i == 8){ //if the edge has no lower tile
+								matTiles[i-1][j/2-1].setEdge(3, new Door());
+							}
+							else {
+								matTiles[i][j/2].setEdge(1, new Door());
+								matTiles[i-1][j/2].setEdge(3, new Door());
+							}
 						}
 					}
-					else if (i%2 == 0) { //if top/down edge
-						if(i==0) { //if the edge has no left tile
-							matTiles[i/2][j].setEdge(2, new Door());
+					else if ((j+1)%2 == 1) { //if top/down edge
+						if(j==0) { //if the edge has no left tile
+							matTiles[i][j/2].setEdge(0, new Door());
 						}
-						else if(i==20) { //if the edge has no right tile
-							matTiles[(i/2)-1][j].setEdge(0, new Door());
+						else if(j==20) { //if the edge has no right tile
+							matTiles[i][(j/2)-1].setEdge(2, new Door());
 						}
 						else {
-							matTiles[i/2][j].setEdge(2, new Door());
-							matTiles[(i/2)-1][j].setEdge(0, new Door());
+							matTiles[i][(j/2)-1].setEdge(2, new Door());
+							matTiles[i][(j/2)].setEdge(0, new Door());
 						}
 					}
 				}
 
 				if (edgeChecker == 1) {
-					if (i%2 == 1) { // if left/right edge
-						if (j == 0) { //if the edge has no upper tile
-							matTiles[i/2][j-1].setEdge(3, new Wall());
-						}
-						else if(j == 8){ //if the edge has no lower tile
-							matTiles[i/2][j].setEdge(1, new Wall());
-						}
-						else {
-							matTiles[i/2][j].setEdge(1, new Wall());
-							matTiles[i/2][j-1].setEdge(3, new Wall());
+					if ((j+1)%2 == 0) { // if left/right edge
+						if(j == 1) {
+							if (i == 0) { //if the edge has no upper tile
+								matTiles[i][j/2].setEdge(1, new Wall());
+							}
+							else if(i == 8){ //if the edge has no lower tile
+								matTiles[i-1][(j/2)].setEdge(3, new Wall());
+							}
+							else {
+								matTiles[i][j/2].setEdge(1, new Wall());
+								matTiles[i-1][j/2].setEdge(3, new Wall());
+							}
+						}else {
+							if (i == 0) { //if the edge has no upper tile
+								matTiles[i][j/2].setEdge(1, new Wall());
+							}
+							else if(i == 8){ //if the edge has no lower tile
+								matTiles[i-1][(j/2)-1].setEdge(3, new Wall());
+							}
+							else {
+								matTiles[i][j/2].setEdge(1, new Wall());
+								matTiles[i-1][j/2].setEdge(3, new Wall());
+							}
 						}
 					}
-					else if (i%2 == 0) { //if top/down edge
-						if(i==0) { //if the edge has no left tile
-							matTiles[i/2][j].setEdge(2, new Wall());
+					else if ((j+1)%2 == 1) { //if top/down edge
+						if(j==0) { //if the edge has no left tile
+							matTiles[i][j].setEdge(0, new Wall());
 						}
-						else if(i==20) { //if the edge has no right tile
-							matTiles[(i/2)-1][j].setEdge(0, new Wall());
+						else if(j==20) { //if the edge has no right tile
+							matTiles[i][(j/2)-1].setEdge(2, new Wall());
 						}
 						else {
-							matTiles[i/2][j].setEdge(2, new Wall());
-							matTiles[(i/2)-1][j].setEdge(0, new Wall());
+							matTiles[i][(j/2)-1].setEdge(2, new Wall());
+							matTiles[i][(j/2)].setEdge(0, new Wall());
 						}
 					}
 
 				}
 				if (edgeChecker == 0){
-					if (i%2 == 1) { // if left/right edge
-						if (j == 0) { //if the edge has no upper tile
-							matTiles[i/2][j-1].setEdge(3, new Blank());
-						}
-						else if(j == 8){ //if the edge has no lower tile
-							matTiles[i/2][j].setEdge(1, new Blank());
-						}
-						else {
-							matTiles[i/2][j].setEdge(1, new Blank());
-							matTiles[i/2][j-1].setEdge(3, new Blank());
+					if ((j+1)%2 == 0) { // if left/right edge
+						if(j==1) {
+							if (i == 0) { //if the edge has no upper tile
+								matTiles[i][j/2].setEdge(1, new Blank());
+							}
+							else if(i == 8){ //if the edge has no lower tile
+								matTiles[i-1][(j/2)].setEdge(3, new Blank());
+							}
+							else {
+								matTiles[i][(j/2)].setEdge(1, new Blank());
+								matTiles[i-1][(j/2)].setEdge(3, new Blank());
+							}
+						}else {
+							if (i == 0) { //if the edge has no upper tile
+								matTiles[i][j/2].setEdge(1, new Blank());
+							}
+							else if(i == 8){ //if the edge has no lower tile
+								matTiles[i-1][(j/2)-1].setEdge(3, new Blank());
+								if(j==19) {
+									matTiles[i-1][9].setEdge(3, new Blank());
+								}
+							}
+							else {
+								matTiles[i][(j/2)].setEdge(1, new Blank());
+								matTiles[i-1][(j/2)].setEdge(3, new Blank());
+							}
 						}
 					}
-					else if (i%2 == 0) { //if top/down edge
-						if(i==0) { //if the edge has no left tile
-							matTiles[i/2][j].setEdge(2, new Blank());
+					else if ((j+1)%2 == 1) { //if top/down edge
+						if(j==0) { //if the edge has no left tile
+							matTiles[i][j].setEdge(0, new Blank());
 						}
-						else if(i==20) { //if the edge has no right tile
-							matTiles[(i/2)-1][j].setEdge(0, new Blank());
+						else if(j==20) { //if the edge has no right tile
+							matTiles[i][(j/2)-1].setEdge(2, new Blank());
 						}
 						else {
-							matTiles[i/2][j].setEdge(2, new Blank());
-							matTiles[(i/2)-1][j].setEdge(0, new Blank());
+							matTiles[i][(j/2)-1].setEdge(2, new Blank());
+							matTiles[i][(j/2)].setEdge(0, new Blank());
 						}
 					}
 				}
+				
+				//no idea why this is happening but temp fix for the last edge...
+				
 				//didnt cover case edgeChecker == -1
 			}
 		}
@@ -572,7 +648,7 @@ public class GameState implements Serializable {
 	public String toString() {
 		return "GameState [remainingVictims=" + remainingVictims + ", remainingFalseAlarms=" + remainingFalseAlarms
 				+ ", wallsDamaged=" + wallsDamaged + ", lostVictims=" + lostVictims + ", savedVictims=" + savedVictims
-				+ ", remainingPoi=" + remainingPoi + ", gameTerminated=" + gameTerminated + ", gameWon=" + gameWon
+				+ ", remainingPoi=" + currentPoi + ", gameTerminated=" + gameTerminated + ", gameWon=" + gameWon
 				+ ", activeFireFighterIndex=" + activeFireFighterIndex + ", isActiveGame=" + isActiveGame
 				+ ", matEdges=" + Arrays.toString(matEdges) + ", matTiles=" + Arrays.toString(matTiles)
 				+ ", currentTile=" + currentTile + ", availableActions=" + availableActions.stream().map(Object::toString).collect(Collectors.joining(", ")) + ", listOfFireFighter="
@@ -591,8 +667,8 @@ public class GameState implements Serializable {
 		this.isActiveGame = true;
 
 		initializeTiles();
-		initializeEdges(template);
-		initializeBasicTokens(template);
+//		initializeEdges(template);
+//		initializeBasicTokens(template);
 
 
 	}
@@ -602,16 +678,16 @@ public class GameState implements Serializable {
 	 * Tokens such as fires and POI will be initialized unto the board. Modular design
 	 * @param defaultGame
 	 */
-	public void initializeBasicTokens(TemplateGame template) {
-		int[][] tokenLocations = template.getTokenLocations();
-
+	public void initializeBasicTokens(/*TemplateGame template*/ int[][] tokenStarting) {
+//		int[][] tokenLocations = template.getTokenLocations();
+		int[][] tokenLocations = tokenStarting;
 		
 		// loops over the whole game board
-		for (int i=0; i<=9; i++) {
-			for (int j=0; j<=7; j++) {
+		for (int i=0; i<8; i++) {
+			for (int j=0; j<10; j++) {
 				
 				switch (tokenLocations[i][j]) {
-				case 1: this.matTiles[i][j].setFire(1); 
+				case 1: this.matTiles[i][j].setFire(2); 
 					break;
 				case 2: this.matTiles[i][j].addPoi(new POI(true));
 					break;

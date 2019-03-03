@@ -434,7 +434,7 @@ public class GameManager {
     public static void main(String[] args) {
     	GameManager gm = new GameManager();
     	gm.runFlashpoint();
-    	gm.gs.toString();
+//    	gm.gs.toString();
     	
     }
  

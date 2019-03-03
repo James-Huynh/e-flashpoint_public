@@ -2,6 +2,7 @@ package token;
 
 import java.util.*;
 
+import server.Player;
 import tile.ParkingSpot;
 import tile.Tile;
 
@@ -10,12 +11,24 @@ import tile.Tile;
  * @author James
  * modified by @matekrk
  */
-abstract public class Firefighter extends Token {
+//removed abstraction to allow a firefighter to be initialized elsewhere - ben
+public class Firefighter extends Token {
 
 	protected int AP;
 	protected int savedAP;
 	protected boolean carryingVictim;
 	protected POI victim;
+	//protected Player owner;
+	protected Colour myColour;
+	
+	public Firefighter(/*Player newOwner*/Colour setColour) {
+		//this.owner = newOwner;
+		super();
+		this.AP = 4;
+		this.savedAP = 0;
+		this.myColour = setColour;
+		//Colour = Player.getColour();
+	}
 
 	/**
 	 * updateLocation sets the coordinates of the firefighter to the tile
@@ -25,14 +38,24 @@ abstract public class Firefighter extends Token {
 		this.x = respawnTile.getTiles()[0].getX(); // @matekrk - (imo) this algo should return the closest tile 
 													// with non-null pointer to parkingSpot
 		this.y = respawnTile.getTiles()[0].getY();
+		tileOn = respawnTile.getTiles()[0];
 	}
 
+	public void setCurrentLocation(Tile target) {
+		this.x = target.getX();
+		this.y = target.getY();
+		tileOn = target;
+	}
 
 	//------------------------ GETTERS -------------------------//
 	public int getAP() {
 		return this.AP;
 	}
 
+	public Colour getColour() {
+		return this.myColour;
+	}
+	
 	public int getSavedAP() {
 		return this.savedAP;
 	}
