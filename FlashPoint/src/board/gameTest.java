@@ -24,6 +24,13 @@ public class gameTest {
 		Firefighter tempFF2 = new Firefighter(Colour.BLUE);
 		tester.placeFireFighter(tempFF, testTile);
 		tester.placeFireFighter(tempFF2, testTile2);
+		testTile2.getEdge(0).chop();
+		testTile2.getEdge(3).chop();
+		testTile2.getEdge(3).chop();
+		Tile testTile3 = tester.returnTile(2, 6);
+		Tile testTile4 = tester.returnTile(1, 6);
+		testTile3.getEdge(0).change();
+		testTile4.getEdge(1).destroyDoor();
 		Table table = new Table(tester);
 	}
 	

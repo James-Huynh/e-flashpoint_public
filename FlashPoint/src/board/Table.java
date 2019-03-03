@@ -173,21 +173,57 @@ public class Table {
 				if(connectedTile.getEdge(0).isBlank()) {
 					
 				} else if(connectedTile.getEdge(0).isWall()) {
-					try {
-						BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL.gif"));
-						add(new JLabel(new ImageIcon(imageWall)), BorderLayout.WEST);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(connectedTile.getEdge(0).getDamage() == 0) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.WEST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if (connectedTile.getEdge(0).getDamage() == 1) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DAMAGED.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.WEST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if(connectedTile.getEdge(0).getDamage() == 2) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DESTROYED.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.WEST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					
 				} else if(connectedTile.getEdge(0).isDoor()) {
-					try {
-						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORRIGHT.gif"));
-						add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(connectedTile.getEdge(0).isDestroyed()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORRIGHT_DESTROYED.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(connectedTile.getEdge(0).getStatus()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORRIGHT_OPEN.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(!connectedTile.getEdge(0).getStatus()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORRIGHT.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				
@@ -195,21 +231,56 @@ public class Table {
 				if(connectedTile.getEdge(1).isBlank()) {
 					
 				} else if(connectedTile.getEdge(1).isWall()) {
-					try {
-						BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL.gif"));
-						add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(connectedTile.getEdge(1).getDamage() == 0) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if (connectedTile.getEdge(1).getDamage() == 1) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DAMAGED.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if(connectedTile.getEdge(1).getDamage() == 2) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DESTROYED.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
-					
 				} else if(connectedTile.getEdge(1).isDoor()) {
-					try {
-						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORBOT.gif"));
-						add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(connectedTile.getEdge(1).isDestroyed()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORBOT_DESTROYED.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(connectedTile.getEdge(1).getStatus()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORBOT_OPEN.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(!connectedTile.getEdge(1).getStatus()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORBOT.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				
@@ -217,21 +288,57 @@ public class Table {
 				if(connectedTile.getEdge(2).isBlank()) {
 					
 				} else if(connectedTile.getEdge(2).isWall()) {
-					try {
-						BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL.gif"));
-						add(new JLabel(new ImageIcon(imageWall)), BorderLayout.EAST);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(connectedTile.getEdge(2).getDamage() == 0) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.EAST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if (connectedTile.getEdge(2).getDamage() == 1) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DAMAGED.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.EAST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if(connectedTile.getEdge(2).getDamage() == 2) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DESTROYED.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.EAST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					
 				} else if(connectedTile.getEdge(2).isDoor()) {
-					try {
-						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORLEFT.gif"));
-						add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(connectedTile.getEdge(2).isDestroyed()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORLEFT_DESTROYED.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(connectedTile.getEdge(2).getStatus()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORLEFT_OPEN.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(!connectedTile.getEdge(2).getStatus()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORLEFT.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				
@@ -239,21 +346,57 @@ public class Table {
 				if(connectedTile.getEdge(3).isBlank()) {
 					
 				} else if(connectedTile.getEdge(3).isWall()) {
-					try {
-						BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL.gif"));
-						add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(connectedTile.getEdge(3).getDamage() == 0) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if (connectedTile.getEdge(3).getDamage() == 1) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DAMAGED.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if(connectedTile.getEdge(3).getDamage() == 2) {
+						try {
+							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DESTROYED.gif"));
+							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					
 				} else if(connectedTile.getEdge(3).isDoor()) {
-					try {
-						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORTOP.gif"));
-						add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(connectedTile.getEdge(3).isDestroyed()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORTOP_DESTROYED.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(connectedTile.getEdge(3).getStatus()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORTOP_OPEN.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(!connectedTile.getEdge(3).getStatus()) {
+						try {
+							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORTOP.gif"));
+							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				

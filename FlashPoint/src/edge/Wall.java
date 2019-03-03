@@ -11,10 +11,10 @@ import java.util.*;
  */
 public class Wall extends Edge{
     
-    protected int damage; //domain: 0 = destroyed wall,1,2 = strong wall
+    protected int damage; //domain: 0 = undamaged 1 = damaged, 2 = destroyed
     
     public Wall() {
-    	this.damage = 2; 
+    	this.damage = 0; 
     }
     
     public Wall(int damage) {
@@ -35,14 +35,14 @@ public class Wall extends Edge{
     
     //always chopping by 1
     public void chop() {
-        if (damage > 0) {
-        	damage--;
+        if (damage < 2) {
+        	damage++;
         }
     }
 
 
     public void destroyWall() {
-        damage = 0;
+        damage = 2;
     }
     
     /*

@@ -16,6 +16,8 @@ public class Door extends Edge{
     
     public Door() {
         /* TODO: No message view defined */
+    	this.isOpen = false;
+    	this.destroyed = false;
     }
 
     /*

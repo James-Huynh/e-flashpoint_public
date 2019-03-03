@@ -424,8 +424,9 @@ public class GameState implements Serializable {
 								matTiles[i-1][j/2].setEdge(3, new Door());
 							}
 							else {
-								matTiles[i][j/2].setEdge(1, new Door());
-								matTiles[i-1][j/2].setEdge(3, new Door());
+								Door temp = new Door();
+								matTiles[i][j/2].setEdge(1, temp);
+								matTiles[i-1][j/2].setEdge(3, temp);
 							}
 						} else {
 							if (i == 0) { //if the edge has no upper tile
@@ -435,8 +436,9 @@ public class GameState implements Serializable {
 								matTiles[i-1][j/2-1].setEdge(3, new Door());
 							}
 							else {
-								matTiles[i][j/2].setEdge(1, new Door());
-								matTiles[i-1][j/2].setEdge(3, new Door());
+								Door temp = new Door();
+								matTiles[i][j/2].setEdge(1, temp);
+								matTiles[i-1][j/2].setEdge(3, temp);
 							}
 						}
 					}
@@ -448,8 +450,9 @@ public class GameState implements Serializable {
 							matTiles[i][(j/2)-1].setEdge(2, new Door());
 						}
 						else {
-							matTiles[i][(j/2)-1].setEdge(2, new Door());
-							matTiles[i][(j/2)].setEdge(0, new Door());
+							Door temp = new Door();
+							matTiles[i][(j/2)-1].setEdge(2, temp);
+							matTiles[i][(j/2)].setEdge(0, temp);
 						}
 					}
 				}
@@ -464,8 +467,9 @@ public class GameState implements Serializable {
 								matTiles[i-1][(j/2)].setEdge(3, new Wall());
 							}
 							else {
-								matTiles[i][j/2].setEdge(1, new Wall());
-								matTiles[i-1][j/2].setEdge(3, new Wall());
+								Wall temp = new Wall();
+								matTiles[i][j/2].setEdge(1, temp);
+								matTiles[i-1][j/2].setEdge(3, temp);
 							}
 						}else {
 							if (i == 0) { //if the edge has no upper tile
@@ -475,8 +479,9 @@ public class GameState implements Serializable {
 								matTiles[i-1][(j/2)-1].setEdge(3, new Wall());
 							}
 							else {
-								matTiles[i][j/2].setEdge(1, new Wall());
-								matTiles[i-1][j/2].setEdge(3, new Wall());
+								Wall temp = new Wall();
+								matTiles[i][j/2].setEdge(1, temp);
+								matTiles[i-1][j/2].setEdge(3, temp);
 							}
 						}
 					}
@@ -488,8 +493,9 @@ public class GameState implements Serializable {
 							matTiles[i][(j/2)-1].setEdge(2, new Wall());
 						}
 						else {
-							matTiles[i][(j/2)-1].setEdge(2, new Wall());
-							matTiles[i][(j/2)].setEdge(0, new Wall());
+							Wall temp = new Wall();
+							matTiles[i][(j/2)-1].setEdge(2, temp);
+							matTiles[i][(j/2)].setEdge(0, temp);
 						}
 					}
 
@@ -504,8 +510,9 @@ public class GameState implements Serializable {
 								matTiles[i-1][(j/2)].setEdge(3, new Blank());
 							}
 							else {
-								matTiles[i][(j/2)].setEdge(1, new Blank());
-								matTiles[i-1][(j/2)].setEdge(3, new Blank());
+								Blank temp = new Blank();
+								matTiles[i][(j/2)].setEdge(1, temp);
+								matTiles[i-1][(j/2)].setEdge(3, temp);
 							}
 						}else {
 							if (i == 0) { //if the edge has no upper tile
@@ -518,8 +525,9 @@ public class GameState implements Serializable {
 								}
 							}
 							else {
-								matTiles[i][(j/2)].setEdge(1, new Blank());
-								matTiles[i-1][(j/2)].setEdge(3, new Blank());
+								Blank temp = new Blank();
+								matTiles[i][(j/2)].setEdge(1, temp);
+								matTiles[i-1][(j/2)].setEdge(3, temp);
 							}
 						}
 					}
@@ -531,8 +539,9 @@ public class GameState implements Serializable {
 							matTiles[i][(j/2)-1].setEdge(2, new Blank());
 						}
 						else {
-							matTiles[i][(j/2)-1].setEdge(2, new Blank());
-							matTiles[i][(j/2)].setEdge(0, new Blank());
+							Blank temp = new Blank();
+							matTiles[i][(j/2)-1].setEdge(2, temp);
+							matTiles[i][(j/2)].setEdge(0, temp);
 						}
 					}
 				}
