@@ -468,11 +468,20 @@ public class Table {
 			private void assignTokens() {
 				this.removeAll();
 				if(this.connectedTile.containsPOI()) {
-					try {
-						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "VICTIM.gif"));
-						add(new JLabel(new ImageIcon(POIimage)));	
-					} catch (IOException e) {
-						e.printStackTrace();
+					if(this.connectedTile.getPoiList().get(0).isRevealed()) {
+						try {
+							final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "VICTIM.gif"));
+							add(new JLabel(new ImageIcon(POIimage)));	
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					} else {
+						try {
+							final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "POI.gif"));
+							add(new JLabel(new ImageIcon(POIimage)));	
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
 				}else {
 					add(new JLabel());
@@ -495,7 +504,9 @@ public class Table {
 						builder = builder + "PURPLE";
 					}
 					try {
-						final BufferedImage FFimage = ImageIO.read(new File(builder +"_FIREMAN.gif"));
+						builder = builder + "_FIREMAN";
+						int numberFF = this.connectedTile.getFirefighterList().size();
+						final BufferedImage FFimage = ImageIO.read(new File(builder +"_"+ numberFF +".gif"));
 						add(new JLabel(new ImageIcon(FFimage)));	
 					} catch (IOException e) {
 						e.printStackTrace();

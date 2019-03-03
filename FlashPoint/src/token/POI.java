@@ -25,6 +25,10 @@ public class POI {
     public boolean isVictim() {
         return isVictim;
     }
+    
+    public boolean isRevealed() {
+    	return revealed;
+    }
 
     /*
      * SETTERS
