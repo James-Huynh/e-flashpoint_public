@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -29,17 +31,19 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import lobby.Lobby;
+
 public class RunFlashPoint {
 
 	private JFrame frame;
+	
 	//Define big panels corresponding to each 'page'
 	private JPanel loginSuperPanel;
 	private JPanel startMenuSuperPanel;
 	private JPanel createLobbySuperPanel;
 	private JPanel findLobbySuperPanel;
 	private JPanel lobbyPageSuperPanel;
-
-	//========================================JAMES STUFF===========================================//
+	
 	private JPanel panel_PlayersDisplay;
 	private JButton btnBackToMain;
 	private JButton btnStartGame;
@@ -60,7 +64,18 @@ public class RunFlashPoint {
 	
 	private JLabel[] arrLblPlayers = {lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6};
 	private ArrayList<String> listPlayers = new ArrayList<String>();
-	//========================================JAMES STUFF===========================================//
+	
+	/*		For Login	*/
+	private String username;
+	private char[] password;
+	private JTextField userNameField;
+	private JPasswordField pword;
+	
+	/* For Lobby */
+	Lobby lobbyObject;
+	int nbPlayers;
+	String gameType = "null", nameLobby = "null", chosenDifficulty = "null";
+	
 
 
 	/**
@@ -116,7 +131,7 @@ public class RunFlashPoint {
 		loginSuperPanel.add(loginPanel);
 		loginPanel.setLayout(null);
 
-		JPasswordField pword = new JPasswordField(10);
+		pword = new JPasswordField(10);
 		pword.setBounds(162, 53, 166, 35);
 		loginPanel.add(pword); 
 
@@ -130,7 +145,7 @@ public class RunFlashPoint {
 		usrLabel.setBounds(25, 14, 103, 16);
 		loginPanel.add(usrLabel);
 
-		JTextField userNameField = new JTextField();
+		userNameField = new JTextField();
 		userNameField.setFont(new Font("Avenir", Font.PLAIN, 13));
 		userNameField.setBounds(162, 6, 166, 35);
 		loginPanel.add(userNameField);
@@ -141,9 +156,7 @@ public class RunFlashPoint {
 			//When there is a state/page change, the idea is to set the current Panel false -> dispose it -> call the next method which would
 			//set the next appropriate panel
 			public void actionPerformed(ActionEvent e) {
-				loginSuperPanel.setVisible(false);
-				frame.getContentPane().remove(loginSuperPanel);
-				startMenu();
+				clickLogin();
 			}
 		});
 		loginBtn.setFont(new Font("Avenir", Font.PLAIN, 20));
@@ -183,9 +196,7 @@ public class RunFlashPoint {
 		JButton createBtn = new JButton("Create Lobby");
 		createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				startMenuSuperPanel.setVisible(false);
-				frame.getContentPane().remove(startMenuSuperPanel);
-				createLobby();	
+				clickCreateLobby();
 			}
 		});
 		createBtn.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
@@ -249,10 +260,24 @@ public class RunFlashPoint {
 		JToggleButton familyBtn = new JToggleButton("Family");
 		familyBtn.setBounds(0, 25, 117, 29);
 		modePanel.add(familyBtn);
+		familyBtn.addItemListener(new ItemListener() {
+			   public void itemStateChanged(ItemEvent ev) {
+			      if(ev.getStateChange()==ItemEvent.SELECTED){
+			        GameModeSelected (familyBtn);
+			      }
+			   }
+			});
 
 		JToggleButton expBtn = new JToggleButton("Experienced");
 		expBtn.setBounds(113, 25, 117, 29);
 		modePanel.add(expBtn);
+		expBtn.addItemListener(new ItemListener() {
+			   public void itemStateChanged(ItemEvent ev) {
+			      if(ev.getStateChange()==ItemEvent.SELECTED){
+			        GameModeSelected (expBtn);
+			      }
+			   }
+			});
 
 		ButtonGroup modeOpts = new ButtonGroup();
 		modeOpts.add(familyBtn);
@@ -326,7 +351,8 @@ public class RunFlashPoint {
 		JSlider plyrSlider = new JSlider();
 		plyrSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				plyrLabel.setText("Number of Players :- " + plyrSlider.getValue());
+				nbPlayers = plyrSlider.getValue();
+				plyrLabel.setText("Number of Players :- " + nbPlayers);
 			}
 		});
 		plyrSlider.setPaintTicks(true);
@@ -343,11 +369,7 @@ public class RunFlashPoint {
 		JButton createBtn = new JButton("CREATE");
 		createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//				lobbyPage(); #To be implemented by James
-				createLobbySuperPanel.setVisible(false);
-				frame.getContentPane().remove(createLobbySuperPanel);
-				createLobbyPage();
-				
+				clickCreate();
 			}
 		});
 		createBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
@@ -539,6 +561,9 @@ public class RunFlashPoint {
 		int offsetY = 100;
 		//int playerSpacing = 50;
 		
+		initializeLobby();
+		
+		
 		
 		lobbyPageSuperPanel = new JPanel();
 		frame.getContentPane().add(lobbyPageSuperPanel, BorderLayout.CENTER);
@@ -557,72 +582,8 @@ public class RunFlashPoint {
 		gameLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 58));
 		
 		
-		//==================================CHAT_START=====================================
-		panel_chat = new JPanel();
-		panel_chat.setBounds(695 + offsetX, 10 + offsetY, 337, 576);
-		lobbyPageSuperPanel.add(panel_chat);
-		panel_chat.setLayout(null);
-	
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 337, 537);
-		panel_chat.add(scrollPane);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		textAreaChat = new JTextArea("");
-		textAreaChat.setEditable(false);
-		textAreaChat.setLineWrap(true);
-		scrollPane.setViewportView(textAreaChat);
-		textAreaChat.setFont(new Font("Tahoma", Font.PLAIN, 22));
-
-		txtFieldChat = new JTextField();
-		txtFieldChat.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					sendMessage();
-				}
-			}
-		});
-		txtFieldChat.setBounds(0, 536, 289, 40);
-		panel_chat.add(txtFieldChat);
-		txtFieldChat.setBackground(Color.ORANGE);
-		txtFieldChat.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtFieldChat.setColumns(10);
-
-		btnChat = new JButton(">");
-		btnChat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				sendMessage();
-			}
-		});
-		btnChat.setBounds(288, 536, 50, 40);
-		panel_chat.add(btnChat);
-		btnChat.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		//==================================CHAT_END=====================================
-
-		
-		btnStartGame = new JButton("Start Game");
-		btnStartGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				startGame();
-			}
-		});
-		btnStartGame.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnStartGame.setBounds(496 + offsetX, 508 + offsetY, 176, 78);
-		lobbyPageSuperPanel.add(btnStartGame);
-
-		btnBackToMain = new JButton("Back");
-		btnBackToMain.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				backToFindLobby();
-			}
-		});
-		btnBackToMain.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBackToMain.setBounds(10 + offsetX, 508 + offsetY, 192, 78);
-		lobbyPageSuperPanel.add(btnBackToMain);
-
-		//=====================================
-		
+		createChat();
 		
 		panel_PlayersDisplay = new JPanel();
 		panel_PlayersDisplay.setBounds(10 + offsetX, 10 + offsetY, 662, 372);
@@ -715,8 +676,7 @@ public class RunFlashPoint {
 		updateLobbyDescription();
 	}
 
-	
-	//===================================== James Methods ============================
+
 	/**
 	 * StartGame will proceed to the next phase of the application which is the main game.
 	 */
@@ -750,6 +710,7 @@ public class RunFlashPoint {
 
 	}
 
+	// James
 	/**
 	 * updateLobbyDescription will set the lobby's display accordingly to the game state and setting chosen on the previous page
 	 */
@@ -769,6 +730,154 @@ public class RunFlashPoint {
 		textAreaDifficulty.append("- Impossible\n");
 	}
 	
-	//===================================== James Methods ============================
+	
+	// James
+	/**
+	 * Defines what happens once you click the Login button at the start
+	 */
+	private void clickLogin() {
+		username = userNameField.getText();
+		password = pword.getPassword();
+		
+		
+		if (ValidateCredentials() == true) {
+			loginSuperPanel.setVisible(false);
+			frame.getContentPane().remove(loginSuperPanel);
+			startMenu();
+		} else {
+			System.out.println("Invalid Credentials");
+		}
+
+	}
+	
+	
+	// James
+	/**
+	 * Defines what happens once you click the Create Lobby button
+	 */
+	private void clickCreateLobby() {
+		startMenuSuperPanel.setVisible(false);
+		frame.getContentPane().remove(startMenuSuperPanel);
+		createLobby();	
+	}
+	
+	
+	// James
+	/**
+	 * Defines what happens once you click the Create button after specifying the lobby's specifications
+	 */
+	private void clickCreate() {
+		// @server
+		
+		// read the object sent from server lobbyObject = inServer.readObject();
+		
+		// dummy
+		lobbyObject = new Lobby();
+		
+		createLobbySuperPanel.setVisible(false);
+		frame.getContentPane().remove(createLobbySuperPanel);
+		createLobbyPage();
+	}
+	
+	
+	// James
+	/**
+	 * Specifies the type of game that is chosen
+	 * @param button The chosen button
+	 */
+	private void GameModeSelected (JToggleButton button) {
+		gameType = button.getText();
+	}
+	
+	
+	// James
+	/**
+	 * Initializes all the parameters of the specified lobby
+	 */
+	private void initializeLobby() {
+		// continue @James
+		
+	}
+	
+	// James
+	/**
+	 * Create the working chat box in the lobby page
+	 */
+	private void createChat() {
+		panel_chat = new JPanel();
+		panel_chat.setBounds(695 + offsetX, 10 + offsetY, 337, 576);
+		lobbyPageSuperPanel.add(panel_chat);
+		panel_chat.setLayout(null);
+	
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 337, 537);
+		panel_chat.add(scrollPane);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		textAreaChat = new JTextArea("");
+		textAreaChat.setEditable(false);
+		textAreaChat.setLineWrap(true);
+		scrollPane.setViewportView(textAreaChat);
+		textAreaChat.setFont(new Font("Tahoma", Font.PLAIN, 22));
+
+		txtFieldChat = new JTextField();
+		txtFieldChat.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					sendMessage();
+				}
+			}
+		});
+		txtFieldChat.setBounds(0, 536, 289, 40);
+		panel_chat.add(txtFieldChat);
+		txtFieldChat.setBackground(Color.ORANGE);
+		txtFieldChat.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtFieldChat.setColumns(10);
+
+		btnChat = new JButton(">");
+		btnChat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sendMessage();
+			}
+		});
+		btnChat.setBounds(288, 536, 50, 40);
+		panel_chat.add(btnChat);
+		btnChat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		//==================================CHAT_END=====================================
+
+		
+		btnStartGame = new JButton("Start Game");
+		btnStartGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startGame();
+			}
+		});
+		btnStartGame.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnStartGame.setBounds(496 + offsetX, 508 + offsetY, 176, 78);
+		lobbyPageSuperPanel.add(btnStartGame);
+
+		btnBackToMain = new JButton("Back");
+		btnBackToMain.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				backToFindLobby();
+			}
+		});
+		btnBackToMain.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBackToMain.setBounds(10 + offsetX, 508 + offsetY, 192, 78);
+		lobbyPageSuperPanel.add(btnBackToMain);
+
+	}
+	
+	
+	// James
+	/**
+	 * Validates by the user's credentials by asking the server
+	 * @return
+	 */
+	private boolean ValidateCredentials() {
+		// @server
+		return true;
+	}
 	
 }	// END

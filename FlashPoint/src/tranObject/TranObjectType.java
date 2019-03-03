@@ -3,6 +3,7 @@ package tranObject;
 
 public enum TranObjectType {
 	REGISTER, 
+	LOBBY,
 	LOGIN, 
 	LOGOUT, 
 	FRIENDLOGIN, 
@@ -16,5 +17,5 @@ public enum TranObjectType {
 	CHOICED,
 	CHOICEE,
 	CHOP,
-	MOve,
+	MOVE,
 }
