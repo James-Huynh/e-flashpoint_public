@@ -28,7 +28,7 @@ public class GameState implements Serializable {
 	protected int wallsDamaged; //start with 0 upto MAX_WALL_DMGD
 	protected int lostVictims; //if 4 lost lose!
 	protected int savedVictims; //if 7 rescued win!
-	protected int currentPoi; //DO WE NEED THIS? =remainingVictims+remainingFalseAlarms
+	//protected int currentPoi; //DO WE NEED THIS? =remainingVictims+remainingFalseAlarms
 	protected boolean gameTerminated;
 	protected boolean gameWon;
 	protected int activeFireFighterIndex;
@@ -44,7 +44,7 @@ public class GameState implements Serializable {
 
 	protected ArrayList<Firefighter> listOfFireFighter;
 	public int MAX_WALL_DMGD = 24;
-	protected POI[] poiList; //@matekrk: this is important (fixed array) it is on purpose. 
+	protected ArrayList<POI> poiList; //@matekrk: this is important (fixed array) it is on purpose. 
 	//you can't remove poi so easily. you need to replace with new one!
 	private static final long serialVersionUID = 1L; //serialization
 
@@ -93,7 +93,7 @@ public class GameState implements Serializable {
 		wallsDamaged = gs1.wallsDamaged;
 		lostVictims = gs1.wallsDamaged;
 		savedVictims = gs1.savedVictims;
-		currentPoi = gs1.currentPoi;
+		//currentPoi = gs1.currentPoi;
 		gameTerminated = gs1.gameTerminated;
 		gameWon = gs1.gameWon;
 		activeFireFighterIndex = gs1.activeFireFighterIndex;
@@ -125,17 +125,18 @@ public class GameState implements Serializable {
 		wallsDamaged = 0;
 		lostVictims = 0;
 		savedVictims = 0;
-		currentPoi = 0;
+		//currentPoi = 0;
 		gameTerminated = false;
 		gameWon = false;
 		activeFireFighterIndex = 0;
 		isActiveGame = true;
 		matEdges = new Edge[21][9];
 		matTiles = new Tile[8][10];
-		initializeTiles();
+		poiList = new ArrayList<POI>();
 		createAmbulances();
 		createEnginge();
-//		setClosest();
+		initializeTiles();
+		setClosest();
 		initializeEdges(lobby.getTemplate().getEdgeLocations());
 		initializeBasicTokens(lobby.getTemplate().getTokenLocations());
 		
@@ -146,7 +147,7 @@ public class GameState implements Serializable {
 	 */
 
 	//ALWAYS 3!
-	public POI[] retrievePOI() {
+	public ArrayList<POI> retrievePOI() {
 		return poiList;
 	}
 
@@ -178,7 +179,7 @@ public class GameState implements Serializable {
 	//QUESTION
 	public int getCurrentPOI() {
 		// what is that even?
-		return 0;
+		return poiList.size();
 	}
 	
 	public Tile[][] getMatTiles(){
@@ -226,23 +227,25 @@ public class GameState implements Serializable {
 	public void updateDamageCounter() {
 		this.wallsDamaged = this.wallsDamaged + 1;
 	}
-
+//changed this class, we need to have an array list that is not of fixed size in order to make the advance fire work - ben
 	public void updatePOI(POI toUpdate) {
-		for (int ind = 0; ind<poiList.length; ind++) {
-			if (poiList[ind].equals(null)) {
-				poiList[ind] = toUpdate;
-				break;
-			}
-		}
+		this.poiList.add(toUpdate);
+//		for (int ind = 0; ind<poiList.length; ind++) {
+//			if (poiList[ind].equals(null)) {
+//				poiList[ind] = toUpdate;
+//				break;
+//			}
+//		}
 	}
 
 	public void removePOI(POI toRemove) {
-		for (int ind = 0; ind<poiList.length; ind++) {
-			if (poiList[ind].equals(toRemove)) {
-				poiList[ind] = null;
-				break;
-			}
-		}
+		this.poiList.remove(toRemove);
+//		for (int ind = 0; ind<poiList.length; ind++) {
+//			if (poiList[ind].equals(toRemove)) {
+//				poiList[ind] = null;
+//				break;
+//			}
+//		}
 	}
 
 	public void updateSavedCount() {
@@ -285,16 +288,24 @@ public class GameState implements Serializable {
 	 */
 	public void createAmbulances() {
 		this.ambulances = new ParkingSpot[4];
-		for (ParkingSpot forAmbulance : ambulances) {
-			forAmbulance = new ParkingSpot(Vehicle.Ambulance, false);
-		}
+		this.ambulances[0] = new ParkingSpot(Vehicle.Ambulance, false);
+		this.ambulances[1] = new ParkingSpot(Vehicle.Ambulance, false);
+		this.ambulances[2] = new ParkingSpot(Vehicle.Ambulance, false);
+		this.ambulances[3] = new ParkingSpot(Vehicle.Ambulance, false);
+//		for (ParkingSpot forAmbulance : ambulances) {
+//			forAmbulance = new ParkingSpot(Vehicle.Ambulance, false);
+//		}
 	}
 	
 	public void createEnginge() {
 		this.engines = new ParkingSpot[4];
-		for (ParkingSpot forEngine : engines) {
-			forEngine = new ParkingSpot(Vehicle.Engine, false);
-		}
+		this.engines[0] = new ParkingSpot(Vehicle.Engine, false);
+		this.engines[1] = new ParkingSpot(Vehicle.Engine, false);
+		this.engines[2] = new ParkingSpot(Vehicle.Engine, false);
+		this.engines[3] = new ParkingSpot(Vehicle.Engine, false);
+//		for (ParkingSpot forEngine : engines) {
+//			forEngine = new ParkingSpot(Vehicle.Engine, false);
+//		}
 	}
 	
 	/**
@@ -315,29 +326,29 @@ public class GameState implements Serializable {
 				if (i==0 && (j==5 || j==6)) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
-//					matTiles[i][j].setParkingSpot(ambulances[0]);
-//					ambulances[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingSpot(ambulances[0]);
+					ambulances[0].setTile(matTiles[i][j]);
 				}
 				
 				else if ((i==3 || i==4) && j==0) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
-//					matTiles[i][j].setParkingSpot(ambulances[3]);
-//					ambulances[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingSpot(ambulances[3]);
+					ambulances[3].setTile(matTiles[i][j]);
 				}
 				
-				else if (i==8 && (j==3 || j==4)) {
+				else if (i==7 && (j==3 || j==4)) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
-//					matTiles[i][j].setParkingSpot(ambulances[1]);
-//					ambulances[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingSpot(ambulances[1]);
+					ambulances[1].setTile(matTiles[i][j]);
 				}
 				
 				else if ((i==3 || i==4) && j==9) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
-//					matTiles[i][j].setParkingSpot(ambulances[2]);
-//					ambulances[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingSpot(ambulances[2]);
+					ambulances[2].setTile(matTiles[i][j]);
 				}
 				
 				///////// ENGINES
@@ -345,29 +356,29 @@ public class GameState implements Serializable {
 				else if (i==0 && (j==7 || j==8)) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
 					matTiles[i][j].setParkingType(Vehicle.Engine);
-//					matTiles[i][j].setParkingSpot(engines[0]);
-//					engines[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingSpot(engines[0]);
+					engines[0].setTile(matTiles[i][j]);
 				}
 				
 				else if ((i==1 || i==2) && j==0) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
 					matTiles[i][j].setParkingType(Vehicle.Engine);
-//					matTiles[i][j].setParkingSpot(engines[3]);
-//					engines[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingSpot(engines[3]);
+					engines[3].setTile(matTiles[i][j]);
 				}
 				
-				else if (i==8 && (j==5 || j==6)) {
+				else if (i==7 && (j==5 || j==6)) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
 					matTiles[i][j].setParkingType(Vehicle.Engine);
-//					matTiles[i][j].setParkingSpot(engines[1]);
-//					engines[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingSpot(engines[1]);
+					engines[1].setTile(matTiles[i][j]);
 				}
 				
-				else if ((i==1 || i==2) && j==9) {
+				else if ((i==6 || i==5) && j==9) {
 					matTiles[i][j] = new Tile(false, new int[] {i,j});
 					matTiles[i][j].setParkingType(Vehicle.Engine);
-//					matTiles[i][j].setParkingSpot(engines[2]);
-//					engines[0].setTile(matTiles[i][j]);
+					matTiles[i][j].setParkingSpot(engines[2]);
+					engines[2].setTile(matTiles[i][j]);
 				}
 				
 				else if (i==0 || i==7 || j==0 || j==9) {
@@ -386,12 +397,13 @@ public class GameState implements Serializable {
 	 * complexity big O (n^5)
 	 */
 	public void setClosest() {
-		for (int i=0; i<=matEdges.length; i++) {
-			for (int j=0; j<=matEdges[0].length; j++) {
+		for (int i=0; i<8; i++) {
+			for (int j=0; j<10; j++) {
 				int minDistance = (int)Double.POSITIVE_INFINITY;
 				for (ParkingSpot a : ambulances) {
 					for (Tile t: a.getTiles()) {
 						if (minDistance > Math.abs(t.getX()-i) + Math.abs(t.getY()-j)) {
+							minDistance = minDistance - (Math.abs(t.getX()-i) + Math.abs(t.getY()-j));
 							returnTile(i,j).setNearestAmbulance(a);
 						}
 					}
@@ -633,16 +645,16 @@ public class GameState implements Serializable {
 	public Tile getNeighbour(Tile tile, int direction) {
 		int[] coords = tile.getCoords();
 		if (direction == 0) {
-			return matTiles[coords[0]-1][coords[1]];
-		}
-		else if (direction == 1) {
 			return matTiles[coords[0]][coords[1]-1];
 		}
+		else if (direction == 1) {
+			return matTiles[coords[0]-1][coords[1]];
+		}
 		else if (direction == 2) {
-			return matTiles[coords[0]+1][coords[1]];
+			return matTiles[coords[0]][coords[1]+1];
 		}
 		else if (direction == 3) {
-			return matTiles[coords[0]][coords[1]+1];
+			return matTiles[coords[0]+1][coords[1]];
 		}
 		else { //self, so direction==-1
 			return tile;
@@ -657,11 +669,11 @@ public class GameState implements Serializable {
 	public String toString() {
 		return "GameState [remainingVictims=" + remainingVictims + ", remainingFalseAlarms=" + remainingFalseAlarms
 				+ ", wallsDamaged=" + wallsDamaged + ", lostVictims=" + lostVictims + ", savedVictims=" + savedVictims
-				+ ", remainingPoi=" + currentPoi + ", gameTerminated=" + gameTerminated + ", gameWon=" + gameWon
+				+ ", remainingPoi=" /*+ currentPoi*/ + ", gameTerminated=" + gameTerminated + ", gameWon=" + gameWon
 				+ ", activeFireFighterIndex=" + activeFireFighterIndex + ", isActiveGame=" + isActiveGame
 				+ ", matEdges=" + Arrays.toString(matEdges) + ", matTiles=" + Arrays.toString(matTiles)
 				+ ", currentTile=" + currentTile + ", availableActions=" + availableActions.stream().map(Object::toString).collect(Collectors.joining(", ")) + ", listOfFireFighter="
-				+ listOfFireFighter.stream().map(Object::toString).collect(Collectors.joining(", ")) + ", MAX_WALL_DMGD=" + MAX_WALL_DMGD + ", poiList=" + Arrays.toString(poiList)
+				+ listOfFireFighter.stream().map(Object::toString).collect(Collectors.joining(", ")) + ", MAX_WALL_DMGD=" + MAX_WALL_DMGD + ", poiList=" + poiList.stream().map(Object::toString).collect(Collectors.joining(", "))
 				+ "]";
 	}
 
@@ -698,7 +710,9 @@ public class GameState implements Serializable {
 				switch (tokenLocations[i][j]) {
 				case 1: this.matTiles[i][j].setFire(2); 
 					break;
-				case 2: this.matTiles[i][j].addPoi(new POI(true));
+				case 2: POI addition = generatePOI();
+					this.matTiles[i][j].addPoi(addition);
+					this.updatePOI(addition);
 					break;
 				}
 				

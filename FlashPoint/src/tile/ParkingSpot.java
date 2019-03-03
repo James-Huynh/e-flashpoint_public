@@ -18,6 +18,7 @@ public class ParkingSpot{
     public ParkingSpot(Vehicle type, boolean b) {
     	this.parkingType  = type;
     	this.isCar = b;
+    	this.tiles = new Tile[2];
     }
     
     public ParkingSpot(Tile[] position, Vehicle type, boolean b) {

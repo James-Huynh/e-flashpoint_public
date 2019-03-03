@@ -34,7 +34,9 @@ import edge.*;
  */
 public class GameManager {
     
-	private final GameState gs = GameState.getInstance();
+	//changes by ben
+	//private final GameState gs = GameState.getInstance();
+	private GameState gs;
 	private Set<Action> possibleActions = generateAllPossibleActions();
 	
 	// MAIN
@@ -44,6 +46,10 @@ public class GameManager {
     	gs.updateGameStateFromLobby(lobby);
     	setup();
     	doTurns();
+    }
+    
+    public GameManager(GameState input) {
+    	gs = input;
     }
     
     public void setup() {
@@ -129,6 +135,7 @@ public class GameManager {
     		
     		Edge targetEdge;
     		
+    		//checks if the wall or door that is the next edge in this direction is closed or intact. Explosion halts here
     		if(checkBarriers == true) {
     			targetEdge = targetTile.getEdge(direction);
     			
@@ -136,10 +143,7 @@ public class GameManager {
     				
     				targetEdge.destroyDoor();
     				//continue instead of break, to check the next direction but continue the explosion
-    				if(!targetEdge.getStatus()) {
-						//may need to be a continue
-							continue;
-						}
+    				continue;
     			} 
     			else if(targetEdge.isWall()) {
     				//wall is only damaged 1 for family game
@@ -148,58 +152,99 @@ public class GameManager {
     				//continue instead of break, to check the next direction but continue the explosion
     				continue;
     			}
-    			
-    			Tile tempTile = gs.getNeighbour(targetTile, direction);
-    			
-    			
-    			while(true) {
-    				if(tempTile.getFire()<2) {
-    					
-    					tempTile.increaseToFire();
-    					
-    					break;
-    				}
-    				
-    				boolean barCheck = tempTile.checkBarriers(direction);
-    				
-    				if(barCheck == true) {
-    					targetEdge = tempTile.getEdge(direction);
-    					
-    					if(targetEdge.isDoor()) {
-    						
-    						targetEdge.destroyDoor();
-    						break;
-    					} 
-    					else if(targetEdge.isWall()) {
-    						
-    						targetEdge.chop();
-    						
-    						gs.updateDamageCounter();
-    						
-    						if(!targetEdge.getStatus()) {
-    						//may need to be a continue
-    							break;
-    						}
-    					}
-    				}
-    				tempTile = gs.getNeighbour(targetTile, direction);
-    			}
     		}
+    			
+			//destroys the open door but the explosion continues through the door.
+			if(targetTile.getEdge(direction).isDoor()) {
+				if(!targetTile.getEdge(direction).isDestroyed()) {
+					targetTile.getEdge(direction).destroyDoor();
+				}
+			}
+			
+			Tile tempTile = gs.getNeighbour(targetTile, direction);
+			
+			
+			while(true) {
+				//updates final tile of explosion
+				if(tempTile.getFire()<2) {
+					
+					tempTile.setFire(2);
+					
+					break;
+				} 
+				
+				//halts the explosion from leaving the board
+				if(!tempTile.checkInterior()) {
+					break;
+				}
+				
+				boolean barCheck = tempTile.checkBarriers(direction);
+				//destroyed or damages walls in the way
+				if(barCheck == true) {
+					targetEdge = tempTile.getEdge(direction);
+					
+					if(targetEdge.isDoor()) {
+						
+						targetEdge.destroyDoor();
+						break;
+					} 
+					else if(targetEdge.isWall()) {
+						
+						targetEdge.chop();
+						
+						gs.updateDamageCounter();
+						
+						break;
+					}
+				}
+				
+				//destroys the open door if the explosion is passing through.
+				if(tempTile.getEdge(direction).isDoor()) {
+					if(!tempTile.getEdge(direction).isDestroyed()) {
+						tempTile.getEdge(direction).destroyDoor();
+					}
+				}
+				
+				//gets the next tile
+				tempTile = gs.getNeighbour(tempTile, direction);
+			}
+    		
     	}
     }
 
   //Ben and eric, ready for testing
     public void resolveFlashOver() {
         /* TODO: No message view defined */
-    	Tile targetTile = gs.returnTile(1,1);
+    	Tile targetTile = gs.returnTile(0,0);
     	int[] tempCoords = targetTile.getCoords();
-    	while(tempCoords[0] != 8 && tempCoords[1] != 10) {       // so only inner Tile count in the game right now?@Eric
+    	while(true) {       // all tiles
     		int curFire = targetTile.getFire();
-    		
-    		if(curFire == 1) {
+    		tempCoords = targetTile.getCoords();
+    		if(curFire == 1) { //checking if the tile is smokey, if so it will check adj tiles to see if it should be set on fire
     			
     			for(int direction=0; direction<4;direction++) {
+    				//checks for if the adj tiles are above/below the map
+    				if(tempCoords[0] == 0) {
+    					if(direction == 1) {
+    						continue;
+    					}
+    				} else if(tempCoords[0] == 7) {
+    					if(direction == 3) {
+    						continue;
+    					}
+    				}
+    				//checks for if the adj tiles are left or right of the map
+    				if(tempCoords[1] == 0) {
+    					if(direction == 0) {
+    						continue;
+    					}
+    				} else if(tempCoords[1] == 9) {
+    					if(direction == 2) {
+    						continue;
+    					}
+    				}
     				
+    				//checks if a barrier is in the way, if not it checks if the tile in said direction is on fire and flashes over is so
     				boolean checkBarriers = targetTile.checkBarriers(direction);
     				if(checkBarriers == false) {
     					Tile adjTile =  gs.getNeighbour(targetTile,direction);
@@ -208,18 +253,38 @@ public class GameManager {
         				if(fireCheck == 2) {
         					targetTile.setFire(2);
         					
-        					targetTile = gs.returnTile(0,1);
+        					//resets the targetTile
+        					targetTile = gs.returnTile(0,0);
         		
-        					continue;
+        					break;
         				}
     				}
     			}
-    			tempCoords = targetTile.getCoords();
-        		if(tempCoords[0] == 6 && tempCoords[1] == 8) {
+    		
+    			//halts the loop when the last tile is looked at
+        		if(tempCoords[0] == 7 && tempCoords[1] == 9) {
         			break;
         		}
-        		targetTile = gs.returnTile(tempCoords[0], tempCoords[1]);
-    		}	
+        		
+        		//selects the next tile either by getneighbour or the first column of the next row if at the end of the current
+        		if(tempCoords[1] == 9) {
+        			targetTile = gs.returnTile(tempCoords[0] + 1, 0);
+        		}else {
+        			targetTile = gs.getNeighbour(targetTile, 2);
+        		}
+        		
+    		} 
+    		//the tile being looked at is not smokey, get the next tile
+    		else {
+    			if(tempCoords[0] == 7 && tempCoords[1] == 9) {
+    				break;
+    			}
+    			if(tempCoords[1] == 9) {
+        			targetTile = gs.returnTile(tempCoords[0] + 1, 0);
+        		}else {
+        			targetTile = gs.getNeighbour(targetTile, 2);
+        		}
+    		}
     		
     	}
     	
@@ -229,7 +294,7 @@ public class GameManager {
     public void checkKnockDowns() {
         /* TODO: No message view defined */
     	//Select Tile
-    	Tile targetTile = gs.returnTile(1, 1);
+    	Tile targetTile = gs.returnTile(0, 0);
     	
     	//Check Tile contents
     	boolean containsFireFighter = targetTile.containsFirefighter();
@@ -237,26 +302,30 @@ public class GameManager {
     	
     	//cycle through all the tile, need a better check.
     	int[] coords = targetTile.getCoords();
-    	boolean check = true;
     
-    	while(check){	
+    	while(true){	
     		int curFire = targetTile.getFire();
+    		coords = targetTile.getCoords();
+    		boolean fire = false;
     		
     		//knockdown all firefighters on tiles with fire
     		
     		if(containsFireFighter == true) {
     			
     			if(curFire == 2) {
+    				fire = true;
     				ParkingSpot respawnTile = targetTile.getNearestAmbulance();
     				
     				Firefighter tempFire = targetTile.removeFirstFireFighter();
-    				
+    				Tile target = respawnTile.getTiles()[0];
     				tempFire.updateLocation(respawnTile);
+    				target.addToFirefighterList(tempFire);
     			}
     		}
     		//kill and remove all POI found on tiles with fire
     		if(containsPOI == true) {
     			if(curFire == 2) {
+    				fire = true;
     				POI tempPOI = targetTile.removeFirstPoi();
     				gs.removePOI(tempPOI);
     				if(tempPOI.isVictim()) {
@@ -270,13 +339,18 @@ public class GameManager {
         	containsPOI = targetTile.containsPOI();
         	
         	//select next tile if current tile is empty
-        	if(containsFireFighter == false && containsPOI == false) {
-        		coords = targetTile.getCoords();
-        		if(coords[0] == 6 && coords[1] == 8) {
-        			//break the loop
-        			check = false;
+        	if((!containsFireFighter && !containsPOI)|| (containsFireFighter && !fire) || (containsPOI && !fire)) {
+        		
+        		
+        		if(coords[0] == 7 && coords[1] == 9) {
+    				break;
+    			}
+    			if(coords[1] == 9) {
+        			targetTile = gs.returnTile(coords[0] + 1, 0);
+        		}else {
+        			targetTile = gs.getNeighbour(targetTile, 2);
         		}
-        		targetTile = gs.returnTile(coords[0], coords[1]);
+        		
         		containsFireFighter = targetTile.containsFirefighter();
             	containsPOI = targetTile.containsPOI();
         	}
@@ -289,7 +363,6 @@ public class GameManager {
         int currentPOI = gs.getCurrentPOI();
         while (currentPOI < 3) {
         	Tile targetTile = gs.rollForTile();
-        	POI newPOI = gs.generatePOI();
         	boolean containsPOI = targetTile.containsPOI();
         	boolean containsFireFighter = targetTile.containsFirefighter();
         	int curFire = targetTile.getFire();
@@ -297,6 +370,7 @@ public class GameManager {
         		//could skip this if else and just set fire to 0 every time, could also write this to check tile and so on and only add the poi if the tile does not contain a firefighter or if it does and the poi is a victim.
         		if(curFire != 0) {
         			targetTile.setFire(0);
+        			POI newPOI = gs.generatePOI();
         			targetTile.addPoi(newPOI);
         			gs.updatePOI(newPOI);
         			
@@ -306,11 +380,11 @@ public class GameManager {
         					//change to remove POI
         					targetTile.removeFromPoiList(newPOI);
         					gs.removePOI(newPOI);
-        					newPOI.destroy();
         				}
         			}
         		}
         		else if(curFire == 0) {
+        			POI newPOI = gs.generatePOI();
         			targetTile.addPoi(newPOI);
         			gs.updatePOI(newPOI);
         			if(containsFireFighter == true) {
@@ -323,8 +397,8 @@ public class GameManager {
         				}
         			}
         		}
-        		currentPOI = gs.getCurrentPOI();
         	}
+        	currentPOI = gs.getCurrentPOI();
         }
     }
 
@@ -338,14 +412,14 @@ public class GameManager {
     	int curFire = targetTile.getFire();
     	
     	if(curFire < 2) {
-    		targetTile.increaseToFire();
+    		targetTile.setFire(2);
     	}
     	  else {
     		explosion(targetTile);
     	}
-    	resolveFlashOver();
-    	checkKnockDowns();
-    	placePOI();
+//    	resolveFlashOver();
+//    	checkKnockDowns();
+//    	placePOI();
     	
     	
     	int wallCheck = gs.getDamageCounter();//should this running the same time with the main process? @Eric
@@ -431,11 +505,11 @@ public class GameManager {
         /* TODO: No message view defined */
     }
     
-    public static void main(String[] args) {
-    	GameManager gm = new GameManager();
-    	gm.runFlashpoint();
-//    	gm.gs.toString();
-    	
-    }
+//    public static void main(String[] args) {
+//    	GameManager gm = new GameManager();
+//    	gm.runFlashpoint();
+////    	gm.gs.toString();
+//    	
+//    }
  
 }

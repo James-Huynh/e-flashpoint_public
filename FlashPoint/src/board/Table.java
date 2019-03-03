@@ -8,6 +8,7 @@ import game.GameState;
 import tile.Tile;
 import token.Colour;
 import token.Firefighter;
+import token.Vehicle;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -48,6 +49,8 @@ public class Table {
 		private static Color tileColorWhite = Color.decode("#FFFFFF");
 		private Color tileColorBlack = Color.decode("#000000");
 		private Color tileColorGreen = Color.decode("#00900B");
+		private Color tileColorAmbulance = Color.decode("#05E1FF");
+		private Color tileColorEngine = Color.decode("#FFFF05");
 		
 		public Table(GameState inputBoard) {
 			this.currentBoard = inputBoard;
@@ -401,97 +404,6 @@ public class Table {
 				}
 				
 			}
-			
-			
-//			private void assingTileWall() {
-//				Border blackline = BorderFactory.createLineBorder(tileColorBlack);
-//				
-//				final JPanel wall = new JPanel();
-//				wall.setBackground(tileColorGrey);
-////				wall.setBorder(blackline);
-//				
-//				final JPanel wall2 = new JPanel();
-//				wall2.setBackground(tileColorGrey);
-////				wall2.setBorder(blackline);
-////				
-////				final JPanel wall3 = new JPanel();
-////				wall3.setBackground(tileColorGrey);
-//////				wall3.setBorder(blackline);
-////				
-////				final JPanel wall4 = new JPanel();
-////				wall4.setBackground(tileColorGrey);
-//////				wall4.setBorder(blackline);
-//				
-//				if(this.tileId/10 == 0 || this.tileId/10 == 7 || this.tileId%10 == 9 || this.tileId%10 == 0) {
-//					if(this.tileId/10 == 0 && (this.tileId%10 != 9 && this.tileId%10 != 0) ) {
-//						add(wall, BorderLayout.SOUTH);
-//					} else if(this.tileId/10 == 7 && (this.tileId%10 != 9 && this.tileId%10 != 0)) {
-//						add(wall, BorderLayout.NORTH);
-//					}
-//					if(this.tileId/10 != 0 && this.tileId/10 != 7 && (this.tileId%10 == 9 && this.tileId%10 != 7) ) {
-//						add(wall, BorderLayout.WEST);
-//					} else if(this.tileId/10 != 0 && this.tileId/10 != 7 && this.tileId%10 == 0 && this.tileId%10 != 7) {
-//						add(wall, BorderLayout.EAST);
-//					}
-//				} else if(this.tileId/10 == 1 || this.tileId/10 == 6 || this.tileId%10 == 8 || this.tileId%10 == 1){
-//					if(this.tileId/10 == 1) {
-//						add(wall, BorderLayout.NORTH);
-//					} else if(this.tileId/10 == 6) {
-//						add(wall, BorderLayout.SOUTH);
-//					}
-//					if(this.tileId%10 == 1) {
-//						add(wall2, BorderLayout.WEST);
-//					} else if(this.tileId%10 == 8) {
-//						add(wall2, BorderLayout.EAST);
-//					}
-//				}else if(this.tileId == 45) {
-//					try {
-//						final BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORBOT.gif"));
-//						final BufferedImage imageWallDAM = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DAMAGED.gif"));
-//						final BufferedImage imageWallDES = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DESTROYED.gif"));
-//						add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
-//						add(new JLabel(new ImageIcon(imageWallDES)), BorderLayout.SOUTH);
-//						add(new JLabel(new ImageIcon(imageWallDAM)), BorderLayout.EAST);
-//						
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}else if(this.tileId == 46) {
-//					try {
-//						BufferedImage imageWallDAM = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DAMAGED.gif"));
-//						add(new JLabel(new ImageIcon(imageWallDAM)), BorderLayout.WEST);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					
-//				}else if(this.tileId == 55) {
-//					try {
-//						BufferedImage imageWallDES = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DESTROYED.gif"));
-//						add(new JLabel(new ImageIcon(imageWallDES)), BorderLayout.NORTH);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					
-//				}else if(this.tileId == 35) {
-//					try {
-//						BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORTOP.gif"));
-//						add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					
-//				}else {
-////					add(wall, BorderLayout.NORTH);
-////					add(wall2, BorderLayout.EAST);
-////					add(wall3, BorderLayout.SOUTH);
-////					add(wall4,BorderLayout.WEST);
-//				}
-//				
-//			}
 		}
 		
 		private class TilePanel extends JPanel {
@@ -593,65 +505,18 @@ public class Table {
 				}
 			}
 			
-			
-//			private void assignTilePieceIcon() {
-//				this.removeAll();
-//				if(this.tileId/10 == 0 || this.tileId/10 == 7 || this.tileId%10 == 9 || this.tileId%10 == 0) {
-//
-//				} else {
-//					if(pieceLayout[this.tileId] == 1) {
-//						try {
-//							final BufferedImage image = ImageIO.read(new File(defaultImagesPath + "GREEN_FIREMAN.gif"));
-//							add(new JLabel());
-//							add(new JLabel(new ImageIcon(image)));
-//							add(new JLabel());
-//							add(new JLabel());	
-//						} catch (IOException e) {
-//							e.printStackTrace();
-//						}
-//					} else if (pieceLayout[this.tileId] == 2) {
-//						try {
-//							final BufferedImage image2 = ImageIO.read(new File(defaultImagesPath + "VICTIM.gif"));
-//							add(new JLabel(new ImageIcon(image2)));	
-//							add(new JLabel());
-//							add(new JLabel());	
-//							add(new JLabel());
-//						} catch (IOException e) {
-//							e.printStackTrace();
-//						}
-//					} else if (pieceLayout[this.tileId] == 3) {
-//						try {
-//							final BufferedImage image = ImageIO.read(new File(defaultImagesPath + "BLACK_FIREMAN.gif"));
-//							final BufferedImage image2 = ImageIO.read(new File(defaultImagesPath + "POI.gif"));
-//							add(new JLabel(new ImageIcon(image2)));	
-//							add(new JLabel(new ImageIcon(image)));
-//							add(new JLabel());
-//							add(new JLabel());	
-//						} catch (IOException e) {
-//							e.printStackTrace();
-//						}
-//					} else {
-//						
-//					}
-//				}
-//				
-////				if(board.getTile(this.tileId).isTileOccupied()) {
-////					String pieceIconPath = "";
-////					try {
-////						final BufferedImage image = ImageIO.read(new File());
-////						add(new JLabel(new ImageIcon(image)));	
-////					} catch (IOException e) {
-////						e.printStackTrace();
-////					}
-////				}
-//			
-//			}
+		
 
 			private void assignFires(){
 				if(connectedTile.checkInterior()) {
 					setBackground(tileColorWhite);
 				} else {
 					setBackground(tileColorGreen);
+					if(connectedTile.getParkingType() == Vehicle.Engine) {
+						setBackground(tileColorEngine);
+					}else if(connectedTile.getParkingType() == Vehicle.Ambulance) {
+						setBackground(tileColorAmbulance);
+					}
 				}
 				if(connectedTile.getFire() == 1) {
 					setBackground(tileColorGrey);
@@ -660,20 +525,6 @@ public class Table {
 				} 
 			}
 			
-//			private void assignTileColour() {
-//				if(fireLayout[this.tileId] == 1) {
-//					setBackground(tileColorRed);
-//				}else if(fireLayout[this.tileId] == 2) {
-//					setBackground(tileColorGrey);
-//				}else {
-//					if(this.tileId/10 == 0 || this.tileId/10 == 7 || this.tileId%10 == 9 || this.tileId%10 == 0) {
-//						setBackground(tileColorGreen);
-//					} else {
-//						setBackground(tileColorWhite);
-//					}
-//				}				
-//				
-//			}
 		}
 		
 		public static int[] calculateTileCoords(int tileId) {
@@ -684,7 +535,7 @@ public class Table {
 			return result;
 		}
 		
-		public static void showPopUpMenu(Component component, int x, int y) {
+		public static void showPopUpMenu(/*GameState currentBoard,*/ Component component, int x, int y) {
 			JPopupMenu popupMenu = new JPopupMenu();
 			 JMenu moveMenu = new JMenu("move");
 		     JMenu editMenu = new JMenu("extinguish"); 
@@ -716,12 +567,12 @@ public class Table {
 				}
 			});
 	        
-	        JMenuItem pasteMenuItem = new JMenuItem("chop walls");
-	        pasteMenuItem.addActionListener(new ActionListener() {
+	        JMenuItem endTurn = new JMenuItem("end turn");
+	        endTurn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					System.out.println("chop walls");
+//					currentBoard.advancefire();
 				}
 			});
 	         
@@ -747,7 +598,7 @@ public class Table {
 	        moveMenu.add(moveright);
 	        moveMenu.add(movedown);
 	        moveMenu.add(moveleft);
-	        popupMenu.add(pasteMenuItem);
+	        popupMenu.add(endTurn);
 	        popupMenu.addSeparator();
 	        popupMenu.add(moveMenu);
 	        popupMenu.addSeparator();

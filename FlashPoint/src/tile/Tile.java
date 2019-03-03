@@ -141,6 +141,10 @@ public class Tile{
     	this.ParkingType = parkingType;
     }
     
+    public Vehicle getParkingType() {
+    	return this.ParkingType;
+    }
+    
     public void setParkingSpot(ParkingSpot pointerParkingSpot) {
     	this.pointerParkingSpot = pointerParkingSpot;
     }
@@ -156,9 +160,19 @@ public class Tile{
 
     public boolean checkBarriers(int direction) {
         /* TODO: No message view defined */
-    	if(this.getEdge(direction).isDoor()) {
+    	if(this.getEdge(direction).isWall()) {
+    		if(this.getEdge(direction).getDamage() == 2) {
+    			return false;
+    		}
     		return true;
-    	}else if(this.getEdge(direction).isWall()) {
+    	}
+    	//Doors do not stop explosions
+    	else if(this.getEdge(direction).isDoor()) {
+    		if(this.getEdge(direction).isDestroyed()) {
+    			return false;
+    		} else if(this.getEdge(direction).getStatus()) {
+    			return false;
+    		}
     		return true;
     	}
         return false;
