@@ -196,7 +196,7 @@ public class GameState implements Serializable {
 	}
 
 	public ArrayList<Firefighter> getFireFighterList() {
-		return getFireFighterList();
+		return this.listOfFirefighters;
 	}
 
 	public Firefighter getPlayingFirefighter() {
