@@ -17,7 +17,7 @@ import java.awt.Color;
  * 
  * @author zaidyahya
  *The main launcher of the game. Responsible for inserting/removing panels
- *Holds a frame, and uses panels to display 'pages' (i.e. login/menu/game)
+ *Holds a frame, and uses panels to display 'pages' (i.e. login/menu/game etc)
  */
 public class Launcher {
 
