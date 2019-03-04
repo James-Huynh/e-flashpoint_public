@@ -3,6 +3,7 @@ package gui;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.text.JTextComponent;
 
 import game.GameState;
 import tile.Tile;
@@ -63,7 +64,7 @@ public class Table {
 			//this.gameFrame.setJMenuBar(tableMenuBar);
 			this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
 			this.boardPanel = new BoardPanel();
-			this.rightPanel = new RightPanel();
+			this.rightPanel = new RightPanel(this.currentBoard);
 			this.leftPanel = new LeftPanel(this.currentBoard);
 			this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
 			this.gameFrame.add(this.rightPanel, BorderLayout.EAST);
@@ -104,25 +105,60 @@ public class Table {
 		}
 		
 		private class RightPanel extends JPanel {
-			RightPanel(){
-				super(new BorderLayout());
+			GameState currentBoard;
+			InformationPanel infoPanel;
+			RightPanel(GameState updatedBoard){
+				super(new GridLayout(2,1));
 				setPreferredSize(RIGHT_PANEL_DIMENSION);
-				JTextArea textArea = new JTextArea();
-				textArea.setLineWrap(true);
-				JTextField textField = new JTextField();
+				currentBoard = updatedBoard;
+				JTextArea chatArea = new JTextArea();
+				chatArea.setLineWrap(true);
+				JTextField chatField = new JTextField();
 				
-				try {
-					final BufferedImage leftImage = ImageIO.read(new File(defaultImagesPath + "RIGHT_TOP.gif"));
-					add(new JLabel(new ImageIcon(leftImage)), BorderLayout.NORTH);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				infoPanel = new InformationPanel(currentBoard);
+				add(infoPanel);
 				
-				add(textArea, BorderLayout.SOUTH);
+				add(chatArea);
 				
 				
 				validate();
+			}
+		}
+		
+		private class InformationPanel extends JPanel{
+			GameState currentBoard;
+			InformationPanel(GameState updatedBoard){
+				super(new GridLayout());
+				setLayout(new GridLayout(6,1));
+				this.currentBoard = updatedBoard;
+				for(int i = 0; i<this.currentBoard.getFireFighterList().size(); i++) {
+					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
+					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() + "  Saved Ap: " + currentFF.getSavedAP());
+					String inputString;
+					if(this.currentBoard.getActiveFireFighterIndex() == i) {
+						inputString = "<html> <font size=\"5\">" + playerInfo + "</font></html>";
+					} 
+					else if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
+						inputString = "<html> <font color='red'>" + playerInfo + "</font></html>";
+					} else {
+						inputString = "<html>"  + playerInfo + "</html>";
+					}
+					
+					add(new JLabel(inputString));
+					
+//					JTextArea nextPlayer = new JTextArea(playerInfo);
+//					nextPlayer.setEditable(false);
+//					//can be used to show which player blongs to this client
+//					if(this.currentBoard.getActiveFireFighterIndex() == i) {
+//						nextPlayer.setFont(new Font("Serif", Font.ITALIC, 16));	
+//					} 
+//					if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
+//						
+//					}
+//					
+//					add(nextPlayer);
+					
+				}
 			}
 		}
 		

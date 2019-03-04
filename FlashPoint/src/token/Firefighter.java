@@ -1,5 +1,6 @@
 package token;
 
+import java.io.File;
 import java.util.*;
 
 import server.Player;
@@ -59,6 +60,10 @@ public class Firefighter extends Token {
 	
 	public int getSavedAP() {
 		return this.savedAP;
+	}
+	
+	public Player getOwner() {
+		return this.myPlayer;
 	}
 	
 	
