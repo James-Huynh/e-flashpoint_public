@@ -469,8 +469,9 @@ public class Table {
 				this.removeAll();
 				if(this.connectedTile.containsPOI()) {
 					if(this.connectedTile.getPoiList().get(0).isRevealed()) {
+						int numberPOI = this.connectedTile.getPoiList().size();
 						try {
-							final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "VICTIM.gif"));
+							final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "VICTIM_"+ numberPOI + ".gif"));
 							add(new JLabel(new ImageIcon(POIimage)));	
 						} catch (IOException e) {
 							e.printStackTrace();

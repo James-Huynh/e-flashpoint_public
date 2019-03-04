@@ -40,6 +40,7 @@ public class gameTest {
 		current.resolveFlashOver();
 		current.checkKnockDowns();
 		current.placePOI();
+		current.generateAllPossibleActions();
 //		current.advanceFire();
 //		current.explosion(targetTile);
 //		current.explosion(targetTile);
