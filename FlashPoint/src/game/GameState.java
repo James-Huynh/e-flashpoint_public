@@ -41,8 +41,8 @@ public class GameState implements Serializable {
 	protected int currentTile; // ??
 	protected ArrayList<Action> availableActions;
 	
-
-	protected ArrayList<Firefighter> listOfFireFighter;
+	protected ArrayList<Player> listOfPlayers; //unsure if we need this as long as we have the firefighters, but the player indexes will match the fireFighters for games where players do not double up
+	protected ArrayList<Firefighter> listOfFirefighters;
 	public int MAX_WALL_DMGD = 24;
 	protected ArrayList<POI> poiList; //@matekrk: this is important (fixed array) it is on purpose. 
 	//you can't remove poi so easily. you need to replace with new one!
@@ -102,7 +102,7 @@ public class GameState implements Serializable {
 		matTiles = gs1.matTiles;
 		currentTile = gs1.currentTile;
 		availableActions = gs1.availableActions;
-		listOfFireFighter = gs1.listOfFireFighter;
+		listOfFirefighters = gs1.listOfFirefighters;
 		MAX_WALL_DMGD = gs1.MAX_WALL_DMGD;
 		poiList = gs1.poiList; 	
 	}
@@ -120,25 +120,26 @@ public class GameState implements Serializable {
 	//ASSUME FOR DEMO THAT LOBBY GIVES ME ALWAYS FAMILY SETTINGS AND I HAVE LIST OF USERS
 	//added in basic family setting inits - ben
 	public void updateGameStateFromLobby(Lobby lobby) {
-		remainingVictims = 10;
-		remainingFalseAlarms = 5;
-		wallsDamaged = 0;
-		lostVictims = 0;
-		savedVictims = 0;
-		//currentPoi = 0;
-		gameTerminated = false;
-		gameWon = false;
-		activeFireFighterIndex = 0;
-		isActiveGame = true;
-		matEdges = new Edge[21][9];
-		matTiles = new Tile[8][10];
-		poiList = new ArrayList<POI>();
+		this.remainingVictims = 10;
+		this.remainingFalseAlarms = 5;
+		this.wallsDamaged = 0;
+		this.lostVictims = 0;
+		this.savedVictims = 0;
+		this.gameTerminated = false;
+		this.gameWon = false;
+		this.activeFireFighterIndex = 0;
+		this.isActiveGame = true;
+		this.matEdges = new Edge[21][9];
+		this.matTiles = new Tile[8][10];
+		this.poiList = new ArrayList<POI>();
 		createAmbulances();
 		createEnginge();
 		initializeTiles();
 		setClosest();
 		initializeEdges(lobby.getTemplate().getEdgeLocations());
 		initializeBasicTokens(lobby.getTemplate().getTokenLocations());
+		this.listOfPlayers = lobby.getPlayers();
+		setFirefighters();
 		
 	}
 
@@ -200,7 +201,7 @@ public class GameState implements Serializable {
 
 	public Firefighter getPlayingFirefighter() {
 		/* TODO: No message view defined */
-		return listOfFireFighter.get(activeFireFighterIndex);
+		return listOfFirefighters.get(activeFireFighterIndex);
 	}
 
 	public int getActiveFireFighterIndex() {
@@ -306,6 +307,18 @@ public class GameState implements Serializable {
 //		for (ParkingSpot forEngine : engines) {
 //			forEngine = new ParkingSpot(Vehicle.Engine, false);
 //		}
+	}
+	
+	public void setFirefighters() {
+		this.listOfFirefighters = new ArrayList<Firefighter>();
+		for(int i = 0; i<listOfPlayers.size(); i++) {
+			if(this.listOfPlayers.get(i) != null) {
+				Firefighter tempFirefighter = new Firefighter(this.listOfPlayers.get(i).getColour());
+				tempFirefighter.setPlayer(this.listOfPlayers.get(i));
+				this.listOfPlayers.get(i).setFirefighter(tempFirefighter);
+				this.listOfFirefighters.add(tempFirefighter);
+			}
+		}
 	}
 	
 	/**
@@ -676,7 +689,7 @@ public class GameState implements Serializable {
 				+ ", activeFireFighterIndex=" + activeFireFighterIndex + ", isActiveGame=" + isActiveGame
 				+ ", matEdges=" + Arrays.toString(matEdges) + ", matTiles=" + Arrays.toString(matTiles)
 				+ ", currentTile=" + currentTile + ", availableActions=" + availableActions.stream().map(Object::toString).collect(Collectors.joining(", ")) + ", listOfFireFighter="
-				+ listOfFireFighter.stream().map(Object::toString).collect(Collectors.joining(", ")) + ", MAX_WALL_DMGD=" + MAX_WALL_DMGD + ", poiList=" + poiList.stream().map(Object::toString).collect(Collectors.joining(", "))
+				+ listOfFirefighters.stream().map(Object::toString).collect(Collectors.joining(", ")) + ", MAX_WALL_DMGD=" + MAX_WALL_DMGD + ", poiList=" + poiList.stream().map(Object::toString).collect(Collectors.joining(", "))
 				+ "]";
 	}
 

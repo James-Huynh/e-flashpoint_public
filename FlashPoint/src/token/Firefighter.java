@@ -20,6 +20,7 @@ public class Firefighter extends Token {
 	protected POI victim;
 	//protected Player owner;
 	protected Colour myColour;
+	protected Player myPlayer;
 	
 	public Firefighter(/*Player newOwner*/Colour setColour) {
 		//this.owner = newOwner;
@@ -82,12 +83,18 @@ public class Firefighter extends Token {
 	public void setVictim(POI victim) {
 		this.victim = victim;
 	}
-
+	
+	public void setPlayer(Player player) {
+		// TODO Auto-generated method stub
+		this.myPlayer = player;
+	}
 
 	@Override
 	public String toString() {
 		return "Firefighter [AP=" + AP + ", savedAP=" + savedAP + ", carryingVictim=" + carryingVictim + ", victim="
 				+ victim.toString() + "]";
 	}
+
+	
 
 }

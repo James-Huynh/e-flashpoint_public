@@ -22,6 +22,7 @@ public class Lobby {
 		protected int[][] tokenLocations = new int[10][8];
 		protected int[][] edgeLocations = new int[30][30] ; 	// subject to change
 		protected ArrayList<Player> players;
+		protected ArrayList<token.Colour> assignableColours;
 		protected String type;
 		private TemplateGame template;
 
@@ -29,17 +30,33 @@ public class Lobby {
 		public Lobby(){
 			
 			//dummy
-			ArrayList<Player> playingPlayers = new ArrayList<Player>(3);
-	    	playingPlayers.add(new Player("Matekrk", "Cuba123"));
-	    	playingPlayers.add(new Player("Zaid", "zeroOneTwoThree"));
-	    	playingPlayers.add(new Player("Tester", "myPassword"));
+			players = new ArrayList<Player>();
+//			ArrayList<Player> playingPlayers = new ArrayList<Player>(3);
+	    	players.add(new Player("Matekrk", "Cuba123"));
+	    	players.add(new Player("Zaid", "zeroOneTwoThree"));
+	    	players.add(new Player("Tester", "myPassword"));
 	    	type = "Family";
 	    	if(type.equals("Family")) {
 	    		template = new FamilyGame();
 	    	}
+	    	assignColours();
 			
 		}
 
+		public void assignColours(){
+			assignableColours = new ArrayList<token.Colour>();
+			assignableColours.add(token.Colour.GREEN);
+			assignableColours.add(token.Colour.BLACK);
+			assignableColours.add(token.Colour.WHITE);
+			assignableColours.add(token.Colour.RED);
+			assignableColours.add(token.Colour.PURPLE);
+			assignableColours.add(token.Colour.BLUE);
+			for(int i = 0; i<players.size(); i++) {
+				if(this.players.get(i) != null) {
+					this.players.get(i).setColour(this.assignableColours.get(i));
+				}
+			}
+		}
 
 		public boolean isClickable() {
 			return isClickable;
