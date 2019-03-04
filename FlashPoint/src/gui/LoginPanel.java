@@ -1,6 +1,5 @@
-package board;
+package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,6 +13,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.event.EventListenerList;
+
+import personalizedlisteners.LoginListener;
 /**
  * Class representing the login page. 
  * Panel size corresponds to dimensions specified for 'Central' panel in Launcher.java
@@ -21,7 +23,7 @@ import javax.swing.SwingConstants;
  * 	 for login are inside that panel, so easy to move around if need to be changed
  * 		--All attributes global
  * 		--Sub method'ed as much as possible
- * @author zaidyahya
+ * @author zaidyahya & James
  */
 public class LoginPanel extends JPanel {
 
@@ -35,8 +37,9 @@ public class LoginPanel extends JPanel {
 	private JPanel inputPanel;
 	private JPanel headerPanel;
 	private JLabel headerLabel;
-	
-	
+
+	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
+
 	/**
 	 * Create the panel.
 	 */
@@ -45,11 +48,11 @@ public class LoginPanel extends JPanel {
 		//setPreferredSize(panelDimension);  /* Not working */
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
-		
+
 		createHeaderPanel();
 		createInputPanel();
 	}
-	
+
 	private void createHeaderPanel() {
 		headerPanel = new JPanel();
 		headerPanel.setLayout(null);
@@ -57,12 +60,12 @@ public class LoginPanel extends JPanel {
 		createHeader();
 		this.add(headerPanel);
 	}
-	
+
 	private void createInputPanel() {
 		inputPanel = new JPanel();
 		inputPanel.setBounds(187, 229, 439, 286);
 		inputPanel.setLayout(null);
-		
+
 		//this.add(inputPanel);
 		createLoginFields();
 		createLoginButton();
@@ -71,19 +74,19 @@ public class LoginPanel extends JPanel {
 		this.add(inputPanel);
 
 	}
-	
+
 	private void createLoginFields() {
 		usrLabel = new JLabel("Username");
 		usrLabel.setFont(new Font("Copperplate", Font.PLAIN, 20));
 		usrLabel.setBounds(52, 31, 103, 37);
 		inputPanel.add(usrLabel);
-		
+
 		userNameField = new JTextField();
 		userNameField.setFont(new Font("Avenir", Font.PLAIN, 13));
 		userNameField.setBounds(230, 33, 183, 35);
 		inputPanel.add(userNameField);
 		userNameField.setColumns(10);
-		
+
 		password = new JPasswordField(10);
 		password.setBounds(230, 80, 183, 35);
 		inputPanel.add(password);
@@ -93,16 +96,17 @@ public class LoginPanel extends JPanel {
 		pwdLabel.setBounds(52, 80, 103, 37);
 		inputPanel.add(pwdLabel);
 	}
-	
+
 	private void createLoginButton() {
 		loginBtn = new JButton("Login");
 		loginBtn.setFont(new Font("Avenir", Font.PLAIN, 20));
 		loginBtn.setBounds(89, 182, 117, 35);
 		inputPanel.add(loginBtn);
-		
+
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Login Clicked");
+				//System.out.println("Login Clicked");
+				raiseEventLoginBtn(); // James
 				//Server request will be made here
 				//Will create the tranObject and insert the info contained in 'password' and 'userNameField'
 			}
@@ -114,7 +118,7 @@ public class LoginPanel extends JPanel {
 		registerBtn.setFont(new Font("Avenir", Font.PLAIN, 20));
 		registerBtn.setBounds(245, 182, 117, 35);
 		inputPanel.add(registerBtn);
-		
+
 		registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Register Clicked");
@@ -128,9 +132,9 @@ public class LoginPanel extends JPanel {
 		tglBtn.setSelected(true);
 		tglBtn.setBounds(171, 141, 117, 29);
 		inputPanel.add(tglBtn);
-	
+
 	}
-	
+
 	private void createHeader() {
 		headerLabel = new JLabel("FLASHPOINT");
 		headerLabel.setBounds(6, 20, 622, 84);
@@ -139,11 +143,37 @@ public class LoginPanel extends JPanel {
 		headerLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 90));
 		headerPanel.add(headerLabel);
 	}
+
+	// James
+	/**
+	 * Register an object to be a listener
+	 * @param obj
+	 */
+	public void addSelectionPiecesListenerListener(LoginListener obj) {
+		REGISTERED_OBJECTS.add(LoginListener.class, obj);
+	}
+
+	// James
+	/**
+	 * Raise an event: the login button has been clicked
+	 */
+	private void raiseEventLoginBtn() {
+		for (LoginListener listener: REGISTERED_OBJECTS.getListeners(LoginListener.class)) {
+			listener.clickLogin();
+		}
+	}
 	
+
 	public JPanel getLoginPanel() {
 		return this;
 	}
 	
-	
+	public String getUsername() {
+		return this.userNameField.getText();
+	}
+
+	public char[] getPassword() {
+		return this.password.getPassword();
+	}
 
 }

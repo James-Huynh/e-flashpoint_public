@@ -1,4 +1,4 @@
-package gui;
+package old_interface;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -43,6 +43,7 @@ public class RunFlashPoint {
 	private JPanel createLobbySuperPanel;
 	private JPanel findLobbySuperPanel;
 	private JPanel lobbyPageSuperPanel;
+
 	
 	private JPanel panel_PlayersDisplay;
 	private JButton btnBackToMain;

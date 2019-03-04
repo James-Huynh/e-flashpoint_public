@@ -1,8 +1,8 @@
-package board;
+package gui;
 
-import board.Table;
 import game.FamilyGame;
 import game.GameState;
+import gui.Table;
 import lobby.Lobby;
 import managers.GameManager;
 import server.Player;
