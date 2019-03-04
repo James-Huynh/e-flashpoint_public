@@ -34,6 +34,7 @@ public class Launcher {
 	private JMenuBar tableMenuBar = new JMenuBar();
 
 	private LoginPanel login;
+	private MainMenuPanel mainMenu;
 
 	String username;
 	char[] password;
@@ -89,6 +90,7 @@ public class Launcher {
 		setupLoginPage();
 
 	}
+	
 
 	private void setupDummies() {
 		dummyCenterPanel.setBackground(Color.YELLOW);
@@ -155,6 +157,7 @@ public class Launcher {
 				if (validateCredentials() == true) {
 					login.setVisible(false);
 					motherFrame.remove(login);
+					setupMainMenuPage();
 				} else {
 					System.out.println("Invalid Credentials");
 				}
@@ -166,6 +169,19 @@ public class Launcher {
 		contentPane.remove(dummyCenterPanel);
 		contentPane.add(login.getLoginPanel(), BorderLayout.CENTER);
 		// @Zaid: from James, I think the getLoginPanel is redundant since login is already the panel we need
+	}
+	//	------------------------------- LOGIN 
+	
+	
+// James
+	/**
+	 * 
+	 */
+	private void setupMainMenuPage() {
+		mainMenu = new MainMenuPanel();
+		
+		
+		contentPane.add(mainMenu);
 	}
 
 
