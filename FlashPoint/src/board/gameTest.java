@@ -37,11 +37,11 @@ public class gameTest {
 		tester.returnTile(4, 5).setFire(1);
 		tester.returnTile(2, 4).setFire(2);
 		tester.returnTile(4, 6).setFire(1);
-		current.resolveFlashOver();
-		current.checkKnockDowns();
-		current.placePOI();
-		current.generateAllPossibleActions();
-//		current.advanceFire();
+//		current.resolveFlashOver();
+//		current.checkKnockDowns();
+//		current.placePOI();
+//		current.generateAllPossibleActions();
+		current.advanceFire();
 //		current.explosion(targetTile);
 //		current.explosion(targetTile);
 //		current.explosion(targetTile);

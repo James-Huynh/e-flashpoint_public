@@ -574,10 +574,13 @@ public class GameState implements Serializable {
 	 */
 
 	public Tile rollForTile() {
-		//random:
+		//random: should only ever be an interior tile
 		Random r = new Random();
-		int i = r.nextInt(matTiles.length);
-		int j = r.nextInt(matEdges[0].length);
+		//generates a row [1,6]
+		int i = r.nextInt(6) + 1;
+		//generates a column [1,8]
+		int j = r.nextInt(8) + 1;
+		
 		return returnTile(i,j);
 	}
 

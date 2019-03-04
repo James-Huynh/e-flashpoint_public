@@ -417,9 +417,9 @@ public class GameManager {
     	  else {
     		explosion(targetTile);
     	}
-//    	resolveFlashOver();
-//    	checkKnockDowns();
-//    	placePOI();
+    	resolveFlashOver();
+    	checkKnockDowns();
+    	placePOI();
     	
     	
     	int wallCheck = gs.getDamageCounter();//should this running the same time with the main process? @Eric
