@@ -44,8 +44,11 @@ public class GameState implements Serializable {
 	protected ArrayList<Player> listOfPlayers; //unsure if we need this as long as we have the firefighters, but the player indexes will match the fireFighters for games where players do not double up
 	protected ArrayList<Firefighter> listOfFirefighters;
 	public int MAX_WALL_DMGD = 24;
-	protected ArrayList<POI> poiList; //@matekrk: this is important (fixed array) it is on purpose. 
-	//you can't remove poi so easily. you need to replace with new one!
+	protected ArrayList<POI> poiList; // no longer fixed, you can have less than 3 at any one time but no more than 3 will ever be generated and added to the board.
+	protected ArrayList<POI> lostVictimsList;
+	protected ArrayList<POI> savedVictimsList;
+	protected ArrayList<POI> revealedFalseAlarmsList;
+	
 	private static final long serialVersionUID = 1L; //serialization
 
 
@@ -132,6 +135,9 @@ public class GameState implements Serializable {
 		this.matEdges = new Edge[21][9];
 		this.matTiles = new Tile[8][10];
 		this.poiList = new ArrayList<POI>();
+		this.revealedFalseAlarmsList = new ArrayList<POI>();
+		this.lostVictimsList = new ArrayList<POI>();
+		this.savedVictimsList = new ArrayList<POI>();
 		createAmbulances();
 		createEnginge();
 		initializeTiles();
@@ -198,6 +204,8 @@ public class GameState implements Serializable {
 	public ArrayList<Firefighter> getFireFighterList() {
 		return this.listOfFirefighters;
 	}
+	
+	
 
 	public Firefighter getPlayingFirefighter() {
 		/* TODO: No message view defined */
@@ -206,6 +214,16 @@ public class GameState implements Serializable {
 
 	public int getActiveFireFighterIndex() {
 		return activeFireFighterIndex;
+	}
+	
+	public ArrayList<POI> getLostVictimsList(){
+		return this.lostVictimsList;
+	}
+	public ArrayList<POI> getSavedVictimsList(){
+		return this.savedVictimsList;
+	}
+	public ArrayList<POI> getRevealedFalseAlarmsList(){
+		return this.revealedFalseAlarmsList;
 	}
 
 	public int getDamageCounter() {
@@ -249,14 +267,21 @@ public class GameState implements Serializable {
 //		}
 	}
 
-	public void updateSavedCount() {
+	public void updateSavedCount(POI savedPoi) {
 		savedVictims++;
+		this.savedVictimsList.add(savedPoi);
 	}
 
-	public void updateLostCount() {
+	public void updateLostCount(POI lostPoi) {
 		lostVictims++;
+		this.lostVictimsList.add(lostPoi);
 	}
 
+	public void updateRevealPOI(POI inputPOI) {
+		// TODO Auto-generated method stub
+		this.revealedFalseAlarmsList.add(inputPOI);
+	}
+	
 	public void setIsActiveGame(boolean isActiveGame) {
 		this.isActiveGame = isActiveGame;
 	}
@@ -621,6 +646,7 @@ public class GameState implements Serializable {
 		return newPOI;
 	}
 
+	//unused method
 	public void newPOI(POI toBeAdded) {
 		for (POI po : poiList) {
 			if (po == null) {
@@ -738,5 +764,8 @@ public class GameState implements Serializable {
 		
 		
 	}
+
+
+	
 
 }

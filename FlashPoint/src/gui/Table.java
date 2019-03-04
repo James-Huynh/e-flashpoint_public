@@ -30,8 +30,6 @@ public class Table {
 		private final LeftPanel leftPanel;
 		private final GameState currentBoard;
 		private final Tile[][] gameTiles;
-		private final int[] fireLayout = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,2,1,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-		private final int[] pieceLayout = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,2,0,1,0,0,2,0,0,2,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		
 		
 		
@@ -40,6 +38,9 @@ public class Table {
 		private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(1000,800);
 		private final static Dimension RIGHT_PANEL_DIMENSION = new Dimension(300,800);
 		private final static Dimension LEFT_PANEL_DIMENSION = new Dimension(200,800);
+		private final static Dimension NORTH_LEFT_PANEL_DIMENSION = new Dimension(200, 300);
+		private final static Dimension CENTER_LEFT_PANEL_DIMENSION = new Dimension(200, 300);
+		private final static Dimension SOUTH_LEFT_PANEL_DIMENSION = new Dimension(200, 300);
 		private final static Dimension SUPERTILE_PANEL_DIMENSION = new Dimension(40,40);
 		private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
 		private static String defaultImagesPath = "img/";
@@ -63,7 +64,7 @@ public class Table {
 			this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
 			this.boardPanel = new BoardPanel();
 			this.rightPanel = new RightPanel();
-			this.leftPanel = new LeftPanel();
+			this.leftPanel = new LeftPanel(this.currentBoard);
 			this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
 			this.gameFrame.add(this.rightPanel, BorderLayout.EAST);
 			this.gameFrame.add(this.leftPanel,BorderLayout.WEST);
@@ -126,18 +127,87 @@ public class Table {
 		}
 		
 		private class LeftPanel extends JPanel {
-			LeftPanel(){
+			final LostPoiPanel lostPoiPanel;
+			final SavedPoiPanel savedPoiPanel;
+			final RevealPoiPanel revealPoiPanel;
+			GameState currentBoard;
+			
+			LeftPanel(GameState updatedBoard){
 				setPreferredSize(LEFT_PANEL_DIMENSION);
-				
+				this.currentBoard = updatedBoard;
+				setLayout(new BorderLayout());
+				this.lostPoiPanel = new LostPoiPanel(currentBoard);
+				this.savedPoiPanel = new SavedPoiPanel(currentBoard);
+				this.revealPoiPanel = new RevealPoiPanel(currentBoard);
+				add(this.lostPoiPanel, BorderLayout.NORTH);
+				add(this.savedPoiPanel, BorderLayout.SOUTH);
+				add(this.revealPoiPanel, BorderLayout.CENTER);
+				validate();
+			}
+		}
+		
+		private class LostPoiPanel extends JPanel{
+			GameState currentBoard;
+			LostPoiPanel(GameState updatedBoard){
+				super(new BorderLayout());
+				setLayout(new GridLayout(2,2));
+				this.currentBoard = updatedBoard;
+				setBackground(tileColorRed);
+				setPreferredSize(NORTH_LEFT_PANEL_DIMENSION);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
+				setBorder(blackline);
+				if(this.currentBoard.getLostVictimsList().size() > 0) {
+					for(int i = 0; i<this.currentBoard.getLostVictimsList().size(); i++) {
+						try {
+							final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "VICTIM.gif"));
+							add(new JLabel(new ImageIcon(POIimage)));	
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+		
+		private class SavedPoiPanel extends JPanel{
+			GameState currentBoard;
+			SavedPoiPanel(GameState updatedBoard){
+				super(new BorderLayout());
+				setLayout(new GridLayout(4,2));
+				this.currentBoard = updatedBoard;
+				setBackground(tileColorGreen);
+				setPreferredSize(SOUTH_LEFT_PANEL_DIMENSION);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
+				setBorder(blackline);
+				if(this.currentBoard.getSavedVictimsList().size() > 0) {
+					for(int i = 0; i<this.currentBoard.getSavedVictimsList().size(); i++) {
+						try {
+							final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "VICTIM.gif"));
+							add(new JLabel(new ImageIcon(POIimage)));	
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+		
+		private class RevealPoiPanel extends JPanel{
+			GameState currentBoard;
+			RevealPoiPanel(GameState updatedBoard){
+				super(new BorderLayout());
+				setBackground(tileColorGrey);
+				currentBoard = updatedBoard;
+				setPreferredSize(CENTER_LEFT_PANEL_DIMENSION);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
+				setBorder(blackline);
+				int num = currentBoard.getRevealedFalseAlarmsList().size();
 				try {
-					final BufferedImage leftImage = ImageIO.read(new File(defaultImagesPath + "LEFT_PANEL.gif"));
-					add(new JLabel(new ImageIcon(leftImage)));
+					final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "FALSE_ALARM_"+ num + ".gif"));
+					add(new JLabel(new ImageIcon(POIimage)));	
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				validate();
 			}
 		}
 		
@@ -146,6 +216,8 @@ public class Table {
 			
 			BoardPanel(){
 				super(new GridLayout(8,10));
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
+				setBorder(blackline);
 				this.boardTiles = new ArrayList<>();
 				for(int i = 0; i < NUM_TILES; i++) {
 					final SuperTilePanel superTilePanel = new SuperTilePanel(this, i);

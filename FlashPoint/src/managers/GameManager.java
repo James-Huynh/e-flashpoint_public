@@ -329,7 +329,9 @@ public class GameManager {
     				POI tempPOI = targetTile.removeFirstPoi();
     				gs.removePOI(tempPOI);
     				if(tempPOI.isVictim()) {
-    					gs.updateLostCount();
+    					gs.updateLostCount(tempPOI);
+    				} else {
+    					gs.updateRevealPOI(tempPOI);
     				}
     			}
     		}
@@ -380,6 +382,7 @@ public class GameManager {
         					//change to remove POI
         					targetTile.removeFromPoiList(newPOI);
         					gs.removePOI(newPOI);
+        					gs.updateRevealPOI(newPOI);
         				}
         			}
         		}
@@ -393,7 +396,7 @@ public class GameManager {
         					//change to remove POI
         					targetTile.removeFromPoiList(newPOI);
         					gs.removePOI(newPOI);
-        					newPOI.destroy();
+        					gs.updateRevealPOI(newPOI);
         				}
         			}
         		}
