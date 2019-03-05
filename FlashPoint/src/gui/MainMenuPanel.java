@@ -11,6 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.event.EventListenerList;
+
+import personalizedlisteners.mainMenuListeners.CreateListener;
 
 /**
  * Class representing the whole page of the main menu encapsulated inside a panel
@@ -18,9 +21,10 @@ import javax.swing.SwingConstants;
  *
  */
 public class MainMenuPanel extends JPanel {
-	JButton createBtn;
+	JButton createBtn; //@James - Make these private attributes? @Zaid
 	JButton findBtn;
 	JButton rulesBtn;
+	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
 	/**
 	 * Create the panel.
@@ -48,7 +52,7 @@ public class MainMenuPanel extends JPanel {
 		createBtn.setBounds(67, 35, 423, 49);
 		createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				raiseEventCreateBtn();
 			}
 		});
 
@@ -67,4 +71,23 @@ public class MainMenuPanel extends JPanel {
 		rulesBtn.setEnabled(false);
 
 	}
+	
+	/**
+	 * Register an object to be a listener
+	 * @param obj
+	 */
+	public void addSelectionPiecesListenerListener(CreateListener obj) {
+		REGISTERED_OBJECTS.add(CreateListener.class, obj);
+	}
+	
+	/**
+	 * Raise an event: the create button has been clicked
+	 */
+	private void raiseEventCreateBtn() {
+		for (CreateListener listener: REGISTERED_OBJECTS.getListeners(CreateListener.class)) {
+			listener.clickCreate();
+		}
+	}
+	
+	
 }

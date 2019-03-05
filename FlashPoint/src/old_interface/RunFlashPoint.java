@@ -562,7 +562,7 @@ public class RunFlashPoint {
 		int offsetY = 100;
 		//int playerSpacing = 50;
 		
-		initializeLobby();
+//		initializeLobby();
 		
 		
 		
@@ -584,7 +584,7 @@ public class RunFlashPoint {
 		
 		
 		
-		createChat();
+//		createChat();
 		
 		panel_PlayersDisplay = new JPanel();
 		panel_PlayersDisplay.setBounds(10 + offsetX, 10 + offsetY, 662, 372);
