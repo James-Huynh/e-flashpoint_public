@@ -78,6 +78,7 @@ public class Move extends Action {
         		
         		else if( fire == 2 && aP >= 2) {
         				flag = true;
+        				this.APcost = 2;
         			}
         		}
         }
@@ -99,7 +100,7 @@ public class Move extends Action {
         if(neighbour.containsPOI() == true) {
         	ArrayList<POI> Pois = neighbour.getPoiList();
         	for(POI poi:Pois) {
-        		if(!poi.isVictim()) {
+        		if(!poi.isVictim()) { //Why? POIs should get revealed if victim or not
         			poi.reveal();
         		}
         	}
