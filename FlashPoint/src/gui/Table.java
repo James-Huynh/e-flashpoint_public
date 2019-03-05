@@ -32,9 +32,6 @@ public class Table {
 		private final GameState currentBoard;
 		private final Tile[][] gameTiles;
 		
-		
-		
-		
 		private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
 		private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(1000,800);
 		private final static Dimension RIGHT_PANEL_DIMENSION = new Dimension(300,800);
@@ -284,7 +281,7 @@ public class Table {
 				if(connectedTile.getEdge(0).isBlank()) {
 					
 				} else if(connectedTile.getEdge(0).isWall()) {
-					if(connectedTile.getEdge(0).getDamage() == 0) {
+					if(connectedTile.getEdge(0).getDamage() == 2) {
 						try {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.WEST);
@@ -300,7 +297,7 @@ public class Table {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					}else if(connectedTile.getEdge(0).getDamage() == 2) {
+					}else if(connectedTile.getEdge(0).getDamage() == 0) {
 						try {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.WEST);
@@ -342,7 +339,7 @@ public class Table {
 				if(connectedTile.getEdge(1).isBlank()) {
 					
 				} else if(connectedTile.getEdge(1).isWall()) {
-					if(connectedTile.getEdge(1).getDamage() == 0) {
+					if(connectedTile.getEdge(1).getDamage() == 2) {
 						try {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
@@ -358,7 +355,7 @@ public class Table {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					}else if(connectedTile.getEdge(1).getDamage() == 2) {
+					}else if(connectedTile.getEdge(1).getDamage() == 0) {
 						try {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
@@ -399,7 +396,7 @@ public class Table {
 				if(connectedTile.getEdge(2).isBlank()) {
 					
 				} else if(connectedTile.getEdge(2).isWall()) {
-					if(connectedTile.getEdge(2).getDamage() == 0) {
+					if(connectedTile.getEdge(2).getDamage() == 2) {
 						try {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.EAST);
@@ -415,7 +412,7 @@ public class Table {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					}else if(connectedTile.getEdge(2).getDamage() == 2) {
+					}else if(connectedTile.getEdge(2).getDamage() == 0) {
 						try {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.EAST);
@@ -457,7 +454,7 @@ public class Table {
 				if(connectedTile.getEdge(3).isBlank()) {
 					
 				} else if(connectedTile.getEdge(3).isWall()) {
-					if(connectedTile.getEdge(3).getDamage() == 0) {
+					if(connectedTile.getEdge(3).getDamage() == 2) {
 						try {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
@@ -473,7 +470,7 @@ public class Table {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					}else if(connectedTile.getEdge(3).getDamage() == 2) {
+					}else if(connectedTile.getEdge(3).getDamage() == 0) {
 						try {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
@@ -532,12 +529,14 @@ public class Table {
 				assignTokens();
 				
 				addMouseListener(new MouseListener() {
-
 					@Override
 					public void mouseClicked(final MouseEvent e) {
 						if(SwingUtilities.isRightMouseButton(e)) {
 							//brings up menu
-							showPopUpMenu(e.getComponent(), e.getX(), e.getY());
+							int[] check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
+							if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
+								showPopUpMenu(e.getComponent(), e.getX(), e.getY(), currentBoard);
+							}
 						} else if(SwingUtilities.isLeftMouseButton(e)) {
 							System.out.println(tileId);
 						}
@@ -655,10 +654,11 @@ public class Table {
 			return result;
 		}
 		
-		public static void showPopUpMenu(/*GameState currentBoard,*/ Component component, int x, int y) {
+		public static void showPopUpMenu(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 			JPopupMenu popupMenu = new JPopupMenu();
-			 JMenu moveMenu = new JMenu("move");
-		     JMenu editMenu = new JMenu("extinguish"); 
+			Set<actions.Action> currentActions = currentBoard.getAvailableActions();
+			JMenu moveMenu = new JMenu("move");
+		    JMenu editMenu = new JMenu("extinguish"); 
 			
 			JMenuItem moveleft = new JMenuItem("move left");
 			moveleft.addActionListener(new ActionListener() {

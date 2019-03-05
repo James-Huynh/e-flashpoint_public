@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.io.Serializable;
 
@@ -39,7 +40,7 @@ public class GameState implements Serializable {
 	protected ParkingSpot[] ambulances;
 
 	protected int currentTile; // ??
-	protected ArrayList<Action> availableActions;
+	protected Set<Action> availableActions;
 	
 	protected ArrayList<Player> listOfPlayers; //unsure if we need this as long as we have the firefighters, but the player indexes will match the fireFighters for games where players do not double up
 	protected ArrayList<Firefighter> listOfFirefighters;
@@ -230,7 +231,7 @@ public class GameState implements Serializable {
 		return wallsDamaged;
 	}
 
-	public ArrayList<Action> getAvailableActions(){
+	public Set<Action> getAvailableActions(){
 		return availableActions;
 	}
 
@@ -265,6 +266,10 @@ public class GameState implements Serializable {
 //				break;
 //			}
 //		}
+	}
+	
+	public void updateActionList(Set<Action> newActionList) {
+		this.availableActions = newActionList;
 	}
 
 	public void updateSavedCount(POI savedPoi) {
