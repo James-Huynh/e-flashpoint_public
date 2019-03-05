@@ -14,9 +14,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import personalizedlisteners.LoginListener;
-
-
+import personalizedlisteners.loginListeners.LoginListener;
+import personalizedlisteners.mainMenuListeners.CreateListener;
+import personalizedlisteners.createLobbyListeners.BackListener;
+import personalizedlisteners.lobbyListeners.StartListener;
+import personalizedlisteners.lobbyListeners.LeaveListener;
 // random comments
 /**
  * 
@@ -37,8 +39,10 @@ public class Launcher {
 
 	private LoginPanel login;
 	private MainMenuPanel mainMenu;
+	private CreateLobbyPanel createLobby;
+	private LobbyPanel lobby;
 
-	String username;
+	String username; //@James - Ideally don't want these to be here, will grow enormously -- @Zaid
 	char[] password;
 
 	/**
@@ -169,40 +173,92 @@ public class Launcher {
 		});
 
 		contentPane.remove(dummyCenterPanel);
-		contentPane.add(login.getLoginPanel(), BorderLayout.CENTER);
-		// @Zaid: from James, I think the getLoginPanel is redundant since login is already the panel we need
+		contentPane.add(login, BorderLayout.CENTER);
 	}
-	//	------------------------------- LOGIN 
-	
-	
-// James
-	/**
-	 * 
-	 */
-	private void setupMainMenuPage() {
-		mainMenu = new MainMenuPanel();
-		
-		
-		contentPane.add(mainMenu);
-	}
-
-
-	// James
+	 
 	/**
 	 * Validates by the user's credentials by asking the server
-	 * @return
+	 * @return @author James
 	 */
 	private boolean validateCredentials() {
 		// @server
 		return true;
 	}
 	//------------------------------- LOGIN
-
-	private void setupMenuPage() {
-
+	
+	
+	//	MAIN MENU -------------------------------
+	private void setupMainMenuPage() {
+		mainMenu = new MainMenuPanel();
+		contentPane.add(mainMenu);
+		
+		mainMenu.addSelectionPiecesListenerListener(new CreateListener() {
+			public void clickCreate() {
+				mainMenu.setVisible(false);
+				motherFrame.remove(mainMenu);
+				setupCreateLobbyPage();
+			}
+		});
 	}
+	//------------------------------- MAIN MENU
+	
 
+	//  CREATE LOBBY -------------------------------  
+	private void setupCreateLobbyPage() {
+		createLobby = new CreateLobbyPanel(CENTER_PANEL_DIMENSION);
+		contentPane.add(createLobby);		
+		/**
+		 * I have to make an exact use of the class name here because of import problems 
+		 * due to same name (CreateListener) if I import at top - Zaid
+		 */
+		createLobby.addSelectionPiecesListenerListener(new personalizedlisteners.createLobbyListeners.CreateListener() {
+			public void clickCreate() {
+				createLobby.setVisible(false);
+				motherFrame.remove(createLobby);
+				setupLobbyPage();
+			}
+		});
+		
+		createLobby.addSelectionPiecesListenerListener(new BackListener() {
+			public void clickBack() {
+				createLobby.setVisible(false);
+				motherFrame.remove(createLobby);
+				setupMainMenuPage();
+			}	
+		});
+	}
+	//------------------------------- CREATE LOBBY
+	
+	
+	//	LOBBY ------------------------------- 
+	private void setupLobbyPage() {
+		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION);
+		contentPane.add(lobby);
+		
+		lobby.addSelectionPiecesListenerListener(new StartListener() {
+			public void clickStart() {
+				lobby.setVisible(false);
+				motherFrame.remove(lobby);
+				setupGamePage();
+			}
+		});
+		
+		lobby.addSelectionPiecesListenerListener(new LeaveListener() {
+			public void clickLeave() {
+				lobby.setVisible(false);
+				motherFrame.remove(lobby);
+				setupMainMenuPage();
+			}
+		});
+	}
+	//------------------------------- LOBBY
+	
+	
+	// GAME	------------------------------- 
 	private void setupGamePage() {
-
+		/**
+		 * Ben's gamePanel comes here
+		 */
 	}
+	//	------------------------------- GAME 
 }

@@ -15,7 +15,7 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
-import personalizedlisteners.LoginListener;
+import personalizedlisteners.loginListeners.LoginListener;
 /**
  * Class representing the login page. 
  * Panel size corresponds to dimensions specified for 'Central' panel in Launcher.java
@@ -162,12 +162,7 @@ public class LoginPanel extends JPanel {
 			listener.clickLogin();
 		}
 	}
-	
 
-	public JPanel getLoginPanel() {
-		return this;
-	}
-	
 	public String getUsername() {
 		return this.userNameField.getText();
 	}
