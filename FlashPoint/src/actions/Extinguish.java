@@ -18,6 +18,7 @@ import edge.Edge;
 public class Extinguish extends Action {
     
     protected int direction;
+    protected ActionList title = ActionList.Extinguish;
     
     public Extinguish() {
     	this.APcost = 1;
@@ -34,6 +35,10 @@ public class Extinguish extends Action {
     
     public int getDirection() {
         return direction;
+    }
+    
+    public ActionList getTitle() {
+    	return this.title;
     }
 
     /*

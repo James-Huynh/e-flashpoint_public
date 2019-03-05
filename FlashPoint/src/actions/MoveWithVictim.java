@@ -6,10 +6,16 @@ import token.Firefighter;
 
 public class MoveWithVictim extends Move{
 	
+	protected ActionList title = ActionList.MoveWithVictim;
+	
 	public MoveWithVictim(int direction){
 		super(direction);
 		this.APcost = 2;
 	}
+	
+	public ActionList getTitle() {
+    	return this.title;
+    }
 	
 	@Override
 	public boolean validate(GameState gs) {

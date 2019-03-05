@@ -10,10 +10,15 @@ public class Drive extends Action {
 	protected int direction;
 	protected boolean moveWith;
 	protected Vehicle vehicle;
+	protected ActionList title = ActionList.Drive;
 	
 	public Drive() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public ActionList getTitle() {
+    	return this.title;
+    }
 	
 	public Drive(int dir, boolean flag, Vehicle type) {
 		direction = dir;

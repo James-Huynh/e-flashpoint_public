@@ -7,11 +7,17 @@ import token.Vehicle;
 import edge.Edge;
 
 public class FireGun extends Action {
+	
+	protected ActionList title = ActionList.FireGun;
 
 	protected int[][] quadrantIndices = new int[12][2]; //To hold the indices of the quadrant
 	public FireGun() {									//FF location corresponds to
 		APcost = 4;
 	}
+	
+	public ActionList getTitle() {
+    	return this.title;
+    }
 
 	@Override
 	public void perform(GameState gs) {

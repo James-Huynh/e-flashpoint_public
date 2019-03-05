@@ -17,13 +17,11 @@ import token.Firefighter;
 public class Chop extends Action {
     
     protected int direction;
+    protected ActionList title = ActionList.Chop;
     
-    public Chop() {
+    public Chop(int direction) {
     	this.APcost = 2;
-    }
-    
-    public Chop(int cost) {
-    	this.APcost = cost;
+    	this.direction = direction;
     }
     
     /*
@@ -32,6 +30,10 @@ public class Chop extends Action {
     
     public int getDirection() {
         return direction;
+    }
+    
+    public ActionList getTitle() {
+    	return this.title;
     }
 
     /*

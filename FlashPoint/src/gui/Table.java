@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.text.JTextComponent;
 
+import actions.ActionList;
 import game.GameState;
 import tile.Tile;
 import token.Colour;
@@ -536,6 +537,8 @@ public class Table {
 							int[] check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
 							if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
 								showPopUpMenu(e.getComponent(), e.getX(), e.getY(), currentBoard);
+							} else {
+								showPopUpMenu2(e.getComponent(), e.getX(), e.getY(), currentBoard);
 							}
 						} else if(SwingUtilities.isLeftMouseButton(e)) {
 							System.out.println(tileId);
@@ -657,35 +660,391 @@ public class Table {
 		public static void showPopUpMenu(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 			JPopupMenu popupMenu = new JPopupMenu();
 			Set<actions.Action> currentActions = currentBoard.getAvailableActions();
-			JMenu moveMenu = new JMenu("move");
-		    JMenu editMenu = new JMenu("extinguish"); 
 			
-			JMenuItem moveleft = new JMenuItem("move left");
-			moveleft.addActionListener(new ActionListener() {
+			JMenu moveMenu = new JMenu("Move");
+		    JMenu extinguishMenu = new JMenu("Extinguish"); 
+		    JMenu toSmokeMenu = new JMenu("To Smoke");
+		    JMenu completelyMenu = new JMenu("Completely");
+		    JMenu chopMenu = new JMenu("Chop");
+		    JMenu handleMenu = new JMenu("Open Door");
+		    JMenu carryMenu = new JMenu("Carry");
+		    JMenu finishMenu = new JMenu("finish");
+		    JMenu moveWithVictimMenu = new JMenu("Move With Victim");
+	        
+		    for(actions.Action a: currentActions) {
+		    	ActionList actionTitle = a.getTitle();
+		    	String builder = "";
+		    	JMenuItem newAction;
+		    	int APCost = a.getCost();
+		    	if(actionTitle == ActionList.Chop) {
+		    		if(a.getDirection() == 0) {
+		    			builder = "Left, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        chopMenu.add(newAction);
+		    			
+		    		} else if(a.getDirection() == 1) {
+		    			builder = "Up, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        chopMenu.add(newAction);
+		    			
+		    		} else if(a.getDirection() == 2) {
+		    			builder = "Right, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        chopMenu.add(newAction);
+		    			
+		    		} else if(a.getDirection() == 3) {
+		    			builder = "Down, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        chopMenu.add(newAction);
+		    			
+		    		} 
+		    	} else if(actionTitle == ActionList.Extinguish) {
+		    		if(APCost == 1) {
+		    			if(a.getDirection() == 0) {
+		    				builder = "Left, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        toSmokeMenu.add(newAction);
+			    		} else if(a.getDirection() == 1) {
+			    			builder = "Up, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        toSmokeMenu.add(newAction);
+			    			
+			    		} else if(a.getDirection() == 2) {
+			    			builder = "Right, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        toSmokeMenu.add(newAction);
+			    		} else if(a.getDirection() == 3) {
+			    			builder = "Down, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        toSmokeMenu.add(newAction);
+			    		} else if(a.getDirection() == -1) {
+			    			builder = "Current Location, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        toSmokeMenu.add(newAction);
+			    		}
+		    		} else if(APCost == 2) {
+		    			if(a.getDirection() == 0) {
+		    				builder = "Left, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        completelyMenu.add(newAction);
+			    		} else if(a.getDirection() == 1) {
+			    			builder = "Up, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        completelyMenu.add(newAction);
+			    			
+			    		} else if(a.getDirection() == 2) {
+			    			builder = "Right, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        completelyMenu.add(newAction);
+			    		} else if(a.getDirection() == 3) {
+			    			builder = "Down, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        completelyMenu.add(newAction);
+			    		} else if(a.getDirection() == -1) {
+			    			builder = "Current Location, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					
+			    					System.out.println(a.getClass());
+			    				}
+			    			});
+			    	        completelyMenu.add(newAction);
+			    		}
+		    		}
+		    	} else if(actionTitle == ActionList.Drive) {
+		    		System.out.println(a.getClass().toString());
+		    	} else if(actionTitle == ActionList.Finish) {
+		    		builder = "End Turn";
+	    			newAction = new JMenuItem(builder);
+	    	        newAction.addActionListener(new ActionListener() {
+	    				@Override
+	    				public void actionPerformed(ActionEvent e) {
+	    					
+	    					System.out.println(a.getClass());
+	    				}
+	    			});
+	    	        finishMenu.add(newAction);
+		    		System.out.println(a.getClass().toString());
+		    	} else if(actionTitle == ActionList.FireGun) {
+		    		System.out.println(a.getClass().toString());
+		    	} else if(actionTitle == ActionList.Handle) {
+		    		if(a.getDirection() == 0) {
+		    			builder = "Left, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        handleMenu.add(newAction);
+		    		} else if(a.getDirection() == 1) {
+		    			builder = "Up, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        handleMenu.add(newAction);
+		    		} else if(a.getDirection() == 2) {
+		    			builder = "Right, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        handleMenu.add(newAction);
+		    		} else if(a.getDirection() == 3) {
+		    			builder = "Down, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        handleMenu.add(newAction);
+		    		} 
+		    	} else if(actionTitle == ActionList.Move) {
+		    		if(a.getDirection() == 0) {
+		    			builder = "Left, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        moveMenu.add(newAction);
+		    			
+		    		} else if(a.getDirection() == 1) {
+		    			builder = "Up, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        moveMenu.add(newAction);
+		    			
+		    		} else if(a.getDirection() == 2) {
+		    			builder = "Right, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        moveMenu.add(newAction);
+		    			
+		    		} else if(a.getDirection() == 3) {
+		    			builder = "Down, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        moveMenu.add(newAction);
+		    			
+		    		} 
+		    	} else if(actionTitle == ActionList.MoveWithVictim) {
+		    		if(a.getDirection() == 0) {
+		    			builder = "Left, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        moveWithVictimMenu.add(newAction);
+		    			
+		    		} else if(a.getDirection() == 1) {
+		    			builder = "Up, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        moveWithVictimMenu.add(newAction);
+		    			
+		    		} else if(a.getDirection() == 2) {
+		    			builder = "Right, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        moveWithVictimMenu.add(newAction);
+		    			
+		    		} else if(a.getDirection() == 3) {
+		    			builder = "Down, APC: " + APCost;
+		    			newAction = new JMenuItem(builder);
+		    	        newAction.addActionListener(new ActionListener() {
+		    				@Override
+		    				public void actionPerformed(ActionEvent e) {
+		    					
+		    					System.out.println(a.getClass());
+		    				}
+		    			});
+		    	        moveWithVictimMenu.add(newAction);
+		    			
+		    		} 
+		    	}
+				
+			}
+	         
+	        JMenuItem exitMenu = new JMenuItem("exit");
+	        exitMenu.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					System.out.println("move left");
-				}
-			});
-			
-	        JMenuItem movedown = new JMenuItem("move down");
-	        movedown.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-					System.out.println("move down");
+					System.exit(0);
 				}
 			});
 	        
-	        JMenuItem moveright = new JMenuItem("move right");
-	        moveright.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-					System.out.println("move right");
-				}
-			});
+	        
+	        extinguishMenu.add(toSmokeMenu);
+	        extinguishMenu.addSeparator();
+	        extinguishMenu.add(completelyMenu);
+	        
+	        
+	        popupMenu.add(moveMenu);
+	        popupMenu.addSeparator();
+	        popupMenu.add(moveWithVictimMenu);
+	        popupMenu.addSeparator();
+	        popupMenu.add(carryMenu);
+	        popupMenu.addSeparator();
+	        popupMenu.add(chopMenu);
+	        popupMenu.addSeparator();
+	        popupMenu.add(extinguishMenu);
+	        popupMenu.addSeparator();
+	        popupMenu.add(finishMenu);
+	        popupMenu.addSeparator();
+	        popupMenu.add(exitMenu);
+	        
+	        
+	        popupMenu.show(component, x, y);		// very important
+		}
+		
+		public static void showPopUpMenu2(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
+			JPopupMenu popupMenu = new JPopupMenu();
 	        
 	        JMenuItem endTurn = new JMenuItem("end turn");
 	        endTurn.addActionListener(new ActionListener() {
@@ -704,25 +1063,7 @@ public class Table {
 					System.exit(0);
 				}
 			});
-	        
-	        JMenuItem findMenuItem = new JMenuItem("put out fire");
-	        findMenuItem.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					component.setBackground(tileColorWhite);
-					System.out.println("put out fire");
-				}
-			});
-	        
-	        editMenu.add(findMenuItem);
-	        moveMenu.add(moveright);
-	        moveMenu.add(movedown);
-	        moveMenu.add(moveleft);
 	        popupMenu.add(endTurn);
-	        popupMenu.addSeparator();
-	        popupMenu.add(moveMenu);
-	        popupMenu.addSeparator();
-	        popupMenu.add(editMenu);
 	        popupMenu.addSeparator();
 	        popupMenu.add(fileMenu);
 	        

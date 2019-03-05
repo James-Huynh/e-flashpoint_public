@@ -9,6 +9,8 @@ import token.POI;
 
 
 public class Handle extends Action{
+	
+	protected ActionList title = ActionList.Handle;
 
 	protected int direction;
     
@@ -16,8 +18,13 @@ public class Handle extends Action{
 		this.APcost = 1;
 	}
 	
+	
     public int getDirection() {
         return direction;
+    }
+    
+    public ActionList getTitle() {
+    	return this.title;
     }
 	
     @Override

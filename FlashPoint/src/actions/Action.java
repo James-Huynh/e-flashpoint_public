@@ -20,6 +20,9 @@ public abstract class Action {
     protected int APcost;
     public abstract void perform(GameState gs);
     public abstract boolean validate(GameState gs);
+    protected ActionList title;
+    //placeholder for the GUI 
+    protected int direction;
     // public abstract boolean validate();
     
 
@@ -29,6 +32,13 @@ public abstract class Action {
     
     public int getCost() {
         return APcost;
+    }
+    public ActionList getTitle() {
+    	return title;
+    }
+    //placeholder for the GUI.
+    public int getDirection() {
+    	return direction;
     }
     
     /*

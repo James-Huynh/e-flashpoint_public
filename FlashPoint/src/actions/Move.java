@@ -16,6 +16,7 @@ import token.POI;
 public class Move extends Action {
 
 	protected int direction;
+	protected ActionList title = ActionList.Move;
 	
 	public Move(int direction) {
 		this.direction = direction;
@@ -24,6 +25,10 @@ public class Move extends Action {
     
     public int getDirection() {
         return direction;
+    }
+    
+    public ActionList getTitle() {
+    	return this.title;
     }
 
     @Override
