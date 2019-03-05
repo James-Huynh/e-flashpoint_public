@@ -3,13 +3,13 @@ package gui;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.text.JTextComponent;
 
 import actions.ActionList;
 import game.GameState;
 import tile.Tile;
 import token.Colour;
 import token.Firefighter;
+import token.POI;
 import token.Vehicle;
 
 import java.awt.*;
@@ -287,7 +287,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.WEST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}else if (connectedTile.getEdge(0).getDamage() == 1) {
@@ -295,7 +294,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DAMAGED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.WEST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}else if(connectedTile.getEdge(0).getDamage() == 0) {
@@ -303,7 +301,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.WEST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -314,7 +311,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORRIGHT_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else if(connectedTile.getEdge(0).getStatus()) {
@@ -322,7 +318,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORRIGHT_OPEN.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else if(!connectedTile.getEdge(0).getStatus()) {
@@ -330,7 +325,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORRIGHT.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -345,7 +339,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}else if (connectedTile.getEdge(1).getDamage() == 1) {
@@ -353,7 +346,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DAMAGED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}else if(connectedTile.getEdge(1).getDamage() == 0) {
@@ -361,7 +353,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.NORTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -371,7 +362,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORBOT_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else if(connectedTile.getEdge(1).getStatus()) {
@@ -379,7 +369,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORBOT_OPEN.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else if(!connectedTile.getEdge(1).getStatus()) {
@@ -387,7 +376,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORBOT.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -402,7 +390,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.EAST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}else if (connectedTile.getEdge(2).getDamage() == 1) {
@@ -410,7 +397,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DAMAGED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.EAST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}else if(connectedTile.getEdge(2).getDamage() == 0) {
@@ -418,7 +404,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.EAST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -429,7 +414,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORLEFT_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else if(connectedTile.getEdge(2).getStatus()) {
@@ -437,7 +421,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORLEFT_OPEN.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else if(!connectedTile.getEdge(2).getStatus()) {
@@ -445,7 +428,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "VERT_WALL_DOORLEFT.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -460,7 +442,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}else if (connectedTile.getEdge(3).getDamage() == 1) {
@@ -468,7 +449,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DAMAGED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}else if(connectedTile.getEdge(3).getDamage() == 0) {
@@ -476,7 +456,6 @@ public class Table {
 							BufferedImage imageWall = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageWall)), BorderLayout.SOUTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -487,7 +466,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORTOP_DESTROYED.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else if(connectedTile.getEdge(3).getStatus()) {
@@ -495,7 +473,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORTOP_OPEN.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else if(!connectedTile.getEdge(3).getStatus()) {
@@ -503,7 +480,6 @@ public class Table {
 							BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "HORT_WALL_DOORTOP.gif"));
 							add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -536,12 +512,12 @@ public class Table {
 							//brings up menu
 							int[] check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
 							if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
-								showPopUpMenu(e.getComponent(), e.getX(), e.getY(), currentBoard);
+								showPopUpMenuCurrent(e.getComponent(), e.getX(), e.getY(), currentBoard);
 							} else {
-								showPopUpMenu2(e.getComponent(), e.getX(), e.getY(), currentBoard);
+								showPopUpMenuOther(e.getComponent(), e.getX(), e.getY(), currentBoard);
 							}
 						} else if(SwingUtilities.isLeftMouseButton(e)) {
-							System.out.println(tileId);
+							showPopUpMenuInfo(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
 						}
 						
 					}
@@ -657,7 +633,8 @@ public class Table {
 			return result;
 		}
 		
-		public static void showPopUpMenu(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
+		//generates the popup menu for the available actions
+		public static void showPopUpMenuCurrent(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 			JPopupMenu popupMenu = new JPopupMenu();
 			Set<actions.Action> currentActions = currentBoard.getAvailableActions();
 			
@@ -857,7 +834,6 @@ public class Table {
 	    				}
 	    			});
 	    	        finishMenu.add(newAction);
-		    		System.out.println(a.getClass().toString());
 		    	} else if(actionTitle == ActionList.FireGun) {
 		    		System.out.println(a.getClass().toString());
 		    	} else if(actionTitle == ActionList.Handle) {
@@ -1043,7 +1019,8 @@ public class Table {
 	        popupMenu.show(component, x, y);		// very important
 		}
 		
-		public static void showPopUpMenu2(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
+		//generates the popUp menu for tiles that don't contain current FF
+		public static void showPopUpMenuOther(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 			JPopupMenu popupMenu = new JPopupMenu();
 	        
 	        JMenuItem endTurn = new JMenuItem("end turn");
@@ -1069,5 +1046,47 @@ public class Table {
 	        
 	        popupMenu.show(component, x, y);		// very important
 		}
+		
+		//generates the popUp menu for tiles that don't contain current FF
+			public static void showPopUpMenuInfo(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard, int[] coords) {
+				JPopupMenu popupMenu = new JPopupMenu();
+				JMenu poiMenu = new JMenu("POIs");
+				JMenu firefighterMenu = new JMenu("Firefighters");
+				Tile myTile = currentBoard.returnTile(coords[0], coords[1]);
+		        String builder = "";
+		        JMenuItem info;
+				for(POI p : myTile.getPoiList()) {
+					if(p.isRevealed()) {
+						if(p.isVictim()) {
+							builder = "Victim";
+						}else {
+							builder = "False Alarm";
+						}
+					}else {
+						builder = "Point of Interest";
+					}
+					info = new JMenuItem(builder);
+					poiMenu.add(info);
+				}
+				for(Firefighter f: myTile.getFirefighterList()) {
+					builder = f.getOwner().getUserName() + ": " + f.getColour().toString() + " fireman.";
+					info = new JMenuItem(builder);
+					firefighterMenu.add(info);
+				}
+				
+		        JMenuItem fileMenu = new JMenuItem("exit");
+		        fileMenu.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						System.exit(0);
+					}
+				});
+		        popupMenu.add(poiMenu);
+		        popupMenu.addSeparator();
+		        popupMenu.add(firefighterMenu);
+		        
+		        popupMenu.show(component, x, y);		// very important
+			}
 		
 }

@@ -33,8 +33,7 @@ public static void main(String[] args) {
 //		testTile.getPoiList().get(0).reveal();
 		
 		current.generateAllPossibleActions();
-		Set<Action> testActions = current.getAllAvailableActions();
-		tester.updateActionList(testActions);
+		tester.updateActionList(current.getAllAvailableActions());
 		
 //		current.advanceFire();
 //		current.advanceFire();
