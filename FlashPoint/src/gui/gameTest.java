@@ -17,9 +17,12 @@ import token.Token;
 
 public class gameTest {
 	
+	protected static Table table;
+	protected static GameState tester;
+	
 public static void main(String[] args) {
 		
-		GameState tester = GameState.getInstance();
+		tester = GameState.getInstance();
 		Tile[][] testerBoard = tester.getMatTiles();
 		Lobby tempLobby = new Lobby();
 		tester.updateGameStateFromLobby(tempLobby);
@@ -33,8 +36,9 @@ public static void main(String[] args) {
 		testTile.getPoiList().get(0).reveal();
 		
 		current.generateAllPossibleActions();
+		current.getAllAvailableActions();
+		
 		tester.updateActionList(current.getAllAvailableActions());
-		
 //		current.advanceFire();
 //		current.advanceFire();
 //		current.advanceFire();
@@ -42,9 +46,14 @@ public static void main(String[] args) {
 //		current.advanceFire();
 //		current.advanceFire();
 		
-		Table table = new Table(tester);
+		table = new Table(tester);
+		
+		System.out.println("testComplete");
 	}
 	
+	public static void repainter() {
+		table = new Table(tester);
+	}
 	
 	//tester code
 //	for(int i =0; i<8;i++) {
