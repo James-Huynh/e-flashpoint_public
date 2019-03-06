@@ -34,10 +34,14 @@ public class Handle extends Action{
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Edge edge = currentPosition.getEdge(direction);
+        int cost = super.getCost();
+        int AP = playingFirefighter.getAP();
         
         if( edge.isDoor() ) {
         	if ( edge.isDestroyed() == false) { //Check if door is destroyed, currently not implemented
-        		flag = true;
+        		if(AP >= cost) {
+        			flag = true;
+        		}
         	}
         }
         
@@ -49,7 +53,10 @@ public class Handle extends Action{
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Edge door = currentPosition.getEdge(direction);
+        int cost = super.getCost();
+        int AP = playingFirefighter.getAP();
         door.change();
+        playingFirefighter.setAP(AP - cost);
 	}
     
     @Override

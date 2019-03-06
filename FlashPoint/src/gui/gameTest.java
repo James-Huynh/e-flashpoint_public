@@ -27,7 +27,7 @@ public static void main(String[] args) {
 		Tile[][] testerBoard = tester.getMatTiles();
 		Lobby tempLobby = new Lobby();
 		tester.updateGameStateFromLobby(tempLobby);
-		Tile testTile = tester.returnTile(5, 4);
+		Tile testTile = tester.returnTile(1, 4);
 		Tile testTile2 = tester.returnTile(2, 4);
 		Tile testTile3 = tester.returnTile(5, 6);
 		current = new GameManager(tester);

@@ -54,6 +54,11 @@ public class Launcher {
 	private MainMenuPanel mainMenu;
 	private CreateLobbyPanel createLobby;
 	private LobbyPanel lobby;
+	
+	
+	//Used by Ben for in game testing. Not permanent.
+	private static GameManager current;
+	private static GameState tester;
 
 	String username; //@James - Ideally don't want these to be here, will grow enormously -- @Zaid
 	char[] password;
@@ -293,13 +298,13 @@ public class Launcher {
 		 * Ben's gamePanel comes here
 		 */
 		//A fake gamestate set up to allow the gui to build from something
-		GameState tester = GameState.getInstance();
+		tester = GameState.getInstance();
 		Lobby tempLobby = new Lobby();
 		tester.updateGameStateFromLobby(tempLobby);
 		Tile testTile = tester.returnTile(3, 1);
 		Tile testTile2 = tester.returnTile(2, 4);
 		Tile testTile3 = tester.returnTile(5, 6);
-		GameManager current = new GameManager(tester);
+		current = new GameManager(tester);
 		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
 		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
 		tester.placeFireFighter(tester.getFireFighterList().get(2), testTile2);
@@ -320,5 +325,28 @@ public class Launcher {
 		contentPane.add(RPanel, BorderLayout.EAST);
 		motherFrame.revalidate();
 	}
+	private void repaint() {
+		Table table = new Table(tester);
+		BoardPanel board = table.genBoard();
+		LeftPanel LPanel = table.new LeftPanel(tester);
+		RightPanel RPanel = table.new RightPanel(tester);
+		contentPane.removeAll();
+		contentPane.add(LPanel, BorderLayout.WEST);
+		contentPane.add(board, BorderLayout.CENTER);
+		contentPane.add(RPanel, BorderLayout.EAST);
+		motherFrame.revalidate();
+	}
+	
+//	public static void gameRepainter() {
+//		Table table = new Table(tester);
+//		BoardPanel board = table.genBoard();
+//		LeftPanel LPanel = table.new LeftPanel(tester);
+//		RightPanel RPanel = table.new RightPanel(tester);
+//		contentPane.removeAll();
+//		contentPane.add(LPanel, BorderLayout.WEST);
+//		contentPane.add(board, BorderLayout.CENTER);
+//		contentPane.add(RPanel, BorderLayout.EAST);
+//		motherFrame.revalidate();
+//	}
 	//	------------------------------- GAME 
 }

@@ -671,9 +671,7 @@ public class Table {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
-//			    					refresh();
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        chopMenu.add(newAction);
@@ -685,9 +683,7 @@ public class Table {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
-//			    					refresh();
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        chopMenu.add(newAction);
@@ -699,9 +695,7 @@ public class Table {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
-//			    					refresh();
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        chopMenu.add(newAction);
@@ -715,7 +709,6 @@ public class Table {
 			    					a.perform(currentBoard);
 //			    					refresh();
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        chopMenu.add(newAction);
@@ -731,7 +724,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -743,7 +735,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -756,7 +747,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -768,7 +758,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -780,7 +769,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -794,7 +782,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -806,7 +793,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -819,7 +805,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -831,7 +816,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -843,7 +827,6 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -873,7 +856,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -885,7 +867,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -897,7 +878,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -909,7 +889,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -923,7 +902,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -936,7 +914,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -949,7 +926,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -962,7 +938,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -977,7 +952,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -990,7 +964,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1003,7 +976,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1016,7 +988,6 @@ public class Table {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
