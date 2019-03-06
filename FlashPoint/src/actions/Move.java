@@ -99,11 +99,29 @@ public class Move extends Action {
         
         if(neighbour.containsPOI() == true) {
         	ArrayList<POI> Pois = neighbour.getPoiList();
+        	
+        	//Ben code to try to reveal pois
+        	ArrayList<POI> POIStoRemove = new ArrayList<POI>();
         	for(POI poi:Pois) {
-        		if(!poi.isVictim()) { //Why? POIs should get revealed if victim or not
-        			poi.reveal();
+        		if(!poi.isRevealed()){
+        		  if(poi.isVictim()){
+        		   	poi.reveal();
+        		  } else {
+        			POIStoRemove.add(poi);
+        		  }
         		}
         	}
+        	for(POI poi:POIStoRemove) {
+        		Pois.remove(poi);
+        		gs.getRevealedFalseAlarmsList().add(poi);
+        	}
+        		   
+        		   	
+//        	for(POI poi:Pois) {
+//        		if(!poi.isVictim()) { //Why? POIs should get revealed if victim or not
+//        			poi.reveal();
+//        		}
+//        	}
         }
         
         //Do when move saves the victim

@@ -27,25 +27,19 @@ public static void main(String[] args) {
 		Tile[][] testerBoard = tester.getMatTiles();
 		Lobby tempLobby = new Lobby();
 		tester.updateGameStateFromLobby(tempLobby);
-		Tile testTile = tester.returnTile(5, 1);
+		Tile testTile = tester.returnTile(6, 1);
 		Tile testTile2 = tester.returnTile(2, 4);
 		Tile testTile3 = tester.returnTile(5, 6);
-		GameManager current = new GameManager(tester);
+		current = new GameManager(tester);
 		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
 		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
 		tester.placeFireFighter(tester.getFireFighterList().get(2), testTile2);
-		testTile.getPoiList().get(0).reveal();
+//		testTile.getPoiList().get(0).reveal();
 		
 		current.generateAllPossibleActions();
-		current.getAllAvailableActions();
 		
 		tester.updateActionList(current.getAllAvailableActions());
-//		current.advanceFire();
-//		current.advanceFire();
-//		current.advanceFire();
-//		current.advanceFire();
-//		current.advanceFire();
-//		current.advanceFire();
+
 		
 		table = new Table(tester);
 		
@@ -53,6 +47,10 @@ public static void main(String[] args) {
 	}
 	
 	public static void repainter() {
+//
+//		current.generateAllPossibleActions();
+//		current.getAllAvailableActions();
+		tester.updateActionList(current.getAllAvailableActions());
 		table = new Table(tester);
 	}
 	
