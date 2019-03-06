@@ -95,7 +95,7 @@ public class Extinguish extends Action {
     public void perform(GameState gs) {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
-        playingFirefighter.setSavedAP(aP - this.APcost);
+        playingFirefighter.setAP(aP - this.APcost);
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
         int prevFire = neighbour.getFire();
