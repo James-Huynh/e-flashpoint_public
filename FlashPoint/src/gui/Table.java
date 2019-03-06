@@ -1029,7 +1029,8 @@ public class Table {
 		        extinguishMenu.addSeparator();
 		        extinguishMenu.add(completelyMenu);
 		        
-		        
+		        popupMenu.add(handleMenu);
+		        popupMenu.addSeparator();
 		        popupMenu.add(moveMenu);
 		        popupMenu.addSeparator();
 		        popupMenu.add(moveWithVictimMenu);
