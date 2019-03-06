@@ -52,6 +52,9 @@ public class Extinguish extends Action {
         int aP = playingFirefighter.getAP();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
+        if(neighbour == null) { //If exterior, this direction isn't valid
+        	return false;
+        }
         int cost = super.getCost();
         
         //We cannot extinguish by 2 where have only smoke

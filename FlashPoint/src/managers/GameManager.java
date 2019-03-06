@@ -120,6 +120,10 @@ public class GameManager {
         return allValidActions;
     }
     
+    public void setAllAvailableActions(Set<Action> newSet) {
+    	this.possibleActions = newSet;
+    }
+    
     
 	//Ben and eric, ready for testing
     public void explosion(Tile targetTile) {
