@@ -1,4 +1,4 @@
-package gui;
+package custom_panels;
 
 import java.awt.Color;
 import java.awt.Dimension;

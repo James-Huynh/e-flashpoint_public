@@ -15,6 +15,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import custom_panels.CreateLobbyPanel;
+import custom_panels.LobbyPanel;
+import custom_panels.LoginPanel;
+import custom_panels.MainMenuPanel;
 import gui.Table;
 import gui.Table.BoardPanel;
 import gui.Table.LeftPanel;
@@ -23,7 +27,7 @@ import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
 import personalizedlisteners.loginListeners.LoginListener;
-import personalizedlisteners.mainMenuListeners.CreateListener;
+import personalizedlisteners.mainMenuListeners.MainMenuListener;
 import tile.Tile;
 import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.lobbyListeners.StartListener;
@@ -97,6 +101,7 @@ public class Launcher {
 		motherFrame.setBounds(100, 100, 450, 300);
 		motherFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		motherFrame.setSize(OUTER_FRAME_DIMENSION);
+		motherFrame.setTitle("You're a god if you recognized this quote: \"Whether you think you can, or you think you can't--you're right.\"");
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		setupDummies();
@@ -201,12 +206,22 @@ public class Launcher {
 		mainMenu = new MainMenuPanel();
 		contentPane.add(mainMenu);
 		
-		mainMenu.addSelectionPiecesListenerListener(new CreateListener() {
+		mainMenu.addSelectionPiecesListenerListener(new MainMenuListener() {
+			@Override
 			public void clickCreate() {
 				mainMenu.setVisible(false);
 				motherFrame.remove(mainMenu);
 				setupCreateLobbyPage();
 			}
+			
+			// James
+			@Override
+			public void clickFind() {
+				mainMenu.setVisible(false);
+				motherFrame.remove(mainMenu);
+				setupFindLobbyPage();
+			}
+
 		});
 	}
 	//------------------------------- MAIN MENU
@@ -238,6 +253,15 @@ public class Launcher {
 	}
 	//------------------------------- CREATE LOBBY
 	
+	
+	
+	//  FIND LOBBY -------------------------------  
+	private void setupFindLobbyPage() {
+		
+		
+	}
+	
+	//------------------------------- FIND LOBBY
 	
 	//	LOBBY ------------------------------- 
 	private void setupLobbyPage() {
