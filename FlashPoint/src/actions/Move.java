@@ -38,6 +38,9 @@ public class Move extends Action {
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Edge edge = currentPosition.getEdge(direction);
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
+        if(neighbour.checkInterior() == false) { //If exterior, this direction isn't valid
+        	return false;
+        }
         int fire = neighbour.getFire();
         int aP = playingFirefighter.getAP();
         

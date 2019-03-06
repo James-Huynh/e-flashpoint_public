@@ -2,6 +2,7 @@ package actions;
 
 import java.util.ArrayList;
 
+import edge.Edge;
 import game.GameState;
 import tile.Tile;
 import token.Firefighter;
@@ -32,22 +33,47 @@ public class MoveWithVictim extends Move{
 		else {
 			return false;
 		}*/
-		
+
 		if(normalMove) {
 			Firefighter playingFirefighter = gs.getPlayingFirefighter();
 			int aP = playingFirefighter.getAP();
 			Tile currentPosition = playingFirefighter.getCurrentPosition();
+	        Edge edge = currentPosition.getEdge(direction);
+	        Tile neighbour = gs.getNeighbour(currentPosition, direction);
+	        int fire = neighbour.getFire();			
 			if(currentPosition.containsPOI()) {
 				ArrayList<POI> pois = currentPosition.getPoiList();
-				for(POI p: pois) {
-					if(p.isVictim() && p.isRevealed() && aP >= 2) {
-						return true;
+				if(fire < 2) {
+					if(edge.isDoor()) {
+						if(edge.getStatus() == true) {
+							for(POI p: pois) {
+								if(p.isVictim() && p.isRevealed() && aP >=2) {
+									return true;
+								}
+							}
+						}
+					}
+					else if(edge.isWall()) {
+						if(edge.getDamage() == 0) {
+							for(POI p: pois) {
+								if(p.isVictim() && p.isRevealed() && aP >=2) {
+									return true;
+								}
+							}
+						}
+					}
+					else if(edge.isBlank()) {
+						for(POI p:pois) {
+							if(p.isVictim() && p.isRevealed() && aP >=2) {
+								return true;
+							}
+						}
 					}
 				}
 			}
 		}
+		
 		return false;
-
 	}
 	
 	@Override
