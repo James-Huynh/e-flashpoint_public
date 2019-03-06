@@ -642,7 +642,7 @@ public class LocalizedTable {
 			    JMenu toSmokeMenu = new JMenu("To Smoke/Smoke");
 			    JMenu completelyMenu = new JMenu("Completely");
 			    JMenu chopMenu = new JMenu("Chop");
-			    JMenu handleMenu = new JMenu("Open Door");
+			    JMenu handleMenu = new JMenu("Toggle Door");
 			    JMenu carryMenu = new JMenu("Carry");
 			    JMenu finishMenu = new JMenu("finish");
 			    JMenu moveWithVictimMenu = new JMenu("Move With Victim");

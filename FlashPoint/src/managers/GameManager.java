@@ -85,11 +85,12 @@ public class GameManager {
     	
     	Set<Action> allPossibleActions = new HashSet<Action>(30);
     	
-    	//move + chop
+    	//move + chop + handle
     	for (int dir : new int[]{0,1,2,3} ) {
     		allPossibleActions.add(new Move(dir));
     		allPossibleActions.add(new MoveWithVictim(dir));
     		allPossibleActions.add(new Chop(dir));
+    		allPossibleActions.add(new Handle(dir));
     	}
     	
     	//extinguish
@@ -98,8 +99,8 @@ public class GameManager {
     		allPossibleActions.add(new Extinguish(dir, 2));
     	}
  
-    	//handle
-    	allPossibleActions.add(new Handle());
+//    	//handle
+//    	allPossibleActions.add(new Handle());
     	
     	//finish
     	allPossibleActions.add(new Finish());

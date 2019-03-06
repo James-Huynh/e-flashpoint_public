@@ -14,8 +14,9 @@ public class Handle extends Action{
 
 	protected int direction;
     
-	public Handle() {
+	public Handle(int direction) {
 		this.APcost = 1;
+		this.direction = direction;
 	}
 	
 	
@@ -35,7 +36,7 @@ public class Handle extends Action{
         Edge edge = currentPosition.getEdge(direction);
         
         if( edge.isDoor() ) {
-        	if ( edge.getStatus() == false) { //Check if door is destroyed, currently not implemented
+        	if ( edge.isDestroyed() == false) { //Check if door is destroyed, currently not implemented
         		flag = true;
         	}
         }
