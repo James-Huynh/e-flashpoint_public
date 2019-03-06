@@ -23,9 +23,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.*;
 
-public class Table extends JPanel{
+public class LocalizedTable {
 
-		private final JPanel gameFrame;
+		private final JFrame gameFrame;
 		private final int NUM_TILES = 80;		// 8 x 10 (rows x columns)
 		private BoardPanel boardPanel;
 		private RightPanel rightPanel;
@@ -52,10 +52,10 @@ public class Table extends JPanel{
 		private Color tileColorAmbulance = Color.decode("#05E1FF");
 		private Color tileColorEngine = Color.decode("#FFFF05");
 		
-		public Table(GameState inputBoard) {
+		public LocalizedTable(GameState inputBoard) {
 			this.currentBoard = inputBoard;
 			this.gameTiles = inputBoard.getMatTiles();
-			this.gameFrame = new JPanel();//("FlashPoint");
+			this.gameFrame = new JFrame("FlashPoint");
 			this.gameFrame.setLayout(new BorderLayout());
 			final JMenuBar tableMenuBar = new JMenuBar();
 			populateMenuBar(tableMenuBar);
@@ -67,7 +67,7 @@ public class Table extends JPanel{
 			this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
 			this.gameFrame.add(this.rightPanel, BorderLayout.EAST);
 			this.gameFrame.add(this.leftPanel,BorderLayout.WEST);
-//			this.gameFrame.setVisible(true);
+			this.gameFrame.setVisible(true);
 		}
 		
 		public void refresh() {
@@ -254,7 +254,7 @@ public class Table extends JPanel{
 			}
 		}
 		
-		public class BoardPanel extends JPanel {
+		private class BoardPanel extends JPanel {
 			final List<SuperTilePanel> boardTiles;
 			
 			BoardPanel(){
