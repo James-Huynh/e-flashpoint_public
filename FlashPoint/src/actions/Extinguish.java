@@ -99,7 +99,7 @@ public class Extinguish extends Action {
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
         int prevFire = neighbour.getFire();
-        neighbour.setFire(prevFire - this.APcost/2);
+        neighbour.setFire(prevFire - this.APcost);
     }
 
 	@Override

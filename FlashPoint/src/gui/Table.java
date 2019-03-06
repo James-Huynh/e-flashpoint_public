@@ -639,7 +639,7 @@ public class Table {
 				
 				JMenu moveMenu = new JMenu("Move");
 			    JMenu extinguishMenu = new JMenu("Extinguish"); 
-			    JMenu toSmokeMenu = new JMenu("To Smoke");
+			    JMenu toSmokeMenu = new JMenu("To Smoke/Smoke");
 			    JMenu completelyMenu = new JMenu("Completely");
 			    JMenu chopMenu = new JMenu("Chop");
 			    JMenu handleMenu = new JMenu("Open Door");
