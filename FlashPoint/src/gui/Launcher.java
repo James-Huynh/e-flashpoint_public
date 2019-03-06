@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -14,8 +15,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import game.GameState;
+import lobby.Lobby;
+import managers.GameManager;
 import personalizedlisteners.loginListeners.LoginListener;
 import personalizedlisteners.mainMenuListeners.CreateListener;
+import tile.Tile;
 import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.lobbyListeners.StartListener;
 import personalizedlisteners.lobbyListeners.LeaveListener;
@@ -259,6 +264,24 @@ public class Launcher {
 		/**
 		 * Ben's gamePanel comes here
 		 */
+		//A fake gamestate set up to allow the gui to build from something
+		GameState tester = GameState.getInstance();
+		Lobby tempLobby = new Lobby();
+		tester.updateGameStateFromLobby(tempLobby);
+		Tile testTile = tester.returnTile(3, 1);
+		Tile testTile2 = tester.returnTile(2, 4);
+		Tile testTile3 = tester.returnTile(5, 6);
+		GameManager current = new GameManager(tester);
+		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
+		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
+		tester.placeFireFighter(tester.getFireFighterList().get(2), testTile2);
+		testTile.getPoiList().get(0).reveal();
+		current.generateAllPossibleActions();
+		tester.updateActionList(current.getAllAvailableActions());
+		
+		Table boardView = new Table(tester);
+		boardView.setVisible(true);
+		contentPane.add(boardView);
 	}
 	//	------------------------------- GAME 
 }
