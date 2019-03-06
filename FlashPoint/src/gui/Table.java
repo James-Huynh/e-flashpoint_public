@@ -913,7 +913,7 @@ public class Table {
 		    	        newAction.addActionListener(new ActionListener() {
 		    				@Override
 		    				public void actionPerformed(ActionEvent e) {
-		    					
+		    					a.perform(currentBoard);
 		    					System.out.println(a.getClass());
 		    				}
 		    			});
@@ -963,7 +963,7 @@ public class Table {
 		    	        newAction.addActionListener(new ActionListener() {
 		    				@Override
 		    				public void actionPerformed(ActionEvent e) {
-		    					
+		    					a.perform(currentBoard);
 		    					System.out.println(a.getClass());
 		    				}
 		    			});

@@ -91,7 +91,7 @@ public class Move extends Action {
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
         playingFirefighter.setAP(aP - this.APcost);
-        
+
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
         playingFirefighter.setCurrentPosition(neighbour);
         currentPosition.removeFromFirefighterList(playingFirefighter);
@@ -105,7 +105,6 @@ public class Move extends Action {
         		}
         	}
         }
-        
         //Do when move saves the victim
     }
     
