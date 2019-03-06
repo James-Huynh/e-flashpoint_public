@@ -15,6 +15,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import gui.Table;
+import gui.Table.BoardPanel;
+import gui.Table.LeftPanel;
+import gui.Table.RightPanel;
 import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
@@ -275,13 +279,22 @@ public class Launcher {
 		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
 		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
 		tester.placeFireFighter(tester.getFireFighterList().get(2), testTile2);
-		testTile.getPoiList().get(0).reveal();
+//		testTile.getPoiList().get(0).reveal();
 		current.generateAllPossibleActions();
 		tester.updateActionList(current.getAllAvailableActions());
 		
-		Table boardView = new Table(tester);
-		boardView.setVisible(true);
-		contentPane.add(boardView);
+		Table table = new Table(tester);
+		BoardPanel board = table.genBoard();
+		LeftPanel LPanel = table.new LeftPanel(tester);
+		RightPanel RPanel = table.new RightPanel(tester);
+		
+//		Table boardView = new Table(tester);
+//		boardView.setVisible(true);
+		contentPane.removeAll();
+		contentPane.add(LPanel, BorderLayout.WEST);
+		contentPane.add(board, BorderLayout.CENTER);
+		contentPane.add(RPanel, BorderLayout.EAST);
+		motherFrame.revalidate();
 	}
 	//	------------------------------- GAME 
 }
