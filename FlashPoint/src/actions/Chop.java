@@ -19,8 +19,8 @@ public class Chop extends Action {
     protected int direction;
     protected ActionList title = ActionList.Chop;
     
-    public Chop(int direction) {
-    	this.APcost = 2;
+    public Chop(int direction, int cost) {
+    	this.APcost = cost;
     	this.direction = direction;
     }
     
@@ -51,8 +51,9 @@ public class Chop extends Action {
         	edge.chop();
         	gs.updateDamageCounter();
         }
-        else { // == 4
-        	edge.destroyDoor();
+        else if(this.APcost == 4) { // == 4
+        	edge.chop();
+        	edge.chop();
         	gs.updateDamageCounter();
         	gs.updateDamageCounter();
         }
@@ -69,21 +70,59 @@ public class Chop extends Action {
         Edge edge = currPosition.getEdge(this.direction);
         int dmgCounter = edge.getDamage();
         
-        if (edge.isWall()) {
-            int damage = edge.getDamage();
-            if (damage > 0) {
-                if (aP >= 2) {
-                    if (dmgCounter + 1 < gs.MAX_WALL_DMGD) {
-                        flag = true;
-                    }
-                }
-                if (APcost == 4 && damage == 2 && aP >= 4) {
-                	if (dmgCounter + 1 < gs.MAX_WALL_DMGD) {
-                        flag = true;
-                    }
-                }
-            }
+        if(edge.isWall()) {
+        	int damage = edge.getDamage();
+        	if(damage == 2) {
+        		if(aP >= APcost) {
+        			switch(APcost) {
+        			case 4:
+        				if(dmgCounter + 2 < gs.MAX_WALL_DMGD) {
+        					flag = true;
+        				}
+        			case 2:
+        				if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+        					flag = true;
+        				}
+        			}
+        		}
+        	}
+        	else if(damage == 1) {
+        		if(aP >= APcost) {
+        			switch(APcost) {
+        			case 4:
+        				break;
+        			case 2:
+        				if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+        					flag = true;
+        				}
+        			}
+        		}
+        	}
         }
+        
+//        if (edge.isWall()) {
+//            int damage = edge.getDamage();
+//            if(damage == 2) {
+//            	if(aP >= 4) {
+//            		if(dmgCounter + 2 < gs.MAX_WALL_DMGD) {
+//            			this.APcost = 4;
+//            			flag = true;
+//            		}
+//            	}
+//            }
+//            if (damage > 0) {
+//                if (aP >= 2) {
+//                    if (dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+//                        flag = true;
+//                    }
+//                }
+////                if (APcost == 4 && damage == 2 && aP >= 4) {
+////                	if (dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+////                        flag = true;
+////                    }
+////                }
+//            }
+//        }
         return flag;
     }
 

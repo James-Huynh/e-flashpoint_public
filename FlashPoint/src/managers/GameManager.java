@@ -89,7 +89,8 @@ public class GameManager {
     	for (int dir : new int[]{0,1,2,3} ) {
     		allPossibleActions.add(new Move(dir));
     		allPossibleActions.add(new MoveWithVictim(dir));
-    		allPossibleActions.add(new Chop(dir));
+    		allPossibleActions.add(new Chop(dir, 2));
+    		allPossibleActions.add(new Chop(dir, 4));
     		allPossibleActions.add(new Handle(dir));
     	}
     	
