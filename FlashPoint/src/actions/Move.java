@@ -47,7 +47,8 @@ public class Move extends Action {
         
         if ( edge.isDoor() ) {
         	boolean status = edge.getStatus();
-        	if(status == true) {
+        	boolean desStatus = edge.isDestroyed();
+        	if(status == true || desStatus == true) {
         		if (fire < 2) {
         			if( aP >= 1) {
         				flag = true;
@@ -116,6 +117,7 @@ public class Move extends Action {
         		}
         	}
         	for(POI poi:POIStoRemove) {
+        		gs.removePOI(poi);
         		Pois.remove(poi);
         		gs.getRevealedFalseAlarmsList().add(poi);
         	}

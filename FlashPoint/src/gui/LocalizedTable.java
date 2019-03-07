@@ -141,15 +141,18 @@ public class LocalizedTable {
 				this.currentBoard = updatedBoard;
 				for(int i = 0; i<this.currentBoard.getFireFighterList().size(); i++) {
 					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
-					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() + "  Saved Ap: " + currentFF.getSavedAP());
+					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() /*+ "  Saved Ap: " + currentFF.getSavedAP()*/);
 					String inputString;
+					//needs fixing
+					String ffColour = currentFF.getColour().toString(currentFF.getColour());
 					if(this.currentBoard.getActiveFireFighterIndex() == i) {
-						inputString = "<html> <font size=\"5\">" + playerInfo + "</font></html>";
+						inputString = "<html> <font size=\"5\", color='"+ffColour+"'>" + playerInfo + "</font></html>";
 					} 
-					else if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
-						inputString = "<html> <font color='red'>" + playerInfo + "</font></html>";
-					} else {
-						inputString = "<html>"  + playerInfo + "</html>";
+//					else if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
+//						inputString = "<html> <font color='"+ ffColour + "'>" + playerInfo + "</font></html>";
+//					}
+					else {
+						inputString = "<html> <font color='"+ ffColour + "'>" + playerInfo + "</font></html>";
 					}
 					
 					add(new JLabel(inputString));
@@ -167,6 +170,8 @@ public class LocalizedTable {
 //					add(nextPlayer);
 					
 				}
+				String inputString = "<html> <font size=\"5\"> Current Wall Damage: " + currentBoard.getDamageCounter() + "</font></html>";
+				add(new JLabel(inputString));
 			}
 		}
 		
@@ -1093,7 +1098,7 @@ public class LocalizedTable {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-//						currentBoard.advancefire();
+						gameTest.nextTurn();
 					}
 				});
 		         
