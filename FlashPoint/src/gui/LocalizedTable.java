@@ -655,6 +655,8 @@ public class LocalizedTable {
 			    JMenu toSmokeMenu = new JMenu("To Smoke/Smoke");
 			    JMenu completelyMenu = new JMenu("Completely");
 			    JMenu chopMenu = new JMenu("Chop");
+			    JMenu onceMenu = new JMenu("Once");
+			    JMenu twiceMenu = new JMenu("Twice");
 			    JMenu handleMenu = new JMenu("Toggle Door");
 			    JMenu carryMenu = new JMenu("Carry");
 			    JMenu finishMenu = new JMenu("finish");
@@ -666,63 +668,108 @@ public class LocalizedTable {
 			    	JMenuItem newAction;
 			    	int APCost = a.getCost();
 			    	if(actionTitle == ActionList.Chop) {
-			    		if(a.getDirection() == 0) {
-			    			builder = "Left, APC: " + APCost;
-			    			newAction = new JMenuItem(builder);
-			    	        newAction.addActionListener(new ActionListener() {
-			    				@Override
-			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-//			    					refresh();
-			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
-			    				}
-			    			});
-			    	        chopMenu.add(newAction);
-			    			
-			    		} else if(a.getDirection() == 1) {
-			    			builder = "Up, APC: " + APCost;
-			    			newAction = new JMenuItem(builder);
-			    	        newAction.addActionListener(new ActionListener() {
-			    				@Override
-			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-//			    					refresh();
-			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
-			    				}
-			    			});
-			    	        chopMenu.add(newAction);
-			    			
-			    		} else if(a.getDirection() == 2) {
-			    			builder = "Right, APC: " + APCost;
-			    			newAction = new JMenuItem(builder);
-			    	        newAction.addActionListener(new ActionListener() {
-			    				@Override
-			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-//			    					refresh();
-			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
-			    				}
-			    			});
-			    	        chopMenu.add(newAction);
-			    			
-			    		} else if(a.getDirection() == 3) {
-			    			builder = "Down, APC: " + APCost;
-			    			newAction = new JMenuItem(builder);
-			    	        newAction.addActionListener(new ActionListener() {
-			    				@Override
-			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-//			    					refresh();
-			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
-			    				}
-			    			});
-			    	        chopMenu.add(newAction);
-			    			
-			    		} 
+			    		if(APCost == 2) {
+			    			if(a.getDirection() == 0) {
+				    			builder = "Left, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        onceMenu.add(newAction);
+				    			
+				    		} else if(a.getDirection() == 1) {
+				    			builder = "Up, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        onceMenu.add(newAction);
+				    			
+				    		} else if(a.getDirection() == 2) {
+				    			builder = "Right, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        onceMenu.add(newAction);
+				    			
+				    		} else if(a.getDirection() == 3) {
+				    			builder = "Down, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        onceMenu.add(newAction);
+				    			
+				    		} 
+			    		} else if(APCost == 4) {
+			    			if(a.getDirection() == 0) {
+				    			builder = "Left, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        twiceMenu.add(newAction);
+				    			
+				    		} else if(a.getDirection() == 1) {
+				    			builder = "Up, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        twiceMenu.add(newAction);
+				    			
+				    		} else if(a.getDirection() == 2) {
+				    			builder = "Right, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        twiceMenu.add(newAction);
+				    			
+				    		} else if(a.getDirection() == 3) {
+				    			builder = "Down, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        twiceMenu.add(newAction);
+				    			
+				    		} 
+			    		}
+			    		
 			    	} else if(actionTitle == ActionList.Extinguish) {
 			    		if(APCost == 1) {
 			    			if(a.getDirection() == 0) {
@@ -733,7 +780,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -745,7 +791,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -758,7 +803,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -770,7 +814,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -782,7 +825,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -796,7 +838,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -808,7 +849,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -821,7 +861,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -833,7 +872,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -845,7 +883,6 @@ public class LocalizedTable {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -875,7 +912,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -887,7 +923,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -899,7 +934,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -911,7 +945,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -925,7 +958,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -938,7 +970,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -951,7 +982,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -964,7 +994,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -979,7 +1008,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -992,7 +1020,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1005,7 +1032,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1018,7 +1044,6 @@ public class LocalizedTable {
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1041,6 +1066,10 @@ public class LocalizedTable {
 		        extinguishMenu.add(toSmokeMenu);
 		        extinguishMenu.addSeparator();
 		        extinguishMenu.add(completelyMenu);
+		        
+		        chopMenu.add(onceMenu);
+		        chopMenu.addSeparator();
+		        chopMenu.add(twiceMenu);
 		        
 		        popupMenu.add(handleMenu);
 		        popupMenu.addSeparator();
