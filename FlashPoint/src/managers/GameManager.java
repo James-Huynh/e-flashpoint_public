@@ -468,18 +468,32 @@ public class GameManager {
     	resolveFlashOver();
     	checkKnockDowns();
     	placePOI();
+    	clearExteriorFire();
+    	
     	
     	
     	int wallCheck = gs.getDamageCounter();//should this running the same time with the main process? @Eric
-    	//int victimCheck = gs.getVictims();
+    	int victimCheck = gs.getLostVictimsList().size();
     	
     	
-    	if(wallCheck == 24 /*|| victimCheck == 4*/) {
-    		//gs.setGameOver(true);
+    	if(wallCheck == 24 || victimCheck == 4) {
+    		gs.terminateGame();
     	}
     }
    
-    public int[] nextTile(int x, int y, int direction) {
+    private void clearExteriorFire() {
+		for(int i = 0; i<8; i++) {
+			gs.returnTile(i,0).setFire(0);
+			gs.returnTile(i, 9).setFire(0);
+		}
+		for(int i = 0; i<10; i++) {
+			gs.returnTile(0,i).setFire(0);
+			gs.returnTile(7, i).setFire(0);
+		}
+		
+	}
+
+	public int[] nextTile(int x, int y, int direction) {
     	int[] result = new int[2];
     	if(y==8) {
     		if(x == 6) {

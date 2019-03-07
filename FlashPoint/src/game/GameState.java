@@ -268,6 +268,10 @@ public class GameState implements Serializable {
 //		}
 	}
 	
+	public void terminateGame() {
+		this.gameTerminated = true;
+	}
+	
 	public void updateActionList(Set<Action> newActionList) {
 		this.availableActions = newActionList;
 	}

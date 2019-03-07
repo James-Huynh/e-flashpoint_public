@@ -847,7 +847,7 @@ public class LocalizedTable {
 		    				@Override
 		    				public void actionPerformed(ActionEvent e) {
 //		    					a.perform(currentBoard);
-		    					System.out.println(a.getClass());
+		    					gameTest.nextTurn();
 		    				}
 		    			});
 		    	        finishMenu.add(newAction);

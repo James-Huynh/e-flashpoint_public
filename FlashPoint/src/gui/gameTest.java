@@ -27,9 +27,9 @@ public static void main(String[] args) {
 		Tile[][] testerBoard = tester.getMatTiles();
 		Lobby tempLobby = new Lobby();
 		tester.updateGameStateFromLobby(tempLobby);
-		Tile testTile = tester.returnTile(3, 1);
-		Tile testTile2 = tester.returnTile(2, 4);
-		Tile testTile3 = tester.returnTile(5, 6);
+		Tile testTile = tester.returnTile(3, 0);
+		Tile testTile2 = tester.returnTile(0, 4);
+		Tile testTile3 = tester.returnTile(7, 6);
 		current = new GameManager(tester);
 		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
 		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
@@ -49,6 +49,21 @@ public static void main(String[] args) {
 	public static void repainter() {
 //
 //		current.generateAllPossibleActions();
+		current.setAllAvailableActions(current.generateAllPossibleActions());
+		tester.updateActionList(current.getAllAvailableActions());
+		table = new LocalizedTable(tester);
+	}
+	
+	public static void nextTurn() {
+		Firefighter temp = tester.getPlayingFirefighter();
+		int AP = temp.getAP();
+		if(AP + 4 > 8) {
+			temp.setAP(8);
+		}else {
+			temp.setAP(AP + 4);
+		}
+		current.advanceFire();
+		tester.setActiveFireFighterIndex( (tester.getActiveFireFighterIndex() + 1)%(tester.getFireFighterList().size()) );
 		current.setAllAvailableActions(current.generateAllPossibleActions());
 		tester.updateActionList(current.getAllAvailableActions());
 		table = new LocalizedTable(tester);
