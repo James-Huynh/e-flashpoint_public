@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import custom_panels.CreateLobbyPanel;
+import custom_panels.FindLobbyPanel;
 import custom_panels.LobbyPanel;
 import custom_panels.LoginPanel;
 import custom_panels.MainMenuPanel;
@@ -53,6 +54,7 @@ public class Launcher {
 	private LoginPanel login;
 	private MainMenuPanel mainMenu;
 	private CreateLobbyPanel createLobby;
+	private FindLobbyPanel findLobby;
 	private LobbyPanel lobby;
 	
 	
@@ -205,7 +207,7 @@ public class Launcher {
 	}
 	//------------------------------- LOGIN
 	
-	
+
 	//	MAIN MENU -------------------------------
 	private void setupMainMenuPage() {
 		mainMenu = new MainMenuPanel();
@@ -259,14 +261,15 @@ public class Launcher {
 	//------------------------------- CREATE LOBBY
 	
 	
-	
+	// James
 	//  FIND LOBBY -------------------------------  
 	private void setupFindLobbyPage() {
-		
-		
+		findLobby = new FindLobbyPanel();
+		contentPane.add(findLobby);		
 	}
 	
 	//------------------------------- FIND LOBBY
+	
 	
 	//	LOBBY ------------------------------- 
 	private void setupLobbyPage() {
