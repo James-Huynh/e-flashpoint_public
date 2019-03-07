@@ -15,11 +15,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import custom_panels.CreateLobbyPanel;
+import custom_panels.LobbyPanel;
+import custom_panels.LoginPanel;
+import custom_panels.MainMenuPanel;
+import gui.Table;
+import gui.Table.BoardPanel;
+import gui.Table.LeftPanel;
+import gui.Table.RightPanel;
 import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
 import personalizedlisteners.loginListeners.LoginListener;
-import personalizedlisteners.mainMenuListeners.CreateListener;
+import personalizedlisteners.mainMenuListeners.MainMenuListener;
 import tile.Tile;
 import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.lobbyListeners.StartListener;
@@ -46,6 +54,11 @@ public class Launcher {
 	private MainMenuPanel mainMenu;
 	private CreateLobbyPanel createLobby;
 	private LobbyPanel lobby;
+	
+	
+	//Used by Ben for in game testing. Not permanent.
+	private static GameManager current;
+	private static GameState tester;
 
 	String username; //@James - Ideally don't want these to be here, will grow enormously -- @Zaid
 	char[] password;
@@ -93,6 +106,7 @@ public class Launcher {
 		motherFrame.setBounds(100, 100, 450, 300);
 		motherFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		motherFrame.setSize(OUTER_FRAME_DIMENSION);
+		motherFrame.setTitle("You're a god if you recognized this quote: \"Whether you think you can, or you think you can't--you're right.\"");
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		setupDummies();
@@ -197,12 +211,22 @@ public class Launcher {
 		mainMenu = new MainMenuPanel();
 		contentPane.add(mainMenu);
 		
-		mainMenu.addSelectionPiecesListenerListener(new CreateListener() {
+		mainMenu.addSelectionPiecesListenerListener(new MainMenuListener() {
+			@Override
 			public void clickCreate() {
 				mainMenu.setVisible(false);
 				motherFrame.remove(mainMenu);
 				setupCreateLobbyPage();
 			}
+			
+			// James
+			@Override
+			public void clickFind() {
+				mainMenu.setVisible(false);
+				motherFrame.remove(mainMenu);
+				setupFindLobbyPage();
+			}
+
 		});
 	}
 	//------------------------------- MAIN MENU
@@ -235,6 +259,15 @@ public class Launcher {
 	//------------------------------- CREATE LOBBY
 	
 	
+	
+	//  FIND LOBBY -------------------------------  
+	private void setupFindLobbyPage() {
+		
+		
+	}
+	
+	//------------------------------- FIND LOBBY
+	
 	//	LOBBY ------------------------------- 
 	private void setupLobbyPage() {
 		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION);
@@ -265,23 +298,55 @@ public class Launcher {
 		 * Ben's gamePanel comes here
 		 */
 		//A fake gamestate set up to allow the gui to build from something
-		GameState tester = GameState.getInstance();
+		tester = GameState.getInstance();
 		Lobby tempLobby = new Lobby();
 		tester.updateGameStateFromLobby(tempLobby);
 		Tile testTile = tester.returnTile(3, 1);
 		Tile testTile2 = tester.returnTile(2, 4);
 		Tile testTile3 = tester.returnTile(5, 6);
-		GameManager current = new GameManager(tester);
+		current = new GameManager(tester);
 		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
 		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
 		tester.placeFireFighter(tester.getFireFighterList().get(2), testTile2);
-		testTile.getPoiList().get(0).reveal();
+//		testTile.getPoiList().get(0).reveal();
 		current.generateAllPossibleActions();
 		tester.updateActionList(current.getAllAvailableActions());
 		
-		Table boardView = new Table(tester);
-		boardView.setVisible(true);
-		contentPane.add(boardView);
+		Table table = new Table(tester);
+		BoardPanel board = table.genBoard();
+		LeftPanel LPanel = table.new LeftPanel(tester);
+		RightPanel RPanel = table.new RightPanel(tester);
+		
+//		Table boardView = new Table(tester);
+//		boardView.setVisible(true);
+		contentPane.removeAll();
+		contentPane.add(LPanel, BorderLayout.WEST);
+		contentPane.add(board, BorderLayout.CENTER);
+		contentPane.add(RPanel, BorderLayout.EAST);
+		motherFrame.revalidate();
 	}
+	private void repaint() {
+		Table table = new Table(tester);
+		BoardPanel board = table.genBoard();
+		LeftPanel LPanel = table.new LeftPanel(tester);
+		RightPanel RPanel = table.new RightPanel(tester);
+		contentPane.removeAll();
+		contentPane.add(LPanel, BorderLayout.WEST);
+		contentPane.add(board, BorderLayout.CENTER);
+		contentPane.add(RPanel, BorderLayout.EAST);
+		motherFrame.revalidate();
+	}
+	
+//	public static void gameRepainter() {
+//		Table table = new Table(tester);
+//		BoardPanel board = table.genBoard();
+//		LeftPanel LPanel = table.new LeftPanel(tester);
+//		RightPanel RPanel = table.new RightPanel(tester);
+//		contentPane.removeAll();
+//		contentPane.add(LPanel, BorderLayout.WEST);
+//		contentPane.add(board, BorderLayout.CENTER);
+//		contentPane.add(RPanel, BorderLayout.EAST);
+//		motherFrame.revalidate();
+//	}
 	//	------------------------------- GAME 
 }

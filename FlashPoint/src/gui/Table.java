@@ -23,15 +23,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.*;
 
-public class Table extends JPanel{
+public class Table {
 
-		private final JPanel gameFrame;
+//		private final JPanel gameFrame;
 		private final int NUM_TILES = 80;		// 8 x 10 (rows x columns)
 		private BoardPanel boardPanel;
 		private RightPanel rightPanel;
 		private LeftPanel leftPanel;
-		private final GameState currentBoard;
-		private final Tile[][] gameTiles;
+		protected GameState currentBoard;
+		protected Tile[][] gameTiles;
 		
 		private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
 		private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(1000,800);
@@ -52,31 +52,42 @@ public class Table extends JPanel{
 		private Color tileColorAmbulance = Color.decode("#05E1FF");
 		private Color tileColorEngine = Color.decode("#FFFF05");
 		
+//		public Table(GameState inputBoard) {
+//			this.currentBoard = inputBoard;
+//			this.gameTiles = inputBoard.getMatTiles();
+//			this.gameFrame = new JPanel();//("FlashPoint");
+//			this.gameFrame.setLayout(new BorderLayout());
+//			final JMenuBar tableMenuBar = new JMenuBar();
+//			populateMenuBar(tableMenuBar);
+//			//this.gameFrame.setJMenuBar(tableMenuBar);
+//			this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
+//			this.boardPanel = new BoardPanel();
+//			this.rightPanel = new RightPanel(this.currentBoard);
+//			this.leftPanel = new LeftPanel(this.currentBoard);
+//			this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
+//			this.gameFrame.add(this.rightPanel, BorderLayout.EAST);
+//			this.gameFrame.add(this.leftPanel,BorderLayout.WEST);
+////			this.gameFrame.setVisible(true);
+//		}
+		
 		public Table(GameState inputBoard) {
-			this.currentBoard = inputBoard;
-			this.gameTiles = inputBoard.getMatTiles();
-			this.gameFrame = new JPanel();//("FlashPoint");
-			this.gameFrame.setLayout(new BorderLayout());
-			final JMenuBar tableMenuBar = new JMenuBar();
-			populateMenuBar(tableMenuBar);
-			//this.gameFrame.setJMenuBar(tableMenuBar);
-			this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
+			currentBoard = inputBoard;
+			gameTiles = inputBoard.getMatTiles();
+		}
+		
+		public BoardPanel genBoard() {
 			this.boardPanel = new BoardPanel();
-			this.rightPanel = new RightPanel(this.currentBoard);
-			this.leftPanel = new LeftPanel(this.currentBoard);
-			this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
-			this.gameFrame.add(this.rightPanel, BorderLayout.EAST);
-			this.gameFrame.add(this.leftPanel,BorderLayout.WEST);
-//			this.gameFrame.setVisible(true);
+			return boardPanel;
+			
 		}
 		
 		public void refresh() {
 			this.boardPanel = new BoardPanel();
 			this.rightPanel = new RightPanel(this.currentBoard);
 			this.leftPanel = new LeftPanel(this.currentBoard);
-			this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
-			this.gameFrame.add(this.rightPanel, BorderLayout.EAST);
-			this.gameFrame.add(this.leftPanel,BorderLayout.WEST);
+//			this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
+//			this.gameFrame.add(this.rightPanel, BorderLayout.EAST);
+//			this.gameFrame.add(this.leftPanel,BorderLayout.WEST);
 		}
 
 		private void populateMenuBar(final JMenuBar tableMenuBar) {
@@ -111,7 +122,7 @@ public class Table extends JPanel{
 			return fileMenu;
 		}
 		
-		private class RightPanel extends JPanel {
+		public class RightPanel extends JPanel {
 			GameState currentBoard;
 			InformationPanel infoPanel;
 			RightPanel(GameState updatedBoard){
@@ -169,7 +180,7 @@ public class Table extends JPanel{
 			}
 		}
 		
-		private class LeftPanel extends JPanel {
+		public class LeftPanel extends JPanel {
 			final LostPoiPanel lostPoiPanel;
 			final SavedPoiPanel savedPoiPanel;
 			final RevealPoiPanel revealPoiPanel;
@@ -642,7 +653,7 @@ public class Table extends JPanel{
 			    JMenu toSmokeMenu = new JMenu("To Smoke/Smoke");
 			    JMenu completelyMenu = new JMenu("Completely");
 			    JMenu chopMenu = new JMenu("Chop");
-			    JMenu handleMenu = new JMenu("Open Door");
+			    JMenu handleMenu = new JMenu("Toggle Door");
 			    JMenu carryMenu = new JMenu("Carry");
 			    JMenu finishMenu = new JMenu("finish");
 			    JMenu moveWithVictimMenu = new JMenu("Move With Victim");
@@ -660,9 +671,7 @@ public class Table extends JPanel{
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
-//			    					refresh();
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        chopMenu.add(newAction);
@@ -674,9 +683,7 @@ public class Table extends JPanel{
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
-//			    					refresh();
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        chopMenu.add(newAction);
@@ -688,9 +695,7 @@ public class Table extends JPanel{
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
-//			    					refresh();
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        chopMenu.add(newAction);
@@ -704,7 +709,6 @@ public class Table extends JPanel{
 			    					a.perform(currentBoard);
 //			    					refresh();
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        chopMenu.add(newAction);
@@ -720,7 +724,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -732,7 +735,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -745,7 +747,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -757,7 +758,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -769,7 +769,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -783,7 +782,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -795,7 +793,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -808,7 +805,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -820,7 +816,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -832,7 +827,6 @@ public class Table extends JPanel{
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
-				    					System.out.println(a.getClass());
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -862,7 +856,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -874,7 +867,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -886,7 +878,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -898,7 +889,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -912,7 +902,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -925,7 +914,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -938,7 +926,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -951,7 +938,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -966,7 +952,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -979,7 +964,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -992,7 +976,6 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1005,181 +988,8 @@ public class Table extends JPanel{
 			    				public void actionPerformed(ActionEvent e) {
 			    					a.perform(currentBoard);
 			    					gameTest.repainter();
-			    					System.out.println(a.getClass());
 			    				}
 			    			});
-			    	        completelyMenu.add(newAction);
-			    		}
-		    		}
-		    	} else if(actionTitle == ActionList.Drive) {
-		    		System.out.println(a.getClass().toString());
-		    	} else if(actionTitle == ActionList.Finish) {
-		    		builder = "End Turn";
-	    			newAction = new JMenuItem(builder);
-	    	        newAction.addActionListener(new ActionListener() {
-	    				@Override
-	    				public void actionPerformed(ActionEvent e) {
-	    					
-	    					System.out.println(a.getClass());
-	    				}
-	    			});
-	    	        finishMenu.add(newAction);
-		    	} else if(actionTitle == ActionList.FireGun) {
-		    		System.out.println(a.getClass().toString());
-		    	} else if(actionTitle == ActionList.Handle) {
-		    		if(a.getDirection() == 0) {
-		    			builder = "Left, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        handleMenu.add(newAction);
-		    		} else if(a.getDirection() == 1) {
-		    			builder = "Up, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        handleMenu.add(newAction);
-		    		} else if(a.getDirection() == 2) {
-		    			builder = "Right, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        handleMenu.add(newAction);
-		    		} else if(a.getDirection() == 3) {
-		    			builder = "Down, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        handleMenu.add(newAction);
-		    		} 
-		    	} else if(actionTitle == ActionList.Move) {
-		    		if(a.getDirection() == 0) {
-		    			builder = "Left, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        moveMenu.add(newAction);
-		    			
-		    		} else if(a.getDirection() == 1) {
-		    			builder = "Up, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        moveMenu.add(newAction);
-		    			
-		    		} else if(a.getDirection() == 2) {
-		    			builder = "Right, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					a.perform(currentBoard);
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        moveMenu.add(newAction);
-		    			
-		    		} else if(a.getDirection() == 3) {
-		    			builder = "Down, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        moveMenu.add(newAction);
-		    			
-		    		} 
-		    	} else if(actionTitle == ActionList.MoveWithVictim) {
-		    		if(a.getDirection() == 0) {
-		    			builder = "Left, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        moveWithVictimMenu.add(newAction);
-		    			
-		    		} else if(a.getDirection() == 1) {
-		    			builder = "Up, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        moveWithVictimMenu.add(newAction);
-		    			
-		    		} else if(a.getDirection() == 2) {
-		    			builder = "Right, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					a.perform(currentBoard);
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        moveWithVictimMenu.add(newAction);
-		    			
-		    		} else if(a.getDirection() == 3) {
-		    			builder = "Down, APC: " + APCost;
-		    			newAction = new JMenuItem(builder);
-		    	        newAction.addActionListener(new ActionListener() {
-		    				@Override
-		    				public void actionPerformed(ActionEvent e) {
-		    					
-		    					System.out.println(a.getClass());
-		    				}
-		    			});
-		    	        moveWithVictimMenu.add(newAction);
-		    			
-		    		} 
-		    	}
-				
-			}
-	         
-	        JMenuItem exitMenu = new JMenuItem("exit");
-	        exitMenu.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
 			    	        moveWithVictimMenu.add(newAction);
 			    			
 			    		} 

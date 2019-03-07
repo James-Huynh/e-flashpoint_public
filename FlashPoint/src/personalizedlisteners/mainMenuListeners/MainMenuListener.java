@@ -6,8 +6,11 @@ import java.util.EventListener;
  * @author zaidyahya
  *
  */
-public interface CreateListener extends EventListener {
+public interface MainMenuListener extends EventListener {
 	public void clickCreate();	
 	
-	//.. more methods here
+	/**
+	 * Find lobby button from the main menu
+	 */
+	public void clickFind(); // James
 }

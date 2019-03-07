@@ -1,4 +1,4 @@
-package gui;
+package custom_panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
-import personalizedlisteners.mainMenuListeners.CreateListener;
+import personalizedlisteners.mainMenuListeners.MainMenuListener;
 
 /**
  * Class representing the whole page of the main menu encapsulated inside a panel
@@ -27,7 +27,7 @@ public class MainMenuPanel extends JPanel {
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
 	/**
-	 * Create the panel.
+	 * Create the visible components
 	 */
 	public MainMenuPanel() {
 		setPreferredSize(new Dimension(1000,800));
@@ -76,15 +76,15 @@ public class MainMenuPanel extends JPanel {
 	 * Register an object to be a listener
 	 * @param obj
 	 */
-	public void addSelectionPiecesListenerListener(CreateListener obj) {
-		REGISTERED_OBJECTS.add(CreateListener.class, obj);
+	public void addSelectionPiecesListenerListener(MainMenuListener obj) {
+		REGISTERED_OBJECTS.add(MainMenuListener.class, obj);
 	}
 	
 	/**
 	 * Raise an event: the create button has been clicked
 	 */
 	private void raiseEventCreateBtn() {
-		for (CreateListener listener: REGISTERED_OBJECTS.getListeners(CreateListener.class)) {
+		for (MainMenuListener listener: REGISTERED_OBJECTS.getListeners(MainMenuListener.class)) {
 			listener.clickCreate();
 		}
 	}

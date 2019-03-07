@@ -27,8 +27,8 @@ public static void main(String[] args) {
 		Tile[][] testerBoard = tester.getMatTiles();
 		Lobby tempLobby = new Lobby();
 		tester.updateGameStateFromLobby(tempLobby);
-		Tile testTile = tester.returnTile(3, 1);
-		Tile testTile2 = tester.returnTile(2, 4);
+		Tile testTile = tester.returnTile(4, 5);
+		Tile testTile2 = tester.returnTile(1, 4);
 		Tile testTile3 = tester.returnTile(5, 6);
 		current = new GameManager(tester);
 		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
@@ -48,7 +48,7 @@ public static void main(String[] args) {
 	
 	public static void repainter() {
 //
-//		current.generateAllPossibleActions();
+		current.generateAllPossibleActions();
 //		current.getAllAvailableActions();
 		tester.updateActionList(current.getAllAvailableActions());
 		table = new LocalizedTable(tester);
