@@ -60,6 +60,10 @@ public class Extinguish extends Action {
         //We cannot extinguish by 2 where have only smoke
         int fire = neighbour.getFire();
 
+        if(fire > 0 && currentPosition.getFire() == 2 && neighbour != currentPosition && aP == cost) {
+        	return false;
+        }
+        
         if (fire >= 1 && fire >= cost) { 
             if (currentPosition.equals(neighbour)) { //in other words: direction -1
                 if (aP >= cost) {

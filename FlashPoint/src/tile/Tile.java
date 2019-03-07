@@ -18,7 +18,6 @@ public class Tile{
     
     protected int fire;
     protected int[] coords;
-    protected boolean interior;
     protected Edge[] adjacentEdges;
     protected ArrayList<Firefighter> listOfFirefighters;
     protected int x;
@@ -73,9 +72,6 @@ public class Tile{
     	
     }
     
-    public boolean getInterior() {
-    	return interior;
-    }
     
     public void setEdge(int direction, Edge e) {
     	adjacentEdges[direction] = e;
@@ -196,8 +192,7 @@ public class Tile{
 
 	@Override
 	public String toString() {
-		return "Tile [fire=" + fire + ", coords=" + Arrays.toString(coords) + ", interior=" + interior
-				+ ", adjacentEdges=" + Arrays.toString(adjacentEdges) + ", listOfFirefighters=" + listOfFirefighters
+		return "Tile [fire=" + fire + ", coords=" + Arrays.toString(coords) + ", interior=" +  ", adjacentEdges=" + Arrays.toString(adjacentEdges) + ", listOfFirefighters=" + listOfFirefighters
 				+ ", x=" + x + ", y=" + y + ", poiList=" + poiList + ", isInterior=" + isInterior
 				+ ", pointerParkingSpot=" + pointerParkingSpot + "]";
 	}

@@ -419,10 +419,50 @@ public class GameManager {
     	
     	int curFire = targetTile.getFire();
     	
-    	if(curFire < 2) {
+    	if(curFire == 0) {
+    		int[] tempCoords = targetTile.getCoords();
+    		boolean flag = false;
+    		for(int direction = 0; direction<4; direction ++) {
+    			//checks for if the adj tiles are above/below the map
+				if(tempCoords[0] == 0) {
+					if(direction == 1) {
+						continue;
+					}
+				} else if(tempCoords[0] == 7) {
+					if(direction == 3) {
+						continue;
+					}
+				}
+				//checks for if the adj tiles are left or right of the map
+				if(tempCoords[1] == 0) {
+					if(direction == 0) {
+						continue;
+					}
+				} else if(tempCoords[1] == 9) {
+					if(direction == 2) {
+						continue;
+					}
+				}
+				//checks if a barrier is in the way, if not it checks if the tile in said direction is on fire and flashes over is so
+				boolean checkBarriers = targetTile.checkBarriers(direction);
+				if(checkBarriers == false) {
+					Tile adjTile =  gs.getNeighbour(targetTile,direction);
+    				int fireCheck = adjTile.getFire();
+    				
+    				if(fireCheck == 2) {
+    					flag = true;
+    				}
+				}
+    		}
+    		if(flag) {
+    			targetTile.setFire(2);
+    		}else {
+    			targetTile.setFire(1);
+    		}
+    	}else if(curFire == 1) {
     		targetTile.setFire(2);
     	}
-    	  else {
+    	else {
     		explosion(targetTile);
     	}
     	resolveFlashOver();
