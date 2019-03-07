@@ -268,6 +268,10 @@ public class GameState implements Serializable {
 //		}
 	}
 	
+	public void terminateGame() {
+		this.gameTerminated = true;
+	}
+	
 	public void updateActionList(Set<Action> newActionList) {
 		this.availableActions = newActionList;
 	}
@@ -692,16 +696,32 @@ public class GameState implements Serializable {
 	public Tile getNeighbour(Tile tile, int direction) {
 		int[] coords = tile.getCoords();
 		if (direction == 0) {
-			return matTiles[coords[0]][coords[1]-1];
+			if(coords[1]-1 < 0) {
+				return null;
+			}else {
+				return matTiles[coords[0]][coords[1]-1];
+			}
 		}
 		else if (direction == 1) {
-			return matTiles[coords[0]-1][coords[1]];
+			if(coords[0]-1<0) {
+				return null;
+			}else {
+				return matTiles[coords[0]-1][coords[1]];
+			}
 		}
 		else if (direction == 2) {
-			return matTiles[coords[0]][coords[1]+1];
+			if(coords[1]+1 > 9) {
+				return null;
+			} else {
+				return matTiles[coords[0]][coords[1]+1];
+			}
 		}
 		else if (direction == 3) {
-			return matTiles[coords[0]+1][coords[1]];
+			if(coords[0] + 1 > 7) {
+				return null;
+			}else {
+				return matTiles[coords[0]+1][coords[1]];
+			}
 		}
 		else { //self, so direction==-1
 			return tile;

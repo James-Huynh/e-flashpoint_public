@@ -120,6 +120,10 @@ public class GameManager {
         return allValidActions;
     }
     
+    public void setAllAvailableActions(Set<Action> newSet) {
+    	this.possibleActions = newSet;
+    }
+    
     
 	//Ben and eric, ready for testing
     public void explosion(Tile targetTile) {
@@ -415,27 +419,81 @@ public class GameManager {
     	
     	int curFire = targetTile.getFire();
     	
-    	if(curFire < 2) {
+    	if(curFire == 0) {
+    		int[] tempCoords = targetTile.getCoords();
+    		boolean flag = false;
+    		for(int direction = 0; direction<4; direction ++) {
+    			//checks for if the adj tiles are above/below the map
+				if(tempCoords[0] == 0) {
+					if(direction == 1) {
+						continue;
+					}
+				} else if(tempCoords[0] == 7) {
+					if(direction == 3) {
+						continue;
+					}
+				}
+				//checks for if the adj tiles are left or right of the map
+				if(tempCoords[1] == 0) {
+					if(direction == 0) {
+						continue;
+					}
+				} else if(tempCoords[1] == 9) {
+					if(direction == 2) {
+						continue;
+					}
+				}
+				//checks if a barrier is in the way, if not it checks if the tile in said direction is on fire and flashes over is so
+				boolean checkBarriers = targetTile.checkBarriers(direction);
+				if(checkBarriers == false) {
+					Tile adjTile =  gs.getNeighbour(targetTile,direction);
+    				int fireCheck = adjTile.getFire();
+    				
+    				if(fireCheck == 2) {
+    					flag = true;
+    				}
+				}
+    		}
+    		if(flag) {
+    			targetTile.setFire(2);
+    		}else {
+    			targetTile.setFire(1);
+    		}
+    	}else if(curFire == 1) {
     		targetTile.setFire(2);
     	}
-    	  else {
+    	else {
     		explosion(targetTile);
     	}
     	resolveFlashOver();
     	checkKnockDowns();
     	placePOI();
+    	clearExteriorFire();
+    	
     	
     	
     	int wallCheck = gs.getDamageCounter();//should this running the same time with the main process? @Eric
-    	//int victimCheck = gs.getVictims();
+    	int victimCheck = gs.getLostVictimsList().size();
     	
     	
-    	if(wallCheck == 24 /*|| victimCheck == 4*/) {
-    		//gs.setGameOver(true);
+    	if(wallCheck == 24 || victimCheck == 4) {
+    		gs.terminateGame();
     	}
     }
    
-    public int[] nextTile(int x, int y, int direction) {
+    private void clearExteriorFire() {
+		for(int i = 0; i<8; i++) {
+			gs.returnTile(i,0).setFire(0);
+			gs.returnTile(i, 9).setFire(0);
+		}
+		for(int i = 0; i<10; i++) {
+			gs.returnTile(0,i).setFire(0);
+			gs.returnTile(7, i).setFire(0);
+		}
+		
+	}
+
+	public int[] nextTile(int x, int y, int direction) {
     	int[] result = new int[2];
     	if(y==8) {
     		if(x == 6) {

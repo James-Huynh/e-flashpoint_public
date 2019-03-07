@@ -51,6 +51,7 @@ public class LocalizedTable {
 		private Color tileColorGreen = Color.decode("#00900B");
 		private Color tileColorAmbulance = Color.decode("#05E1FF");
 		private Color tileColorEngine = Color.decode("#FFFF05");
+		private static boolean placing = true;
 		
 		public LocalizedTable(GameState inputBoard) {
 			this.currentBoard = inputBoard;
@@ -140,15 +141,18 @@ public class LocalizedTable {
 				this.currentBoard = updatedBoard;
 				for(int i = 0; i<this.currentBoard.getFireFighterList().size(); i++) {
 					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
-					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() + "  Saved Ap: " + currentFF.getSavedAP());
+					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() /*+ "  Saved Ap: " + currentFF.getSavedAP()*/);
 					String inputString;
+					//needs fixing
+					String ffColour = currentFF.getColour().toString(currentFF.getColour());
 					if(this.currentBoard.getActiveFireFighterIndex() == i) {
-						inputString = "<html> <font size=\"5\">" + playerInfo + "</font></html>";
+						inputString = "<html> <font size=\"5\", color='"+ffColour+"'>" + playerInfo + "</font></html>";
 					} 
-					else if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
-						inputString = "<html> <font color='red'>" + playerInfo + "</font></html>";
-					} else {
-						inputString = "<html>"  + playerInfo + "</html>";
+//					else if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
+//						inputString = "<html> <font color='"+ ffColour + "'>" + playerInfo + "</font></html>";
+//					}
+					else {
+						inputString = "<html> <font color='"+ ffColour + "'>" + playerInfo + "</font></html>";
 					}
 					
 					add(new JLabel(inputString));
@@ -166,6 +170,8 @@ public class LocalizedTable {
 //					add(nextPlayer);
 					
 				}
+				String inputString = "<html> <font size=\"5\"> Current Wall Damage: " + currentBoard.getDamageCounter() + "</font></html>";
+				add(new JLabel(inputString));
 			}
 		}
 		
@@ -519,11 +525,18 @@ public class LocalizedTable {
 					public void mouseClicked(final MouseEvent e) {
 						if(SwingUtilities.isRightMouseButton(e)) {
 							//brings up menu
-							int[] check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
-							if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
-								showPopUpMenuCurrent(e.getComponent(), e.getX(), e.getY(), currentBoard);
-							} else {
-								showPopUpMenuOther(e.getComponent(), e.getX(), e.getY(), currentBoard);
+							int[] check;
+							if(placing) {
+								if(connectedTile.getCoords()[0] == 0 || connectedTile.getCoords()[1] == 0 || connectedTile.getCoords()[0] == 7 || connectedTile.getCoords()[1] == 9) {
+									showPopUpMenuPlace(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
+								}
+							}else {
+								check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
+								if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
+									showPopUpMenuCurrent(e.getComponent(), e.getX(), e.getY(), currentBoard);
+								} else {
+									showPopUpMenuOther(e.getComponent(), e.getX(), e.getY(), currentBoard);
+								}
 							}
 						} else if(SwingUtilities.isLeftMouseButton(e)) {
 							showPopUpMenuInfo(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
@@ -847,7 +860,7 @@ public class LocalizedTable {
 		    				@Override
 		    				public void actionPerformed(ActionEvent e) {
 //		    					a.perform(currentBoard);
-		    					System.out.println(a.getClass());
+		    					gameTest.nextTurn();
 		    				}
 		    			});
 		    	        finishMenu.add(newAction);
@@ -1050,6 +1063,33 @@ public class LocalizedTable {
 			}
 			
 			//generates the popUp menu for tiles that don't contain current FF
+			public void showPopUpMenuPlace(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard, int[] coords) {
+				JPopupMenu popupMenu = new JPopupMenu();
+		        
+		        JMenuItem endTurn = new JMenuItem("placeFireFighter");
+		        endTurn.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						gameTest.placeFF(currentBoard.returnTile(coords[0],coords[1]));
+					}
+				});
+		         
+		        JMenuItem fileMenu = new JMenuItem("exit");
+		        fileMenu.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						System.exit(0);
+					}
+				});
+		        popupMenu.add(endTurn);
+		        popupMenu.addSeparator();
+		        popupMenu.add(fileMenu);
+		        
+		        popupMenu.show(component, x, y);		// very important
+			}
+			
+			//generates the popUp menu for tiles that don't contain current FF
 			public void showPopUpMenuOther(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 				JPopupMenu popupMenu = new JPopupMenu();
 		        
@@ -1058,7 +1098,7 @@ public class LocalizedTable {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-//						currentBoard.advancefire();
+						gameTest.nextTurn();
 					}
 				});
 		         
@@ -1127,6 +1167,10 @@ public class LocalizedTable {
 			int[] result = {i,j};
 			
 			return result;
+		}
+		
+		public static void setPlacing(boolean update) {
+			placing = update;
 		}
 		
 		

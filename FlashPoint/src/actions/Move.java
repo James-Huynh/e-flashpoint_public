@@ -37,8 +37,9 @@ public class Move extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Edge edge = currentPosition.getEdge(direction);
+        
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
-        if(neighbour.checkInterior() == false) { //If exterior, this direction isn't valid
+        if(neighbour == null) { //If exterior, this direction isn't valid
         	return false;
         }
         int fire = neighbour.getFire();
@@ -46,14 +47,15 @@ public class Move extends Action {
         
         if ( edge.isDoor() ) {
         	boolean status = edge.getStatus();
-        	if(status == true) {
+        	boolean desStatus = edge.isDestroyed();
+        	if(status == true || desStatus == true) {
         		if (fire < 2) {
         			if( aP >= 1) {
         				flag = true;
         			}
         		}
         		
-        	   else if (fire == 2 && aP >= 2) {
+        	   else if (fire == 2 && aP > 2) {
         		   flag = true;
         		   this.APcost = 2;
         	   }
@@ -66,7 +68,7 @@ public class Move extends Action {
         		flag = true;
         	}
         	
-        	else if( fire == 2 && aP >= 2) {
+        	else if( fire == 2 && aP > 2) {
         		flag = true;
         		this.APcost = 2;
         	}
@@ -79,7 +81,7 @@ public class Move extends Action {
         			flag = true;
         		}
         		
-        		else if( fire == 2 && aP >= 2) {
+        		else if( fire == 2 && aP > 2) {
         				flag = true;
         				this.APcost = 2;
         			}
@@ -115,6 +117,7 @@ public class Move extends Action {
         		}
         	}
         	for(POI poi:POIStoRemove) {
+        		gs.removePOI(poi);
         		Pois.remove(poi);
         		gs.getRevealedFalseAlarmsList().add(poi);
         	}

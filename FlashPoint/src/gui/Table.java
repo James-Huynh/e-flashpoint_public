@@ -147,7 +147,7 @@ public class Table {
 			GameState currentBoard;
 			InformationPanel(GameState updatedBoard){
 				super(new GridLayout());
-				setLayout(new GridLayout(6,1));
+				setLayout(new GridLayout(7,1));
 				this.currentBoard = updatedBoard;
 				for(int i = 0; i<this.currentBoard.getFireFighterList().size(); i++) {
 					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
@@ -177,6 +177,8 @@ public class Table {
 //					add(nextPlayer);
 					
 				}
+				String inputString = "<html> <font size=\"5\"> Current Wall Damage: " + currentBoard.getDamageCounter() + "</font></html>";
+				add(new JLabel(inputString));
 			}
 		}
 		
@@ -1040,7 +1042,7 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-//						currentBoard.advancefire();
+						gameTest.nextTurn();
 					}
 				});
 		         

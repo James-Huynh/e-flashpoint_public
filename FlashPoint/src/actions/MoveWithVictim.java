@@ -88,7 +88,15 @@ public class MoveWithVictim extends Move{
 		ArrayList<POI> pois = currentPosition.getPoiList(); //This is under the assumption we can have only
 
 		//switch to this from the loop, because you will never be in a space with an unrevealed poi and there fore they will always be a victim. 
-		neighbour.addPoi(pois.remove(0));
+		if(!neighbour.checkInterior()) {
+			POI temp = pois.remove(0);
+			gs.removePOI(temp);
+			gs.updateSavedCount(temp);
+		}else {
+			neighbour.addPoi(pois.remove(0));
+		}
+		
+		
 //		for(POI p: pois) { 									//one victim POI on a Tile at any time
 //			if(p.isVictim() && p.isRevealed()) {			//
 //				currentPosition.removeFromPoiList(p);
