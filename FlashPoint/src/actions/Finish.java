@@ -1,6 +1,8 @@
 package actions;
 
 import game.GameState;
+import tile.Tile;
+import token.Firefighter;
 
 public class Finish extends Action{
 	
@@ -27,6 +29,12 @@ public class Finish extends Action{
 
 	@Override
 	public boolean validate(GameState gs) {
+		Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        Tile currentPosition = playingFirefighter.getCurrentPosition();
+        int fire = currentPosition.getFire();
+        if(fire == 2) {
+        	return false;
+        }
 		return true;  //pop-in window?
 	}
 	

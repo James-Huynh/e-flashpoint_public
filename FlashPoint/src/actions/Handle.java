@@ -36,6 +36,11 @@ public class Handle extends Action{
         Edge edge = currentPosition.getEdge(direction);
         int cost = super.getCost();
         int AP = playingFirefighter.getAP();
+        int fire = currentPosition.getFire();
+
+        if(fire == 2 && AP ==1) {
+        	return false;
+        }
         
         if( edge.isDoor() ) {
         	if ( edge.isDestroyed() == false) { //Check if door is destroyed, currently not implemented

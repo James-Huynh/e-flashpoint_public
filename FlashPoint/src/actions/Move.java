@@ -54,7 +54,7 @@ public class Move extends Action {
         			}
         		}
         		
-        	   else if (fire == 2 && aP >= 2) {
+        	   else if (fire == 2 && aP > 2) {
         		   flag = true;
         		   this.APcost = 2;
         	   }
@@ -67,7 +67,7 @@ public class Move extends Action {
         		flag = true;
         	}
         	
-        	else if( fire == 2 && aP >= 2) {
+        	else if( fire == 2 && aP > 2) {
         		flag = true;
         		this.APcost = 2;
         	}
@@ -80,7 +80,7 @@ public class Move extends Action {
         			flag = true;
         		}
         		
-        		else if( fire == 2 && aP >= 2) {
+        		else if( fire == 2 && aP > 2) {
         				flag = true;
         				this.APcost = 2;
         			}
