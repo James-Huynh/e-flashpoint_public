@@ -598,7 +598,14 @@ public class LocalizedTable {
 					
 				if(this.connectedTile.containsFirefighter()) {
 					String builder = defaultImagesPath;
-					Firefighter check = this.connectedTile.getFirefighterList().get(0);
+					Firefighter currentFF = currentBoard.getPlayingFirefighter();
+					Tile currentPos = currentFF.getCurrentPosition();
+					Firefighter check;
+					if(this.connectedTile == currentPos) {
+						check = currentFF;
+					} else {
+						check = this.connectedTile.getFirefighterList().get(0);
+					}
 					if(check.getColour() == Colour.WHITE) {
 						builder = builder + "WHITE";
 					} else if(check.getColour() == Colour.BLUE) {
@@ -1173,14 +1180,6 @@ public class LocalizedTable {
 						firefighterMenu.add(info);
 					}
 					
-			        JMenuItem fileMenu = new JMenuItem("exit");
-			        fileMenu.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							
-							System.exit(0);
-						}
-					});
 			        popupMenu.add(poiMenu);
 			        popupMenu.addSeparator();
 			        popupMenu.add(firefighterMenu);
