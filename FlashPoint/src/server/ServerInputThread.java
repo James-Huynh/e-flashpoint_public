@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import commons.util.Constants;
-
-import chat.dao.UserDao;
+import dao.UserDao;
 import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
@@ -18,18 +17,18 @@ import dao.UserDaoFactory;
 
 
 public class ServerInputThread extends Thread {
-	private Socket socket;// socket����
-	private OutputThread out;// ���ݽ�����д��Ϣ�̣߳���Ϊ����Ҫ���û��ظ���Ϣ��
-	private OutputThreadMap map;// д��Ϣ�̻߳�����
-	private ObjectInputStream ois;// ����������
-	private boolean isStart = true;// �Ƿ�ѭ������Ϣ
+	private Socket socket;// socket锟斤拷锟斤拷
+	private OutputThread out;// 锟斤拷锟捷斤拷锟斤拷锟斤拷写锟斤拷息锟竭程ｏ拷锟斤拷为锟斤拷锟斤拷要锟斤拷锟矫伙拷锟截革拷锟斤拷息锟斤拷
+	private OutputThreadMap map;// 写锟斤拷息锟竭程伙拷锟斤拷锟斤拷
+	private ObjectInputStream ois;// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
+	private boolean isStart = true;// 锟角凤拷循锟斤拷锟斤拷锟斤拷息
 
 	public ServerInputThread(Socket socket, OutputThread out, OutputThreadMap map) {
 		this.socket = socket;
 		this.out = out;
 		this.map = map;
 		try {
-			ois = new ObjectInputStream(socket.getInputStream());// ʵ�����������
+			ois = new ObjectInputStream(socket.getInputStream());// 实锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟�
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -44,7 +43,7 @@ public class ServerInputThread extends Thread {
 	public void run() {
 		try {
 			while (isStart) {
-				// ��ȡ��Ϣ
+				// 锟斤拷取锟斤拷息
 				readMessage();
 			}
 			if (ois != null)
@@ -60,24 +59,24 @@ public class ServerInputThread extends Thread {
 	}
 
 	/**
-	 * ����Ϣ�Լ�������Ϣ���׳��쳣
+	 * 锟斤拷锟斤拷息锟皆硷拷锟斤拷锟斤拷锟斤拷息锟斤拷锟阶筹拷锟届常
 	 * 
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
 	public void readMessage() throws IOException, ClassNotFoundException {
 		System.out.println("server loginUser123:");
-		Object readObject = ois.readObject();// �����ж�ȡ����
-		UserDao dao = UserDaoFactory.getInstance();// ͨ��daoģʽ�����̨
+		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
+		UserDao dao = UserDaoFactory.getInstance();// 通锟斤拷dao模式锟斤拷锟斤拷锟教�
 		if (readObject != null && readObject instanceof TranObject) {
-			TranObject read_tranObject = (TranObject) readObject;// ת���ɴ������
+			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
 			switch (read_tranObject.getType()) {
-			case REGISTER:// ����û���ע��
+			case REGISTER:// 锟斤拷锟斤拷没锟斤拷锟阶拷锟�
 				User registerUser = (User) read_tranObject.getObject();
 				int registerResult = dao.register(registerUser);
-				System.out.println(MyDate.getDateCN() + " ���û�ע��:"
+				System.out.println(MyDate.getDateCN() + " 锟斤拷锟矫伙拷注锟斤拷:"
 						+ registerResult);
-				// ���û��ظ���Ϣ
+				// 锟斤拷锟矫伙拷锟截革拷锟斤拷息
 				TranObject<User> register2TranObject = new TranObject<User>(
 						TranObjectType.REGISTER);
 				User register2user = new User();
@@ -93,17 +92,17 @@ public class ServerInputThread extends Thread {
 				ArrayList<User> list = dao.login(loginUser);
 				TranObject<ArrayList<User>> login2Object = new TranObject<ArrayList<User>>(
 						TranObjectType.LOGIN);
-				if (list != null) {// ����¼�ɹ�
+				if (list != null) {// 锟斤拷锟斤拷录锟缴癸拷
 					TranObject<User> onObject = new TranObject<User>(
 							TranObjectType.LOGIN);
 					User login2User = new User();
 					login2User.setId(loginUser.getId());
 					onObject.setObject(login2User);
 					for (OutputThread onOut : map.getAll()) {
-						onOut.setMessage(onObject);// �㲥һ���û�����
+						onOut.setMessage(onObject);// 锟姐播一锟斤拷锟矫伙拷锟斤拷锟斤拷
 					}
-					map.add(loginUser.getId(), out);// �ȹ㲥���ٰѶ�Ӧ�û�id��д�̴߳���map�У��Ա�ת����Ϣʱ����
-					login2Object.setObject(list);// �Ѻ����б����ظ��Ķ�����
+					map.add(loginUser.getId(), out);// 锟饺广播锟斤拷锟劫把讹拷应锟矫伙拷id锟斤拷写锟竭程达拷锟斤拷map锟叫ｏ拷锟皆憋拷转锟斤拷锟斤拷息时锟斤拷锟斤拷
+					login2Object.setObject(list);// 锟窖猴拷锟斤拷锟叫憋拷锟斤拷锟截革拷锟侥讹拷锟斤拷锟斤拷
 				} else {
 					login2Object.setObject(null);
 				}
@@ -112,35 +111,35 @@ public class ServerInputThread extends Thread {
 				System.out.println(MyDate.getDateCN() + "user"
 						+ loginUser.getId() + " is online");
 				break;
-			case LOGOUT:// ������˳���������ݿ�����״̬��ͬʱȺ���������������û�
+			case LOGOUT:// 锟斤拷锟斤拷锟斤拷顺锟斤拷锟斤拷锟斤拷锟斤拷锟捷匡拷锟斤拷锟斤拷状态锟斤拷同时群锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟矫伙拷
 				User logoutUser = (User) read_tranObject.getObject();
 				int offId = logoutUser.getId();
 				System.out
-						.println(MyDate.getDateCN() + " �û���" + offId + " ������");
+						.println(MyDate.getDateCN() + " 锟矫伙拷锟斤拷" + offId + " 锟斤拷锟斤拷锟斤拷");
 				dao.logout(offId);
-				isStart = false;// �����Լ��Ķ�ѭ��
-				map.remove(offId);// �ӻ�����߳����Ƴ�
-				out.setMessage(null);// ��Ҫ����һ������Ϣȥ����д�߳�
-				out.setStart(false);// �ٽ���д�߳�ѭ��
+				isStart = false;// 锟斤拷锟斤拷锟皆硷拷锟侥讹拷循锟斤拷
+				map.remove(offId);// 锟接伙拷锟斤拷锟斤拷叱锟斤拷锟斤拷瞥锟�
+				out.setMessage(null);// 锟斤拷要锟斤拷锟斤拷一锟斤拷锟斤拷锟斤拷息去锟斤拷锟斤拷写锟竭筹拷
+				out.setStart(false);// 锟劫斤拷锟斤拷写锟竭筹拷循锟斤拷
 
 				TranObject<User> offObject = new TranObject<User>(
 						TranObjectType.LOGOUT);
 				User logout2User = new User();
 				logout2User.setId(logoutUser.getId());
 				offObject.setObject(logout2User);
-				for (OutputThread offOut : map.getAll()) {// �㲥�û�������Ϣ
+				for (OutputThread offOut : map.getAll()) {// 锟姐播锟矫伙拷锟斤拷锟斤拷锟斤拷息
 					offOut.setMessage(offObject);
 				}
 				break;
-			case MESSAGE:// �����ת����Ϣ�������Ⱥ����
-				// ��ȡ��Ϣ��Ҫת���Ķ���id��Ȼ���ȡ����ĸö����д�߳�
+			case MESSAGE:// 锟斤拷锟斤拷锟阶拷锟斤拷锟较拷锟斤拷锟斤拷锟斤拷群锟斤拷锟斤拷
+				// 锟斤拷取锟斤拷息锟斤拷要转锟斤拷锟侥讹拷锟斤拷id锟斤拷然锟斤拷锟饺★拷锟斤拷锟侥该讹拷锟斤拷锟叫达拷叱锟�
 				int id2 = read_tranObject.getToUser();
 				OutputThread toOut = map.getById(id2);
-				if (toOut != null) {// ����û�����
+				if (toOut != null) {// 锟斤拷锟斤拷没锟斤拷锟斤拷锟�
 					toOut.setMessage(read_tranObject);
-				} else {// ���Ϊ�գ�˵���û��Ѿ�����,�ظ��û�
+				} else {// 锟斤拷锟轿拷眨锟剿碉拷锟斤拷没锟斤拷丫锟斤拷锟斤拷锟�,锟截革拷锟矫伙拷
 					TextMessage text = new TextMessage();
-					text.setMessage("�ף��Է�������Ŷ�������Ϣ����ʱ�����ڷ�����");
+					text.setMessage("锟阶ｏ拷锟皆凤拷锟斤拷锟斤拷锟斤拷哦锟斤拷锟斤拷锟斤拷锟较拷锟斤拷锟绞憋拷锟斤拷锟斤拷诜锟斤拷锟斤拷锟�");
 					TranObject<TextMessage> offText = new TranObject<TextMessage>(
 							TranObjectType.MESSAGE);
 					offText.setObject(text);
