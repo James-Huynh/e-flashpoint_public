@@ -66,7 +66,7 @@ public class Launcher {
 	private static GameState tester;
 
 	String username; //@James - Ideally don't want these to be here, will grow enormously -- @Zaid
-	char[] password;
+	char[] password; //
 
 	/**
 	 * Below is for to get around a problem. Wanted to specify an outline for the frame
