@@ -90,7 +90,7 @@ public class ServerInputThread extends Thread {
 				System.out.println("server loginUser:"+loginUser);
 				
 				if(loginUser.getName() == "Zaid") {
-					TranObject<User> o = new TranObject<User>(TranObjectType.SUCCESS);
+					TranObject<User> o = new TranObject<User>(TranObjectType.LOGINSUCCESS);
 					User u = new User();
 					
 

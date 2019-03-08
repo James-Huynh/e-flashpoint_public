@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,8 +17,12 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
+import client.*;
+import commons.bean.User;
+import commons.tran.bean.TranObject;
+import commons.tran.bean.TranObjectType;
+import gui.Launcher;
 import personalizedlisteners.loginListeners.LoginListener;
-//import client;
 /**
  * Class representing the login page. 
  * Panel size corresponds to dimensions specified for 'Central' panel in Launcher.java
@@ -114,21 +120,39 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Login Clicked");
 				raiseEventLoginBtn(); // James
-//				Client client = Launcher.getClient();
-//				ClientOutputThread output = client.getClientOutputThread();
-//				ClientInputThread input = client.getClientInputThread();
-//				TranObject<User> user = new TranObject<User>(TranObjectType.LOGIN);
-//				User userOne = new User();
-//				username = "Zaid";
-//				pword = "zzz";
-//				userOne.setName(username);
-//				userOne.setPassword(pword);
-//				user.setObject(userOne);
-//				output.setMsg(user);
-//				once done{
-//					output.close();
-//					input.close();
-//				}
+				Client client = Launcher.getClient();
+				ClientOutputThread output = client.getClientOutputThread();
+				ClientInputThread input = client.getClientInputThread();
+				TranObject<User> user = new TranObject<User>(TranObjectType.LOGIN);
+				User userOne = new User();
+				username = "Zaid";
+				pword = "zzz";
+				userOne.setName(username);
+				userOne.setPassword(pword);
+				user.setObject(userOne);
+				output.setMsg(user);
+				try {
+					while(input.readMessage() != true) {
+						System.out.println("waiting");
+					}	
+				}
+				catch(ClassNotFoundException f) {
+					System.out.println("Error");
+				}
+				catch(IOException k) {
+					System.out.println("Error");
+				}
+				System.out.println("Success");
+
+
+				
+//				do {
+//					Object readObject = ois.readObject();
+//					if (readObject != null && readObject instanceof TranObject) {
+//						TranObject read_tranObject = (TranObject) readObject;
+//					}
+//				}while(read_tranObject.getType() != TranObjectType.SUCCESS);
+				//Shift pages at this point;
 				
 				//Server request will be made here
 				//Will create the tranObject and insert the info contained in 'password' and 'userNameField'

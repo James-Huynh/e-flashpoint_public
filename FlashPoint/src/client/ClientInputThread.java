@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 import commons.tran.bean.TranObject;
+import commons.tran.bean.TranObjectType;
 
 /**
  * Ã¥Â®Â¢Ã¦Ë†Â·Ã§Â«Â¯Ã¨Â¯Â»Ã¦Â¶Ë†Ã¦ï¿½Â¯Ã§ÂºÂ¿Ã§Â¨â€¹
@@ -40,6 +41,21 @@ public class ClientInputThread extends Thread {
 
 	public void setStart(boolean isStart) {
 		this.isStart = isStart;
+	}
+	
+	public boolean readMessage() throws IOException, ClassNotFoundException {
+		boolean flag = false;
+		System.out.println("Reading on Client side Started");
+		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
+		if (readObject != null && readObject instanceof TranObject) {
+			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
+			switch(read_tranObject.getType()) {
+			case LOGINSUCCESS:
+				flag = true;
+				break;
+			}
+		}
+		return flag;
 	}
 
 	@Override

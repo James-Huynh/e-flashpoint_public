@@ -23,5 +23,5 @@ public enum TranObjectType {
 	CHOICEE,
 	NEXTQ,
 	CLOSEQ,
-	SUCCESS,
+	LOGINSUCCESS,
 }

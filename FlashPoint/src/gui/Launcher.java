@@ -14,6 +14,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import client.Client;
 import custom_panels.CreateLobbyPanel;
 import custom_panels.FindLobbyPanel;
 import custom_panels.LobbyPanel;
@@ -40,9 +41,9 @@ import tile.Tile;
  */
 public class Launcher {
 
-//	private static Client client;
-//	private String ServerIP = "142.157.30.90";
-//	int port = 8888;
+	private static Client client;
+	private String ServerIP = "142.157.65.31";
+	int port = 8888;
 	
 	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
 	private final static Dimension CENTER_PANEL_DIMENSION = new Dimension(1000,800);
@@ -98,8 +99,8 @@ public class Launcher {
 	 * Create the application.
 	 */
 	public Launcher() {
-//		client = new Client(ServerIP, port);
-//		client.start();
+		client = new Client(ServerIP, port);
+		client.start();
 		initialize();
 	}
 
@@ -358,7 +359,7 @@ public class Launcher {
 	//	------------------------------- GAME 
 	
 	
-//	public static Client getClient() {
-//		return client;
-//	}
+	public static Client getClient() {
+		return client;
+	}
 }
