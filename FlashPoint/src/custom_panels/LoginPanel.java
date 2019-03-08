@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
 import personalizedlisteners.loginListeners.LoginListener;
+//import client;
 /**
  * Class representing the login page. 
  * Panel size corresponds to dimensions specified for 'Central' panel in Launcher.java
@@ -37,7 +38,13 @@ public class LoginPanel extends JPanel {
 	private JPanel inputPanel;
 	private JPanel headerPanel;
 	private JLabel headerLabel;
-
+	
+//	private Client user;
+//	private ClientInputThread inputThread;
+	private String username;
+	private String pword;
+	
+	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
 	/**
@@ -105,8 +112,24 @@ public class LoginPanel extends JPanel {
 
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println("Login Clicked");
+				System.out.println("Login Clicked");
 				raiseEventLoginBtn(); // James
+//				Client client = Launcher.getClient();
+//				ClientOutputThread output = client.getClientOutputThread();
+//				ClientInputThread input = client.getClientInputThread();
+//				TranObject<User> user = new TranObject<User>(TranObjectType.LOGIN);
+//				User userOne = new User();
+//				username = "Zaid";
+//				pword = "zzz";
+//				userOne.setName(username);
+//				userOne.setPassword(pword);
+//				user.setObject(userOne);
+//				output.setMsg(user);
+//				once done{
+//					output.close();
+//					input.close();
+//				}
+				
 				//Server request will be made here
 				//Will create the tranObject and insert the info contained in 'password' and 'userNameField'
 			}

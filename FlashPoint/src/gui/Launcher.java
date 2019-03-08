@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -20,19 +19,18 @@ import custom_panels.FindLobbyPanel;
 import custom_panels.LobbyPanel;
 import custom_panels.LoginPanel;
 import custom_panels.MainMenuPanel;
-import gui.Table;
+import game.GameState;
 import gui.Table.BoardPanel;
 import gui.Table.LeftPanel;
 import gui.Table.RightPanel;
-import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
+import personalizedlisteners.createLobbyListeners.BackListener;
+import personalizedlisteners.lobbyListeners.LeaveListener;
+import personalizedlisteners.lobbyListeners.StartListener;
 import personalizedlisteners.loginListeners.LoginListener;
 import personalizedlisteners.mainMenuListeners.MainMenuListener;
 import tile.Tile;
-import personalizedlisteners.createLobbyListeners.BackListener;
-import personalizedlisteners.lobbyListeners.StartListener;
-import personalizedlisteners.lobbyListeners.LeaveListener;
 // random comments
 /**
  * 
@@ -42,6 +40,10 @@ import personalizedlisteners.lobbyListeners.LeaveListener;
  */
 public class Launcher {
 
+//	private static Client client;
+//	private String ServerIP = "142.157.30.90";
+//	int port = 8888;
+	
 	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
 	private final static Dimension CENTER_PANEL_DIMENSION = new Dimension(1000,800);
 	private final static Dimension RIGHT_PANEL_DIMENSION = new Dimension(300,800);
@@ -96,6 +98,8 @@ public class Launcher {
 	 * Create the application.
 	 */
 	public Launcher() {
+//		client = new Client(ServerIP, port);
+//		client.start();
 		initialize();
 	}
 
@@ -352,4 +356,9 @@ public class Launcher {
 //		motherFrame.revalidate();
 //	}
 	//	------------------------------- GAME 
+	
+	
+//	public static Client getClient() {
+//		return client;
+//	}
 }

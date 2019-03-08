@@ -4,26 +4,21 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import commons.tran.bean.TranObject;
 
 
-/**
- * output message
- * 
- * @author eric
- * 
- */
 public class OutputThread extends Thread {
 	private OutputThreadMap map;
 	private ObjectOutputStream oos;
 	private TranObject object;
-	private boolean isStart = true;
+	private boolean isStart = true;// ѭ����־λ
 	private Socket socket;
 
 	public OutputThread(Socket socket, OutputThreadMap map) {
 		try {
 			this.socket = socket;
 			this.map = map;
-			oos = new ObjectOutputStream(socket.getOutputStream());//output stream
+			oos = new ObjectOutputStream(socket.getOutputStream());// �ڹ���������ʵ�������������
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -33,7 +28,7 @@ public class OutputThread extends Thread {
 		this.isStart = isStart;
 	}
 
-	// Using the writing method and wake up run
+	// ����д��Ϣ�̣߳���������Ϣ֮�󣬻���run���������Խ�Լ��Դ
 	public void setMessage(TranObject object) {
 		this.object = object;
 		synchronized (this) {
@@ -45,7 +40,7 @@ public class OutputThread extends Thread {
 	public void run() {
 		try {
 			while (isStart) {
-				// wait
+				// û����Ϣд����ʱ���̵߳ȴ�
 				synchronized (this) {
 					wait();
 				}
@@ -54,7 +49,7 @@ public class OutputThread extends Thread {
 					oos.flush();
 				}
 			}
-			if (oos != null)// 
+			if (oos != null)// ѭ�������󣬹ر������ͷ���Դ
 				oos.close();
 			if (socket != null)
 				socket.close();
