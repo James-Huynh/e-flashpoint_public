@@ -89,7 +89,15 @@ public class ServerInputThread extends Thread {
 				User loginUser = (User) read_tranObject.getObject();
 				System.out.println("server loginUser:"+loginUser);
 				
-				ArrayList<User> list = dao.login(loginUser);
+				if(loginUser.getName() == "Zaid") {
+					TranObject<User> o = new TranObject<User>(TranObjectType.SUCCESS);
+					User u = new User();
+					
+
+					o.setObject(u);
+					out.setMessage(o);
+				}
+			/*	ArrayList<User> list = dao.login(loginUser);
 				TranObject<ArrayList<User>> login2Object = new TranObject<ArrayList<User>>(
 						TranObjectType.LOGIN);
 				if (list != null) {// 锟斤拷锟斤拷录锟缴癸拷
@@ -106,7 +114,7 @@ public class ServerInputThread extends Thread {
 				} else {
 					login2Object.setObject(null);
 				}
-				out.setMessage(login2Object);
+				out.setMessage(login2Object); */
 
 				System.out.println(MyDate.getDateCN() + "user"
 						+ loginUser.getId() + " is online");
