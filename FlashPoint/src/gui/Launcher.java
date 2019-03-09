@@ -31,6 +31,7 @@ import gui.Table.BoardPanel;
 import gui.Table.LeftPanel;
 import gui.Table.RightPanel;
 import lobby.Lobby;
+import managers.ClientManager;
 import managers.GameManager;
 import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.lobbyListeners.LeaveListener;
@@ -46,9 +47,10 @@ import tile.Tile;
  *Holds a frame, and uses panels to display 'pages' (i.e. login/menu/game etc)
  */
 public class Launcher {
-
+	private static ClientManager clientManager;
+	
 	private static Client client;
-	private String ServerIP = "142.157.30.90";
+	private String ServerIP = "142.157.65.31";
 	int port = 8888;
 	User userOne = new User();
 	
@@ -119,7 +121,7 @@ public class Launcher {
 	 */
 	private void initialize() {
 		motherFrame = new JFrame();
-		contentPane = motherFrame.getContentPane(); // @Zaid : from James, you're welcome for shortcutting the call :))
+		contentPane = motherFrame.getContentPane();
 		motherFrame.setBounds(100, 100, 450, 300);
 		motherFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		motherFrame.setSize(OUTER_FRAME_DIMENSION);
@@ -315,6 +317,8 @@ public class Launcher {
 		/**
 		 * Ben's gamePanel comes here
 		 */
+		setupSpecialistPage();
+		
 		//A fake gamestate set up to allow the gui to build from something
 		tester = GameState.getInstance();
 		Lobby tempLobby = new Lobby();
@@ -343,6 +347,8 @@ public class Launcher {
 		contentPane.add(RPanel, BorderLayout.EAST);
 		motherFrame.revalidate();
 	}
+
+
 	private void repaint() {
 		Table table = new Table(tester);
 		BoardPanel board = table.genBoard();
@@ -369,6 +375,14 @@ public class Launcher {
 	//	------------------------------- GAME 
 	
 	
+	//	SPECIALIST -------------------------------
+	private void setupSpecialistPage() {
+		
+		//...
+		
+	}
+	//	------------------------------- SPECIALIST 
+	
 	public static Client getClient() {
 		return client;
 	}
@@ -386,7 +400,7 @@ public class Launcher {
 		output.setMsg(user);
 		
 		try {
-		while(input.readMessage() != true) {
+		while(input.readMessage() != true) {		// until you receive something, keep reading
 			System.out.println("waiting");
 			}	
 		}
