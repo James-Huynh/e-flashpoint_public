@@ -61,8 +61,9 @@ public class MainMenuPanel extends JPanel {
 		findBtn.setBounds(67, 120, 423, 49);
 		findBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				raiseEventFindBtn();
 			}
+
 		});
 
 		rulesBtn = new JButton("Rules");
@@ -86,6 +87,13 @@ public class MainMenuPanel extends JPanel {
 	private void raiseEventCreateBtn() {
 		for (MainMenuListener listener: REGISTERED_OBJECTS.getListeners(MainMenuListener.class)) {
 			listener.clickCreate();
+		}
+	}
+	
+
+	private void raiseEventFindBtn() {
+		for (MainMenuListener listener: REGISTERED_OBJECTS.getListeners(MainMenuListener.class)) {
+			listener.clickFind();
 		}
 	}
 	

@@ -1,22 +1,16 @@
-package tranObject;
+package commons.tran.bean;
 
 import java.io.Serializable;
-
 import java.util.List;
 
-/**
- * testing 
- * 
- *
- * @author eric
- */
+
 public class TranObject<T> implements Serializable {
 	/**
-	 *
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private TranObjectType type; 
+	private TranObjectType type;
 
 	private int fromUser;
 	private int toUser;

@@ -2,12 +2,12 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -15,23 +15,29 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import client.Client;
+import client.ClientInputThread;
+import client.ClientOutputThread;
+import commons.bean.User;
+import commons.tran.bean.TranObject;
+import commons.tran.bean.TranObjectType;
 import custom_panels.CreateLobbyPanel;
+import custom_panels.FindLobbyPanel;
 import custom_panels.LobbyPanel;
 import custom_panels.LoginPanel;
 import custom_panels.MainMenuPanel;
-import gui.Table;
+import game.GameState;
 import gui.Table.BoardPanel;
 import gui.Table.LeftPanel;
 import gui.Table.RightPanel;
-import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
+import personalizedlisteners.createLobbyListeners.BackListener;
+import personalizedlisteners.lobbyListeners.LeaveListener;
+import personalizedlisteners.lobbyListeners.StartListener;
 import personalizedlisteners.loginListeners.LoginListener;
 import personalizedlisteners.mainMenuListeners.MainMenuListener;
 import tile.Tile;
-import personalizedlisteners.createLobbyListeners.BackListener;
-import personalizedlisteners.lobbyListeners.StartListener;
-import personalizedlisteners.lobbyListeners.LeaveListener;
 // random comments
 /**
  * 
@@ -41,6 +47,11 @@ import personalizedlisteners.lobbyListeners.LeaveListener;
  */
 public class Launcher {
 
+	private static Client client;
+	private String ServerIP = "142.157.30.90";
+	int port = 8888;
+	User userOne = new User();
+	
 	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
 	private final static Dimension CENTER_PANEL_DIMENSION = new Dimension(1000,800);
 	private final static Dimension RIGHT_PANEL_DIMENSION = new Dimension(300,800);
@@ -53,6 +64,7 @@ public class Launcher {
 	private LoginPanel login;
 	private MainMenuPanel mainMenu;
 	private CreateLobbyPanel createLobby;
+	private FindLobbyPanel findLobby;
 	private LobbyPanel lobby;
 	
 	
@@ -61,7 +73,7 @@ public class Launcher {
 	private static GameState tester;
 
 	String username; //@James - Ideally don't want these to be here, will grow enormously -- @Zaid
-	char[] password;
+	char[] password; //
 
 	/**
 	 * Below is for to get around a problem. Wanted to specify an outline for the frame
@@ -94,7 +106,12 @@ public class Launcher {
 	 * Create the application.
 	 */
 	public Launcher() {
-		initialize();
+		client = new Client(ServerIP, port);
+		client.start();
+		if(sendConnectionRequest()) {
+//		sendConnectionRequest();
+			initialize();
+		};
 	}
 
 	/**
@@ -205,7 +222,7 @@ public class Launcher {
 	}
 	//------------------------------- LOGIN
 	
-	
+
 	//	MAIN MENU -------------------------------
 	private void setupMainMenuPage() {
 		mainMenu = new MainMenuPanel();
@@ -259,14 +276,15 @@ public class Launcher {
 	//------------------------------- CREATE LOBBY
 	
 	
-	
+	// James
 	//  FIND LOBBY -------------------------------  
 	private void setupFindLobbyPage() {
-		
-		
+		findLobby = new FindLobbyPanel();
+		contentPane.add(findLobby);		
 	}
 	
 	//------------------------------- FIND LOBBY
+	
 	
 	//	LOBBY ------------------------------- 
 	private void setupLobbyPage() {
@@ -349,4 +367,37 @@ public class Launcher {
 //		motherFrame.revalidate();
 //	}
 	//	------------------------------- GAME 
+	
+	
+	public static Client getClient() {
+		return client;
+	}
+	
+	private boolean sendConnectionRequest() {
+		boolean flag = false;
+		ClientOutputThread output = client.getClientOutputThread();
+		ClientInputThread input = client.getClientInputThread();
+		String username = "Zaid";
+		String pword = "zzz";
+		TranObject<User> user = new TranObject<User>(TranObjectType.CONNECT);
+		userOne.setName(username);
+		userOne.setPassword(pword);
+		user.setObject(userOne);
+		output.setMsg(user);
+		
+		try {
+		while(input.readMessage() != true) {
+			System.out.println("waiting");
+			}	
+		}
+		catch(ClassNotFoundException f) {
+			System.out.println("Error class");
+		}
+		catch(IOException k) {
+			System.out.println("Error IO");
+		}
+		flag = true;
+		return flag;
+		
+	}
 }

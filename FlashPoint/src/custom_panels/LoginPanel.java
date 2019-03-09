@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,6 +17,11 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
+import client.*;
+import commons.bean.User;
+import commons.tran.bean.TranObject;
+import commons.tran.bean.TranObjectType;
+import gui.Launcher;
 import personalizedlisteners.loginListeners.LoginListener;
 /**
  * Class representing the login page. 
@@ -37,7 +44,13 @@ public class LoginPanel extends JPanel {
 	private JPanel inputPanel;
 	private JPanel headerPanel;
 	private JLabel headerLabel;
-
+	
+//	private Client user;
+//	private ClientInputThread inputThread;
+	private String username;
+	private String pword;
+	
+	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
 	/**
@@ -51,6 +64,7 @@ public class LoginPanel extends JPanel {
 
 		createHeaderPanel();
 		createInputPanel();
+//		serverRequest();
 	}
 
 	private void createHeaderPanel() {
@@ -105,8 +119,44 @@ public class LoginPanel extends JPanel {
 
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println("Login Clicked");
-				raiseEventLoginBtn(); // James
+				System.out.println("Login Clicked");
+//				raiseEventLoginBtn(); // James
+				serverRequest();
+//				Client client = Launcher.getClient();
+//				ClientOutputThread output = client.getClientOutputThread();
+//				ClientInputThread input = client.getClientInputThread();
+//				TranObject<User> user = new TranObject<User>(TranObjectType.LOGIN);
+//				User userOne = new User();
+//				username = "Zaid";
+//				pword = "zzz";
+//				userOne.setName(username);
+//				userOne.setPassword(pword);
+//				user.setObject(userOne);
+//				output.setMsg(user);
+//				System.out.println(output);
+//				try {
+//					while(input.readMessage() != true) {
+//						System.out.println("waiting");
+//					}	
+//				}
+//				catch(ClassNotFoundException f) {
+//					System.out.println("Error");
+//				}
+//				catch(IOException k) {
+//					System.out.println("Error");
+//				}
+//				System.out.println("Success");
+
+
+				
+//				do {
+//					Object readObject = ois.readObject();
+//					if (readObject != null && readObject instanceof TranObject) {
+//						TranObject read_tranObject = (TranObject) readObject;
+//					}
+//				}while(read_tranObject.getType() != TranObjectType.SUCCESS);
+				//Shift pages at this point;
+				
 				//Server request will be made here
 				//Will create the tranObject and insert the info contained in 'password' and 'userNameField'
 			}
@@ -169,6 +219,20 @@ public class LoginPanel extends JPanel {
 
 	public char[] getPassword() {
 		return this.password.getPassword();
+	}
+	
+	public void serverRequest() {
+		Client client = Launcher.getClient();
+		ClientOutputThread output = client.getClientOutputThread();
+		ClientInputThread input = client.getClientInputThread();
+		TranObject<User> user = new TranObject<User>(TranObjectType.LOGIN);
+		User userOne = new User();
+		username = "Zaid";
+		pword = "zzz";
+		userOne.setName(username);
+		userOne.setPassword(pword);
+		user.setObject(userOne);
+		output.setMsg(user);
 	}
 
 }
