@@ -53,6 +53,7 @@ public class LocalizedTable {
 		private Color tileColorEngine = Color.decode("#FFFF05");
 		private static boolean placing = true;
 		
+		
 		public LocalizedTable(GameState inputBoard) {
 			this.currentBoard = inputBoard;
 			this.gameTiles = inputBoard.getMatTiles();
@@ -1344,6 +1345,46 @@ public class LocalizedTable {
 		
 		public static void setPlacing(boolean update) {
 			placing = update;
+		}
+		
+		public void showGameTermination() {
+			Popup gameTermination = null;
+			PopupFactory gameT = new PopupFactory();
+			JPanel gameTPanel = new JPanel();
+			
+			if(currentBoard.isGameTerminated()) {
+				if(currentBoard.getDamageCounter() >= 24) {
+					JLabel popupMsg = new JLabel("Game over.\n The house has collapsed.");
+					gameTPanel.setPreferredSize(new Dimension(300,300));
+					gameTPanel.setBackground(tileColorRed);
+					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+					gameTPanel.setBorder(blackline);
+					gameTPanel.add(popupMsg);
+					gameTermination = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+					
+				} else if(currentBoard.getLostVictimsList().size() >= 4) {
+					JLabel popupMsg = new JLabel("Game over.\n 4 victims were lost.");
+					gameTPanel.setPreferredSize(new Dimension(300,300));
+					gameTPanel.setBackground(tileColorRed);
+					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+					gameTPanel.setBorder(blackline);
+					gameTPanel.add(popupMsg);
+					gameTermination = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+				}
+			} else if(currentBoard.isGameWon()) {
+				JLabel popupMsg = new JLabel("Game Won.\n 7 victims were saved in time.");
+				gameTPanel.setPreferredSize(new Dimension(300,300));
+				gameTPanel.setBackground(tileColorGreen);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+				gameTPanel.setBorder(blackline);
+				gameTPanel.add(popupMsg);
+				gameTermination = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+			}
+			
+			gameTermination.show();
+			
+			
+			
 		}
 		
 		

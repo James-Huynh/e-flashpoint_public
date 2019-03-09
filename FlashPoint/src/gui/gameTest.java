@@ -56,8 +56,10 @@ public static void main(String[] args) {
 		}
 		current.advanceFire();
 		if(tester.isGameTerminated()) {
+			table.showGameTermination();
 			System.out.println("Game Over");
 		} else if(tester.isGameWon()) {
+			table.showGameTermination();
 			System.out.println("Game Won");
 		}else {
 			tester.setActiveFireFighterIndex( (tester.getActiveFireFighterIndex() + 1)%(tester.getFireFighterList().size()) );

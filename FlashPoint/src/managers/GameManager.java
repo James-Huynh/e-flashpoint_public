@@ -475,10 +475,13 @@ public class GameManager {
     	
     	int wallCheck = gs.getDamageCounter();//should this running the same time with the main process? @Eric
     	int victimCheck = gs.getLostVictimsList().size();
+    	int savedVictimCheck = gs.getSavedVictimsList().size();
     	
     	
-    	if(wallCheck == 24 || victimCheck == 4) {
+    	if(wallCheck >= 24 || victimCheck >= 4) {
     		gs.terminateGame();
+    	} else if(savedVictimCheck >= 7) {
+    		gs.winGame();
     	}
     }
    
