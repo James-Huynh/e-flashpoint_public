@@ -24,42 +24,26 @@ public class gameTest {
 public static void main(String[] args) {
 		
 		tester = GameState.getInstance();
-		Tile[][] testerBoard = tester.getMatTiles();
-		Lobby tempLobby = new Lobby();
-		tester.updateGameStateFromLobby(tempLobby);
-
-		Tile testTile = tester.returnTile(4, 5);
-		Tile testTile2 = tester.returnTile(1, 4);
-		Tile testTile3 = tester.returnTile(5, 6);
-
-
-		current = new GameManager(tester);
-//		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
-//		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
-//		tester.placeFireFighter(tester.getFireFighterList().get(2), testTile2);
-//		testTile.getPoiList().get(0).reveal();
 		
-//		current.generateAllPossibleActions();
-//		
-//		tester.updateActionList(current.getAllAvailableActions());
+		Lobby tempLobby = new Lobby();
+		
+		tester.updateGameStateFromLobby(tempLobby);
+		
+		current = new GameManager(tester);
 
 		
 		table = new LocalizedTable(tester);
 		
-		System.out.println("testComplete");
 	}
 	
 	public static void repainter() {
-//
 
-		current.generateAllPossibleActions();
-//		current.getAllAvailableActions();
-
-//		current.generateAllPossibleActions();
 		current.setAllAvailableActions(current.generateAllPossibleActions());
 
 		tester.updateActionList(current.getAllAvailableActions());
-		table = new LocalizedTable(tester);
+//		table = new LocalizedTable(tester);
+		table.refresh(tester);
+//		table.updateBoard(tester);
 	}
 	
 	public static void nextTurn() {
@@ -79,7 +63,9 @@ public static void main(String[] args) {
 			tester.setActiveFireFighterIndex( (tester.getActiveFireFighterIndex() + 1)%(tester.getFireFighterList().size()) );
 			current.setAllAvailableActions(current.generateAllPossibleActions());
 			tester.updateActionList(current.getAllAvailableActions());
-			table = new LocalizedTable(tester);
+//			table = new LocalizedTable(tester);
+			table.refresh(tester);
+//			table.updateBoard(tester);
 		}
 	}
 	
@@ -89,20 +75,14 @@ public static void main(String[] args) {
 		if(tester.getActiveFireFighterIndex() + 1 == tester.getFireFighterList().size()) {
 			LocalizedTable.setPlacing(false);
 			tester.setActiveFireFighterIndex( (tester.getActiveFireFighterIndex() + 1)%(tester.getFireFighterList().size()));
+			System.out.println(tester.getActiveFireFighterIndex());
 			repainter();
 		}else {
 			tester.setActiveFireFighterIndex( (tester.getActiveFireFighterIndex() + 1));
-			table = new LocalizedTable(tester);
+//			table = new LocalizedTable(tester);
+			table.refresh(tester);
+//			table.updateBoard(tester);
 		}
 	}
 	
-	//tester code
-//	for(int i =0; i<8;i++) {
-//		for(int j=0; j<10; j++) {
-//			System.out.println(i + "|"+ j + "|" + test[i][j].checkInterior());
-////			for(int e=0; e<4; e++) {
-////				System.out.println(i + "|"+ j + "|" + test[i][j].getEdge(e).isBlank());
-////			}
-//		}
-//	}
 }

@@ -51,6 +51,7 @@ public class Table {
 		private Color tileColorGreen = Color.decode("#00900B");
 		private Color tileColorAmbulance = Color.decode("#05E1FF");
 		private Color tileColorEngine = Color.decode("#FFFF05");
+		private static boolean placing = true;
 		
 //		public Table(GameState inputBoard) {
 //			this.currentBoard = inputBoard;
@@ -80,15 +81,26 @@ public class Table {
 			return boardPanel;
 			
 		}
-		
-		public void refresh() {
-			this.boardPanel = new BoardPanel();
-			this.rightPanel = new RightPanel(this.currentBoard);
-			this.leftPanel = new LeftPanel(this.currentBoard);
-//			this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
-//			this.gameFrame.add(this.rightPanel, BorderLayout.EAST);
-//			this.gameFrame.add(this.leftPanel,BorderLayout.WEST);
+		public void updateBoard(GameState newBoard) {
+			this.currentBoard = newBoard;
 		}
+		
+//		public void refresh(GameState newBoard) {
+//			boardPanel.drawBoard(newBoard);
+//			rightPanel.drawPanel(newBoard);
+//			leftPanel.drawPanel(newBoard);
+//			this.currentBoard = newBoard;
+////			this.boardPanel = new BoardPanel();
+////			this.rightPanel = new RightPanel(this.currentBoard);
+////			this.leftPanel = new LeftPanel(this.currentBoard);
+//			gameFrame.add(boardPanel, BorderLayout.CENTER);
+//			gameFrame.add(rightPanel, BorderLayout.EAST);
+//			gameFrame.add(leftPanel,BorderLayout.WEST);
+////			gameFrame.validate();
+////			gameFrame.repaint();
+////			this.gameFrame.setVisible(true);
+//			this.gameFrame.validate();
+//		}
 
 		private void populateMenuBar(final JMenuBar tableMenuBar) {
 			tableMenuBar.add(createFileMenu());
@@ -125,13 +137,13 @@ public class Table {
 		public class RightPanel extends JPanel {
 			GameState currentBoard;
 			InformationPanel infoPanel;
+			JTextArea chatArea;
 			RightPanel(GameState updatedBoard){
 				super(new GridLayout(2,1));
 				setPreferredSize(RIGHT_PANEL_DIMENSION);
 				currentBoard = updatedBoard;
-				JTextArea chatArea = new JTextArea();
+				chatArea = new JTextArea();
 				chatArea.setLineWrap(true);
-				JTextField chatField = new JTextField();
 				
 				infoPanel = new InformationPanel(currentBoard);
 				add(infoPanel);
@@ -141,40 +153,49 @@ public class Table {
 				
 				validate();
 			}
+			public void drawPanel(GameState currentBoard2) {
+				// TODO Auto-generated method stub
+				removeAll();
+				infoPanel.drawInfo(currentBoard);
+				add(infoPanel);
+				add(chatArea);
+				validate();
+				repaint();
+			}
 		}
 		
 		private class InformationPanel extends JPanel{
 			GameState currentBoard;
 			InformationPanel(GameState updatedBoard){
 				super(new GridLayout());
-				setLayout(new GridLayout(7,1));
+				setLayout(new GridLayout(6,1));
 				this.currentBoard = updatedBoard;
+				createPlayerInfo();
+			}
+			public void drawInfo(GameState currentBoard2) {
+				// TODO Auto-generated method stub
+				removeAll();
+				createPlayerInfo();
+				validate();
+				repaint();
+				
+			}
+			
+			public void createPlayerInfo() {
 				for(int i = 0; i<this.currentBoard.getFireFighterList().size(); i++) {
 					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
-					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() + "  Saved Ap: " + currentFF.getSavedAP());
+					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() /*+ "  Saved Ap: " + currentFF.getSavedAP()*/);
 					String inputString;
+					//needs fixing
+					String ffColour = currentFF.getColour().toString(currentFF.getColour());
 					if(this.currentBoard.getActiveFireFighterIndex() == i) {
-						inputString = "<html> <font size=\"5\">" + playerInfo + "</font></html>";
+						inputString = "<html> <font size=\"5\", color='"+ffColour+"'>" + playerInfo + "</font></html>";
 					} 
-					else if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
-						inputString = "<html> <font color='red'>" + playerInfo + "</font></html>";
-					} else {
-						inputString = "<html>"  + playerInfo + "</html>";
+					else {
+						inputString = "<html> <font color='"+ ffColour + "'>" + playerInfo + "</font></html>";
 					}
 					
 					add(new JLabel(inputString));
-					
-//					JTextArea nextPlayer = new JTextArea(playerInfo);
-//					nextPlayer.setEditable(false);
-//					//can be used to show which player blongs to this client
-//					if(this.currentBoard.getActiveFireFighterIndex() == i) {
-//						nextPlayer.setFont(new Font("Serif", Font.ITALIC, 16));	
-//					} 
-//					if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
-//						
-//					}
-//					
-//					add(nextPlayer);
 					
 				}
 				String inputString = "<html> <font size=\"5\"> Current Wall Damage: " + currentBoard.getDamageCounter() + "</font></html>";
@@ -200,6 +221,20 @@ public class Table {
 				add(this.revealPoiPanel, BorderLayout.CENTER);
 				validate();
 			}
+
+			public void drawPanel(GameState newBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				lostPoiPanel.drawBoard(newBoard);
+				savedPoiPanel.drawBoard(newBoard);
+				revealPoiPanel.drawBoard(newBoard);
+				add(lostPoiPanel, BorderLayout.NORTH);
+				add(savedPoiPanel, BorderLayout.SOUTH);
+				add(revealPoiPanel, BorderLayout.CENTER);
+				validate();
+				repaint();
+				
+			}
 		}
 		
 		private class LostPoiPanel extends JPanel{
@@ -208,9 +243,21 @@ public class Table {
 				super(new BorderLayout());
 				setLayout(new GridLayout(2,2));
 				this.currentBoard = updatedBoard;
-				setBackground(tileColorRed);
 				setPreferredSize(NORTH_LEFT_PANEL_DIMENSION);
+				getLost();
+			}
+			public void drawBoard(GameState newBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				this.currentBoard = newBoard;
+				getLost();
+				validate();
+				repaint();
+				
+			}
+			public void getLost() {
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
+				setBackground(tileColorRed);
 				setBorder(blackline);
 				if(this.currentBoard.getLostVictimsList().size() > 0) {
 					for(int i = 0; i<this.currentBoard.getLostVictimsList().size(); i++) {
@@ -231,8 +278,18 @@ public class Table {
 				super(new BorderLayout());
 				setLayout(new GridLayout(4,2));
 				this.currentBoard = updatedBoard;
-				setBackground(tileColorGreen);
 				setPreferredSize(SOUTH_LEFT_PANEL_DIMENSION);
+				getSaved();
+			}
+			public void drawBoard(GameState newBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				getSaved();
+				validate();
+				repaint();
+			}
+			public void getSaved() {
+				setBackground(tileColorGreen);
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
 				setBorder(blackline);
 				if(this.currentBoard.getSavedVictimsList().size() > 0) {
@@ -252,9 +309,19 @@ public class Table {
 			GameState currentBoard;
 			RevealPoiPanel(GameState updatedBoard){
 				super(new BorderLayout());
-				setBackground(tileColorGrey);
 				currentBoard = updatedBoard;
 				setPreferredSize(CENTER_LEFT_PANEL_DIMENSION);
+				getRevealed();
+			}
+			public void drawBoard(GameState newBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				getRevealed();
+				validate();
+				repaint();
+			}
+			public void getRevealed() {
+				setBackground(tileColorGrey);
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
 				setBorder(blackline);
 				int num = currentBoard.getRevealedFalseAlarmsList().size();
@@ -283,21 +350,44 @@ public class Table {
 				setPreferredSize(BOARD_PANEL_DIMENSION);
 				validate();
 			}
+
+			public void drawBoard(GameState currentBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				for(final SuperTilePanel newTile : boardTiles) {
+					newTile.DrawTile(currentBoard);
+					add(newTile);
+				}
+				validate();
+				repaint();
+			}
 		}
 		
 		private class SuperTilePanel extends JPanel {
 			private final int tileId;
-			private final Tile connectedTile;
-			private final int[] coords;
+			private Tile connectedTile;
+			private int[] coords;
+			private final TilePanel tilePanel;
 			SuperTilePanel(final BoardPanel boardPanel, final int tileId){
 				super (new BorderLayout());
 				setPreferredSize(SUPERTILE_PANEL_DIMENSION);
 				coords = calculateTileCoords(tileId);
 				connectedTile = gameTiles[coords[0]][coords[1]];
-				final TilePanel tilePanel = new TilePanel(boardPanel, tileId);
+				tilePanel = new TilePanel(boardPanel, tileId);
 				add(tilePanel, BorderLayout.CENTER);
 				this.tileId = tileId;
 				assignTileWall();
+			}
+			public void DrawTile(GameState currentBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				assignTileWall();
+				tilePanel.drawTile(currentBoard);
+				add(tilePanel, BorderLayout.CENTER);
+				validate(); 
+				repaint();
+				
+				
 			}
 			private void assignTileWall() {
 				//left wall
@@ -532,11 +622,18 @@ public class Table {
 					public void mouseClicked(final MouseEvent e) {
 						if(SwingUtilities.isRightMouseButton(e)) {
 							//brings up menu
-							int[] check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
-							if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
-								showPopUpMenuCurrent(e.getComponent(), e.getX(), e.getY(), currentBoard);
-							} else {
-								showPopUpMenuOther(e.getComponent(), e.getX(), e.getY(), currentBoard);
+							int[] check;
+							if(placing) {
+								if(connectedTile.getCoords()[0] == 0 || connectedTile.getCoords()[1] == 0 || connectedTile.getCoords()[0] == 7 || connectedTile.getCoords()[1] == 9) {
+									showPopUpMenuPlace(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
+								}
+							}else {
+								check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
+								if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
+									showPopUpMenuCurrent(e.getComponent(), e.getX(), e.getY(), currentBoard);
+								} else {
+									showPopUpMenuOther(e.getComponent(), e.getX(), e.getY(), currentBoard);
+								}
 							}
 						} else if(SwingUtilities.isLeftMouseButton(e)) {
 							showPopUpMenuInfo(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
@@ -573,6 +670,17 @@ public class Table {
 				validate();
 			}
 			
+			public void drawTile(GameState currentBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				assignFires();
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack);
+				setBorder(blackline);
+				assignTokens();
+				validate();
+				repaint();
+			}
+
 			private void assignTokens() {
 				this.removeAll();
 				if(this.connectedTile.containsPOI()) {
@@ -598,7 +706,14 @@ public class Table {
 					
 				if(this.connectedTile.containsFirefighter()) {
 					String builder = defaultImagesPath;
-					Firefighter check = this.connectedTile.getFirefighterList().get(0);
+					Firefighter currentFF = currentBoard.getPlayingFirefighter();
+					Tile currentPos = currentFF.getCurrentPosition();
+					Firefighter check;
+					if(this.connectedTile == currentPos) {
+						check = currentFF;
+					} else {
+						check = this.connectedTile.getFirefighterList().get(0);
+					}
 					if(check.getColour() == Colour.WHITE) {
 						builder = builder + "WHITE";
 					} else if(check.getColour() == Colour.BLUE) {
@@ -650,13 +765,16 @@ public class Table {
 				JPopupMenu popupMenu = new JPopupMenu();
 				Set<actions.Action> currentActions = currentBoard.getAvailableActions();
 				
+				boolean moveCheck = false, moveWVCheck = false, completeCheck = false, toSmokeCheck = false, oneChopCheck = false, twoChopCheck = false, doorCheck = false;
+				
 				JMenu moveMenu = new JMenu("Move");
 			    JMenu extinguishMenu = new JMenu("Extinguish"); 
 			    JMenu toSmokeMenu = new JMenu("To Smoke/Smoke");
 			    JMenu completelyMenu = new JMenu("Completely");
 			    JMenu chopMenu = new JMenu("Chop");
+			    JMenu onceMenu = new JMenu("Once");
+			    JMenu twiceMenu = new JMenu("Twice");
 			    JMenu handleMenu = new JMenu("Toggle Door");
-			    JMenu carryMenu = new JMenu("Carry");
 			    JMenu finishMenu = new JMenu("finish");
 			    JMenu moveWithVictimMenu = new JMenu("Move With Victim");
 		        
@@ -666,56 +784,116 @@ public class Table {
 			    	JMenuItem newAction;
 			    	int APCost = a.getCost();
 			    	if(actionTitle == ActionList.Chop) {
-			    		if(a.getDirection() == 0) {
-			    			builder = "Left, APC: " + APCost;
-			    			newAction = new JMenuItem(builder);
-			    	        newAction.addActionListener(new ActionListener() {
-			    				@Override
-			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
-			    				}
-			    			});
-			    	        chopMenu.add(newAction);
-			    			
-			    		} else if(a.getDirection() == 1) {
-			    			builder = "Up, APC: " + APCost;
-			    			newAction = new JMenuItem(builder);
-			    	        newAction.addActionListener(new ActionListener() {
-			    				@Override
-			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
-			    				}
-			    			});
-			    	        chopMenu.add(newAction);
-			    			
-			    		} else if(a.getDirection() == 2) {
-			    			builder = "Right, APC: " + APCost;
-			    			newAction = new JMenuItem(builder);
-			    	        newAction.addActionListener(new ActionListener() {
-			    				@Override
-			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
-			    				}
-			    			});
-			    	        chopMenu.add(newAction);
-			    			
-			    		} else if(a.getDirection() == 3) {
-			    			builder = "Down, APC: " + APCost;
-			    			newAction = new JMenuItem(builder);
-			    	        newAction.addActionListener(new ActionListener() {
-			    				@Override
-			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-//			    					refresh();
-			    					gameTest.repainter();
-			    				}
-			    			});
-			    	        chopMenu.add(newAction);
-			    			
-			    		} 
+			    		if(APCost == 2) {
+			    			if(a.getDirection() == 0) {
+				    			builder = "Left, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        onceMenu.add(newAction);
+				    	        oneChopCheck = true;
+				    			
+				    		} else if(a.getDirection() == 1) {
+				    			builder = "Up, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        onceMenu.add(newAction);
+				    	        oneChopCheck = true;
+				    			
+				    		} else if(a.getDirection() == 2) {
+				    			builder = "Right, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        onceMenu.add(newAction);
+				    	        oneChopCheck = true;
+				    			
+				    		} else if(a.getDirection() == 3) {
+				    			builder = "Down, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        onceMenu.add(newAction);
+				    	        oneChopCheck = true;
+				    			
+				    		} 
+			    		} else if(APCost == 4) {
+			    			if(a.getDirection() == 0) {
+				    			builder = "Left, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        twiceMenu.add(newAction);
+				    	        twoChopCheck = true;
+				    			
+				    		} else if(a.getDirection() == 1) {
+				    			builder = "Up, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        twiceMenu.add(newAction);
+				    	        twoChopCheck = true;
+				    			
+				    		} else if(a.getDirection() == 2) {
+				    			builder = "Right, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        twiceMenu.add(newAction);
+				    	        twoChopCheck = true;
+				    			
+				    		} else if(a.getDirection() == 3) {
+				    			builder = "Down, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					a.perform(currentBoard);
+				    					gameTest.repainter();
+				    				}
+				    			});
+				    	        twiceMenu.add(newAction);
+				    	        twoChopCheck = true;
+				    			
+				    		} 
+			    		}
+			    		
 			    	} else if(actionTitle == ActionList.Extinguish) {
 			    		if(APCost == 1) {
 			    			if(a.getDirection() == 0) {
@@ -729,6 +907,7 @@ public class Table {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    		} else if(a.getDirection() == 1) {
 				    			builder = "Up, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -740,6 +919,7 @@ public class Table {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    			
 				    		} else if(a.getDirection() == 2) {
 				    			builder = "Right, APC: " + APCost;
@@ -752,6 +932,7 @@ public class Table {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    		} else if(a.getDirection() == 3) {
 				    			builder = "Down, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -763,6 +944,7 @@ public class Table {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    		} else if(a.getDirection() == -1) {
 				    			builder = "Current Location, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -774,6 +956,7 @@ public class Table {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    		}
 			    		} else if(APCost == 2) {
 			    			if(a.getDirection() == 0) {
@@ -787,6 +970,7 @@ public class Table {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    		} else if(a.getDirection() == 1) {
 				    			builder = "Up, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -798,6 +982,7 @@ public class Table {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    			
 				    		} else if(a.getDirection() == 2) {
 				    			builder = "Right, APC: " + APCost;
@@ -810,6 +995,7 @@ public class Table {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    		} else if(a.getDirection() == 3) {
 				    			builder = "Down, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -821,6 +1007,7 @@ public class Table {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    		} else if(a.getDirection() == -1) {
 				    			builder = "Current Location, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -832,6 +1019,7 @@ public class Table {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    		}
 			    		}
 			    	} else if(actionTitle == ActionList.Drive) {
@@ -843,7 +1031,7 @@ public class Table {
 		    				@Override
 		    				public void actionPerformed(ActionEvent e) {
 //		    					a.perform(currentBoard);
-		    					System.out.println(a.getClass());
+		    					gameTest.nextTurn();
 		    				}
 		    			});
 		    	        finishMenu.add(newAction);
@@ -861,6 +1049,7 @@ public class Table {
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
+			    	        doorCheck = true;
 			    		} else if(a.getDirection() == 1) {
 			    			builder = "Up, APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
@@ -872,6 +1061,7 @@ public class Table {
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
+			    	        doorCheck = true;
 			    		} else if(a.getDirection() == 2) {
 			    			builder = "Right, APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
@@ -883,6 +1073,7 @@ public class Table {
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
+			    	        doorCheck = true;
 			    		} else if(a.getDirection() == 3) {
 			    			builder = "Down, APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
@@ -894,6 +1085,7 @@ public class Table {
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
+			    	        doorCheck = true;
 			    		} 
 			    	} else if(actionTitle == ActionList.Move) {
 			    		if(a.getDirection() == 0) {
@@ -907,6 +1099,7 @@ public class Table {
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
+			    	        moveCheck = true;
 			    			
 			    		} else if(a.getDirection() == 1) {
 			    			builder = "Up, APC: " + APCost;
@@ -919,6 +1112,7 @@ public class Table {
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
+			    	        moveCheck = true;
 			    			
 			    		} else if(a.getDirection() == 2) {
 			    			builder = "Right, APC: " + APCost;
@@ -931,6 +1125,7 @@ public class Table {
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
+			    	        moveCheck = true;
 			    			
 			    		} else if(a.getDirection() == 3) {
 			    			builder = "Down, APC: " + APCost;
@@ -943,6 +1138,7 @@ public class Table {
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
+			    	        moveCheck = true;
 			    			
 			    		} 
 			    	} else if(actionTitle == ActionList.MoveWithVictim) {
@@ -957,6 +1153,7 @@ public class Table {
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
+			    	        moveWVCheck = true;
 			    			
 			    		} else if(a.getDirection() == 1) {
 			    			builder = "Up, APC: " + APCost;
@@ -969,6 +1166,7 @@ public class Table {
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
+			    	        moveWVCheck = true;
 			    			
 			    		} else if(a.getDirection() == 2) {
 			    			builder = "Right, APC: " + APCost;
@@ -981,6 +1179,7 @@ public class Table {
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
+			    	        moveWVCheck = true;
 			    			
 			    		} else if(a.getDirection() == 3) {
 			    			builder = "Down, APC: " + APCost;
@@ -993,6 +1192,7 @@ public class Table {
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
+			    	        moveWVCheck = true;
 			    			
 			    		} 
 			    	}
@@ -1009,26 +1209,74 @@ public class Table {
 				});
 		        
 		        
-		        extinguishMenu.add(toSmokeMenu);
-		        extinguishMenu.addSeparator();
-		        extinguishMenu.add(completelyMenu);
+		        if(toSmokeCheck) {
+			        extinguishMenu.add(toSmokeMenu);
+			        extinguishMenu.addSeparator();
+		        }
+		        if(completeCheck)extinguishMenu.add(completelyMenu);
 		        
-		        popupMenu.add(handleMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(moveMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(moveWithVictimMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(carryMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(chopMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(extinguishMenu);
-		        popupMenu.addSeparator();
+		        if(oneChopCheck) {
+		        	chopMenu.add(onceMenu);
+			        chopMenu.addSeparator();
+		        }
+		        if(twoChopCheck)chopMenu.add(twiceMenu);
+		        
+		        if(toSmokeCheck || completeCheck) {
+		        	popupMenu.add(extinguishMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
+		        if(oneChopCheck || twoChopCheck) {
+		        	popupMenu.add(chopMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
+		        if(doorCheck) {
+		        	popupMenu.add(handleMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
+		        if(moveCheck) {
+		        	popupMenu.add(moveMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
+		        if(moveWVCheck) {
+		        	popupMenu.add(moveWithVictimMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
 		        popupMenu.add(finishMenu);
 		        popupMenu.addSeparator();
 		        popupMenu.add(exitMenu);
 		        
+		        
+		        popupMenu.show(component, x, y);		// very important
+			}
+			
+			//generates the popUp menu for tiles that don't contain current FF
+			public void showPopUpMenuPlace(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard, int[] coords) {
+				JPopupMenu popupMenu = new JPopupMenu();
+		        
+		        JMenuItem endTurn = new JMenuItem("placeFireFighter");
+		        endTurn.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						gameTest.placeFF(currentBoard.returnTile(coords[0],coords[1]));
+					}
+				});
+		         
+		        JMenuItem fileMenu = new JMenuItem("exit");
+		        fileMenu.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						System.exit(0);
+					}
+				});
+		        popupMenu.add(endTurn);
+		        popupMenu.addSeparator();
+		        popupMenu.add(fileMenu);
 		        
 		        popupMenu.show(component, x, y);		// very important
 			}
@@ -1088,14 +1336,6 @@ public class Table {
 						firefighterMenu.add(info);
 					}
 					
-			        JMenuItem fileMenu = new JMenuItem("exit");
-			        fileMenu.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							
-							System.exit(0);
-						}
-					});
 			        popupMenu.add(poiMenu);
 			        popupMenu.addSeparator();
 			        popupMenu.add(firefighterMenu);
@@ -1113,6 +1353,9 @@ public class Table {
 			return result;
 		}
 		
+		public static void setPlacing(boolean update) {
+			placing = update;
+		}
 		
-		
+				
 }
