@@ -385,6 +385,7 @@ public class Launcher {
 		user.setObject(userOne);
 		output.setMsg(user);
 		
+		
 		try {
 		while(input.readMessage() != true) {
 			System.out.println("waiting");
@@ -397,7 +398,7 @@ public class Launcher {
 			System.out.println("Error IO");
 		}
 		flag = true;
-		return flag;
+		return flag; 
 		
 	}
 }

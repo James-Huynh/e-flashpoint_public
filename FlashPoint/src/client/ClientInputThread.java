@@ -44,24 +44,26 @@ public class ClientInputThread extends Thread {
 		this.isStart = isStart;
 	}
 	
-	public boolean readMessage() throws IOException, ClassNotFoundException {
-		boolean flag = false;
-		System.out.println("Reading on Client side Started");
-		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
-		if (readObject != null && readObject instanceof TranObject) {
-			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
-			switch(read_tranObject.getType()) {
-			case SUCCESS:
-				System.out.println("Succesuful return");
-				System.out.println(read_tranObject.getType());
-				User xyz = (User) read_tranObject.getObject();
-				System.out.println(xyz.getId());
-				flag = true;
-				break;
-			}
-		}
-		return flag;
-	}
+	//JUNHA : This method was removed to ClientManager
+	
+	  public boolean readMessage() throws IOException, ClassNotFoundException {
+		  boolean flag = false; 
+		  System.out.println("Reading on Client side Started");
+		  Object readObject = ois.readObject();
+		  if (readObject !=null && readObject instanceof TranObject) { 
+			  TranObject read_tranObject =(TranObject) readObject;
+			  switch(read_tranObject.getType()){ 
+			  case SUCCESS: System.out.println("Succesuful return");
+			  System.out.println(read_tranObject.getType()); 
+			  User xyz = (User)read_tranObject.getObject(); 
+			  System.out.println(xyz.getId()); 
+			  flag = true;
+			  break; 
+			  } 
+			 } 
+		  return flag; 
+		  }
+	 
 
 	@Override
 	public void run() {
