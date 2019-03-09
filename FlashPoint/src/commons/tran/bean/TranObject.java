@@ -10,13 +10,13 @@ public class TranObject<T> implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private TranObjectType type;// ���͵���Ϣ����
+	private TranObjectType type;
 
-	private int fromUser;// �����ĸ��û�
-	private int toUser;// �����ĸ��û�
+	private int fromUser;
+	private int toUser;
 
-	private T object;// ����Ķ�������������ǿ����Զ����κ�
-	private List<Integer> group;// Ⱥ������Щ�û�
+	private T object;
+	private List<Integer> group;
 
 	public TranObject(TranObjectType type) {
 		this.type = type;

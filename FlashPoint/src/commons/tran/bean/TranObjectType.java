@@ -24,4 +24,5 @@ public enum TranObjectType {
 	NEXTQ,
 	CLOSEQ,
 	LOGINSUCCESS,
+	CONNECT, SUCCESS, 
 }

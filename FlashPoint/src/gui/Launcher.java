@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -15,6 +16,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import client.Client;
+import client.ClientInputThread;
+import client.ClientOutputThread;
+import commons.bean.User;
+import commons.tran.bean.TranObject;
+import commons.tran.bean.TranObjectType;
 import custom_panels.CreateLobbyPanel;
 import custom_panels.FindLobbyPanel;
 import custom_panels.LobbyPanel;
@@ -42,8 +48,9 @@ import tile.Tile;
 public class Launcher {
 
 	private static Client client;
-	private String ServerIP = "142.157.65.31";
+	private String ServerIP = "142.157.30.90";
 	int port = 8888;
+	User userOne = new User();
 	
 	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
 	private final static Dimension CENTER_PANEL_DIMENSION = new Dimension(1000,800);
@@ -101,7 +108,10 @@ public class Launcher {
 	public Launcher() {
 		client = new Client(ServerIP, port);
 		client.start();
-		initialize();
+		if(sendConnectionRequest()) {
+//		sendConnectionRequest();
+			initialize();
+		};
 	}
 
 	/**
@@ -361,5 +371,33 @@ public class Launcher {
 	
 	public static Client getClient() {
 		return client;
+	}
+	
+	private boolean sendConnectionRequest() {
+		boolean flag = false;
+		ClientOutputThread output = client.getClientOutputThread();
+		ClientInputThread input = client.getClientInputThread();
+		String username = "Zaid";
+		String pword = "zzz";
+		TranObject<User> user = new TranObject<User>(TranObjectType.CONNECT);
+		userOne.setName(username);
+		userOne.setPassword(pword);
+		user.setObject(userOne);
+		output.setMsg(user);
+		
+		try {
+		while(input.readMessage() != true) {
+			System.out.println("waiting");
+			}	
+		}
+		catch(ClassNotFoundException f) {
+			System.out.println("Error class");
+		}
+		catch(IOException k) {
+			System.out.println("Error IO");
+		}
+		flag = true;
+		return flag;
+		
 	}
 }

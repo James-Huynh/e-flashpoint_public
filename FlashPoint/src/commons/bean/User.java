@@ -8,15 +8,15 @@ public class User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;// QQ����
-	private String name;// �ǳ�
-	private String email;// ����
-	private String password;// ����
-	private int isOnline;// �Ƿ�����
-	private int img;// ͷ��ͼ��
-	private int group;// ��һ������
+	private int id;
+	private String name;
+//	private String email;
+	private String password;
+	private int isOnline;
+//	private int img;
+//	private int group;
 	private String ip;
-	private int port;
+//	private int port;
 
 	public int getId() {
 		return id;
@@ -42,29 +42,29 @@ public class User implements Serializable {
 		this.ip = ip;
 	}
 
-	public int getPort() {
-		return port;
-	}
+//	public int getPort() {
+//		return port;
+//	}
+//
+//	public void setPort(int port) {
+//		this.port = port;
+//	}
 
-	public void setPort(int port) {
-		this.port = port;
-	}
+//	public int getGroup() {
+//		return group;
+//	}
+//
+//	public void setGroup(int group) {
+//		this.group = group;
+//	}
 
-	public int getGroup() {
-		return group;
-	}
-
-	public void setGroup(int group) {
-		this.group = group;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+//	public String getEmail() {
+//		return email;
+//	}
+//
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
 
 	public String getPassword() {
 		return password;
@@ -82,33 +82,33 @@ public class User implements Serializable {
 		this.isOnline = isOnline;
 	}
 
-	public int getImg() {
-		return img;
-	}
+//	public int getImg() {
+//		return img;
+//	}
+//
+//	public void setImg(int img) {
+//		this.img = img;
+//	}
 
-	public void setImg(int img) {
-		this.img = img;
-	}
+	//@Override
+//	public boolean equals(Object o) {
+//		if (o instanceof User) {
+//			User user = (User) o;
+//			if (user.getId() == id && user.getIp().equals(ip)
+//					&& user.getPort() == port) {
+//				return true;
+//			}
+//		}
+//
+//		return false;
+//	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof User) {
-			User user = (User) o;
-			if (user.getId() == id && user.getIp().equals(ip)
-					&& user.getPort() == port) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email
-				+ ", password=" + password + ", isOnline=" + isOnline
-				+ ", img=" + img + ", group=" + group + ", ip=" + ip
-				+ ", port=" + port + "]";
-	}
+	//@Override
+//	public String toString() {
+//		return "User [id=" + id + ", name=" + name + ", email=" + email
+//				+ ", password=" + password + ", isOnline=" + isOnline
+//				+ ", img=" + img + ", group=" + group + ", ip=" + ip
+//				+ ", port=" + port + "]";
+//	}
 
 }

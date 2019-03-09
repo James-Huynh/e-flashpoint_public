@@ -44,11 +44,11 @@ public class ClientOutputThread extends Thread {
 					oos.writeObject(msg);
 					oos.flush();
 					if (msg.getType() == TranObjectType.LOGOUT) {
-						// å¦‚æžœæ˜¯å�‘é€�ä¸‹çº¿çš„æ¶ˆæ�¯ï¼Œå°±ç›´æŽ¥è·³å‡ºå¾ªçŽ¯
+
 						break;
 					}
 					synchronized (this) {
-						wait();// å�‘é€�å®Œæ¶ˆæ�¯å�Žï¼Œçº¿ç¨‹è¿›å…¥ç­‰å¾…çŠ¶æ€�
+						wait();
 					}
 				}
 			}
