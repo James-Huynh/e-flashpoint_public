@@ -48,7 +48,7 @@ import tile.Tile;
 public class Launcher {
 
 	private static Client client;
-	private String ServerIP = "142.157.104.187";
+	private String ServerIP = "142.157.65.31";
 	int port = 8888;
 	User userOne = new User();
 	
