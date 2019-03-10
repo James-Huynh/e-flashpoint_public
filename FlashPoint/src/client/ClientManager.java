@@ -8,13 +8,12 @@ import commons.tran.bean.TranObject;
 
 public class ClientManager {
 	
-	private ObjectInputStream ois;
 	
 	public ClientManager() {
 		
 	}
 	
-	public boolean readMessage() throws IOException, ClassNotFoundException {
+	public boolean readMessage(ObjectInputStream ois) throws IOException, ClassNotFoundException {
 		boolean flag = false;
 		System.out.println("Reading on Client side Started");
 		Object readObject = ois.readObject();

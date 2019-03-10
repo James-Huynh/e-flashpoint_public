@@ -48,7 +48,7 @@ import tile.Tile;
 public class Launcher {
 
 	private static Client client;
-	private String ServerIP = "142.157.65.31";
+	private String ServerIP = "142.157.145.231";
 	int port = 8888;
 	User userOne = new User();
 	
@@ -375,6 +375,7 @@ public class Launcher {
 	
 	private boolean sendConnectionRequest() {
 		boolean flag = false;
+
 		ClientOutputThread output = client.getClientOutputThread();
 		ClientInputThread input = client.getClientInputThread();
 		String username = "Zaid";
@@ -397,8 +398,8 @@ public class Launcher {
 		catch(IOException k) {
 			System.out.println("Error IO");
 		}
+	
 		flag = true;
 		return flag; 
-		
 	}
 }
