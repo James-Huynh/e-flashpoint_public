@@ -64,16 +64,18 @@ public class ClientInputThread extends Thread {
 //			 } 
 //		  return flag; 
 //		  }
-	 
+	public ObjectInputStream getInputStream() {
+		return ois;
+	}
 
 	@Override
 	public void run() {
-		clientManager = new ClientManager();
+//		clientManager = new ClientManager();
 		
 		try {
 			while (isStart) {
-				System.out.println("enter clientInputThread");
-				clientManager.readMessage(ois);
+			//	System.out.println("enter clientInputThread");
+			//	clientManager.readMessage(ois);
 			}
 			ois.close();
 			if (socket != null&&!socket.isClosed())
