@@ -78,8 +78,10 @@ public class ServerInputThread extends Thread {
 			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
 			switch (read_tranObject.getType()) {
 			case CONNECT:
+				System.out.println("Got in connect request");
 				TranObject<User> register2TranObject = new TranObject<User>(TranObjectType.SUCCESS);
 				User newUser = (User) read_tranObject.getObject();
+				System.out.println("server loginUser:"+newUser);
 				newUser.setId(12345);
 				register2TranObject.setObject(newUser);
 				out.setMessage(register2TranObject);
