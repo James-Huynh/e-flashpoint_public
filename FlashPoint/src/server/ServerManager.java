@@ -6,6 +6,8 @@ import java.io.ObjectInputStream;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
+import game.GameState;
+import lobby.Lobby;
 
 public class ServerManager {
 	
@@ -30,7 +32,15 @@ public class ServerManager {
 				register2TranObject.setObject(newUser);
 				out.setMessage(register2TranObject);
 				break;
-			}
+			
+			case GAMESTATEOUT:
+				TranObject<GameState> gameStateOutput = new TranObject<GameState>(TranObjectType.GAMESTATEUPDATE);
+				Lobby lobby1 = new Lobby();
+				GameState gamestate1 = GameState.getInstance();
+				gamestate1.updateGameStateFromLobby(lobby1);
+				gameStateOutput.setObject(gamestate1);
+				out.setMessage(gameStateOutput);
+		}
 		}
 			
 	}
