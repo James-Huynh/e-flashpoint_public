@@ -55,6 +55,7 @@ public static void main(String[] args) {
 			temp.setAP(AP + 4);
 		}
 		current.advanceFire();
+		table.showAdvanceFireString(current.getAdvFireMessage());
 		if(tester.isGameTerminated()) {
 			table.showGameTermination();
 			System.out.println("Game Over");

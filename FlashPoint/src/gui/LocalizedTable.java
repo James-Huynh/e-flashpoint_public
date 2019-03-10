@@ -6,6 +6,7 @@ import javax.swing.border.Border;
 
 import actions.ActionList;
 import game.GameState;
+import managers.GameManager;
 import tile.Tile;
 import token.Colour;
 import token.Firefighter;
@@ -32,6 +33,7 @@ public class LocalizedTable {
 		private final LeftPanel leftPanel;
 		private GameState currentBoard;
 		private final Tile[][] gameTiles;
+		private Popup advFire;
 		
 		private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
 		private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(1000,800);
@@ -1382,9 +1384,34 @@ public class LocalizedTable {
 			}
 			
 			gameTermination.show();
+		}
+		
+		public void showAdvanceFireString(String message) {
+			advFire = null;
+			PopupFactory gameT = new PopupFactory();
+			JPanel gameTPanel = new JPanel(new GridLayout(2,1));
+			JTextArea text = new JTextArea();
+			text.append(message);
+			text.setLineWrap(true);
+//			popupMsg.add(gameTPanel);
 			
+			JButton okButton = new JButton("ok");
+			okButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					advFire.hide();
+					advFire = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+				}
+			});
+			gameTPanel.setPreferredSize(new Dimension(300,300));
+			gameTPanel.setBackground(tileColorWhite);
+			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
+			gameTPanel.setBorder(blackline);
+			gameTPanel.add(text);
+			gameTPanel.add(okButton);
+			advFire = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
 			
-			
+			advFire.show();
 		}
 		
 		
