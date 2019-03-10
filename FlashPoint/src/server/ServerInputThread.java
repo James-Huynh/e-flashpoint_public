@@ -45,7 +45,7 @@ public class ServerInputThread extends Thread {
 		try {
 			while (isStart) {
 				System.out.println("Looping?");
-				serverManager.readMessage();
+				serverManager.readMessage(out, ois);
 				// JUNHA : this is supposed to be serverManager.readMessage();
 				// readMessage();
 

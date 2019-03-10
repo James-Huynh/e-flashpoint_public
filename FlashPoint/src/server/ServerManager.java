@@ -11,14 +11,12 @@ import lobby.Lobby;
 
 public class ServerManager {
 	
-	private OutputThread out;
-	private ObjectInputStream ois;
 	
 	public ServerManager() {
 		
 	}
 	
-	public void readMessage() throws IOException, ClassNotFoundException {
+	public void readMessage(OutputThread out, ObjectInputStream ois) throws IOException, ClassNotFoundException {
 		System.out.println("server loginUser1234:");
 		Object readObject = ois.readObject();
 		System.out.println("Here?");
@@ -46,4 +44,6 @@ public class ServerManager {
 		}
 			
 	}
+
+
 }

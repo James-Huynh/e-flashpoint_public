@@ -34,6 +34,10 @@ public class ClientOutputThread extends Thread {
 			notify();
 		}
 	}
+	
+	public ObjectOutputStream getOuputStream() {
+		return this.oos;
+	}
 
 	@Override
 	public void run() {

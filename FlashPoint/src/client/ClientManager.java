@@ -2,19 +2,26 @@ package client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import commons.bean.User;
 import commons.tran.bean.TranObject;
+import commons.tran.bean.TranObjectType;
 
 public class ClientManager {
 	
-	private ObjectInputStream ois;
+	private ClientInputThread inputThread;
+	private ClientOutputThread outputThread;
+//	private ObjectInputStream ois;
+//	private ObjectOutputStream oos;
 	
-	public ClientManager() {
+	public ClientManager(ClientInputThread input, ClientOutputThread output) {
+		this.inputThread = input;
+		this.outputThread = output;
 		
 	}
 	
-	public boolean readMessage() throws IOException, ClassNotFoundException {
+	public boolean readMessage(ObjectInputStream ois) throws IOException, ClassNotFoundException {
 		boolean flag = false;
 		System.out.println("Reading on Client side Started");
 		Object readObject = ois.readObject();
@@ -31,6 +38,14 @@ public class ClientManager {
 			}
 		}
 		return flag;
+	}
+	
+	public boolean connectionRequest(User client) {
+		System.out.println("Getting here");
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CONNECT);
+		objectToSend.setObject(client);
+		outputThread.setMsg(objectToSend);
+		return false;
 	}
 	
 }
