@@ -32,9 +32,12 @@ public class Lobby {
 			//dummy
 			players = new ArrayList<Player>();
 //			ArrayList<Player> playingPlayers = new ArrayList<Player>(3);
-	    	players.add(new Player("Matekrk", "Cuba123"));
+	    	players.add(new Player("Mat", "Cuba123"));
 	    	players.add(new Player("Zaid", "zeroOneTwoThree"));
-	    	players.add(new Player("Tester", "myPassword"));
+	    	players.add(new Player("Junha", "myPassword"));
+	    	players.add(new Player("Ben", "Cuba123"));
+	    	players.add(new Player("Cao", "zeroOneTwoThree"));
+	    	players.add(new Player("James", "myPassword"));
 	    	type = "Family";
 	    	if(type.equals("Family")) {
 	    		template = new FamilyGame();

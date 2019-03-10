@@ -32,6 +32,7 @@ public class FamilyGame extends TemplateGame {
 	tokenLocations[2][4] = 2;
 	tokenLocations[5][1] = 2;
 	tokenLocations[5][8] = 2;
+	
 
 	//Set initially with all no edges except bottom edge
 		for (int i=0; i<9; i++) {

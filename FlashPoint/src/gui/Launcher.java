@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 
 import client.Client;
 import client.ClientInputThread;
+import client.ClientManager;
 import client.ClientOutputThread;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
@@ -48,9 +49,11 @@ import tile.Tile;
 public class Launcher {
 
 	private static Client client;
-	private String ServerIP = "142.157.65.31";
+	private String ServerIP = "142.157.145.231";
 	int port = 8888;
 	User userOne = new User();
+	private ClientManager clientManager;
+	
 	
 	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
 	private final static Dimension CENTER_PANEL_DIMENSION = new Dimension(1000,800);
@@ -106,12 +109,16 @@ public class Launcher {
 	 * Create the application.
 	 */
 	public Launcher() {
+		userOne.setName("Zaid");
+		userOne.setPassword("zzz");
 		client = new Client(ServerIP, port);
 		client.start();
-		if(sendConnectionRequest()) {
-//		sendConnectionRequest();
-			initialize();
-		};
+		clientManager = new ClientManager(client.getClientInputThread(), client.getClientOutputThread());
+		clientManager.connectionRequest(userOne);
+//		if(sendConnectionRequest()) {
+//			initialize();
+//		};
+		initialize();
 	}
 //
 	/**
@@ -375,29 +382,26 @@ public class Launcher {
 	
 	private boolean sendConnectionRequest() {
 		boolean flag = false;
-		ClientOutputThread output = client.getClientOutputThread();
-		ClientInputThread input = client.getClientInputThread();
+//		ClientOutputThread output = client.getClientOutputThread();
+//		ClientInputThread input = client.getClientInputThread();
 		String username = "Zaid";
 		String pword = "zzz";
-		TranObject<User> user = new TranObject<User>(TranObjectType.CONNECT);
+//		TranObject<User> user = new TranObject<User>(TranObjectType.CONNECT);
 		userOne.setName(username);
 		userOne.setPassword(pword);
-		user.setObject(userOne);
-		output.setMsg(user);
+//		user.setObject(userOne);
+//		output.setMsg(user);
 		
-		try {
-		while(input.readMessage() != true) {
-			System.out.println("waiting");
-			}	
-		}
-		catch(ClassNotFoundException f) {
-			System.out.println("Error class");
-		}
-		catch(IOException k) {
-			System.out.println("Error IO");
-		}
+		clientManager.connectionRequest(userOne);
+		
+		
+		/*
+		 * try { while(input.readMessage() != true) { System.out.println("waiting"); } }
+		 * catch(ClassNotFoundException f) { System.out.println("Error class"); }
+		 * catch(IOException k) { System.out.println("Error IO"); }
+		 */
+	
 		flag = true;
-		return flag;
-		
+		return flag; 
 	}
 }

@@ -25,12 +25,12 @@ import java.util.*;
 
 public class LocalizedTable {
 
-		private final JFrame gameFrame;
+		private JFrame gameFrame;
 		private final int NUM_TILES = 80;		// 8 x 10 (rows x columns)
-		private BoardPanel boardPanel;
-		private RightPanel rightPanel;
-		private LeftPanel leftPanel;
-		private final GameState currentBoard;
+		private final BoardPanel boardPanel;
+		private final RightPanel rightPanel;
+		private final LeftPanel leftPanel;
+		private GameState currentBoard;
 		private final Tile[][] gameTiles;
 		
 		private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
@@ -53,6 +53,7 @@ public class LocalizedTable {
 		private Color tileColorEngine = Color.decode("#FFFF05");
 		private static boolean placing = true;
 		
+		
 		public LocalizedTable(GameState inputBoard) {
 			this.currentBoard = inputBoard;
 			this.gameTiles = inputBoard.getMatTiles();
@@ -60,7 +61,6 @@ public class LocalizedTable {
 			this.gameFrame.setLayout(new BorderLayout());
 			final JMenuBar tableMenuBar = new JMenuBar();
 			populateMenuBar(tableMenuBar);
-			//this.gameFrame.setJMenuBar(tableMenuBar);
 			this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
 			this.boardPanel = new BoardPanel();
 			this.rightPanel = new RightPanel(this.currentBoard);
@@ -71,13 +71,25 @@ public class LocalizedTable {
 			this.gameFrame.setVisible(true);
 		}
 		
-		public void refresh() {
-			this.boardPanel = new BoardPanel();
-			this.rightPanel = new RightPanel(this.currentBoard);
-			this.leftPanel = new LeftPanel(this.currentBoard);
-			this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
-			this.gameFrame.add(this.rightPanel, BorderLayout.EAST);
-			this.gameFrame.add(this.leftPanel,BorderLayout.WEST);
+		public void updateBoard(GameState newBoard) {
+			this.currentBoard = newBoard;
+		}
+		
+		public void refresh(GameState newBoard) {
+			boardPanel.drawBoard(newBoard);
+			rightPanel.drawPanel(newBoard);
+			leftPanel.drawPanel(newBoard);
+			this.currentBoard = newBoard;
+//			this.boardPanel = new BoardPanel();
+//			this.rightPanel = new RightPanel(this.currentBoard);
+//			this.leftPanel = new LeftPanel(this.currentBoard);
+			gameFrame.add(boardPanel, BorderLayout.CENTER);
+			gameFrame.add(rightPanel, BorderLayout.EAST);
+			gameFrame.add(leftPanel,BorderLayout.WEST);
+//			gameFrame.validate();
+//			gameFrame.repaint();
+//			this.gameFrame.setVisible(true);
+			this.gameFrame.validate();
 		}
 
 		private void populateMenuBar(final JMenuBar tableMenuBar) {
@@ -115,13 +127,13 @@ public class LocalizedTable {
 		private class RightPanel extends JPanel {
 			GameState currentBoard;
 			InformationPanel infoPanel;
+			JTextArea chatArea;
 			RightPanel(GameState updatedBoard){
 				super(new GridLayout(2,1));
 				setPreferredSize(RIGHT_PANEL_DIMENSION);
 				currentBoard = updatedBoard;
-				JTextArea chatArea = new JTextArea();
+				chatArea = new JTextArea();
 				chatArea.setLineWrap(true);
-				JTextField chatField = new JTextField();
 				
 				infoPanel = new InformationPanel(currentBoard);
 				add(infoPanel);
@@ -131,6 +143,15 @@ public class LocalizedTable {
 				
 				validate();
 			}
+			public void drawPanel(GameState currentBoard2) {
+				// TODO Auto-generated method stub
+				removeAll();
+				infoPanel.drawInfo(currentBoard);
+				add(infoPanel);
+				add(chatArea);
+				validate();
+				repaint();
+			}
 		}
 		
 		private class InformationPanel extends JPanel{
@@ -139,6 +160,18 @@ public class LocalizedTable {
 				super(new GridLayout());
 				setLayout(new GridLayout(6,1));
 				this.currentBoard = updatedBoard;
+				createPlayerInfo();
+			}
+			public void drawInfo(GameState currentBoard2) {
+				// TODO Auto-generated method stub
+				removeAll();
+				createPlayerInfo();
+				validate();
+				repaint();
+				
+			}
+			
+			public void createPlayerInfo() {
 				for(int i = 0; i<this.currentBoard.getFireFighterList().size(); i++) {
 					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
 					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() /*+ "  Saved Ap: " + currentFF.getSavedAP()*/);
@@ -148,26 +181,11 @@ public class LocalizedTable {
 					if(this.currentBoard.getActiveFireFighterIndex() == i) {
 						inputString = "<html> <font size=\"5\", color='"+ffColour+"'>" + playerInfo + "</font></html>";
 					} 
-//					else if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
-//						inputString = "<html> <font color='"+ ffColour + "'>" + playerInfo + "</font></html>";
-//					}
 					else {
 						inputString = "<html> <font color='"+ ffColour + "'>" + playerInfo + "</font></html>";
 					}
 					
 					add(new JLabel(inputString));
-					
-//					JTextArea nextPlayer = new JTextArea(playerInfo);
-//					nextPlayer.setEditable(false);
-//					//can be used to show which player blongs to this client
-//					if(this.currentBoard.getActiveFireFighterIndex() == i) {
-//						nextPlayer.setFont(new Font("Serif", Font.ITALIC, 16));	
-//					} 
-//					if(this.currentBoard.getActiveFireFighterIndex()+1 == i) {
-//						
-//					}
-//					
-//					add(nextPlayer);
 					
 				}
 				String inputString = "<html> <font size=\"5\"> Current Wall Damage: " + currentBoard.getDamageCounter() + "</font></html>";
@@ -193,6 +211,20 @@ public class LocalizedTable {
 				add(this.revealPoiPanel, BorderLayout.CENTER);
 				validate();
 			}
+
+			public void drawPanel(GameState newBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				lostPoiPanel.drawBoard(newBoard);
+				savedPoiPanel.drawBoard(newBoard);
+				revealPoiPanel.drawBoard(newBoard);
+				add(lostPoiPanel, BorderLayout.NORTH);
+				add(savedPoiPanel, BorderLayout.SOUTH);
+				add(revealPoiPanel, BorderLayout.CENTER);
+				validate();
+				repaint();
+				
+			}
 		}
 		
 		private class LostPoiPanel extends JPanel{
@@ -201,9 +233,21 @@ public class LocalizedTable {
 				super(new BorderLayout());
 				setLayout(new GridLayout(2,2));
 				this.currentBoard = updatedBoard;
-				setBackground(tileColorRed);
 				setPreferredSize(NORTH_LEFT_PANEL_DIMENSION);
+				getLost();
+			}
+			public void drawBoard(GameState newBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				this.currentBoard = newBoard;
+				getLost();
+				validate();
+				repaint();
+				
+			}
+			public void getLost() {
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
+				setBackground(tileColorRed);
 				setBorder(blackline);
 				if(this.currentBoard.getLostVictimsList().size() > 0) {
 					for(int i = 0; i<this.currentBoard.getLostVictimsList().size(); i++) {
@@ -224,8 +268,18 @@ public class LocalizedTable {
 				super(new BorderLayout());
 				setLayout(new GridLayout(4,2));
 				this.currentBoard = updatedBoard;
-				setBackground(tileColorGreen);
 				setPreferredSize(SOUTH_LEFT_PANEL_DIMENSION);
+				getSaved();
+			}
+			public void drawBoard(GameState newBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				getSaved();
+				validate();
+				repaint();
+			}
+			public void getSaved() {
+				setBackground(tileColorGreen);
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
 				setBorder(blackline);
 				if(this.currentBoard.getSavedVictimsList().size() > 0) {
@@ -245,9 +299,19 @@ public class LocalizedTable {
 			GameState currentBoard;
 			RevealPoiPanel(GameState updatedBoard){
 				super(new BorderLayout());
-				setBackground(tileColorGrey);
 				currentBoard = updatedBoard;
 				setPreferredSize(CENTER_LEFT_PANEL_DIMENSION);
+				getRevealed();
+			}
+			public void drawBoard(GameState newBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				getRevealed();
+				validate();
+				repaint();
+			}
+			public void getRevealed() {
+				setBackground(tileColorGrey);
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,5);
 				setBorder(blackline);
 				int num = currentBoard.getRevealedFalseAlarmsList().size();
@@ -276,21 +340,44 @@ public class LocalizedTable {
 				setPreferredSize(BOARD_PANEL_DIMENSION);
 				validate();
 			}
+
+			public void drawBoard(GameState currentBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				for(final SuperTilePanel newTile : boardTiles) {
+					newTile.DrawTile(currentBoard);
+					add(newTile);
+				}
+				validate();
+				repaint();
+			}
 		}
 		
 		private class SuperTilePanel extends JPanel {
 			private final int tileId;
-			private final Tile connectedTile;
-			private final int[] coords;
+			private Tile connectedTile;
+			private int[] coords;
+			private final TilePanel tilePanel;
 			SuperTilePanel(final BoardPanel boardPanel, final int tileId){
 				super (new BorderLayout());
 				setPreferredSize(SUPERTILE_PANEL_DIMENSION);
 				coords = calculateTileCoords(tileId);
 				connectedTile = gameTiles[coords[0]][coords[1]];
-				final TilePanel tilePanel = new TilePanel(boardPanel, tileId);
+				tilePanel = new TilePanel(boardPanel, tileId);
 				add(tilePanel, BorderLayout.CENTER);
 				this.tileId = tileId;
 				assignTileWall();
+			}
+			public void DrawTile(GameState currentBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				assignTileWall();
+				tilePanel.drawTile(currentBoard);
+				add(tilePanel, BorderLayout.CENTER);
+				validate(); 
+				repaint();
+				
+				
 			}
 			private void assignTileWall() {
 				//left wall
@@ -573,6 +660,17 @@ public class LocalizedTable {
 				validate();
 			}
 			
+			public void drawTile(GameState currentBoard) {
+				// TODO Auto-generated method stub
+				removeAll();
+				assignFires();
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack);
+				setBorder(blackline);
+				assignTokens();
+				validate();
+				repaint();
+			}
+
 			private void assignTokens() {
 				this.removeAll();
 				if(this.connectedTile.containsPOI()) {
@@ -657,6 +755,8 @@ public class LocalizedTable {
 				JPopupMenu popupMenu = new JPopupMenu();
 				Set<actions.Action> currentActions = currentBoard.getAvailableActions();
 				
+				boolean moveCheck = false, moveWVCheck = false, completeCheck = false, toSmokeCheck = false, oneChopCheck = false, twoChopCheck = false, doorCheck = false;
+				
 				JMenu moveMenu = new JMenu("Move");
 			    JMenu extinguishMenu = new JMenu("Extinguish"); 
 			    JMenu toSmokeMenu = new JMenu("To Smoke/Smoke");
@@ -665,7 +765,6 @@ public class LocalizedTable {
 			    JMenu onceMenu = new JMenu("Once");
 			    JMenu twiceMenu = new JMenu("Twice");
 			    JMenu handleMenu = new JMenu("Toggle Door");
-			    JMenu carryMenu = new JMenu("Carry");
 			    JMenu finishMenu = new JMenu("finish");
 			    JMenu moveWithVictimMenu = new JMenu("Move With Victim");
 		        
@@ -687,6 +786,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        onceMenu.add(newAction);
+				    	        oneChopCheck = true;
 				    			
 				    		} else if(a.getDirection() == 1) {
 				    			builder = "Up, APC: " + APCost;
@@ -699,6 +799,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        onceMenu.add(newAction);
+				    	        oneChopCheck = true;
 				    			
 				    		} else if(a.getDirection() == 2) {
 				    			builder = "Right, APC: " + APCost;
@@ -711,6 +812,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        onceMenu.add(newAction);
+				    	        oneChopCheck = true;
 				    			
 				    		} else if(a.getDirection() == 3) {
 				    			builder = "Down, APC: " + APCost;
@@ -723,6 +825,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        onceMenu.add(newAction);
+				    	        oneChopCheck = true;
 				    			
 				    		} 
 			    		} else if(APCost == 4) {
@@ -737,6 +840,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        twiceMenu.add(newAction);
+				    	        twoChopCheck = true;
 				    			
 				    		} else if(a.getDirection() == 1) {
 				    			builder = "Up, APC: " + APCost;
@@ -749,6 +853,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        twiceMenu.add(newAction);
+				    	        twoChopCheck = true;
 				    			
 				    		} else if(a.getDirection() == 2) {
 				    			builder = "Right, APC: " + APCost;
@@ -761,6 +866,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        twiceMenu.add(newAction);
+				    	        twoChopCheck = true;
 				    			
 				    		} else if(a.getDirection() == 3) {
 				    			builder = "Down, APC: " + APCost;
@@ -773,6 +879,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        twiceMenu.add(newAction);
+				    	        twoChopCheck = true;
 				    			
 				    		} 
 			    		}
@@ -790,6 +897,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    		} else if(a.getDirection() == 1) {
 				    			builder = "Up, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -801,6 +909,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    			
 				    		} else if(a.getDirection() == 2) {
 				    			builder = "Right, APC: " + APCost;
@@ -813,6 +922,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    		} else if(a.getDirection() == 3) {
 				    			builder = "Down, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -824,6 +934,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    		} else if(a.getDirection() == -1) {
 				    			builder = "Current Location, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -835,6 +946,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
+				    	        toSmokeCheck = true;
 				    		}
 			    		} else if(APCost == 2) {
 			    			if(a.getDirection() == 0) {
@@ -848,6 +960,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    		} else if(a.getDirection() == 1) {
 				    			builder = "Up, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -859,6 +972,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    			
 				    		} else if(a.getDirection() == 2) {
 				    			builder = "Right, APC: " + APCost;
@@ -871,6 +985,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    		} else if(a.getDirection() == 3) {
 				    			builder = "Down, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -882,6 +997,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    		} else if(a.getDirection() == -1) {
 				    			builder = "Current Location, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
@@ -893,6 +1009,7 @@ public class LocalizedTable {
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
+				    	        completeCheck = true;
 				    		}
 			    		}
 			    	} else if(actionTitle == ActionList.Drive) {
@@ -922,6 +1039,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
+			    	        doorCheck = true;
 			    		} else if(a.getDirection() == 1) {
 			    			builder = "Up, APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
@@ -933,6 +1051,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
+			    	        doorCheck = true;
 			    		} else if(a.getDirection() == 2) {
 			    			builder = "Right, APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
@@ -944,6 +1063,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
+			    	        doorCheck = true;
 			    		} else if(a.getDirection() == 3) {
 			    			builder = "Down, APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
@@ -955,6 +1075,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
+			    	        doorCheck = true;
 			    		} 
 			    	} else if(actionTitle == ActionList.Move) {
 			    		if(a.getDirection() == 0) {
@@ -968,6 +1089,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
+			    	        moveCheck = true;
 			    			
 			    		} else if(a.getDirection() == 1) {
 			    			builder = "Up, APC: " + APCost;
@@ -980,6 +1102,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
+			    	        moveCheck = true;
 			    			
 			    		} else if(a.getDirection() == 2) {
 			    			builder = "Right, APC: " + APCost;
@@ -992,6 +1115,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
+			    	        moveCheck = true;
 			    			
 			    		} else if(a.getDirection() == 3) {
 			    			builder = "Down, APC: " + APCost;
@@ -1004,6 +1128,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
+			    	        moveCheck = true;
 			    			
 			    		} 
 			    	} else if(actionTitle == ActionList.MoveWithVictim) {
@@ -1018,6 +1143,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
+			    	        moveWVCheck = true;
 			    			
 			    		} else if(a.getDirection() == 1) {
 			    			builder = "Up, APC: " + APCost;
@@ -1030,6 +1156,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
+			    	        moveWVCheck = true;
 			    			
 			    		} else if(a.getDirection() == 2) {
 			    			builder = "Right, APC: " + APCost;
@@ -1042,6 +1169,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
+			    	        moveWVCheck = true;
 			    			
 			    		} else if(a.getDirection() == 3) {
 			    			builder = "Down, APC: " + APCost;
@@ -1054,6 +1182,7 @@ public class LocalizedTable {
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
+			    	        moveWVCheck = true;
 			    			
 			    		} 
 			    	}
@@ -1070,26 +1199,43 @@ public class LocalizedTable {
 				});
 		        
 		        
-		        extinguishMenu.add(toSmokeMenu);
-		        extinguishMenu.addSeparator();
-		        extinguishMenu.add(completelyMenu);
+		        if(toSmokeCheck) {
+			        extinguishMenu.add(toSmokeMenu);
+			        extinguishMenu.addSeparator();
+		        }
+		        if(completeCheck)extinguishMenu.add(completelyMenu);
 		        
-		        chopMenu.add(onceMenu);
-		        chopMenu.addSeparator();
-		        chopMenu.add(twiceMenu);
+		        if(oneChopCheck) {
+		        	chopMenu.add(onceMenu);
+			        chopMenu.addSeparator();
+		        }
+		        if(twoChopCheck)chopMenu.add(twiceMenu);
 		        
-		        popupMenu.add(handleMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(moveMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(moveWithVictimMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(carryMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(chopMenu);
-		        popupMenu.addSeparator();
-		        popupMenu.add(extinguishMenu);
-		        popupMenu.addSeparator();
+		        if(toSmokeCheck || completeCheck) {
+		        	popupMenu.add(extinguishMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
+		        if(oneChopCheck || twoChopCheck) {
+		        	popupMenu.add(chopMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
+		        if(doorCheck) {
+		        	popupMenu.add(handleMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
+		        if(moveCheck) {
+		        	popupMenu.add(moveMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
+		        if(moveWVCheck) {
+		        	popupMenu.add(moveWithVictimMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
 		        popupMenu.add(finishMenu);
 		        popupMenu.addSeparator();
 		        popupMenu.add(exitMenu);
@@ -1199,6 +1345,46 @@ public class LocalizedTable {
 		
 		public static void setPlacing(boolean update) {
 			placing = update;
+		}
+		
+		public void showGameTermination() {
+			Popup gameTermination = null;
+			PopupFactory gameT = new PopupFactory();
+			JPanel gameTPanel = new JPanel();
+			
+			if(currentBoard.isGameTerminated()) {
+				if(currentBoard.getDamageCounter() >= 24) {
+					JLabel popupMsg = new JLabel("Game over.\n The house has collapsed.");
+					gameTPanel.setPreferredSize(new Dimension(300,300));
+					gameTPanel.setBackground(tileColorRed);
+					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+					gameTPanel.setBorder(blackline);
+					gameTPanel.add(popupMsg);
+					gameTermination = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+					
+				} else if(currentBoard.getLostVictimsList().size() >= 4) {
+					JLabel popupMsg = new JLabel("Game over.\n 4 victims were lost.");
+					gameTPanel.setPreferredSize(new Dimension(300,300));
+					gameTPanel.setBackground(tileColorRed);
+					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+					gameTPanel.setBorder(blackline);
+					gameTPanel.add(popupMsg);
+					gameTermination = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+				}
+			} else if(currentBoard.isGameWon()) {
+				JLabel popupMsg = new JLabel("Game Won.\n 7 victims were saved in time.");
+				gameTPanel.setPreferredSize(new Dimension(300,300));
+				gameTPanel.setBackground(tileColorGreen);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+				gameTPanel.setBorder(blackline);
+				gameTPanel.add(popupMsg);
+				gameTermination = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+			}
+			
+			gameTermination.show();
+			
+			
+			
 		}
 		
 		

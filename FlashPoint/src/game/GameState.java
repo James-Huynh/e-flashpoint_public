@@ -164,10 +164,7 @@ public class GameState implements Serializable {
 	}
 
 	public boolean isGameWon() {
-		if (gameTerminated == true) {
-			return gameWon;
-		}
-		else return false;
+		return gameWon;
 	}
 	
 	public ParkingSpot[] getAmbulances() {
@@ -638,6 +635,10 @@ public class GameState implements Serializable {
 	//based on current state - randomly new POI
 	public POI generatePOI() {
 		int x = remainingFalseAlarms + remainingVictims;
+		//if victims fall below 1
+		if(x == 0) {
+			return new POI(false);
+		}
 		Random r = new Random();
 		int y = r.nextInt(x);
 		POI newPOI;
@@ -788,6 +789,12 @@ public class GameState implements Serializable {
 		
 		
 		
+	}
+
+
+	public void winGame() {
+		// TODO Auto-generated method stub
+		this.gameWon = true;
 	}
 
 
