@@ -36,6 +36,17 @@ public class ClientManager {
 				client = (User) read_tranObject.getObject();
 				flag = true;
 				break;
+			case LOGINSUCCESS:
+				System.out.println("Succesuful login request");
+				client = (User) read_tranObject.getObject();
+				flag = true;
+				break;
+			case REGISTERSUCCESS:
+				System.out.println("Succesuful login request");
+				client = (User) read_tranObject.getObject();
+				flag = true;
+				break;
+				
 			}
 		}
 		return flag;
@@ -87,6 +98,60 @@ public class ClientManager {
 		System.out.println("|3|" + client.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
 		return client.getCurrentState();
 		
+	}
+
+	public boolean loginRequest(String username, char[] password) {
+		boolean flag = false;
+		client.setName(username);
+		client.setPassword(password.toString());
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOGIN);
+		objectToSend.setObject(client);
+		outputThread.setMsg(objectToSend);
+		
+		try {
+			while(readMessage() != true) {
+				
+			}
+			if(client.getIsOnline() == 1) {
+				flag = true;
+			}
+			//if client.getIsOnline() == 0 flag = false;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		return flag;
+	
+	}
+
+	public boolean registerRequest(String username, char[] password) {
+		boolean flag = false;
+		client.setName(username);
+		client.setPassword(password.toString());
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REGISTER);
+		objectToSend.setObject(client);
+		outputThread.setMsg(objectToSend);
+		
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = client.getIsRegistered();
+			
+			//if client.getIsOnline() == 0 flag = false;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		return flag;
 	}
 	
 }

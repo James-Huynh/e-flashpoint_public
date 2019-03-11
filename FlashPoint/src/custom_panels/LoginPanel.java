@@ -23,6 +23,7 @@ import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
 import gui.Launcher;
 import personalizedlisteners.loginListeners.LoginListener;
+
 /**
  * Class representing the login page. 
  * Panel size corresponds to dimensions specified for 'Central' panel in Launcher.java
@@ -174,7 +175,9 @@ public class LoginPanel extends JPanel {
 
 		registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				System.out.println("Register Clicked");
+				raiseEventRegisterBtn();
 				//**Server request**
 			}
 		});
@@ -213,6 +216,12 @@ public class LoginPanel extends JPanel {
 	private void raiseEventLoginBtn() {
 		for (LoginListener listener: REGISTERED_OBJECTS.getListeners(LoginListener.class)) {
 			listener.clickLogin();
+		}
+	}
+	
+	private void raiseEventRegisterBtn() {
+		for (LoginListener listener: REGISTERED_OBJECTS.getListeners(LoginListener.class)) {
+			listener.clickRegister();
 		}
 	}
 

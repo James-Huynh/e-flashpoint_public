@@ -2,6 +2,7 @@ package server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.HashMap;
 
 import commons.bean.User;
 import commons.tran.bean.TranObject;
@@ -11,9 +12,13 @@ import lobby.Lobby;
 
 public class ServerManager {
 	
+	HashMap<String,String> accounts;
+	
 	
 	public ServerManager() {
-		
+
+	accounts = new HashMap<String,String>();
+	
 	}
 	
 	public void readMessage(OutputThread out, ObjectInputStream ois) throws IOException, ClassNotFoundException {
@@ -31,7 +36,31 @@ public class ServerManager {
 				register2TranObject.setObject(newUser);
 				out.setMessage(register2TranObject);
 				break;
-			
+			case LOGIN:
+				TranObject<User> resultOfLogin = new TranObject<User>(TranObjectType.LOGINSUCCESS);
+				User updatedUser = (User) read_tranObject.getObject();
+				if(accounts.get(updatedUser.getName()).equals(updatedUser.getPassword())) {
+				updatedUser.setIsOnline(1);	
+				}
+				else {
+				updatedUser.setIsOnline(0);
+				}
+				resultOfLogin.setObject(updatedUser);
+				out.setMessage(resultOfLogin);
+				break;
+			case REGISTER:
+				TranObject<User> resultOfRegister = new TranObject<User>(TranObjectType.REGISTERSUCCESS);
+				User updatedUserTwo = (User) read_tranObject.getObject();
+				if(accounts.containsKey(updatedUserTwo.getName())) {
+					updatedUserTwo.setIsRegistered(false);
+				}else {
+				accounts.put(updatedUserTwo.getName(), updatedUserTwo.getPassword());
+				updatedUserTwo.setIsRegistered(true);
+				}
+				resultOfRegister.setObject(updatedUserTwo);
+				out.setMessage(resultOfRegister);
+				break;
+				
 			case GAMESTATEOUT:
 				TranObject<GameState> gameStateOutput = new TranObject<GameState>(TranObjectType.GAMESTATEUPDATE);
 				Lobby lobby1 = new Lobby();
