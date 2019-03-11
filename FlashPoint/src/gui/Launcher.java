@@ -77,7 +77,7 @@ public class Launcher {
 	private static GameState tester;
 
 	String username; //@James - Ideally don't want these to be here, will grow enormously -- @Zaid
-	char[] password; //
+	String password; //
 
 	/**
 	 * Below is for to get around a problem. Wanted to specify an outline for the frame
@@ -192,15 +192,12 @@ public class Launcher {
 
 	//	LOGIN -------------------------------
 	private void setupLoginPage() {
-		login = new LoginPanel(CENTER_PANEL_DIMENSION);
+		login = new LoginPanel(CENTER_PANEL_DIMENSION, clientManager);
 
 		// James
 		login.addSelectionPiecesListenerListener(new LoginListener() {
 			@Override
-			public void clickLogin() {
-				username = login.getUsername();
-				password = login.getPassword();
-				
+			public void clickLogin() {				
 				if (validateCredentials() == true) {
 					login.setVisible(false);
 					motherFrame.remove(login);
@@ -219,10 +216,10 @@ public class Launcher {
 				System.out.println("clickregister entered");
 				
 				
-				username = login.getUsername();
-				password = login.getPassword();
+//				username = login.getUsername();
+//				password = login.getPassword();
 				
-				if(username.isEmpty() || password.toString().isEmpty()) {
+				if(username.isEmpty() || password.isEmpty()) {
 					//print System.out.println("Either Username or password field is empty!")
 				}else {
 					if(createCredentials() == true) {
@@ -242,12 +239,7 @@ public class Launcher {
 		contentPane.remove(dummyCenterPanel);
 		contentPane.add(login, BorderLayout.CENTER);
 	}
-	 
-	/**
-	 * Validates by the user's credentials by asking the server
-	 * @return @author James
-	 */
-	
+	 	
 	private boolean validateCredentials() {
 			
 		if (clientManager.loginRequest(username,password) == false){

@@ -101,7 +101,7 @@ public class ClientManager {
 		
 	}
 
-	public boolean loginRequest(String username, char[] password) {
+	public boolean loginRequest(String username, String password) {
 		boolean flag = false;
 		client.setName(username);
 		client.setPassword(password.toString());
@@ -129,7 +129,7 @@ public class ClientManager {
 	
 	}
 
-	public boolean registerRequest(String username, char[] password) {
+	public boolean registerRequest(String username, String password) {
 		boolean flag = false;
 		client.setName(username);
 		client.setPassword(password.toString());

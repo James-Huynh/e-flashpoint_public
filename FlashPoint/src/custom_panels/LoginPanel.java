@@ -34,7 +34,8 @@ import personalizedlisteners.loginListeners.LoginListener;
  * @author zaidyahya & James
  */
 public class LoginPanel extends JPanel {
-
+	
+	private static ClientManager clientManager;
 	private JLabel pwdLabel;
 	private JPasswordField password;
 	private JTextField userNameField;
@@ -57,12 +58,13 @@ public class LoginPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public LoginPanel(Dimension panelDimension) {
+	public LoginPanel(Dimension panelDimension, ClientManager clientManager) {
 		//super(new BorderLayout());
 		//setPreferredSize(panelDimension);  /* Not working */
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
-
+		this.clientManager = clientManager;
+		
 		createHeaderPanel();
 		createInputPanel();
 //		serverRequest();
@@ -122,47 +124,6 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Login Clicked");
 				raiseEventLoginBtn(); // James
-				
-//				serverRequest();
-//				sendGameStateRequest();
-				
-//				Client client = Launcher.getClient();
-//				ClientOutputThread output = client.getClientOutputThread();
-//				ClientInputThread input = client.getClientInputThread();
-//				TranObject<User> user = new TranObject<User>(TranObjectType.LOGIN);
-//				User userOne = new User();
-//				username = "Zaid";
-//				pword = "zzz";
-//				userOne.setName(username);
-//				userOne.setPassword(pword);
-//				user.setObject(userOne);
-//				output.setMsg(user);
-//				System.out.println(output);
-//				try {
-//					while(input.readMessage() != true) {
-//						System.out.println("waiting");
-//					}	
-//				}
-//				catch(ClassNotFoundException f) {
-//					System.out.println("Error");
-//				}
-//				catch(IOException k) {
-//					System.out.println("Error");
-//				}
-//				System.out.println("Success");
-
-
-				
-//				do {
-//					Object readObject = ois.readObject();
-//					if (readObject != null && readObject instanceof TranObject) {
-//						TranObject read_tranObject = (TranObject) readObject;
-//					}
-//				}while(read_tranObject.getType() != TranObjectType.SUCCESS);
-				//Shift pages at this point;
-				
-				//Server request will be made here
-				//Will create the tranObject and insert the info contained in 'password' and 'userNameField'
 			}
 		});
 	}
@@ -229,22 +190,13 @@ public class LoginPanel extends JPanel {
 		return this.userNameField.getText();
 	}
 
-	public char[] getPassword() {
-		return this.password.getPassword();
+	public String getPassword() {
+		return new String(this.password.getPassword());
 	}
 	
-	public void serverRequest() {
-		Client client = Launcher.getClient();
-		ClientOutputThread output = client.getClientOutputThread();
-		ClientInputThread input = client.getClientInputThread();
-		TranObject<User> user = new TranObject<User>(TranObjectType.LOGIN);
-		User userOne = new User();
-		username = "Zaid";
-		pword = "zzz";
-		userOne.setName(username);
-		userOne.setPassword(pword);
-		user.setObject(userOne);
-		output.setMsg(user);
+	//------------Server Requests------------//
+	public void loginRequest(String name, String password) {
+		
 	}
 
 }
