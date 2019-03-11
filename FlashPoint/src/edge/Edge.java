@@ -1,8 +1,7 @@
 package edge;
 
 import java.io.Serializable;
-// Start of user code for imports
-import java.util.*;
+
 import tile.Tile;
 // End of user code
 

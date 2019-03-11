@@ -20,13 +20,20 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import personalizedlisteners.createLobbyListeners.CreateListener;
+import client.ClientManager;
+import commons.bean.User;
+import commons.tran.bean.TranObject;
+import commons.tran.bean.TranObjectType;
+import lobby.Lobby;
 import personalizedlisteners.createLobbyListeners.BackListener;
+import personalizedlisteners.createLobbyListeners.CreateListener;
 /**
  * @author zaidyahya
  *Panel for create lobby page
  */
 public class CreateLobbyPanel extends JPanel {
+	
+	private static ClientManager clientManager;
 	
 	private JPanel headerPanel;
 	private JLabel headerLabel;
@@ -57,16 +64,24 @@ public class CreateLobbyPanel extends JPanel {
 	private JPanel playerPanel;
 	private JLabel plyrLabel;
 	private JSlider plyrSlider;
-	private int nbPlayers;
 	
-	String gameType = "null";
+	private int nbPlayers;
+	private String gameMode;
+	private String lobbyName = "Loren Ipsum";
+	
+	private Lobby lobby;
+	
+
 	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 	
-	public CreateLobbyPanel(Dimension panelDimension) {
+	public CreateLobbyPanel(Dimension panelDimension, ClientManager clientManager) {
 		//setPreferredSize(panelDimension);  /* Not working */
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
+		
+		
+		this.clientManager = clientManager;
 		
 		createCreateButton();
 		createBackButton();
@@ -149,7 +164,7 @@ public class CreateLobbyPanel extends JPanel {
 	}
 	
 	private void GameModeSelected (JToggleButton button) {
-		gameType = button.getText();
+		gameMode = button.getText();
 	}
 	
 	private void createDifficultyPanel() {
@@ -250,11 +265,14 @@ public class CreateLobbyPanel extends JPanel {
 		playerPanel.add(plyrSlider);
 	}
 	
+	
+	// @James
 	private void createCreateButton() {
 		createBtn = new JButton("CREATE");
 		createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*Server request with selected details*/
+				initializeLobby();
+				serverCreateLobbyRequest();
 				raiseEventCreateBtn();
 			}
 		});
@@ -273,6 +291,23 @@ public class CreateLobbyPanel extends JPanel {
 		backBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
 		backBtn.setBounds(188, 623, 140, 54);
 		this.add(backBtn);
+	}
+	
+	// James
+	private void initializeLobby() {
+		lobby = new Lobby();
+		lobby.setCapacity(nbPlayers);
+		lobby.setMode(gameMode);
+		lobby.setName(lobbyName);
+		
+	}
+	
+	// James
+	private void serverCreateLobbyRequest() {
+		
+		TranObject<User> packet = new TranObject<User>(TranObjectType.LOBBYCREATION);
+		
+		
 	}
 	
 	public void addSelectionPiecesListenerListener(CreateListener obj) {

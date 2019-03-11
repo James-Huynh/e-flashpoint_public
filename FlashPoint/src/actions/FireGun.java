@@ -1,10 +1,10 @@
 package actions;
 import java.util.Random;
+
+import edge.Edge;
 import game.GameState;
 import tile.Tile;
 import token.Firefighter;
-import token.Vehicle;
-import edge.Edge;
 
 public class FireGun extends Action {
 	

@@ -1,8 +1,5 @@
 package token;
 
-import java.io.File;
-import java.util.*;
-
 import server.Player;
 import tile.ParkingSpot;
 import tile.Tile;

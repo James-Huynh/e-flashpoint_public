@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -16,12 +15,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import client.Client;
-import client.ClientInputThread;
 import client.ClientManager;
-import client.ClientOutputThread;
 import commons.bean.User;
-import commons.tran.bean.TranObject;
-import commons.tran.bean.TranObjectType;
 import custom_panels.CreateLobbyPanel;
 import custom_panels.FindLobbyPanel;
 import custom_panels.LobbyPanel;
@@ -31,14 +26,12 @@ import game.GameState;
 import gui.Table.BoardPanel;
 import gui.Table.LeftPanel;
 import gui.Table.RightPanel;
-import lobby.Lobby;
 import managers.GameManager;
 import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.lobbyListeners.LeaveListener;
 import personalizedlisteners.lobbyListeners.StartListener;
 import personalizedlisteners.loginListeners.LoginListener;
 import personalizedlisteners.mainMenuListeners.MainMenuListener;
-import tile.Tile;
 // random comments
 // random comments2
 /**

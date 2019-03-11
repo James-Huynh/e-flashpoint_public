@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 // Start of user code for imports
-import java.util.*;
 // End of user code
+import java.util.HashSet;
+import java.util.Set;
 
 import actions.Action;
 import actions.Chop;
@@ -18,14 +19,13 @@ import actions.Finish;
 import actions.Handle;
 import actions.Move;
 import actions.MoveWithVictim;
+import edge.Edge;
 import game.GameState;
 import lobby.Lobby;
-import old_interface.RunFlashPoint;
-import server.Player;
 import tile.ParkingSpot;
 import tile.Tile;
-import token.*;
-import edge.*;
+import token.Firefighter;
+import token.POI;
 
 /**
  * GameManager class definition.

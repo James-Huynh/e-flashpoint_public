@@ -1,7 +1,5 @@
 package token;
 
-import java.io.Serializable;
-
 public enum Colour {
 	GREEN, BLUE, RED, PURPLE, BLACK, WHITE;
 	

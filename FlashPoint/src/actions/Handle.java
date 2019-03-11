@@ -1,11 +1,9 @@
 package actions;
 
-import edge.Door;
 import edge.Edge;
 import game.GameState;
 import tile.Tile;
 import token.Firefighter;
-import token.POI;
 
 
 public class Handle extends Action{

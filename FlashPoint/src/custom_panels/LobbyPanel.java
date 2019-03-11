@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,11 +15,11 @@ import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
 import lobby.Lobby;
-import personalizedlisteners.lobbyListeners.StartListener;
 import personalizedlisteners.lobbyListeners.LeaveListener;
+import personalizedlisteners.lobbyListeners.StartListener;
 /**
  * Panel for Lobby Page
- * @author zaidyahya
+ *
  */
 public class LobbyPanel extends JPanel {
 	
@@ -37,6 +38,9 @@ public class LobbyPanel extends JPanel {
 	private JTextArea textDifficulty;
 	
 	private JPanel playersPanel;
+	private LinkedList<JLabel> playersLabel;
+	
+	
 	private JLabel playerOne;
 	private JLabel playerTwo;
 	private JLabel playerThree;
@@ -51,11 +55,21 @@ public class LobbyPanel extends JPanel {
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
 		
+		
+		initialize();
 		createHeaderPanel();
 		createStartButton();
 		createLeaveButton();
 		createLobbyDescription();
 		createPlayersPanel();
+	}
+	
+	// James
+	private void initialize() {
+		playersLabel = new LinkedList<JLabel>();
+		
+		
+		createPlayers();
 	}
 	
 	private void createHeaderPanel() {
@@ -137,8 +151,6 @@ public class LobbyPanel extends JPanel {
 		playersPanel.setBounds(105, 172, 662, 330);
 		playersPanel.setLayout(null);
 		this.add(playersPanel);
-		
-		createPlayers();
 	}
 	
 	private void createPlayers() {
@@ -209,6 +221,17 @@ public class LobbyPanel extends JPanel {
 			break;
 		}	
 	}
+	
+	
+	/**
+	 * Updates the Lobby Panel to display changes from the lobby object
+	 * @param newLobby Updated Lobby object from the server
+	 */
+	private void updateLobby(Lobby newLobby) {
+		
+	}
+	
+	
 	
 	public void addSelectionPiecesListenerListener(StartListener obj) {
 		REGISTERED_OBJECTS.add(StartListener.class, obj);
