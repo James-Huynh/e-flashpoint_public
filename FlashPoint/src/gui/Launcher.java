@@ -193,7 +193,6 @@ public class Launcher {
 	private void setupLoginPage() {
 		login = new LoginPanel(CENTER_PANEL_DIMENSION);
 
-		// James
 		login.addSelectionPiecesListenerListener(new LoginListener() {
 			@Override
 			public void clickLogin() {
@@ -220,7 +219,7 @@ public class Launcher {
 	 
 	/**
 	 * Validates by the user's credentials by asking the server
-	 * @return @author James
+	 * @return
 	 */
 	private boolean validateCredentials() {
 		// @server
