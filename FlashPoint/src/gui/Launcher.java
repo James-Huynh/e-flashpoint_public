@@ -40,6 +40,7 @@ import personalizedlisteners.loginListeners.LoginListener;
 import personalizedlisteners.mainMenuListeners.MainMenuListener;
 import tile.Tile;
 // random comments
+// random comments2
 /**
  * 
  * @author zaidyahya
@@ -234,7 +235,7 @@ public class Launcher {
 			
 		});
 		
-
+		
 		contentPane.remove(dummyCenterPanel);
 		contentPane.add(login, BorderLayout.CENTER);
 	}
