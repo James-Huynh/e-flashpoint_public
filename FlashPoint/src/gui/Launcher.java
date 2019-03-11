@@ -70,9 +70,6 @@ public class Launcher {
 	private static GameManager current;
 	private static GameState tester;
 
-	String username; //@James - Ideally don't want these to be here, will grow enormously -- @Zaid
-	char[] password; //
-
 	/**
 	 * Below is for to get around a problem. Wanted to specify an outline for the frame
 	 * And use that to pull in frames
@@ -186,74 +183,26 @@ public class Launcher {
 
 	//	LOGIN -------------------------------
 	private void setupLoginPage() {
-		login = new LoginPanel(CENTER_PANEL_DIMENSION);
+		login = new LoginPanel(CENTER_PANEL_DIMENSION, clientManager);
 
 		login.addSelectionPiecesListenerListener(new LoginListener() {
 			@Override
 			public void clickLogin() {
-				username = login.getUsername();
-				password = login.getPassword();
-				
-				if (validateCredentials() == true) {
-					login.setVisible(false);
-					motherFrame.remove(login);
-					setupMainMenuPage();
-					/*
-					 * if(sendGameStateRequest()) { setupMainMenuPage(); }
-					 */
-				} else {
-					// print System.out.println("Invalid Credentials"); 
-				}
+				login.setVisible(false);
+				motherFrame.remove(login);
+				setupMainMenuPage();
 
 			}
 			
 			public void clickRegister() {
-				
-				username = login.getUsername();
-				password = login.getPassword();
-				
-				if(username.isEmpty() || password.toString().isEmpty()) {
-					//print System.out.println("Either Username or password field is empty!")
-				}else {
-					if(createCredentials() == true) {
-						// display user added success
-					} else {
-						// invalid username or password or the user already exists
-					}
-				}
-				
-				
+				System.out.println("Back in login page");
 			}
-
-			
 		});
-		
 		
 		contentPane.remove(dummyCenterPanel);
 		contentPane.add(login, BorderLayout.CENTER);
 	}
 
-	private boolean validateCredentials() {
-			
-		if (clientManager.loginRequest(username,password) == false){
-				return false;
-			}
-			else if(clientManager.loginRequest(username,password) == true){
-				return true;
-			}
-			return false;
-
-	}
-	private boolean createCredentials() {
-		
-		if (clientManager.registerRequest(username,password) == false){
-			return false;
-		}
-		else if(clientManager.registerRequest(username,password) == true){
-			return true;
-		}
-		return false;
-	}
 	//------------------------------- LOGIN
 	
 
@@ -285,7 +234,7 @@ public class Launcher {
 
 	//  CREATE LOBBY -------------------------------  
 	private void setupCreateLobbyPage() {
-		createLobby = new CreateLobbyPanel(CENTER_PANEL_DIMENSION);
+		createLobby = new CreateLobbyPanel(CENTER_PANEL_DIMENSION, clientManager);
 		contentPane.add(createLobby);		
 		/**
 		 * I have to make an exact use of the class name here because of import problems 

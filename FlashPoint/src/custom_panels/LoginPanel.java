@@ -21,6 +21,7 @@ import javax.swing.event.EventListenerList;
 
 import client.Client;
 import client.ClientInputThread;
+import client.ClientManager;
 import client.ClientOutputThread;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
@@ -146,10 +147,14 @@ public class LoginPanel extends JPanel {
 
 		registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				System.out.println("Register Clicked");
-				raiseEventRegisterBtn();
-				//**Server request**
+				if(registerRequest(getUsername(), getPassword())) {
+					System.out.println("Register Succesful");
+					raiseEventRegisterBtn();
+				}
+				else {
+					//Failed
+					System.out.println("Register failed");
+				}
 			}
 		});
 	}
@@ -239,6 +244,10 @@ public class LoginPanel extends JPanel {
 	//------------Server Requests------------//
 	public boolean loginRequest(String name, String password) {
 		return clientManager.loginRequest(name, password);
+	}
+	
+	public boolean registerRequest(String name, String password) {
+		return clientManager.registerRequest(name, password);
 	}
 
 }
