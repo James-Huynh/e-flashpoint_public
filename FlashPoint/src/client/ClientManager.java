@@ -13,7 +13,7 @@ public class ClientManager {
 	
 	private ClientInputThread inputThread;
 	private ClientOutputThread outputThread;
-	private User client; 
+	private User requestObject; 
 //	private ObjectInputStream ois;
 //	private ObjectOutputStream oos;
 	
@@ -33,17 +33,17 @@ public class ClientManager {
 			case SUCCESS:
 				System.out.println("Succesuful return");
 				System.out.println(read_tranObject.getType());
-				client = (User) read_tranObject.getObject();
+				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				break;
 			case LOGINSUCCESS:
 				System.out.println("Succesuful login request");
-				client = (User) read_tranObject.getObject();
+				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				break;
 			case REGISTERSUCCESS:
 				System.out.println("Succesuful login request");
-				client = (User) read_tranObject.getObject();
+				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				break;
 				
@@ -55,10 +55,10 @@ public class ClientManager {
 	public boolean connectionRequest(User inputClient) {
 		boolean flag = false;
 		System.out.println("Getting here");
-		client = inputClient;
-		System.out.println(client.getId());
+		requestObject = inputClient;
+		System.out.println(requestObject.getId());
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CONNECT);
-		objectToSend.setObject(client);
+		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		System.out.println("check!");
 		try {
@@ -73,7 +73,7 @@ public class ClientManager {
 		catch(IOException k) {
 			
 		}
-		System.out.println("|2|" + client.getId()); 
+		System.out.println("|2|" + requestObject.getId()); 
 //		System.out.println("|3|" + client.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
 		return flag;
 	}
@@ -81,7 +81,7 @@ public class ClientManager {
 	public GameState gameStateRequest(User userOne) {
 		boolean flag = false;
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.GAMESTATEUPDATE);
-		objectToSend.setObject(client);
+		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		System.out.println("test check");
 		try {
@@ -96,28 +96,28 @@ public class ClientManager {
 		catch(IOException k) {
 			
 		}
-		System.out.println("|3|" + client.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
-		return client.getCurrentState();
+		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
+		return requestObject.getCurrentState();
 		
 	}
 
 	public boolean loginRequest(String username, String password) {
 		boolean flag = false;
-		client.setName(username);
-		client.setPassword(password.toString());
+		requestObject.setName(username);
+		requestObject.setPassword(password.toString());
 		
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOGIN);
-		objectToSend.setObject(client);
+		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		
 		try {
 			while(readMessage() != true) {
 				
 			}
-			if(client.getIsOnline() == 1) {
+			if(requestObject.getIsOnline() == 1) {
 				flag = true;
 			}
-			//if client.getIsOnline() == 0 flag = false;
+			//if client.getIsOnline() == 0 flag = false;	
 		}
 		catch(ClassNotFoundException l) {
 			
@@ -131,18 +131,18 @@ public class ClientManager {
 
 	public boolean registerRequest(String username, String password) {
 		boolean flag = false;
-		client.setName(username);
-		client.setPassword(password.toString());
+		requestObject.setName(username);
+		requestObject.setPassword(password.toString());
 		
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REGISTER);
-		objectToSend.setObject(client);
+		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		
 		try {
 			while(readMessage() != true) {
 				
 			}
-			flag = client.getIsRegistered();
+			flag = requestObject.getIsRegistered();
 			
 			//if client.getIsOnline() == 0 flag = false;
 		}
