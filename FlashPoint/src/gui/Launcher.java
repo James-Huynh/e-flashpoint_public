@@ -214,7 +214,10 @@ public class Launcher {
 
 			}
 			
+			@Override
 			public void clickRegister() {
+				System.out.println("clickregister entered");
+				
 				
 				username = login.getUsername();
 				password = login.getPassword();

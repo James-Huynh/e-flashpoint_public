@@ -60,6 +60,7 @@ public class ClientManager {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CONNECT);
 		objectToSend.setObject(client);
 		outputThread.setMsg(objectToSend);
+		System.out.println("check!");
 		try {
 			while(readMessage() != true) {
 				
