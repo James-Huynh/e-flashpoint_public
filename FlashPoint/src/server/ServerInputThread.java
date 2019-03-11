@@ -18,11 +18,11 @@ import game.GameState;
 import lobby.Lobby;
 
 public class ServerInputThread extends Thread {
-	private Socket socket;// socket锟斤拷锟斤拷
-	private OutputThread out;// 锟斤拷锟捷斤拷锟斤拷锟斤拷写锟斤拷息锟竭程ｏ拷锟斤拷为锟斤拷锟斤拷要锟斤拷锟矫伙拷锟截革拷锟斤拷息锟斤拷
-	private OutputThreadMap map;// 写锟斤拷息锟竭程伙拷锟斤拷锟斤拷
-	private ObjectInputStream ois;// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
-	private boolean isStart = true;// 锟角凤拷循锟斤拷锟斤拷锟斤拷息息
+	private Socket socket;
+	private OutputThread out;
+	private OutputThreadMap map;
+	private ObjectInputStream ois;
+	private boolean isStart = true;
 	ServerManager serverManager;
 
 	public ServerInputThread(Socket socket, OutputThread out, OutputThreadMap map) {

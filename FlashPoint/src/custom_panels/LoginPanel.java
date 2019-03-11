@@ -68,6 +68,7 @@ public class LoginPanel extends JPanel {
 		
 		createHeaderPanel();
 		createInputPanel();
+		createPopUp();
 //		serverRequest();
 	}
 
@@ -184,18 +185,19 @@ public class LoginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginFailedPopUp.hide();
-				//loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
+//				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
 			}
 		});
 		popUpPanel.setPreferredSize(new Dimension(300,400));
 		popUpPanel.setBackground(Color.decode("#FFFFFF"));
-		loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
+		popUpPanel.add(text, BorderLayout.NORTH);
+		popUpPanel.add(okButton, BorderLayout.SOUTH);
+		loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 500, 400);
 	}
 	
 	private void showPopUp() {
 		loginFailedPopUp.show();
 	}
-	
 	
 	private void hidePopUp() {
 		loginFailedPopUp.hide();
