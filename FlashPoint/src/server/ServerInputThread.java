@@ -93,6 +93,38 @@ public class ServerInputThread extends Thread {
 				register2TranObject.setObject(newUser);
 				out.setMessage(register2TranObject);
 				break;
+			case LOGIN:
+				TranObject<User> resultOfLogin = new TranObject<User>(TranObjectType.LOGINSUCCESS);
+				User updatedUser = (User) read_tranObject.getObject();
+				if(serverManager.getAccounts().get(updatedUser.getName()) != null) {
+					System.out.println(serverManager.getAccounts().get(updatedUser.getPassword()));
+				}
+				if(serverManager.getAccounts().get(updatedUser.getName()).equals(updatedUser.getPassword())) {
+					System.out.println("is online set to 1");
+					updatedUser.setIsOnline(1);	
+				}
+				else {
+					System.out.println("is online set to 0");
+					updatedUser.setIsOnline(0);
+				}
+				resultOfLogin.setObject(updatedUser);
+				out.setMessage(resultOfLogin);
+				break;
+			case REGISTER:
+				System.out.println("check");
+				TranObject<User> resultOfRegister = new TranObject<User>(TranObjectType.REGISTERSUCCESS);
+				User updatedUserTwo = (User) read_tranObject.getObject();
+				if(serverManager.getAccounts().containsKey(updatedUserTwo.getName())) {
+					System.out.println("account already exists");
+					updatedUserTwo.setIsRegistered(false);
+				}else {
+					System.out.println("account added");
+					serverManager.getAccounts().put(updatedUserTwo.getName(), updatedUserTwo.getPassword());
+					updatedUserTwo.setIsRegistered(true);
+				}
+				resultOfRegister.setObject(updatedUserTwo);
+				out.setMessage(resultOfRegister);
+				break;
 			case GAMESTATEUPDATE:
 				System.out.println("In game state update request");
 				register2TranObject = new TranObject<User>(TranObjectType.SUCCESS);
@@ -117,20 +149,20 @@ public class ServerInputThread extends Thread {
 //				register2TranObject.setObject(register2user);
 //				out.setMessage(register2TranObject);
 //				break;
-			case LOGIN:
-				System.out.println("Am I here??");
-				System.out.println("server loginUser:");
-				User loginUser = (User) read_tranObject.getObject();
-				System.out.println("server loginUser:"+loginUser);
-				
-				if(loginUser.getName() == "Zaid") {
-					TranObject<User> o = new TranObject<User>(TranObjectType.LOGINSUCCESS);
-					User u = new User();
-					
-
-					o.setObject(u);
-					out.setMessage(o);
-				}
+//			case LOGIN:
+//				System.out.println("Am I here??");
+//				System.out.println("server loginUser:");
+//				User loginUser = (User) read_tranObject.getObject();
+//				System.out.println("server loginUser:"+loginUser);
+//				
+//				if(loginUser.getName() == "Zaid") {
+//					TranObject<User> o = new TranObject<User>(TranObjectType.LOGINSUCCESS);
+//					User u = new User();
+//					
+//
+//					o.setObject(u);
+//					out.setMessage(o);
+//				}
 			/*	ArrayList<User> list = dao.login(loginUser);
 				TranObject<ArrayList<User>> login2Object = new TranObject<ArrayList<User>>(
 						TranObjectType.LOGIN);
@@ -150,9 +182,9 @@ public class ServerInputThread extends Thread {
 				}
 				out.setMessage(login2Object); */
 
-				System.out.println(MyDate.getDateCN() + "user"
-						+ loginUser.getId() + " is online");
-				break;
+//				System.out.println(MyDate.getDateCN() + "user"
+//						+ loginUser.getId() + " is online");
+//				break;
 //			case LOGOUT:// 锟斤拷锟斤拷锟斤拷顺锟斤拷锟斤拷锟斤拷锟斤拷锟捷匡拷锟斤拷锟斤拷状态锟斤拷同时群锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟矫伙拷
 //				User logoutUser = (User) read_tranObject.getObject();
 //				int offId = logoutUser.getId();

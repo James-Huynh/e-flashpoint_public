@@ -40,22 +40,27 @@ public class ServerManager {
 				TranObject<User> resultOfLogin = new TranObject<User>(TranObjectType.LOGINSUCCESS);
 				User updatedUser = (User) read_tranObject.getObject();
 				if(accounts.get(updatedUser.getName()).equals(updatedUser.getPassword())) {
-				updatedUser.setIsOnline(1);	
+					System.out.println("is online set to 1");
+					updatedUser.setIsOnline(1);	
 				}
 				else {
-				updatedUser.setIsOnline(0);
+					System.out.println("is online set to 1");
+					updatedUser.setIsOnline(0);
 				}
 				resultOfLogin.setObject(updatedUser);
 				out.setMessage(resultOfLogin);
 				break;
 			case REGISTER:
+				System.out.println("check");
 				TranObject<User> resultOfRegister = new TranObject<User>(TranObjectType.REGISTERSUCCESS);
 				User updatedUserTwo = (User) read_tranObject.getObject();
 				if(accounts.containsKey(updatedUserTwo.getName())) {
+					System.out.println("account already exists1");
 					updatedUserTwo.setIsRegistered(false);
 				}else {
-				accounts.put(updatedUserTwo.getName(), updatedUserTwo.getPassword());
-				updatedUserTwo.setIsRegistered(true);
+					System.out.println("account added1");
+					accounts.put(updatedUserTwo.getName(), updatedUserTwo.getPassword());
+					updatedUserTwo.setIsRegistered(true);
 				}
 				resultOfRegister.setObject(updatedUserTwo);
 				out.setMessage(resultOfRegister);
@@ -71,6 +76,10 @@ public class ServerManager {
 		}
 		}
 			
+	}
+	
+	public HashMap<String, String> getAccounts(){
+		return this.accounts;
 	}
 
 
