@@ -10,7 +10,7 @@ public class User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private String name;
 //	private String email;
 	private String password;
@@ -21,12 +21,14 @@ public class User implements Serializable {
 //	private int port;
 	private GameState currentState;
     private boolean isRegistered;
+    private int[] coords;
+    private boolean placed;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -101,6 +103,22 @@ public class User implements Serializable {
 	
 	public void setIsRegistered(boolean bool) {
 		this.isRegistered = bool;
+	}
+
+	public int[] getCoords() {
+		return coords;
+	}
+
+	public void setCoords(int[] coords) {
+		this.coords = coords;
+	}
+
+	public boolean isPlaced() {
+		return placed;
+	}
+
+	public void setPlaced(boolean placed) {
+		this.placed = placed;
 	}
 
 //	public int getImg() {
