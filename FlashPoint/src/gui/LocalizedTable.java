@@ -1393,7 +1393,6 @@ public class LocalizedTable {
 			JTextArea text = new JTextArea();
 			text.append(message);
 			text.setLineWrap(true);
-//			popupMsg.add(gameTPanel);
 			
 			JButton okButton = new JButton("ok");
 			okButton.addActionListener(new ActionListener() {
