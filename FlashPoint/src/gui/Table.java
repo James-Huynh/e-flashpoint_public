@@ -1,7 +1,35 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTextArea;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import actions.ActionList;
@@ -11,17 +39,6 @@ import token.Colour;
 import token.Firefighter;
 import token.POI;
 import token.Vehicle;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.*;
 
 public class Table {
 
@@ -51,6 +68,7 @@ public class Table {
 		private Color tileColorGreen = Color.decode("#00900B");
 		private Color tileColorAmbulance = Color.decode("#05E1FF");
 		private Color tileColorEngine = Color.decode("#FFFF05");
+		private Popup advFire;
 		private static boolean placing = true;
 		
 //		public Table(GameState inputBoard) {
@@ -78,27 +96,35 @@ public class Table {
 		
 		public BoardPanel genBoard() {
 			this.boardPanel = new BoardPanel();
-			return boardPanel;
+			return this.boardPanel;
 			
+		}
+		public LeftPanel genLeftPanel() {
+			this.leftPanel = new LeftPanel(this.currentBoard);
+			return this.leftPanel;
+		}
+		public RightPanel genRightPanel() {
+			this.rightPanel = new RightPanel(this.currentBoard);
+			return this.rightPanel;
 		}
 		public void updateBoard(GameState newBoard) {
 			this.currentBoard = newBoard;
 		}
-		
+		//add to launcher
 //		public void refresh(GameState newBoard) {
 //			boardPanel.drawBoard(newBoard);
 //			rightPanel.drawPanel(newBoard);
 //			leftPanel.drawPanel(newBoard);
 //			this.currentBoard = newBoard;
-////			this.boardPanel = new BoardPanel();
-////			this.rightPanel = new RightPanel(this.currentBoard);
-////			this.leftPanel = new LeftPanel(this.currentBoard);
+//	//		this.boardPanel = new BoardPanel();
+//	//		this.rightPanel = new RightPanel(this.currentBoard);
+//	//		this.leftPanel = new LeftPanel(this.currentBoard);
 //			gameFrame.add(boardPanel, BorderLayout.CENTER);
 //			gameFrame.add(rightPanel, BorderLayout.EAST);
 //			gameFrame.add(leftPanel,BorderLayout.WEST);
-////			gameFrame.validate();
-////			gameFrame.repaint();
-////			this.gameFrame.setVisible(true);
+//	//		gameFrame.validate();
+//	//		gameFrame.repaint();
+//	//		this.gameFrame.setVisible(true);
 //			this.gameFrame.validate();
 //		}
 
@@ -144,13 +170,9 @@ public class Table {
 				currentBoard = updatedBoard;
 				chatArea = new JTextArea();
 				chatArea.setLineWrap(true);
-				
 				infoPanel = new InformationPanel(currentBoard);
 				add(infoPanel);
-				
 				add(chatArea);
-				
-				
 				validate();
 			}
 			public void drawPanel(GameState currentBoard2) {
@@ -1357,5 +1379,75 @@ public class Table {
 			placing = update;
 		}
 		
-				
+		public void showGameTermination() {
+			Popup gameTermination = null;
+			PopupFactory gameT = new PopupFactory();
+			JPanel gameTPanel = new JPanel();
+			
+			if(currentBoard.isGameTerminated()) {
+				if(currentBoard.getDamageCounter() >= 24) {
+					JLabel popupMsg = new JLabel("Game over.\n The house has collapsed.");
+					gameTPanel.setPreferredSize(new Dimension(300,300));
+					gameTPanel.setBackground(tileColorRed);
+					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+					gameTPanel.setBorder(blackline);
+					gameTPanel.add(popupMsg);
+					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+					
+				} else if(currentBoard.getLostVictimsList().size() >= 4) {
+					JLabel popupMsg = new JLabel("Game over.\n 4 victims were lost.");
+					gameTPanel.setPreferredSize(new Dimension(300,300));
+					gameTPanel.setBackground(tileColorRed);
+					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+					gameTPanel.setBorder(blackline);
+					gameTPanel.add(popupMsg);
+					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+				}
+			} else if(currentBoard.isGameWon()) {
+				JLabel popupMsg = new JLabel("Game Won.\n 7 victims were saved in time.");
+				gameTPanel.setPreferredSize(new Dimension(300,300));
+				gameTPanel.setBackground(tileColorGreen);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+				gameTPanel.setBorder(blackline);
+				gameTPanel.add(popupMsg);
+				gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+			}
+			
+			gameTermination.show();
+		}
+		
+		public void showAdvanceFireString(String message) {
+			advFire = null;
+			PopupFactory gameT = new PopupFactory();
+			JPanel gameTPanel = new JPanel(new BorderLayout());
+			JTextArea text = new JTextArea();
+			text.append(message);
+			text.setLineWrap(true);
+			
+			JButton okButton = new JButton("ok");
+			okButton.setPreferredSize(new Dimension(20,20));
+			okButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					advFire.hide();
+					advFire = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+				}
+			});
+			gameTPanel.setPreferredSize(new Dimension(300,400));
+			gameTPanel.setBackground(tileColorWhite);
+			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
+			gameTPanel.setBorder(blackline);
+			gameTPanel.add(text, BorderLayout.NORTH);
+			gameTPanel.add(okButton, BorderLayout.SOUTH);
+			advFire = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+			
+			advFire.show();
+		}
+		
+		public void hideAdvPanel() {
+			if(advFire != null) {
+				advFire.hide();
+			}
+			
+		}		
 }

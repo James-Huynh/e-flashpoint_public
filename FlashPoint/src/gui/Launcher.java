@@ -16,12 +16,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import client.Client;
-import client.ClientInputThread;
 import client.ClientManager;
-import client.ClientOutputThread;
 import commons.bean.User;
-import commons.tran.bean.TranObject;
-import commons.tran.bean.TranObjectType;
 import custom_panels.CreateLobbyPanel;
 import custom_panels.FindLobbyPanel;
 import custom_panels.LobbyPanel;
@@ -31,14 +27,12 @@ import game.GameState;
 import gui.Table.BoardPanel;
 import gui.Table.LeftPanel;
 import gui.Table.RightPanel;
-import lobby.Lobby;
 import managers.GameManager;
 import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.lobbyListeners.LeaveListener;
 import personalizedlisteners.lobbyListeners.StartListener;
 import personalizedlisteners.loginListeners.LoginListener;
 import personalizedlisteners.mainMenuListeners.MainMenuListener;
-import tile.Tile;
 // random comments
 // random comments2
 /**
@@ -77,7 +71,7 @@ public class Launcher {
 	private static GameState tester;
 
 	String username; //@James - Ideally don't want these to be here, will grow enormously -- @Zaid
-	String password; //
+	char[] password; //
 
 	/**
 	 * Below is for to get around a problem. Wanted to specify an outline for the frame
@@ -192,36 +186,33 @@ public class Launcher {
 
 	//	LOGIN -------------------------------
 	private void setupLoginPage() {
-		login = new LoginPanel(CENTER_PANEL_DIMENSION, clientManager);
+		login = new LoginPanel(CENTER_PANEL_DIMENSION);
 
-		// James
 		login.addSelectionPiecesListenerListener(new LoginListener() {
 			@Override
-			public void clickLogin() {				
-//				if (validateCredentials() == true) {
-//					login.setVisible(false);
-//					motherFrame.remove(login);
-//					setupMainMenuPage();
-//					/*
-//					 * if(sendGameStateRequest()) { setupMainMenuPage(); }
-//					 */
-//				} else {
-//					// print System.out.println("Invalid Credentials"); 
-//				}
-				login.setVisible(false);
-				motherFrame.remove(login);
+			public void clickLogin() {
+				username = login.getUsername();
+				password = login.getPassword();
+				
+				if (validateCredentials() == true) {
+					login.setVisible(false);
+					motherFrame.remove(login);
+					setupMainMenuPage();
+					/*
+					 * if(sendGameStateRequest()) { setupMainMenuPage(); }
+					 */
+				} else {
+					// print System.out.println("Invalid Credentials"); 
+				}
 
 			}
 			
-			@Override
 			public void clickRegister() {
-				System.out.println("clickregister entered");
 				
+				username = login.getUsername();
+				password = login.getPassword();
 				
-//				username = login.getUsername();
-//				password = login.getPassword();
-				
-				if(username.isEmpty() || password.isEmpty()) {
+				if(username.isEmpty() || password.toString().isEmpty()) {
 					//print System.out.println("Either Username or password field is empty!")
 				}else {
 					if(createCredentials() == true) {
@@ -241,7 +232,7 @@ public class Launcher {
 		contentPane.remove(dummyCenterPanel);
 		contentPane.add(login, BorderLayout.CENTER);
 	}
-	 	
+
 	private boolean validateCredentials() {
 			
 		if (clientManager.loginRequest(username,password) == false){

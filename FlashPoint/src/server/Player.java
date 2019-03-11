@@ -1,9 +1,6 @@
 package server;
 
 import java.io.Serializable;
-// Start of user code for imports
-import java.util.*;
-// End of user code
 
 import token.Firefighter;
 

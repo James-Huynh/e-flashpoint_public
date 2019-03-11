@@ -8,7 +8,6 @@ import edge.Edge;
 import token.Firefighter;
 import token.POI;
 import token.Vehicle;
-import game.GameState;
 
 /**
  * Tile class definition.
