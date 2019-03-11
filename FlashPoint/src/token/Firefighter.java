@@ -23,6 +23,7 @@ public class Firefighter extends Token {
 	protected Colour myColour;
 	protected Player myPlayer;
 	
+	
 	public Firefighter(/*Player newOwner*/Colour setColour) {
 		//this.owner = newOwner;
 		super();

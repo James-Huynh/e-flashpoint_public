@@ -1,10 +1,13 @@
 package token;
 
+import java.io.Serializable;
+
 import tile.Tile;
 
 
 //removed the abstraction, I wasn't sure how to implement a working firefighter elsewhere with it in... will bring up to group. Ben
-public class Token {
+public class Token implements Serializable {
+	private static final long serialVersionUID = 1L;
 	int x;
 	int y;
 

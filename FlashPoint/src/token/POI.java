@@ -1,10 +1,13 @@
 package token;
 
-public class POI {
+import java.io.Serializable;
+
+public class POI implements Serializable {
     
     protected boolean revealed;
     protected boolean isVictim;
     protected boolean isRescued;
+    private static final long serialVersionUID = 1L;
     
     /**
      * Constructor for Poi
