@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -231,12 +232,7 @@ public class Launcher {
 		contentPane.remove(dummyCenterPanel);
 		contentPane.add(login, BorderLayout.CENTER);
 	}
-	 
-	/**
-	 * Validates by the user's credentials by asking the server
-	 * @return
-	 */
-	
+
 	private boolean validateCredentials() {
 			
 		if (clientManager.loginRequest(username,password) == false){

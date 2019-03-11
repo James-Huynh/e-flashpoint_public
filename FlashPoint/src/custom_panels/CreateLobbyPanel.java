@@ -294,6 +294,7 @@ public class CreateLobbyPanel extends JPanel {
 	}
 	
 	// James
+	// James
 	private void initializeLobby() {
 		lobby = new Lobby();
 		lobby.setCapacity(nbPlayers);
