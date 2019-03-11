@@ -447,7 +447,7 @@ public class GameState implements Serializable {
 				for (ParkingSpot a : ambulances) {
 					for (Tile t: a.getTiles()) {
 						if (minDistance > Math.abs(t.getX()-i) + Math.abs(t.getY()-j)) {
-							minDistance = minDistance - (Math.abs(t.getX()-i) + Math.abs(t.getY()-j));
+							minDistance = (Math.abs(t.getX()-i) + Math.abs(t.getY()-j));
 							returnTile(i,j).setNearestAmbulance(a);
 						}
 					}
