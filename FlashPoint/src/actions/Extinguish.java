@@ -1,14 +1,9 @@
 package actions;
 
-// Start of user code for imports
-// Trying to push
-import java.util.*;
-// End of user code
-
-import game.GameState;
-import token.Firefighter;
-import tile.Tile;
 import edge.Edge;
+import game.GameState;
+import tile.Tile;
+import token.Firefighter;
 
 /**
  * Extinguish class definition.

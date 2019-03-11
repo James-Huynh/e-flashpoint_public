@@ -1,15 +1,8 @@
 package actions;
 
-import edge.Edge;
-import tile.Tile;
-import token.Firefighter;
-import token.POI;
-import game.GameState;
-
 import java.io.Serializable;
-// Start of user code for imports
-import java.util.*;
-// End of user code
+
+import game.GameState;
 
 /**
  * Action class definition.

@@ -1,11 +1,11 @@
 package client;
 
-import commons.tran.bean.TranObject;
-import commons.tran.bean.TranObjectType;
-
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import commons.tran.bean.TranObject;
+import commons.tran.bean.TranObjectType;
 
 
 public class ClientOutputThread extends Thread {

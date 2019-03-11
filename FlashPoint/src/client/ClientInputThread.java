@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
-import commons.bean.User;
 import commons.tran.bean.TranObject;
-import commons.tran.bean.TranObjectType;
 
 /**
  * Ã¥Â®Â¢Ã¦Ë†Â·Ã§Â«Â¯Ã¨Â¯Â»Ã¦Â¶Ë†Ã¦ï¿½Â¯Ã§ÂºÂ¿Ã§Â¨â€¹

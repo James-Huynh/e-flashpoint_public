@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,7 +19,9 @@ import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
-import client.*;
+import client.Client;
+import client.ClientInputThread;
+import client.ClientOutputThread;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;

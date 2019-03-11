@@ -1,9 +1,5 @@
 package actions;
 
-// Start of user code for imports
-import java.util.*;
-// End of user code
-
 import edge.Edge;
 import game.GameState;
 import tile.Tile;

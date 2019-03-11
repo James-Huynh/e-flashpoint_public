@@ -1,19 +1,10 @@
 package gui;
 
-import java.util.ArrayList;
-import java.util.Set;
-
-import actions.Action;
-import game.FamilyGame;
 import game.GameState;
-import gui.Table;
 import lobby.Lobby;
 import managers.GameManager;
-import server.Player;
 import tile.Tile;
-import token.Colour;
 import token.Firefighter;
-import token.Token;
 
 public class gameTest {
 	
