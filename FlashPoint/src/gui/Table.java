@@ -19,6 +19,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,6 +27,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
