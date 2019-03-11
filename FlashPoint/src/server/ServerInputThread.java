@@ -97,7 +97,7 @@ public class ServerInputThread extends Thread {
 				TranObject<User> resultOfLogin = new TranObject<User>(TranObjectType.LOGINSUCCESS);
 				User updatedUser = (User) read_tranObject.getObject();
 				if(serverManager.getAccounts().get(updatedUser.getName()) != null) {
-					System.out.println(serverManager.getAccounts().get(updatedUser.getPassword()));
+					System.out.println((String) serverManager.getAccounts().get(updatedUser.getName()));
 				}
 				if(serverManager.getAccounts().get(updatedUser.getName()).equals(updatedUser.getPassword())) {
 					System.out.println("is online set to 1");
@@ -120,6 +120,7 @@ public class ServerInputThread extends Thread {
 				}else {
 					System.out.println("account added");
 					serverManager.getAccounts().put(updatedUserTwo.getName(), updatedUserTwo.getPassword());
+					System.out.println(updatedUserTwo.getPassword());
 					updatedUserTwo.setIsRegistered(true);
 				}
 				resultOfRegister.setObject(updatedUserTwo);
