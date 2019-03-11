@@ -78,29 +78,6 @@ public class ClientManager {
 		return flag;
 	}
 
-	public GameState gameStateRequest(User userOne) {
-		boolean flag = false;
-		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.GAMESTATEUPDATE);
-		objectToSend.setObject(requestObject);
-		outputThread.setMsg(objectToSend);
-		System.out.println("test check");
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
-		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
-		return requestObject.getCurrentState();
-		
-	}
-
 	public boolean loginRequest(String username, String password) {
 		boolean flag = false;
 		requestObject.setName(username);
@@ -153,6 +130,29 @@ public class ClientManager {
 			
 		}
 		return flag;
+	}
+	
+	public GameState gameStateRequest(User userOne) {
+		boolean flag = false;
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.GAMESTATEUPDATE);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		System.out.println("test check");
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
+		return requestObject.getCurrentState();
+		
 	}
 	
 }

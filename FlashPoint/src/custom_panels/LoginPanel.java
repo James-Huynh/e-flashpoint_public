@@ -1,5 +1,6 @@
 package custom_panels;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,8 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
@@ -46,12 +50,9 @@ public class LoginPanel extends JPanel {
 	private JPanel inputPanel;
 	private JPanel headerPanel;
 	private JLabel headerLabel;
-	
-//	private Client user;
-//	private ClientInputThread inputThread;
-	private String username;
-	private String pword;
-	
+	private PopupFactory popUpHolder;
+	private Popup loginFailedPopUp;
+	private JPanel popUpPanel;
 	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
@@ -123,7 +124,15 @@ public class LoginPanel extends JPanel {
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Login Clicked");
-				raiseEventLoginBtn(); // James
+				if(loginRequest(getUsername(), getPassword())) {
+					System.out.println("Login succesful");
+					raiseEventLoginBtn();
+				}
+				else {
+					System.out.println("Login failed");
+					showPopUp();
+				}
+				//raiseEventLoginBtn();
 			}
 		});
 	}
@@ -160,6 +169,37 @@ public class LoginPanel extends JPanel {
 		headerLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 90));
 		headerPanel.add(headerLabel);
 	}
+	
+	private void createPopUp() {
+		popUpPanel = new JPanel(new BorderLayout());
+		popUpHolder = new PopupFactory();
+		
+		JTextArea text = new JTextArea();
+		text.append("Login failed bro");
+		text.setLineWrap(true);
+		
+		JButton okButton = new JButton("ok");
+		okButton.setPreferredSize(new Dimension(20,20));
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loginFailedPopUp.hide();
+				//loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
+			}
+		});
+		popUpPanel.setPreferredSize(new Dimension(300,400));
+		popUpPanel.setBackground(Color.decode("#FFFFFF"));
+		loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
+	}
+	
+	private void showPopUp() {
+		loginFailedPopUp.show();
+	}
+	
+	
+	private void hidePopUp() {
+		loginFailedPopUp.hide();
+	}
 
 	// James
 	/**
@@ -195,8 +235,8 @@ public class LoginPanel extends JPanel {
 	}
 	
 	//------------Server Requests------------//
-	public void loginRequest(String name, String password) {
-		
+	public boolean loginRequest(String name, String password) {
+		return clientManager.loginRequest(name, password);
 	}
 
 }

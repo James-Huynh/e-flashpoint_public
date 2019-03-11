@@ -198,16 +198,18 @@ public class Launcher {
 		login.addSelectionPiecesListenerListener(new LoginListener() {
 			@Override
 			public void clickLogin() {				
-				if (validateCredentials() == true) {
-					login.setVisible(false);
-					motherFrame.remove(login);
-					setupMainMenuPage();
-					/*
-					 * if(sendGameStateRequest()) { setupMainMenuPage(); }
-					 */
-				} else {
-					// print System.out.println("Invalid Credentials"); 
-				}
+//				if (validateCredentials() == true) {
+//					login.setVisible(false);
+//					motherFrame.remove(login);
+//					setupMainMenuPage();
+//					/*
+//					 * if(sendGameStateRequest()) { setupMainMenuPage(); }
+//					 */
+//				} else {
+//					// print System.out.println("Invalid Credentials"); 
+//				}
+				login.setVisible(false);
+				motherFrame.remove(login);
 
 			}
 			
