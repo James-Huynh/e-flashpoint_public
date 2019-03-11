@@ -120,8 +120,11 @@ public class LoginPanel extends JPanel {
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Login Clicked");
-//				raiseEventLoginBtn(); // James
-				serverRequest();
+				raiseEventLoginBtn(); // James
+				
+//				serverRequest();
+//				sendGameStateRequest();
+				
 //				Client client = Launcher.getClient();
 //				ClientOutputThread output = client.getClientOutputThread();
 //				ClientInputThread input = client.getClientInputThread();

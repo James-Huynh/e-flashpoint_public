@@ -39,11 +39,9 @@ public static void main(String[] args) {
 	public static void repainter() {
 
 		current.setAllAvailableActions(current.generateAllPossibleActions());
-
 		tester.updateActionList(current.getAllAvailableActions());
-//		table = new LocalizedTable(tester);
 		table.refresh(tester);
-//		table.updateBoard(tester);
+		
 	}
 	
 	public static void nextTurn() {
@@ -66,9 +64,7 @@ public static void main(String[] args) {
 			tester.setActiveFireFighterIndex( (tester.getActiveFireFighterIndex() + 1)%(tester.getFireFighterList().size()) );
 			current.setAllAvailableActions(current.generateAllPossibleActions());
 			tester.updateActionList(current.getAllAvailableActions());
-//			table = new LocalizedTable(tester);
 			table.refresh(tester);
-//			table.updateBoard(tester);
 		}
 	}
 	
@@ -82,9 +78,7 @@ public static void main(String[] args) {
 			repainter();
 		}else {
 			tester.setActiveFireFighterIndex( (tester.getActiveFireFighterIndex() + 1));
-//			table = new LocalizedTable(tester);
 			table.refresh(tester);
-//			table.updateBoard(tester);
 		}
 	}
 	

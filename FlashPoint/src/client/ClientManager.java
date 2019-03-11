@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
+import game.GameState;
 
 public class ClientManager {
 	
@@ -41,6 +42,7 @@ public class ClientManager {
 	}
 	
 	public boolean connectionRequest(User inputClient) {
+		boolean flag = false;
 		System.out.println("Getting here");
 		client = inputClient;
 		System.out.println(client.getId());
@@ -51,6 +53,7 @@ public class ClientManager {
 			while(readMessage() != true) {
 				
 			}
+			flag = true;
 		}
 		catch(ClassNotFoundException l) {
 			
@@ -59,8 +62,31 @@ public class ClientManager {
 			
 		}
 		System.out.println("|2|" + client.getId()); 
-		System.out.println("|3|" + client.getCurrentState().returnTile(3, 3).getFire()); 
-		return false;
+//		System.out.println("|3|" + client.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
+		return flag;
+	}
+
+	public GameState gameStateRequest(User userOne) {
+		boolean flag = false;
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.GAMESTATEUPDATE);
+		objectToSend.setObject(client);
+		outputThread.setMsg(objectToSend);
+		System.out.println("test check");
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		System.out.println("|3|" + client.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
+		return client.getCurrentState();
+		
 	}
 	
 }

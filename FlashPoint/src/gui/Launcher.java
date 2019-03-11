@@ -114,13 +114,10 @@ public class Launcher {
 		client = new Client(ServerIP, port);
 		client.start();
 		clientManager = new ClientManager(client.getClientInputThread(), client.getClientOutputThread());
-		clientManager.connectionRequest(userOne);
-//		if(sendConnectionRequest()) {
-//			initialize();
-//		};
-		initialize();
+		if(sendConnectionRequest()) {	
+			initialize();
+		};
 	}
-//
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -206,7 +203,9 @@ public class Launcher {
 				if (validateCredentials() == true) {
 					login.setVisible(false);
 					motherFrame.remove(login);
-					setupMainMenuPage();
+					if(sendGameStateRequest()) {
+						setupMainMenuPage();
+					}
 				} else {
 					System.out.println("Invalid Credentials");
 				}
@@ -323,19 +322,19 @@ public class Launcher {
 		 * Ben's gamePanel comes here
 		 */
 		//A fake gamestate set up to allow the gui to build from something
-		tester = GameState.getInstance();
-		Lobby tempLobby = new Lobby();
-		tester.updateGameStateFromLobby(tempLobby);
-		Tile testTile = tester.returnTile(3, 1);
-		Tile testTile2 = tester.returnTile(2, 4);
-		Tile testTile3 = tester.returnTile(5, 6);
+//		tester = GameState.getInstance();
+//		Lobby tempLobby = new Lobby();
+//		tester.updateGameStateFromLobby(tempLobby);
+//		Tile testTile = tester.returnTile(3, 1);
+//		Tile testTile2 = tester.returnTile(2, 4);
+//		Tile testTile3 = tester.returnTile(5, 6);
 		current = new GameManager(tester);
-		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
-		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
-		tester.placeFireFighter(tester.getFireFighterList().get(2), testTile2);
+//		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
+//		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
+//		tester.placeFireFighter(tester.getFireFighterList().get(2), testTile2);
 //		testTile.getPoiList().get(0).reveal();
-		current.generateAllPossibleActions();
-		tester.updateActionList(current.getAllAvailableActions());
+//		current.generateAllPossibleActions();
+//		tester.updateActionList(current.getAllAvailableActions());
 		
 		Table table = new Table(tester);
 		BoardPanel board = table.genBoard();
@@ -375,24 +374,36 @@ public class Launcher {
 //	}
 	//	------------------------------- GAME 
 	
+	private boolean sendGameStateRequest() {
+		if(clientManager.gameStateRequest(userOne) == null) {
+			return false;
+		}
+		updateGameState(clientManager.gameStateRequest(userOne));
+		return true;
+	}
+	
+	public void updateGameState(GameState updated) {
+		this.tester = updated;
+	}
 	
 	public static Client getClient() {
 		return client;
 	}
 	
 	private boolean sendConnectionRequest() {
-		boolean flag = false;
+//		boolean flag = false;
 //		ClientOutputThread output = client.getClientOutputThread();
 //		ClientInputThread input = client.getClientInputThread();
-		String username = "Zaid";
-		String pword = "zzz";
+//		String username = "Zaid";
+//		String pword = "zzz";
 //		TranObject<User> user = new TranObject<User>(TranObjectType.CONNECT);
-		userOne.setName(username);
-		userOne.setPassword(pword);
+//		userOne.setName(username);
+//		userOne.setPassword(pword);
 //		user.setObject(userOne);
 //		output.setMsg(user);
 		
-		clientManager.connectionRequest(userOne);
+//		return clientManager.connectionRequest(userOne);
+		return clientManager.connectionRequest(userOne);
 		
 		
 		/*
@@ -400,8 +411,8 @@ public class Launcher {
 		 * catch(ClassNotFoundException f) { System.out.println("Error class"); }
 		 * catch(IOException k) { System.out.println("Error IO"); }
 		 */
-	
-		flag = true;
-		return flag; 
+//	
+//		flag = true;
+//		return flag; 
 	}
 }
