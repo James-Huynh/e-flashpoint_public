@@ -20,6 +20,7 @@ public class User implements Serializable {
 	private String ip;
 //	private int port;
 	private GameState currentState;
+    private boolean isRegistered;
 
 	public int getId() {
 		return id;
@@ -91,6 +92,15 @@ public class User implements Serializable {
 	
 	public void setCurrentState(GameState currentState) {
 		this.currentState = currentState;
+	}
+
+	public boolean getIsRegistered() {
+		
+		return isRegistered;
+	}
+	
+	public void setIsRegistered(boolean bool) {
+		this.isRegistered = bool;
 	}
 
 //	public int getImg() {

@@ -12,6 +12,7 @@ public interface LoginListener extends EventListener {
 	 * Listener that will transition the frame from the login screen to the main menu 
 	 */
 	public void clickLogin();	
+	public void clickRegister();
 	
 	// more methods to be added...
 }

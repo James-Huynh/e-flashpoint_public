@@ -40,6 +40,7 @@ import personalizedlisteners.loginListeners.LoginListener;
 import personalizedlisteners.mainMenuListeners.MainMenuListener;
 import tile.Tile;
 // random comments
+// random comments2
 /**
  * 
  * @author zaidyahya
@@ -49,7 +50,7 @@ import tile.Tile;
 public class Launcher {
 
 	private static Client client;
-	private String ServerIP = "142.157.145.231";
+	private String ServerIP = "142.157.58.203";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
@@ -198,21 +199,42 @@ public class Launcher {
 			public void clickLogin() {
 				username = login.getUsername();
 				password = login.getPassword();
-
+				
 				if (validateCredentials() == true) {
 					login.setVisible(false);
 					motherFrame.remove(login);
-					if(sendGameStateRequest()) {
-						setupMainMenuPage();
-					}
+					setupMainMenuPage();
+					/*
+					 * if(sendGameStateRequest()) { setupMainMenuPage(); }
+					 */
 				} else {
-					System.out.println("Invalid Credentials");
+					// print System.out.println("Invalid Credentials"); 
 				}
 
 			}
 			
-		});
+			public void clickRegister() {
+				
+				username = login.getUsername();
+				password = login.getPassword();
+				
+				if(username.isEmpty() || password.toString().isEmpty()) {
+					//print System.out.println("Either Username or password field is empty!")
+				}else {
+					if(createCredentials() == true) {
+						// display user added success
+					} else {
+						// invalid username or password or the user already exists
+					}
+				}
+				
+				
+			}
 
+			
+		});
+		
+		
 		contentPane.remove(dummyCenterPanel);
 		contentPane.add(login, BorderLayout.CENTER);
 	}
@@ -221,9 +243,27 @@ public class Launcher {
 	 * Validates by the user's credentials by asking the server
 	 * @return
 	 */
+	
 	private boolean validateCredentials() {
-		// @server
-		return true;
+			
+		if (clientManager.loginRequest(username,password) == false){
+				return false;
+			}
+			else if(clientManager.loginRequest(username,password) == true){
+				return true;
+			}
+			return false;
+
+	}
+	private boolean createCredentials() {
+		
+		if (clientManager.registerRequest(username,password) == false){
+			return false;
+		}
+		else if(clientManager.registerRequest(username,password) == true){
+			return true;
+		}
+		return false;
 	}
 	//------------------------------- LOGIN
 	
