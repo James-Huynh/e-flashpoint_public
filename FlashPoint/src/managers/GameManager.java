@@ -138,13 +138,13 @@ public class GameManager {
     	for(int direction = 0; direction < 4; direction++) {
     		
     		if(direction == 0) {
-    			recentAdvFire += "The explosions continued left. ";
+    			recentAdvFire += "The explosions continued left. \n";
     		} else if(direction == 1) {
-    			recentAdvFire += "The explosions continued up. ";
+    			recentAdvFire += "The explosions continued up. \n";
     		} else if(direction == 2){
-    			recentAdvFire += "The explosions continued right. ";
+    			recentAdvFire += "The explosions continued right. \n";
     		} else if(direction == 3) {
-    			recentAdvFire += "The explosions continued down. ";
+    			recentAdvFire += "The explosions continued down. \n";
     		}
     		boolean checkBarriers = targetTile.checkBarriers(direction);
     		
@@ -175,7 +175,7 @@ public class GameManager {
 			if(targetTile.getEdge(direction).isDoor()) {
 				if(!targetTile.getEdge(direction).isDestroyed()) {
 					targetTile.getEdge(direction).destroyDoor();
-					recentAdvFire += "The explosion destroyed an open door but did not stop. ";
+					recentAdvFire += "The explosion destroyed an open door but did not stop. \n";
 				}
 			}
 			
@@ -275,7 +275,7 @@ public class GameManager {
         				
         				if(fireCheck == 2) {
         					targetTile.setFire(2);
-        					recentAdvFire += "Flashover spread the fire to tile " + tempCoords[0] + "," + tempCoords[1] + ".";
+        					recentAdvFire += "Flashover spread the fire to tile " + tempCoords[0] + "," + tempCoords[1] + ".\n";
         					
         					//resets the targetTile
         					targetTile = gs.returnTile(0,0);
@@ -345,7 +345,7 @@ public class GameManager {
     				Tile target = respawnTile.getTiles()[0];
     				tempFire.updateLocation(respawnTile);
     				target.addToFirefighterList(tempFire);
-    				recentAdvFire += "Firefighter knocked down at tile " + coords[0] + "," + coords[1] + ".";
+    				recentAdvFire += "Firefighter knocked down at tile " + coords[0] + "," + coords[1] + ".\n";
     			}
     		}
     		//kill and remove all POI found on tiles with fire
@@ -356,10 +356,10 @@ public class GameManager {
     				gs.removePOI(tempPOI);
     				if(tempPOI.isVictim()) {
     					gs.updateLostCount(tempPOI);
-    					recentAdvFire += "Victim lost on tile " + coords[0] + "," + coords[1] + ".";
+    					recentAdvFire += "Victim lost on tile " + coords[0] + "," + coords[1] + ".\n";
     				} else {
     					gs.updateRevealPOI(tempPOI);
-    					recentAdvFire += "False Alarm revealed on tile " + coords[0] + "," + coords[1] + ".";
+    					recentAdvFire += "False Alarm revealed on tile " + coords[0] + "," + coords[1] + ".\n";
     				}
     			}
     		}
@@ -408,7 +408,7 @@ public class GameManager {
         			
         			if(containsFireFighter == true) {
         				newPOI.reveal();
-        				recentAdvFire += " and revealed. ";
+        				recentAdvFire += " and revealed. \n";
         				if(newPOI.isVictim() == false) {
         					recentAdvFire += "The POI was a false alarm and remvoed. \n";
         					targetTile.removeFromPoiList(newPOI);
@@ -425,6 +425,7 @@ public class GameManager {
         			
         			if(containsFireFighter == true) {
         				newPOI.reveal();
+        				recentAdvFire += " and revealed. \n";
         				if(newPOI.isVictim() == false) {
         					recentAdvFire += "The POI was a false alarm and remvoed. \n";
         					targetTile.removeFromPoiList(newPOI);
@@ -495,8 +496,9 @@ public class GameManager {
     		recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " caught Fire.\n";
     	}
     	else {
+    		recentAdvFire = "An explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". \n";
     		explosion(targetTile);
-    		recentAdvFire = "As explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". ";
+    		
     	}
     	resolveFlashOver();
     	checkKnockDowns();

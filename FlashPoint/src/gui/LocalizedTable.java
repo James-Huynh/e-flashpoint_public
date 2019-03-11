@@ -1389,28 +1389,36 @@ public class LocalizedTable {
 		public void showAdvanceFireString(String message) {
 			advFire = null;
 			PopupFactory gameT = new PopupFactory();
-			JPanel gameTPanel = new JPanel(new GridLayout(2,1));
+			JPanel gameTPanel = new JPanel(new BorderLayout());
 			JTextArea text = new JTextArea();
 			text.append(message);
 			text.setLineWrap(true);
 			
 			JButton okButton = new JButton("ok");
+			okButton.setPreferredSize(new Dimension(20,20));
 			okButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					advFire.hide();
-					advFire = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+					advFire = gameT.getPopup(gameFrame, gameTPanel, 1140, 50);
 				}
 			});
-			gameTPanel.setPreferredSize(new Dimension(300,300));
+			gameTPanel.setPreferredSize(new Dimension(300,400));
 			gameTPanel.setBackground(tileColorWhite);
 			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
 			gameTPanel.setBorder(blackline);
-			gameTPanel.add(text);
-			gameTPanel.add(okButton);
-			advFire = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+			gameTPanel.add(text, BorderLayout.NORTH);
+			gameTPanel.add(okButton, BorderLayout.SOUTH);
+			advFire = gameT.getPopup(gameFrame, gameTPanel, 1140, 50);
 			
 			advFire.show();
+		}
+		
+		public void hideAdvPanel() {
+			if(advFire != null) {
+				advFire.hide();
+			}
+			
 		}
 		
 		

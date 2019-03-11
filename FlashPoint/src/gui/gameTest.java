@@ -40,6 +40,7 @@ public static void main(String[] args) {
 
 		current.setAllAvailableActions(current.generateAllPossibleActions());
 		tester.updateActionList(current.getAllAvailableActions());
+		table.hideAdvPanel();
 		table.refresh(tester);
 		
 	}
