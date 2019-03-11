@@ -82,13 +82,21 @@ public class ServerInputThread extends Thread {
 		if (readObject != null && readObject instanceof TranObject) {
 			System.out.println("Entered IF");
 			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
+			TranObject<User> register2TranObject;
+			User newUser;
 			switch (read_tranObject.getType()) {
 			case CONNECT:
-				System.out.println("Got in connect request");
-				TranObject<User> register2TranObject = new TranObject<User>(TranObjectType.SUCCESS);
-				User newUser = (User) read_tranObject.getObject();
-				System.out.println("server loginUser:"+newUser.toString());
+				System.out.println("In connect request");
+				register2TranObject = new TranObject<User>(TranObjectType.SUCCESS);
+				newUser = (User) read_tranObject.getObject();
 				newUser.setId(12345);
+				register2TranObject.setObject(newUser);
+				out.setMessage(register2TranObject);
+				break;
+			case GAMESTATEUPDATE:
+				System.out.println("In game state update request");
+				register2TranObject = new TranObject<User>(TranObjectType.SUCCESS);
+				newUser = (User) read_tranObject.getObject();
 				GameState gs = GameState.getInstance();
 				Lobby lobby = new Lobby();
 				gs.updateGameStateFromLobby(lobby);
@@ -110,6 +118,7 @@ public class ServerInputThread extends Thread {
 //				out.setMessage(register2TranObject);
 //				break;
 			case LOGIN:
+				System.out.println("Am I here??");
 				System.out.println("server loginUser:");
 				User loginUser = (User) read_tranObject.getObject();
 				System.out.println("server loginUser:"+loginUser);
