@@ -14,6 +14,8 @@ import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
 import commons.util.MyDate;
 import dao.UserDaoFactory;
+import game.GameState;
+import lobby.Lobby;
 
 public class ServerInputThread extends Thread {
 	private Socket socket;// socket锟斤拷锟斤拷
@@ -45,22 +47,22 @@ public class ServerInputThread extends Thread {
 		try {
 			while (isStart) {
 				System.out.println("Looping?");
-				serverManager.readMessage(out, ois);
+//				serverManager.readMessage(out, ois);
 				// JUNHA : this is supposed to be serverManager.readMessage();
-				// readMessage();
+				 readMessage();
 
 			}
 			if (ois != null)
-				System.out.println("Here 1");
+				System.out.println("Object Input Stream is null");
 			ois.close();
 			if (socket != null)
-				System.out.println("Here 2");
+				System.out.println("Socket is null error");
 			socket.close();
 		} catch (ClassNotFoundException e) {
-			System.out.println("Here 3");
+			System.out.println("ClassNotFound Exception");
 			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("Here 4");
+			System.out.println("IO Exception Error");
 			e.printStackTrace();
 		}
 
@@ -74,9 +76,8 @@ public class ServerInputThread extends Thread {
 	 */
 
 	public void readMessage() throws IOException, ClassNotFoundException {
-		System.out.println("server loginUser1234:");
 		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
-		System.out.println("Here?");
+		System.out.println("Insinde readMessage");
 //		UserDao dao = UserDaoFactory.getInstance();// 通锟斤拷dao模式锟斤拷锟斤拷锟教�
 		if (readObject != null && readObject instanceof TranObject) {
 			System.out.println("Entered IF");
@@ -86,8 +87,12 @@ public class ServerInputThread extends Thread {
 				System.out.println("Got in connect request");
 				TranObject<User> register2TranObject = new TranObject<User>(TranObjectType.SUCCESS);
 				User newUser = (User) read_tranObject.getObject();
-				System.out.println("server loginUser:"+newUser);
+				System.out.println("server loginUser:"+newUser.toString());
 				newUser.setId(12345);
+				GameState gs = GameState.getInstance();
+				Lobby lobby = new Lobby();
+				gs.updateGameStateFromLobby(lobby);
+				newUser.setCurrentState(gs);
 				register2TranObject.setObject(newUser);
 				out.setMessage(register2TranObject);
 				break;

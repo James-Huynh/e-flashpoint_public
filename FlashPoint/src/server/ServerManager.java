@@ -19,8 +19,7 @@ public class ServerManager {
 	public void readMessage(OutputThread out, ObjectInputStream ois) throws IOException, ClassNotFoundException {
 		System.out.println("server loginUser1234:");
 		Object readObject = ois.readObject();
-		System.out.println("Here?");
-
+		System.out.println("Here? now");
 		if (readObject != null && readObject instanceof TranObject) {
 			System.out.println("Entered IF");
 			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�

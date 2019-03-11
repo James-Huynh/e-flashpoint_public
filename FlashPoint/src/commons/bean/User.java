@@ -2,6 +2,8 @@ package commons.bean;
 
 import java.io.Serializable;
 
+import game.GameState;
+
 
 public class User implements Serializable {
 	/**
@@ -17,6 +19,7 @@ public class User implements Serializable {
 //	private int group;
 	private String ip;
 //	private int port;
+	private GameState currentState;
 
 	public int getId() {
 		return id;
@@ -80,6 +83,14 @@ public class User implements Serializable {
 
 	public void setIsOnline(int isOnline) {
 		this.isOnline = isOnline;
+	}
+	
+	public GameState getCurrentState() {
+		return currentState;
+	}
+	
+	public void setCurrentState(GameState currentState) {
+		this.currentState = currentState;
 	}
 
 //	public int getImg() {

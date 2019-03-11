@@ -67,6 +67,20 @@ public class ClientInputThread extends Thread {
 	public ObjectInputStream getInputStream() {
 		return ois;
 	}
+	
+	public Object readInputStream() {
+		Object giveBack = null;
+		try{
+			giveBack = ois.readObject();
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k){
+			
+		}
+		return giveBack;
+	}
 
 	@Override
 	public void run() {
