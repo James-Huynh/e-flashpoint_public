@@ -79,7 +79,7 @@ public class Extinguish extends Action {
             	}
             	else if (edge.isDoor()) {
                     boolean status = edge.getStatus();
-                    if (status == true) {
+                    if (status == true || edge.isDestroyed()) {
                         if (aP >= cost) {
                             flag = true;
                         }
