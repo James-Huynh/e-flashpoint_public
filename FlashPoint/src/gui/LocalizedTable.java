@@ -1362,7 +1362,7 @@ public class LocalizedTable {
 					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
 					gameTPanel.setBorder(blackline);
 					gameTPanel.add(popupMsg);
-					gameTermination = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 					
 				} else if(currentBoard.getLostVictimsList().size() >= 4) {
 					JLabel popupMsg = new JLabel("Game over.\n 4 victims were lost.");
@@ -1371,7 +1371,7 @@ public class LocalizedTable {
 					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
 					gameTPanel.setBorder(blackline);
 					gameTPanel.add(popupMsg);
-					gameTermination = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 				}
 			} else if(currentBoard.isGameWon()) {
 				JLabel popupMsg = new JLabel("Game Won.\n 7 victims were saved in time.");
@@ -1380,7 +1380,7 @@ public class LocalizedTable {
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
 				gameTPanel.setBorder(blackline);
 				gameTPanel.add(popupMsg);
-				gameTermination = gameT.getPopup(gameFrame, gameTPanel, 400, 200);
+				gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 			}
 			
 			gameTermination.show();
@@ -1400,7 +1400,7 @@ public class LocalizedTable {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					advFire.hide();
-					advFire = gameT.getPopup(gameFrame, gameTPanel, 1140, 50);
+					advFire = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 				}
 			});
 			gameTPanel.setPreferredSize(new Dimension(300,400));
@@ -1409,7 +1409,7 @@ public class LocalizedTable {
 			gameTPanel.setBorder(blackline);
 			gameTPanel.add(text, BorderLayout.NORTH);
 			gameTPanel.add(okButton, BorderLayout.SOUTH);
-			advFire = gameT.getPopup(gameFrame, gameTPanel, 1140, 50);
+			advFire = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 			
 			advFire.show();
 		}
