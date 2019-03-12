@@ -54,7 +54,7 @@ public class LobbyPanel extends JPanel {
 		this.clientManager = myclientManager;
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
-		
+		this.playersLabel = new JLabel[6];
 		
 		initialize();
 		createHeaderPanel();
@@ -183,6 +183,7 @@ public class LobbyPanel extends JPanel {
 			playerOne.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			playerOne.setBounds(0, 0, 662, 43);
 			playersPanel.add(playerOne);
+			playersLabel[i] = playerOne;
 			break;
 			
 		case 1:
@@ -194,6 +195,7 @@ public class LobbyPanel extends JPanel {
 			playerTwo.setBackground(Color.BLACK);
 			playerTwo.setBounds(0, 55, 662, 43);
 			playersPanel.add(playerTwo);
+			playersLabel[i] = playerOne;
 			break;
 			
 		case 2:
@@ -205,6 +207,7 @@ public class LobbyPanel extends JPanel {
 			playerThree.setBackground(Color.WHITE);
 			playerThree.setBounds(0, 110, 662, 43);
 			playersPanel.add(playerThree);
+			playersLabel[i] = playerOne;
 			break;
 			
 		case 3:
@@ -216,6 +219,7 @@ public class LobbyPanel extends JPanel {
 			playerFour.setBackground(Color.RED);
 			playerFour.setBounds(0, 165, 662, 43);
 			playersPanel.add(playerFour);
+			playersLabel[i] = playerOne;
 			break;
 			
 		case 4:
@@ -227,6 +231,7 @@ public class LobbyPanel extends JPanel {
 			playerFive.setBackground(Color.MAGENTA);
 			playerFive.setBounds(0, 220, 662, 43);
 			playersPanel.add(playerFive);
+			playersLabel[i] = playerOne;
 			break;
 			
 		case 5:
@@ -238,6 +243,7 @@ public class LobbyPanel extends JPanel {
 			playerSix.setBackground(Color.BLUE);
 			playerSix.setBounds(0, 275, 662, 43);
 			playersPanel.add(playerSix);
+			playersLabel[i] = playerOne;
 			break;
 		}	
 		
