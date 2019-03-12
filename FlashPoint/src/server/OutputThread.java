@@ -45,8 +45,10 @@ public class OutputThread extends Thread {
 					wait();
 				}
 				if (object != null) {
-					oos.writeObject(object);
 					oos.flush();
+					oos.reset();
+					oos.writeObject(object);
+					
 				}
 			}
 			if (oos != null)// 循锟斤拷锟斤拷锟斤拷锟襟，关憋拷锟斤拷锟斤拷锟酵凤拷锟斤拷源
