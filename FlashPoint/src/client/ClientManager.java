@@ -1,6 +1,7 @@
 package client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import actions.Action;
 import commons.bean.User;
@@ -50,8 +51,8 @@ public class ClientManager {
 				System.out.println("Succesuful placement request");
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
-				System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
-//				requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
+			//	System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
+				requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
 				break;
 			case ACTIONSUCCESS:
 				System.out.println("Succesuful action request");
@@ -63,6 +64,12 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				System.out.println(requestObject.getCurrentLobby().getPlayers().get(0).getUserName()); //this is tester
+				break;
+			case FINDLOBBYSUCCESS:
+				System.out.println("Successful findlobby request");
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
+				System.out.println(requestObject.getLobbyList().get(0).getPlayers().get(0).getUserName());
 				break;
 			}
 		}
@@ -240,6 +247,9 @@ public class ClientManager {
 	public Lobby getLobby() {
 		return requestObject.getCurrentLobby();
 	}
+	public ArrayList<Lobby> getLobbyList(){
+		return requestObject.getLobbyList();
+	}
 
 	public GameState ActionRequest(Action a) {
 		boolean flag = false;
@@ -265,6 +275,35 @@ public class ClientManager {
 		}
 		
 		return requestObject.getCurrentState();
+	}
+
+	public boolean lobbyListRequest() {
+		boolean flag = false;
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FINDLOBBY);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		
+		try {
+			while(readMessage() != true) {
+				
+			}
+			if(requestObject.getIsOnline() == 1) {
+				flag = true;
+			}
+			//if client.getIsOnline() == 0 flag = false;	
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		return flag;
+	}
+
+	public void joinLobbyRequest(Lobby lobby) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 
 import lobby.Lobby;
 import lobby.LobbySearchEntry;
+import client.ClientManager;
 
 /**
  * 
@@ -17,6 +18,8 @@ import lobby.LobbySearchEntry;
  *
  */
 public class FindLobbyPanel extends JPanel {
+	ClientManager clientManager;
+	
 	private JPanel panel_main;
 	private JLabel lbl_findLobby;
 	private Lobby dummyLobby;	// Test
@@ -29,7 +32,8 @@ public class FindLobbyPanel extends JPanel {
 	/**
 	 * Create the visible components
 	 */
-	public FindLobbyPanel() {
+	public FindLobbyPanel(ClientManager myClientManager) {
+		this.clientManager = myClientManager;
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
 
@@ -51,7 +55,7 @@ public class FindLobbyPanel extends JPanel {
 	private void initialize() {
 		// @server
 		//availLobbies =  server.getCurrentLobbies();
-		dummyLobby = new Lobby();
+		dummyLobby = clientManager.getLobbyList().get(0);
 		
 		
 		
@@ -61,7 +65,7 @@ public class FindLobbyPanel extends JPanel {
 	private void displayLobbies() {
 		/* for (Lobby curLobby : availLobbies) {
 		} */
-		dummyEntry = new LobbySearchEntry(dummyLobby);
+		dummyEntry = new LobbySearchEntry(dummyLobby, clientManager);
 		dummyEntry.setVisible(true);
 		panel_main.add(dummyEntry.getPanel_main());		// weird
 	}

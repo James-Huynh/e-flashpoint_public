@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 
 import personalizedlisteners.mainMenuListeners.MainMenuListener;
+import client.ClientManager;
 
 /**
  * Class representing the whole page of the main menu encapsulated inside a panel
@@ -20,14 +21,19 @@ public class MainMenuPanel extends JPanel {
 	JButton createBtn; //@James - Make these private attributes? @Zaid
 	JButton findBtn;
 	JButton rulesBtn;
+	
+	private ClientManager clientManager;
+	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
 	/**
 	 * Create the visible components
 	 */
-	public MainMenuPanel() {
+	public MainMenuPanel(ClientManager myClientManager) {
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
+		
+		this.clientManager = myClientManager;
 
 		JPanel menuPanel = new JPanel();
 		menuPanel.setBounds(200, 200, 540, 297);
@@ -57,8 +63,16 @@ public class MainMenuPanel extends JPanel {
 		findBtn.setBounds(67, 120, 423, 49);
 		findBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				raiseEventFindBtn();
+				System.out.println("We clicked find lobby");
+				if(findLobbyRequest() == true) {
+					System.out.println("Lobbies were found");
+					raiseEventFindBtn();
+				}else {
+					System.out.println("Lobbies were not found");
+				}
+				
 			}
+
 
 		});
 
@@ -68,6 +82,7 @@ public class MainMenuPanel extends JPanel {
 		rulesBtn.setEnabled(false);
 
 	}
+	
 	
 	/**
 	 * Register an object to be a listener
@@ -91,6 +106,10 @@ public class MainMenuPanel extends JPanel {
 		for (MainMenuListener listener: REGISTERED_OBJECTS.getListeners(MainMenuListener.class)) {
 			listener.clickFind();
 		}
+	}
+	
+	private boolean findLobbyRequest() {
+		return clientManager.lobbyListRequest();
 	}
 	
 	

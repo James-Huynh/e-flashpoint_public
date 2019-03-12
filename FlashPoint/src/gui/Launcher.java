@@ -207,7 +207,7 @@ public class Launcher {
 
 	//	MAIN MENU -------------------------------
 	private void setupMainMenuPage() {
-		mainMenu = new MainMenuPanel();
+		mainMenu = new MainMenuPanel(clientManager);
 		contentPane.add(mainMenu);
 		
 		mainMenu.addSelectionPiecesListenerListener(new MainMenuListener() {
@@ -247,6 +247,7 @@ public class Launcher {
 			}
 		});
 		
+		
 		createLobby.addSelectionPiecesListenerListener(new BackListener() {
 			public void clickBack() {
 				createLobby.setVisible(false);
@@ -261,7 +262,7 @@ public class Launcher {
 	// James
 	//  FIND LOBBY -------------------------------  
 	private void setupFindLobbyPage() {
-		findLobby = new FindLobbyPanel();
+		findLobby = new FindLobbyPanel(clientManager);
 		contentPane.add(findLobby);		
 	}
 	
