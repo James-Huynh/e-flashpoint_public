@@ -107,6 +107,7 @@ public class ServerInputThread extends Thread {
 					requestObject.setIsOnline(0);
 				}
 				returnObject.setObject(requestObject);
+				
 				out.setMessage(returnObject);
 				map.add(loginUser.getId(), out);
 				break;
@@ -150,7 +151,11 @@ public class ServerInputThread extends Thread {
 				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getCurrentPosition().getX());
 				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getAP());
 				returnObject.setObject(requestObject);
-				out.setMessage(returnObject);
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnObject);// 广播一下用户上线
+				}
+			
+		
 				break;
 			case ACTIONREQUEST:
 				System.out.println("In action request");
