@@ -1,6 +1,7 @@
 package commons.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import game.GameState;
 import lobby.Lobby;
@@ -28,6 +29,7 @@ public class User implements Serializable {
     private boolean placed;
     private actions.Action action;
     private Lobby currentLobby;
+    private ArrayList<Lobby> currentLobbies;
 
 	public Integer getId() {
 		return id;
@@ -148,6 +150,15 @@ public class User implements Serializable {
 
 	public void setMatTiles(Tile[][] matTiles) {
 		this.matTiles = matTiles;
+	}
+
+	public ArrayList<Lobby> getLobbyList(){
+		return this.currentLobbies;
+	}
+	
+	public void setLobbyList(ArrayList<Lobby> lobbyList) {
+		this.currentLobbies = lobbyList;
+		
 	}
 
 
