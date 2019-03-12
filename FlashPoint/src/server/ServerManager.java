@@ -19,7 +19,7 @@ public class ServerManager {
 	private HashMap<Integer, Player> onlinePlayers;
 	private ArrayList<Lobby> currentLobbies;
 	
-	private Lobby testLobby;
+	private Lobby activeLobby;
 	private GameState testGS;
 	private GameManager gameManager;
 	
@@ -31,11 +31,12 @@ public class ServerManager {
 	
 	public void createPlayer(String name, String password, Integer ID) {
 		onlinePlayers.put(ID, new Player(name, password));
+		System.out.println(this.onlinePlayers.size());
 	}
 	
 	public void createGame() {
 		testGS = GameState.getInstance();
-		testGS.updateGameStateFromLobby(testLobby);
+		testGS.updateGameStateFromLobby(activeLobby);
 		initializeGameManager();
 //		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
 //		generateActions();
@@ -51,16 +52,16 @@ public class ServerManager {
 	}
 
 	
-	public void createLobby() {
-		testLobby = new Lobby();
-		testLobby.setName("FUNTIMES");
-		testLobby.addPlayer(onlinePlayers.get(Integer.valueOf(12345)));
-		currentLobbies.add(testLobby);
-	}
+//	public void createLobby() {
+//		testLobby = new Lobby();
+//		testLobby.setName("FUNTIMES");
+//		testLobby.addPlayer(onlinePlayers.get(Integer.valueOf(12345)));
+//		currentLobbies.add(testLobby);
+//	}
 	
-	public void placeFirefighter(int[] coords) {
+	public void placeFirefighter(int[] coords, Integer userId) {
 //		System.out.println(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter().getAP());
-		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(coords[0],coords[1]));
+		testGS.placeFireFighter(onlinePlayers.get(userId).getFirefighter(), testGS.returnTile(coords[0],coords[1]));
 //		testGS.getFireFighterList().get(0).setAP(10);
 //		System.out.println(testGS.returnTile(coords[0],coords[1]).getFirefighterList().get(0).getAP());
 	}
@@ -78,7 +79,9 @@ public class ServerManager {
 	}
 	
 	public void setLobby(Lobby newLobby) {
-		this.testLobby = newLobby;
+		this.activeLobby = newLobby;
+		this.currentLobbies.add(this.activeLobby);
+		System.out.println(this.currentLobbies.size());
 	}
 	
 	public Player getPlayer(Integer inputInteger) {
@@ -86,20 +89,20 @@ public class ServerManager {
 	}
 	
 	public void addPlayerToLobby(Player additionalPlayer) {
-		this.testLobby.addPlayer(additionalPlayer);
+		this.activeLobby.addPlayer(additionalPlayer);
 	}
 	
 	public Lobby getLobby() {
-		return this.testLobby;
+		return this.activeLobby;
 	}
 
 	public ArrayList<Lobby> getLobbyList() {
-		this.testLobby = new Lobby();
-		this.testLobby.setName("FUNTIMES");
+		this.activeLobby = new Lobby();
+		this.activeLobby.setName("FUNTIMES");
 		Player temp = new Player("hello", "goodbye");
 		addPlayerToLobby(temp);
-		this.currentLobbies.add(testLobby);
-		
+		this.currentLobbies.add(activeLobby);
+		System.out.println(this.currentLobbies.size());
 		return this.currentLobbies;
 	}
 

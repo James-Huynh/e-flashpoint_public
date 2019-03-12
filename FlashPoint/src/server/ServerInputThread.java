@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 
 import commons.bean.TextMessage;
 import commons.bean.User;
@@ -14,6 +15,7 @@ import commons.util.MyDate;
 import game.GameState;
 import lobby.Lobby;
 
+
 public class ServerInputThread extends Thread {
 	private Socket socket;
 	private OutputThread out;
@@ -21,6 +23,7 @@ public class ServerInputThread extends Thread {
 	private ObjectInputStream ois;
 	private boolean isStart = true;
 	ServerManager serverManager;
+	Random rand = new Random();
 
 	public ServerInputThread(Socket socket, OutputThread out, OutputThreadMap map) {
 		this.socket = socket;
@@ -86,7 +89,7 @@ public class ServerInputThread extends Thread {
 				System.out.println("In connect request");
 				returnObject = new TranObject<User>(TranObjectType.SUCCESS);
 				requestObject = (User) read_tranObject.getObject();
-				requestObject.setId(Integer.valueOf(12345));
+				requestObject.setId(Integer.valueOf(rand.nextInt(10)));
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;
@@ -134,7 +137,7 @@ public class ServerInputThread extends Thread {
 			case GAMESTATEUPDATE:
 				System.out.println("In game state update request");
 				returnObject = new TranObject<User>(TranObjectType.SUCCESS);
-				serverManager.createLobby();
+//				serverManager.createLobby();
 				serverManager.createGame();
 				requestObject = (User) read_tranObject.getObject();
 				requestObject.setCurrentState(serverManager.getGameState());
@@ -146,12 +149,9 @@ public class ServerInputThread extends Thread {
 				returnObject = new TranObject<User>(TranObjectType.FFPLACEMENTSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				int[] coords = requestObject.getCoords();
-				serverManager.placeFirefighter(coords);
+				serverManager.placeFirefighter(coords, requestObject.getId());
 				requestObject.setPlaced(true);
 				requestObject.setCurrentState(serverManager.getGameState());
-				requestObject.setMatTiles(serverManager.getGameState().getMatTiles());
-//				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getCurrentPosition().getX());
-//				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getAP());
 				returnObject.setObject(requestObject);
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnObject);// 广播一下用户上线
@@ -195,6 +195,7 @@ public class ServerInputThread extends Thread {
 				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
 				requestObject.setCurrentLobby(serverManager.getLobby());
 				returnObject.setObject(requestObject);
+				System.out.println("test 2 this should be entered username of second user" + requestObject.getCurrentLobby().getPlayers().get(1).getUserName());
 				out.setMessage(returnObject);
 				break;
 				
