@@ -17,6 +17,9 @@ public class ClientManager {
 	private User requestObject; 
 //	private ObjectInputStream ois;
 //	private ObjectOutputStream oos;
+	private GameState currentGameState;
+	private Lobby currentLobby;
+//	private ArrayList<Lobby> onlineLobbies;
 	
 	public ClientManager(ClientInputThread input, ClientOutputThread output) {
 		this.inputThread = input;
@@ -62,6 +65,7 @@ public class ClientManager {
 			case LOBBYCREATIONSUCCESS:
 				System.out.println("Successful lobby request");
 				requestObject = (User) read_tranObject.getObject();
+				currentLobby = requestObject.getCurrentLobby();
 				flag = true;
 				System.out.println(requestObject.getCurrentLobby().getPlayers().get(0).getUserName()); //this is tester
 				break;
@@ -73,7 +77,9 @@ public class ClientManager {
 				break;
 			case JOINLOBBYSUCCESS:
 				System.out.println("Successful findlobby request");
-				requestObject = (User) read_tranObject.getObject();
+				//currentLobby = (Lobby) read_tranObject.getObject();
+				//requestObject.setCurrentLobby(currentLobby);
+				requestObject.setCurrentLobby((Lobby) read_tranObject.getObject());
 				flag = true;
 				/*
 				 * if(requestObject.getCurrentLobby().getPlayers().size() == 2) {
