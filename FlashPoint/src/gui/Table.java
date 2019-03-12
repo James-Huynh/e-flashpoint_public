@@ -1503,7 +1503,7 @@ public class Table {
 //						gameTest.placeFF(currentBoard.returnTile(coords[0],coords[1]));
 						if(sendPlaceFFRequest(coords)) {
 							System.out.println("this is the print that board is refreshing");
-							//clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+							clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 //							System.out.println("helo!" + clientManager.getUsersGameState().returnTile(0, 0).getFirefighterList().size());
 							refresh(clientManager.getUsersGameState());
 							launcher.repaint();

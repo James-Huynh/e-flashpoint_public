@@ -51,7 +51,7 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
-				requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
+//				requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
 				break;
 			case ACTIONSUCCESS:
 				System.out.println("Succesuful action request");
