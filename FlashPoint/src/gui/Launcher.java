@@ -321,6 +321,7 @@ public class Launcher {
 	}
 	public void repaint() {
 		//Table table = new Table(tester, clientManager);
+		table.setPlaying(true);
 		BoardPanel board = table.getBoard();
 		LeftPanel LPanel = table.getLeftPanel();
 		RightPanel RPanel = table.getRightPanel();

@@ -73,6 +73,7 @@ public class Table {
 		private Color tileColorEngine = Color.decode("#FFFF05");
 		private Popup advFire;
 		private static boolean placing = true;
+		private static boolean playing = true;
 		private ClientManager clientManager;
 		private Launcher launcher;
 		
@@ -671,9 +672,13 @@ public class Table {
 									showPopUpMenuPlace(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
 								}
 							}else {
-								check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
-								if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
-									showPopUpMenuCurrent(e.getComponent(), e.getX(), e.getY(), currentBoard);
+								if(playing) {
+									check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
+									if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
+										showPopUpMenuCurrent(e.getComponent(), e.getX(), e.getY(), currentBoard);
+									} else {
+										showPopUpMenuOther(e.getComponent(), e.getX(), e.getY(), currentBoard);
+									}
 								} else {
 									showPopUpMenuOther(e.getComponent(), e.getX(), e.getY(), currentBoard);
 								}
@@ -834,15 +839,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
-				    					
-//				    					if(sendActionRequest(a)) {
-//											System.out.println("this is the print that board is refreshing");
-////											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint();
-//										}
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    					
 				    				}
 				    			});
@@ -855,8 +859,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        onceMenu.add(newAction);
@@ -868,8 +878,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        onceMenu.add(newAction);
@@ -881,8 +897,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        onceMenu.add(newAction);
@@ -896,8 +918,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        twiceMenu.add(newAction);
@@ -909,8 +937,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        twiceMenu.add(newAction);
@@ -922,8 +956,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        twiceMenu.add(newAction);
@@ -935,8 +975,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        twiceMenu.add(newAction);
@@ -953,8 +999,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -965,8 +1017,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -978,8 +1036,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -990,8 +1054,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -1002,8 +1072,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        toSmokeMenu.add(newAction);
@@ -1016,8 +1092,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -1028,8 +1110,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -1041,8 +1129,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -1053,8 +1147,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -1065,8 +1165,14 @@ public class Table {
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
 				    				public void actionPerformed(ActionEvent e) {
-				    					a.perform(currentBoard);
-				    					gameTest.repainter();
+//				    					a.perform(currentBoard);
+//				    					gameTest.repainter();
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+											refresh(clientManager.getUsersGameState());
+											launcher.repaint();
+										}
 				    				}
 				    			});
 				    	        completelyMenu.add(newAction);
@@ -1083,6 +1189,14 @@ public class Table {
 		    				public void actionPerformed(ActionEvent e) {
 //		    					a.perform(currentBoard);
 		    					gameTest.nextTurn();
+////		    					a.perform(currentBoard);
+////		    					gameTest.repainter();
+//		    					if(sendActionRequest(a)) {
+//									System.out.println("this is the print that board is refreshing");
+////									clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+//									refresh(clientManager.getUsersGameState());
+//									launcher.repaint();
+//								}
 		    				}
 		    			});
 		    	        finishMenu.add(newAction);
@@ -1095,8 +1209,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -1107,8 +1227,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -1137,8 +1263,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -1151,8 +1283,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -1164,8 +1302,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -1177,8 +1321,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -1190,8 +1340,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -1205,8 +1361,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1218,8 +1380,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1231,8 +1399,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1244,8 +1418,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1418,6 +1598,10 @@ public class Table {
 		
 		public static void setPlacing(boolean update) {
 			placing = update;
+		}
+		
+		public static void setPlaying(boolean update) {
+			playing = update;
 		}
 		
 		public void showGameTermination() {
