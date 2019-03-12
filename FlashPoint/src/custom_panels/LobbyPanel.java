@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ import javax.swing.event.EventListenerList;
 import lobby.Lobby;
 import personalizedlisteners.lobbyListeners.LeaveListener;
 import personalizedlisteners.lobbyListeners.StartListener;
+import server.Player;
 /**
  * Panel for Lobby Page
  *
@@ -38,15 +40,11 @@ public class LobbyPanel extends JPanel {
 	private JTextArea textDifficulty;
 	
 	private JPanel playersPanel;
-	private LinkedList<JLabel> playersLabel;
+	private ArrayList<Player> currPlayerList;
+	private ArrayList<Player> newPlayerList;
 	
-	
-	private JLabel playerOne;
-	private JLabel playerTwo;
-	private JLabel playerThree;
-	private JLabel playerFour;
-	private JLabel playerFive;
-	private JLabel playerSix;
+	private JLabel[] playersLabel;
+	private JLabel playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix;
 	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
@@ -66,8 +64,8 @@ public class LobbyPanel extends JPanel {
 	
 	// James
 	private void initialize() {
-		playersLabel = new LinkedList<JLabel>();
-		
+
+
 		
 		createPlayers();
 	}
@@ -148,9 +146,11 @@ public class LobbyPanel extends JPanel {
 	
 	private void createPlayersPanel() {
 		playersPanel = new JPanel();
-		playersPanel.setBounds(105, 172, 662, 330);
+		playersPanel.setBounds(16, 142, 662, 386);
 		playersPanel.setLayout(null);
 		this.add(playersPanel);
+		
+		createPlayers();
 	}
 	
 	private void createPlayers() {
@@ -165,8 +165,9 @@ public class LobbyPanel extends JPanel {
 	
 	private void setPlayer(int i) {
 		switch(i) {
+		
 		case 0:
-			playerOne = new JLabel("James Huynh");
+//			playerOne = new JLabel("James Huynh");
 			playerOne.setOpaque(true);
 			playerOne.setBackground(Color.YELLOW);
 			playerOne.setHorizontalAlignment(SwingConstants.CENTER);
@@ -174,8 +175,9 @@ public class LobbyPanel extends JPanel {
 			playerOne.setBounds(0, 0, 662, 43);
 			playersPanel.add(playerOne);
 			break;
+			
 		case 1:
-			playerTwo = new JLabel("Cao Ruoycu");
+//			playerTwo = new JLabel("Cao Ruoycu");
 			playerTwo.setOpaque(true);
 			playerTwo.setHorizontalAlignment(SwingConstants.CENTER);
 			playerTwo.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -183,8 +185,9 @@ public class LobbyPanel extends JPanel {
 			playerTwo.setBounds(0, 55, 662, 43);
 			playersPanel.add(playerTwo);
 			break;
+			
 		case 2:
-			playerThree = new JLabel("Ben Ruddock");
+//			playerThree = new JLabel("Ben Ruddock");
 			playerThree.setOpaque(true);
 			playerThree.setHorizontalAlignment(SwingConstants.CENTER);
 			playerThree.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -192,8 +195,9 @@ public class LobbyPanel extends JPanel {
 			playerThree.setBounds(0, 110, 662, 43);
 			playersPanel.add(playerThree);
 			break;
+			
 		case 3:
-			playerFour = new JLabel("Junha Park");
+//			playerFour = new JLabel("Junha Park");
 			playerFour.setOpaque(true);
 			playerFour.setHorizontalAlignment(SwingConstants.CENTER);
 			playerFour.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -201,8 +205,9 @@ public class LobbyPanel extends JPanel {
 			playerFour.setBounds(0, 165, 662, 43);
 			playersPanel.add(playerFour);
 			break;
+			
 		case 4:
-			playerFive = new JLabel("Mateusz Pyla");
+//			playerFive = new JLabel("Mateusz Pyla");
 			playerFive.setOpaque(true);
 			playerFive.setHorizontalAlignment(SwingConstants.CENTER);
 			playerFive.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -210,8 +215,9 @@ public class LobbyPanel extends JPanel {
 			playerFive.setBounds(0, 220, 662, 43);
 			playersPanel.add(playerFive);
 			break;
+			
 		case 5:
-			playerSix = new JLabel("Zaid Yahya");
+//			playerSix = new JLabel("Zaid Yahya");
 			playerSix.setOpaque(true);
 			playerSix.setHorizontalAlignment(SwingConstants.CENTER);
 			playerSix.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -220,19 +226,45 @@ public class LobbyPanel extends JPanel {
 			playersPanel.add(playerSix);
 			break;
 		}	
+		
 	}
 	
 	
+	// James
 	/**
 	 * Updates the Lobby Panel to display changes from the lobby object
 	 * @param newLobby Updated Lobby object from the server
 	 */
 	private void updateLobby(Lobby newLobby) {
+		newPlayerList = newLobby.getPlayers();
+		currPlayerList = newPlayerList;
 		
+		refreshDisplay();
 	}
 	
+	// James
+	private void resetLabels() {
+		for (JLabel lbl : playersLabel) {
+			lbl = null;
+		}
+	}
 	
-	
+	// James
+	private void refreshDisplay() {
+		JLabel currLabel;
+		Player currPlayer;
+		
+		resetLabels();
+		
+		for (int i = 0; i < currPlayerList.size(); i++) {
+			currLabel = playersLabel[i];
+			currPlayer = currPlayerList.get(i);
+			
+			currLabel.setText(currPlayer.getUserName());
+			setPlayer(i);
+		}
+	}
+
 	public void addSelectionPiecesListenerListener(StartListener obj) {
 		REGISTERED_OBJECTS.add(StartListener.class, obj);
 	}

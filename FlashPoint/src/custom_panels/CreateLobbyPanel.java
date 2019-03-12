@@ -271,7 +271,6 @@ public class CreateLobbyPanel extends JPanel {
 		createBtn = new JButton("CREATE");
 		createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				initializeLobby();
 				createLobbyRequest();
 				raiseEventCreateBtn();
 			}
@@ -294,21 +293,8 @@ public class CreateLobbyPanel extends JPanel {
 	}
 
 	// James
-	// James
-	private void initializeLobby() {
-		lobby = new Lobby();
-		lobby.setCapacity(nbPlayers);
-		lobby.setMode(gameMode);
-		lobby.setName(lobbyName);
-
-	}
-
-	// James
 	private boolean createLobbyRequest() {
-		
-		
-		return true;
-	
+		return clientManager.createLobbyRequest(lobbyName, gameMode, nbPlayers);
 	}
 
 	public void addSelectionPiecesListenerListener(CreateListener obj) {
