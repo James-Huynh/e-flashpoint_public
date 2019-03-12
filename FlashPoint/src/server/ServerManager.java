@@ -2,6 +2,7 @@ package server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import actions.Action;
@@ -16,6 +17,7 @@ public class ServerManager {
 	
 	private HashMap<String,String> accounts;
 	private HashMap<Integer, Player> onlinePlayers;
+	private ArrayList<Lobby> currentLobbies;
 	
 	private Lobby testLobby;
 	private GameState testGS;
@@ -24,6 +26,7 @@ public class ServerManager {
 	public ServerManager() {
 		onlinePlayers = new HashMap<Integer, Player>();
 		accounts = new HashMap<String,String>();
+		currentLobbies = new ArrayList<Lobby>();
 	}
 	
 	public void createPlayer(String name, String password, Integer ID) {
@@ -50,7 +53,9 @@ public class ServerManager {
 	
 	public void createLobby() {
 		testLobby = new Lobby();
+		testLobby.setName("FUNTIMES");
 		testLobby.addPlayer(onlinePlayers.get(Integer.valueOf(12345)));
+		currentLobbies.add(testLobby);
 	}
 	
 	public void placeFirefighter(int[] coords) {
@@ -86,6 +91,16 @@ public class ServerManager {
 	
 	public Lobby getLobby() {
 		return this.testLobby;
+	}
+
+	public ArrayList<Lobby> getLobbyList() {
+		this.testLobby = new Lobby();
+		this.testLobby.setName("FUNTIMES");
+		Player temp = new Player("hello", "goodbye");
+		addPlayerToLobby(temp);
+		this.currentLobbies.add(testLobby);
+		
+		return this.currentLobbies;
 	}
 
 

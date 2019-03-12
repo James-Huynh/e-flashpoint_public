@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import commons.bean.TextMessage;
 import commons.bean.User;
@@ -149,8 +150,8 @@ public class ServerInputThread extends Thread {
 				requestObject.setPlaced(true);
 				requestObject.setCurrentState(serverManager.getGameState());
 				requestObject.setMatTiles(serverManager.getGameState().getMatTiles());
-				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getCurrentPosition().getX());
-				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getAP());
+//				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getCurrentPosition().getX());
+//				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getAP());
 				returnObject.setObject(requestObject);
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnObject);// 广播一下用户上线
@@ -179,6 +180,24 @@ public class ServerInputThread extends Thread {
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;
+			case FINDLOBBY:
+				System.out.println("In find lobby");
+				returnObject = new TranObject<User>(TranObjectType.FINDLOBBYSUCCESS);
+				requestObject = (User) read_tranObject.getObject();
+				requestObject.setLobbyList(serverManager.getLobbyList());
+				returnObject.setObject(requestObject);
+				out.setMessage(returnObject);
+				break;
+			case JOINLOBBY:
+				System.out.println("In join lobby");
+				returnObject = new TranObject<User>(TranObjectType.JOINLOBBYSUCCESS);
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
+				requestObject.setCurrentLobby(serverManager.getLobby());
+				returnObject.setObject(requestObject);
+				out.setMessage(returnObject);
+				break;
+				
 			case MESSAGE:
 				
 				int id2 = read_tranObject.getToUser();
