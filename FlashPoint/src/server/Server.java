@@ -11,14 +11,14 @@ import commons.util.MyDate;
 
 
 public class Server {
-	private ExecutorService executorService;// �̳߳�
+	private ExecutorService executorService;
 	private ServerSocket serverSocket = null;
 	private Socket socket = null;
 	private boolean isStarted = true;
 
 	public Server() {
 		try {
-			// �����̳߳أ����о���(cpu����*50)���߳�
+		
 			executorService = Executors.newFixedThreadPool(Runtime.getRuntime()
 					.availableProcessors() * 50);
 			serverSocket = new ServerSocket(Constants.SERVER_PORT);
@@ -29,16 +29,16 @@ public class Server {
 	}
 
 	public void start() {
-		System.out.println(MyDate.getDateCN() + " ������������...");
+		System.out.println(MyDate.getDateCN() + " server online...");
 	 Constants.questionnum=0;
 		try {
 			while (isStarted) {
 				socket = serverSocket.accept();
 				String ip = socket.getInetAddress().toString();
-				System.out.println(MyDate.getDateCN() + " �û���" + ip + " �ѽ�������");
-				// Ϊ֧�ֶ��û��������ʣ������̳߳ع���ÿһ���û�����������
+				System.out.println(MyDate.getDateCN() + " user" + ip + " connected");
+				// 为支锟街讹拷锟矫伙拷锟斤拷锟斤拷锟斤拷锟绞ｏ拷锟斤拷锟斤拷锟竭程池癸拷锟斤拷每一锟斤拷锟矫伙拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
 				if (socket.isConnected())
-					executorService.execute(new SocketTask(socket));// ��ӵ��̳߳�
+					executorService.execute(new SocketTask(socket));// 锟斤拷拥锟斤拷叱坛锟�
 			}
 			if (socket != null)
 				socket.close();
@@ -64,8 +64,8 @@ public class Server {
 		@Override
 		public void run() {
 			out = new OutputThread(socket, map);//
-			// ��ʵ��д��Ϣ�߳�,���Ѷ�Ӧ�û���д�̴߳���map�������У�
-			in = new ServerInputThread(socket, out, map);// ��ʵ�����Ϣ�߳�
+			// 锟斤拷实锟斤拷写锟斤拷息锟竭筹拷,锟斤拷锟窖讹拷应锟矫伙拷锟斤拷写锟竭程达拷锟斤拷map锟斤拷锟斤拷锟斤拷锟叫ｏ拷
+			in = new ServerInputThread(socket, out, map);// 锟斤拷实锟斤拷锟斤拷锟较拷叱锟�
 			out.setStart(true);
 			in.setStart(true);
 			in.start();
@@ -74,7 +74,7 @@ public class Server {
 	}
 
 	/**
-	 * �˳�
+	 * 锟剿筹拷
 	 */
 	public void quit() {
 		try {
