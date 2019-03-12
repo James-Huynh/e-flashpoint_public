@@ -11,23 +11,23 @@ import game.GameState;
 import lobby.Lobby;
 
 public class ServerManager {
-	
-	HashMap<String,String> accounts;
-	
-	
-	public ServerManager() {
 
-	accounts = new HashMap<String,String>();
-	
+	private HashMap<String,String> accounts;
+	private static Lobby lobby; // tmp
+	private TranObject read_tranObject;
+
+	public ServerManager() {
+		accounts = new HashMap<String,String>();
+
 	}
-	
+
 	public void readMessage(OutputThread out, ObjectInputStream ois) throws IOException, ClassNotFoundException {
 		System.out.println("server loginUser1234:");
 		Object readObject = ois.readObject();
 		System.out.println("Here? now");
 		if (readObject != null && readObject instanceof TranObject) {
 			System.out.println("Entered IF");
-			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
+			read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
 			switch (read_tranObject.getType()) {
 			case CONNECT:
 				TranObject<User> register2TranObject = new TranObject<User>(TranObjectType.SUCCESS);
@@ -36,6 +36,7 @@ public class ServerManager {
 				register2TranObject.setObject(newUser);
 				out.setMessage(register2TranObject);
 				break;
+
 			case LOGIN:
 				TranObject<User> resultOfLogin = new TranObject<User>(TranObjectType.LOGINSUCCESS);
 				User updatedUser = (User) read_tranObject.getObject();
@@ -50,6 +51,7 @@ public class ServerManager {
 				resultOfLogin.setObject(updatedUser);
 				out.setMessage(resultOfLogin);
 				break;
+
 			case REGISTER:
 				System.out.println("check");
 				TranObject<User> resultOfRegister = new TranObject<User>(TranObjectType.REGISTERSUCCESS);
@@ -65,7 +67,7 @@ public class ServerManager {
 				resultOfRegister.setObject(updatedUserTwo);
 				out.setMessage(resultOfRegister);
 				break;
-				
+
 			case GAMESTATEOUT:
 				TranObject<GameState> gameStateOutput = new TranObject<GameState>(TranObjectType.GAMESTATEUPDATE);
 				Lobby lobby1 = new Lobby();
@@ -73,11 +75,25 @@ public class ServerManager {
 				gamestate1.updateGameStateFromLobby(lobby1);
 				gameStateOutput.setObject(gamestate1);
 				out.setMessage(gameStateOutput);
+				break;
+				
+			case LOBBYCREATION:
+				caseLobbyCreation(out);
+				break;
+				
+				
+			}
+
 		}
-		}
-			
+
 	}
 	
+	private void caseLobbyCreation(OutputThread out) {
+		TranObject<User> resultOfCreateLobby = new TranObject<User>(TranObjectType.LOBBYCREATIONSUCCESS);
+		
+		lobby = ((User) read_tranObject.getObject()).getCurrentLobby();
+	}
+
 	public HashMap<String, String> getAccounts(){
 		return this.accounts;
 	}

@@ -41,6 +41,7 @@ import personalizedlisteners.loginListeners.LoginListener;
 public class LoginPanel extends JPanel {
 	
 	private static ClientManager clientManager;
+	
 	private JLabel pwdLabel;
 	private JPasswordField password;
 	private JTextField userNameField;
@@ -65,7 +66,7 @@ public class LoginPanel extends JPanel {
 		//setPreferredSize(panelDimension);  /* Not working */
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
-		this.clientManager = clientManager;
+		LoginPanel.clientManager = clientManager;
 		
 		createHeaderPanel();
 		createInputPanel();
@@ -241,7 +242,7 @@ public class LoginPanel extends JPanel {
 		return new String(this.password.getPassword());
 	}
 	
-	//------------Server Requests------------//
+	//	Server Requests	---------------	
 	public boolean loginRequest(String name, String password) {
 		return clientManager.loginRequest(name, password);
 	}
@@ -249,5 +250,6 @@ public class LoginPanel extends JPanel {
 	public boolean registerRequest(String name, String password) {
 		return clientManager.registerRequest(name, password);
 	}
-
+	//---------------	Server Requests
+	
 }

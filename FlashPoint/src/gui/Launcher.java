@@ -33,8 +33,6 @@ import personalizedlisteners.lobbyListeners.LeaveListener;
 import personalizedlisteners.lobbyListeners.StartListener;
 import personalizedlisteners.loginListeners.LoginListener;
 import personalizedlisteners.mainMenuListeners.MainMenuListener;
-// random comments
-// random comments2
 /**
  * 
  * @author zaidyahya

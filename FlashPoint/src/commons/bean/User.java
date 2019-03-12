@@ -3,6 +3,7 @@ package commons.bean;
 import java.io.Serializable;
 
 import game.GameState;
+import lobby.Lobby;
 
 
 public class User implements Serializable {
@@ -23,6 +24,7 @@ public class User implements Serializable {
     private boolean isRegistered;
     private int[] coords;
     private boolean placed;
+    private Lobby currentLobby;
 
 	public Integer getId() {
 		return id;
@@ -119,6 +121,14 @@ public class User implements Serializable {
 
 	public void setPlaced(boolean placed) {
 		this.placed = placed;
+	}
+
+	public Lobby getCurrentLobby() {
+		return currentLobby;
+	}
+
+	public void setCurrentLobby(Lobby currentLobby) {
+		this.currentLobby = currentLobby;
 	}
 
 //	public int getImg() {

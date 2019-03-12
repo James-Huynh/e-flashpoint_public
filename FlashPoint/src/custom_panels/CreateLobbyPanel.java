@@ -32,57 +32,57 @@ import personalizedlisteners.createLobbyListeners.CreateListener;
  *Panel for create lobby page
  */
 public class CreateLobbyPanel extends JPanel {
-	
+
 	private static ClientManager clientManager;
-	
+
 	private JPanel headerPanel;
 	private JLabel headerLabel;
 	private JLabel createLobbyLabel;
-	
+
 	private JButton createBtn;
 	private JButton backBtn;
-	
+
 	private JPanel modePanel;
 	private ButtonGroup modeOpts;
 	private JToggleButton familyBtn;
 	private JToggleButton expBtn;
 	private JLabel modeLabel;
-	
+
 	private JPanel difficultyPanel;
 	private JLabel diffLabel;
 	private ButtonGroup diffOpts;
 	private JToggleButton recruitBtn;
 	private JToggleButton veteranBtn;
 	private JToggleButton heroicBtn;
-	
+
 	private JPanel rulesPanel;
 	private JLabel rulesLabel;
 	private JCheckBox hazardBox;
 	private JCheckBox strikeBox;
 	private JCheckBox checkBox;
-	
+
 	private JPanel playerPanel;
 	private JLabel plyrLabel;
 	private JSlider plyrSlider;
-	
+
 	private int nbPlayers;
 	private String gameMode;
 	private String lobbyName = "Loren Ipsum";
-	
-	private Lobby lobby;
-	
 
-	
+	private Lobby lobby;
+
+
+
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
-	
+
 	public CreateLobbyPanel(Dimension panelDimension, ClientManager clientManager) {
 		//setPreferredSize(panelDimension);  /* Not working */
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
-		
-		
-		this.clientManager = clientManager;
-		
+
+
+		CreateLobbyPanel.clientManager = clientManager;
+
 		createCreateButton();
 		createBackButton();
 		createHeaderPanel();
@@ -91,7 +91,7 @@ public class CreateLobbyPanel extends JPanel {
 		createRulesPanel();
 		createPlayerPanel();
 	}
-	
+
 	private void createHeaderPanel() {
 		headerPanel = new JPanel();
 		headerPanel.setLayout(null);
@@ -100,7 +100,7 @@ public class CreateLobbyPanel extends JPanel {
 		createHeader();
 		createSubHeader();
 	}
-	
+
 	private void createHeader() {
 		headerLabel = new JLabel("FLASHPOINT");
 		headerLabel.setBounds(6, 6, 533, 84);
@@ -109,52 +109,52 @@ public class CreateLobbyPanel extends JPanel {
 		headerLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 58));
 		headerPanel.add(headerLabel);	
 	}
-	
+
 	private void createSubHeader() {
 		createLobbyLabel = new JLabel("Create Lobby");
 		createLobbyLabel.setBounds(56, 156, 216, 71);
 		createLobbyLabel.setFont(new Font("SansSerif", Font.PLAIN, 24));
 		this.add(createLobbyLabel);
 	}
-	
+
 	private void createModePanel() {
 		modePanel = new JPanel();
 		modePanel.setBounds(316, 291, 230, 54);
 		modePanel.setLayout(null);
 		this.add(modePanel);
-		
+
 		createToggleButtons();
 		createModeHeader();
 	}
-	
+
 	private void createToggleButtons() {
 		familyBtn = new JToggleButton("Family");
 		familyBtn.setBounds(0, 25, 117, 29);
 		familyBtn.addItemListener(new ItemListener() {
-		   public void itemStateChanged(ItemEvent ev) {
-		      if(ev.getStateChange()==ItemEvent.SELECTED){
-		        GameModeSelected (familyBtn);
-		      }
-		   }
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange()==ItemEvent.SELECTED){
+					GameModeSelected (familyBtn);
+				}
+			}
 		});
 		modePanel.add(familyBtn);
-		
+
 		expBtn = new JToggleButton("Experienced");
 		expBtn.setBounds(113, 25, 117, 29);
 		expBtn.addItemListener(new ItemListener() {
-		   public void itemStateChanged(ItemEvent ev) {
-		      if(ev.getStateChange()==ItemEvent.SELECTED){
-		        GameModeSelected (expBtn);
-		      }
-		   }
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange()==ItemEvent.SELECTED){
+					GameModeSelected (expBtn);
+				}
+			}
 		});
 		modePanel.add(expBtn);
-	
+
 		modeOpts = new ButtonGroup();
 		modeOpts.add(familyBtn);
 		modeOpts.add(expBtn);
 	}
-	
+
 	private void createModeHeader() {
 		modeLabel = new JLabel("Mode");
 		modeLabel.setBounds(6, 0, 209, 20);
@@ -162,11 +162,11 @@ public class CreateLobbyPanel extends JPanel {
 		modeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		modePanel.add(modeLabel);
 	}
-	
+
 	private void GameModeSelected (JToggleButton button) {
 		gameMode = button.getText();
 	}
-	
+
 	private void createDifficultyPanel() {
 		difficultyPanel = new JPanel();
 		difficultyPanel.setLayout(null);
@@ -175,7 +175,7 @@ public class CreateLobbyPanel extends JPanel {
 		createDifficultyHeader();
 		createDifficultyButtons();
 	}
-	
+
 	private void createDifficultyHeader() {
 		diffLabel = new JLabel("Difficulty");
 		diffLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -183,12 +183,12 @@ public class CreateLobbyPanel extends JPanel {
 		diffLabel.setBounds(6, 0, 336, 20);
 		difficultyPanel.add(diffLabel);
 	}
-	
+
 	private void createDifficultyButtons() {
 		recruitBtn = new JToggleButton("Recruit");
 		recruitBtn.setBounds(0, 25, 117, 29);
 		difficultyPanel.add(recruitBtn);
-		
+
 		veteranBtn = new JToggleButton("Veteran");
 		veteranBtn.setBounds(113, 25, 117, 29);
 		difficultyPanel.add(veteranBtn);
@@ -196,13 +196,13 @@ public class CreateLobbyPanel extends JPanel {
 		heroicBtn = new JToggleButton("Heroic");
 		heroicBtn.setBounds(225, 25, 117, 29);
 		difficultyPanel.add(heroicBtn);
-		
+
 		diffOpts = new ButtonGroup();
 		diffOpts.add(recruitBtn);
 		diffOpts.add(veteranBtn);
 		diffOpts.add(heroicBtn);
 	}
-	
+
 	private void createRulesPanel() {
 		rulesPanel = new JPanel();
 		rulesPanel.setBounds(139, 493, 202, 98);
@@ -218,31 +218,31 @@ public class CreateLobbyPanel extends JPanel {
 		rulesLabel.setBounds(36, 6, 116, 16);
 		rulesPanel.add(rulesLabel);
 	}
-	
+
 	private void createCheckBoxes() {
 		hazardBox = new JCheckBox("Unmarked hazards");
 		hazardBox.setBounds(6, 23, 169, 23);
 		rulesPanel.add(hazardBox);
-		
+
 		strikeBox = new JCheckBox("Murphy strikes");
 		strikeBox.setBounds(6, 42, 128, 23);
 		rulesPanel.add(strikeBox);
-		
+
 		checkBox = new JCheckBox("No fire");
 		checkBox.setBounds(6, 61, 128, 23);
 		rulesPanel.add(checkBox);
 	}
-	
+
 	private void createPlayerPanel() {
 		playerPanel = new JPanel();
 		playerPanel.setLayout(null);
 		playerPanel.setBounds(519, 493, 202, 71);
 		this.add(playerPanel);
-		
+
 		createPlayerHeader();
 		createSlider();
 	}
-	
+
 	private void createPlayerHeader() {
 		plyrLabel = new JLabel("Number of Players :- 0");
 		plyrLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -264,15 +264,15 @@ public class CreateLobbyPanel extends JPanel {
 		plyrSlider.setBounds(10, 28, 190, 29);
 		playerPanel.add(plyrSlider);
 	}
-	
-	
+
+
 	// @James
 	private void createCreateButton() {
 		createBtn = new JButton("CREATE");
 		createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				initializeLobby();
-				serverCreateLobbyRequest();
+				createLobbyRequest();
 				raiseEventCreateBtn();
 			}
 		});
@@ -280,7 +280,7 @@ public class CreateLobbyPanel extends JPanel {
 		createBtn.setBounds(561, 623, 140, 54);
 		this.add(createBtn);
 	}
-	
+
 	private void createBackButton() {
 		backBtn = new JButton("BACK");
 		backBtn.addActionListener(new ActionListener() {
@@ -292,7 +292,7 @@ public class CreateLobbyPanel extends JPanel {
 		backBtn.setBounds(188, 623, 140, 54);
 		this.add(backBtn);
 	}
-	
+
 	// James
 	// James
 	private void initializeLobby() {
@@ -300,21 +300,21 @@ public class CreateLobbyPanel extends JPanel {
 		lobby.setCapacity(nbPlayers);
 		lobby.setMode(gameMode);
 		lobby.setName(lobbyName);
-		
+
 	}
-	
+
 	// James
-	private void serverCreateLobbyRequest() {
-		
-		TranObject<User> packet = new TranObject<User>(TranObjectType.LOBBYCREATION);
+	private boolean createLobbyRequest() {
 		
 		
-	}
+		return true;
 	
+	}
+
 	public void addSelectionPiecesListenerListener(CreateListener obj) {
 		REGISTERED_OBJECTS.add(CreateListener.class, obj);
 	}
-	
+
 	public void addSelectionPiecesListenerListener(BackListener obj) {
 		REGISTERED_OBJECTS.add(BackListener.class, obj);
 	}

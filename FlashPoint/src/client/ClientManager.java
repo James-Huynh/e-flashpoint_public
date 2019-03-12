@@ -6,6 +6,7 @@ import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
 import game.GameState;
+import lobby.Lobby;
 
 public class ClientManager {
 	
@@ -127,6 +128,38 @@ public class ClientManager {
 		catch(IOException k) {
 			
 		}
+		return flag;
+	}
+	
+	// James
+	/**
+	 * Asks the server to create a lobby
+	 * @return boolean indicating the status of the operation
+	 */
+	public boolean createLobbyRequest(String name, String mode, int capacity) {
+		boolean flag = false;
+		
+		Lobby lobby = requestObject.getCurrentLobby();
+		lobby.setName(name);
+		lobby.setMode(mode);
+		lobby.setCapacity(capacity);
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOBBYCREATION);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		
+		catch(Exception E) {
+			System.out.println("Exception occured during createLobbyRequest.");
+		}
+		
+		
 		return flag;
 	}
 	
