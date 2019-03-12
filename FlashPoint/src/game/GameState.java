@@ -798,6 +798,13 @@ public class GameState implements Serializable {
 	}
 
 
+	public void setTiles(Tile[][] matTiles2) {
+		// TODO Auto-generated method stub
+		this.matTiles = matTiles2;
+		
+	}
+
+
 	
 
 }

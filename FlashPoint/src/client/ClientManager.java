@@ -50,7 +50,8 @@ public class ClientManager {
 				System.out.println("Succesuful placement request");
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
-				System.out.println(requestObject.getCurrentState().returnTile(0, 0).getFirefighterList().get(0).getOwner().getUserName()); //this is tester
+				System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
+				requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
 				break;
 			case ACTIONSUCCESS:
 				System.out.println("Succesuful action request");
