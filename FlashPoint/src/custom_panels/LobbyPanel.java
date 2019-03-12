@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -191,7 +190,7 @@ public class LobbyPanel extends JPanel {
 			playerTwo.setOpaque(true);
 			playerTwo.setHorizontalAlignment(SwingConstants.CENTER);
 			playerTwo.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			playerTwo.setBackground(Color.MAGENTA);
+			playerTwo.setBackground(Color.BLACK);
 			playerTwo.setBounds(0, 55, 662, 43);
 			playersPanel.add(playerTwo);
 			break;
@@ -202,13 +201,14 @@ public class LobbyPanel extends JPanel {
 			playerThree.setOpaque(true);
 			playerThree.setHorizontalAlignment(SwingConstants.CENTER);
 			playerThree.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			playerThree.setBackground(Color.GREEN);
+			playerThree.setBackground(Color.WHITE);
 			playerThree.setBounds(0, 110, 662, 43);
 			playersPanel.add(playerThree);
 			break;
 			
 		case 3:
-//			playerFour = new JLabel("Junha Park");
+			String playerFourName = targetLobby.getPlayers().get(i).getUserName();
+			playerFour = new JLabel(playerFourName);
 			playerFour.setOpaque(true);
 			playerFour.setHorizontalAlignment(SwingConstants.CENTER);
 			playerFour.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -218,23 +218,23 @@ public class LobbyPanel extends JPanel {
 			break;
 			
 		case 4:
-			String playerFourName = targetLobby.getPlayers().get(i).getUserName();
-			playerFive = new JLabel(playerFourName);
+			String playerFiveName = targetLobby.getPlayers().get(i).getUserName();
+			playerFive = new JLabel(playerFiveName);
 			playerFive.setOpaque(true);
 			playerFive.setHorizontalAlignment(SwingConstants.CENTER);
 			playerFive.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			playerFive.setBackground(Color.WHITE);
+			playerFive.setBackground(Color.MAGENTA);
 			playerFive.setBounds(0, 220, 662, 43);
 			playersPanel.add(playerFive);
 			break;
 			
 		case 5:
-			String playerFiveName = targetLobby.getPlayers().get(i).getUserName();
-			playerSix = new JLabel(playerFiveName);
+			String playerSixName = targetLobby.getPlayers().get(i).getUserName();
+			playerSix = new JLabel(playerSixName);
 			playerSix.setOpaque(true);
 			playerSix.setHorizontalAlignment(SwingConstants.CENTER);
 			playerSix.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			playerSix.setBackground(Color.ORANGE);
+			playerSix.setBackground(Color.BLUE);
 			playerSix.setBounds(0, 275, 662, 43);
 			playersPanel.add(playerSix);
 			break;
