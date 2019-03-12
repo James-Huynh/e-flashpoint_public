@@ -91,6 +91,7 @@ public class ServerInputThread extends Thread {
 				break;
 			case LOGIN:
 				System.out.println("In login request");
+				User loginUser = (User) read_tranObject.getObject();
 				returnObject = new TranObject<User>(TranObjectType.LOGINSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 
@@ -107,6 +108,7 @@ public class ServerInputThread extends Thread {
 				}
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
+				map.add(loginUser.getId(), out);
 				break;
 			case REGISTER:
 				System.out.println("In register request");
@@ -124,6 +126,9 @@ public class ServerInputThread extends Thread {
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;
+			case CHATMESSAGE:
+				System.out.println("chat message received");
+				
 			case GAMESTATEUPDATE:
 				System.out.println("In game state update request");
 				returnObject = new TranObject<User>(TranObjectType.SUCCESS);
@@ -156,6 +161,20 @@ public class ServerInputThread extends Thread {
 				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getAP());
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
+			case MESSAGE:
+				
+				int id2 = read_tranObject.getToUser();
+				OutputThread toOut = map.getById(id2);
+				
+				
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(read_tranObject);
+				}
+				
+					
+				
+			
+				break;
 //			case REGISTER:// 锟斤拷锟斤拷没锟斤拷锟阶拷锟�
 //				User registerUser = (User) read_tranObject.getObject();
 ////				int registerResult = dao.register(registerUser);
@@ -225,22 +244,7 @@ public class ServerInputThread extends Thread {
 //					offOut.setMessage(offObject);
 //				}
 //				break;
-			case MESSAGE:// 锟斤拷锟斤拷锟阶拷锟斤拷锟较拷锟斤拷锟斤拷锟斤拷群锟斤拷锟斤拷
-				// 锟斤拷取锟斤拷息锟斤拷要转锟斤拷锟侥讹拷锟斤拷id锟斤拷然锟斤拷锟饺★拷锟斤拷锟侥该讹拷锟斤拷锟叫达拷叱锟�
-				int id2 = read_tranObject.getToUser();
-				OutputThread toOut = map.getById(id2);
-				if (toOut != null) {// 锟斤拷锟斤拷没锟斤拷锟斤拷锟�
-					toOut.setMessage(read_tranObject);
-				} else {// 锟斤拷锟轿拷眨锟剿碉拷锟斤拷没锟斤拷丫锟斤拷锟斤拷锟�,锟截革拷锟矫伙拷
-					TextMessage text = new TextMessage();
-					text.setMessage("锟阶ｏ拷锟皆凤拷锟斤拷锟斤拷锟斤拷哦锟斤拷锟斤拷锟斤拷锟较拷锟斤拷锟绞憋拷锟斤拷锟斤拷诜锟斤拷锟斤拷锟�");
-					TranObject<TextMessage> offText = new TranObject<TextMessage>(
-							TranObjectType.MESSAGE);
-					offText.setObject(text);
-					offText.setFromUser(0);
-					out.setMessage(offText);
-				}
-				break;
+			
 //			case REFRESH:
 //				List<User> refreshList = dao.refresh(read_tranObject
 //						.getFromUser());
