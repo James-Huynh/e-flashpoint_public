@@ -148,6 +148,7 @@ public class ServerInputThread extends Thread {
 				serverManager.placeFirefighter(coords);
 				requestObject.setPlaced(true);
 				requestObject.setCurrentState(serverManager.getGameState());
+				requestObject.setMatTiles(serverManager.getGameState().getMatTiles());
 				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getCurrentPosition().getX());
 				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getAP());
 				returnObject.setObject(requestObject);
