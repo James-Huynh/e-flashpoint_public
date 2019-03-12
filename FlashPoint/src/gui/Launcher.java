@@ -42,14 +42,14 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
  *Holds a frame, and uses panels to display 'pages' (i.e. login/menu/game etc)
  */
 public class Launcher {
-	private String EricIP = "142.157.30.90";
+	private String EricIP = "142.157.30.183";
 	private String JamesIP = "142.157.104.187";
 	private String JunhazIP = "142.157.";
 	private String ZaidIP = "142.157.";
 	private String BenIP = "142.157.";
 	
 	private static Client client;
-	private String ServerIP = "142.157.58.203";
+	private String ServerIP = "142.157.30.183";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
@@ -290,7 +290,7 @@ public class Launcher {
 	private void setupLobbyPage() {
 		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION,this.clientManager);
 		contentPane.add(lobby);
-		
+
 		lobby.addSelectionPiecesListenerListener(new StartListener() {
 			public void clickStart() {
 				if(sendGameStateRequest()) {
@@ -311,6 +311,7 @@ public class Launcher {
 				setupMainMenuPage();
 			}
 		});
+		
 	}
 	//------------------------------- LOBBY
 	

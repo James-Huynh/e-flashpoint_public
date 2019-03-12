@@ -28,7 +28,7 @@ public class LobbyPanel extends JPanel {
 	private Lobby targetLobby; /*something needs to hold an instance of lobby (GameManager?)
 							   this instance can then be called (getActiveLobby) or be passed in
 							   it'll then be used here to initialize fields (e.g. getPlayers) - Zaid*/
-	private ClientManager clientMananger;
+	private ClientManager clientManager;
    	private JButton startBtn;
 	private JButton leaveBtn;
 	
@@ -51,7 +51,7 @@ public class LobbyPanel extends JPanel {
 
 	public LobbyPanel(Dimension panelDimension, ClientManager myclientManager) {
 		//setPreferredSize(panelDimension);  /* Not working */
-		this.clientMananger = myclientManager;
+		this.clientManager = myclientManager;
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
 		
@@ -68,8 +68,7 @@ public class LobbyPanel extends JPanel {
 	private void initialize() {
 
 		
-		targetLobby = clientMananger.getLobby();
-		
+		targetLobby = clientManager.getLobby();
 //		createPlayers();
 	}
 	
@@ -104,10 +103,11 @@ public class LobbyPanel extends JPanel {
 	}
 	
 	private void createLeaveButton() {
-		leaveBtn = new JButton("LEAVE");
+		leaveBtn = new JButton("REFRESH");
 		leaveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				raiseEventLeaveBtn();
+				listen();
+//				raiseEventLeaveBtn();
 			}
 		});
 		leaveBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
@@ -167,6 +167,7 @@ public class LobbyPanel extends JPanel {
 		for(int i=0;i<targetLobby.getPlayers().size();i++) {
 			setPlayer(i);
 		}
+		
 	}
 	
 	private void setPlayer(int i) {
@@ -252,6 +253,7 @@ public class LobbyPanel extends JPanel {
 		newPlayerList = newLobby.getPlayers();
 		currPlayerList = newPlayerList;
 		
+		targetLobby = newLobby; //added by Zaid
 		refreshDisplay();
 	}
 	
@@ -301,5 +303,13 @@ public class LobbyPanel extends JPanel {
 		for (LeaveListener listener: REGISTERED_OBJECTS.getListeners(LeaveListener.class)) {
 			listener.clickLeave();
 		}
+	}
+	
+	public void listen() {
+		System.out.println("I'm in listen");
+		while(clientManager.listenForResponses() != true) {
+			
+		}
+		updateLobby(clientManager.getLobby());
 	}
 }

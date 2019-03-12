@@ -346,4 +346,22 @@ public class ClientManager {
 		
 	}
 	
+	public boolean listenForResponses() {
+		System.out.println("I am listening in client manager");
+		boolean flag = false;
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		return flag;
+	}
+	
 }
