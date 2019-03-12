@@ -85,7 +85,7 @@ public class ServerInputThread extends Thread {
 				System.out.println("In connect request");
 				returnObject = new TranObject<User>(TranObjectType.SUCCESS);
 				requestObject = (User) read_tranObject.getObject();
-				requestObject.setId(12345);
+				requestObject.setId(Integer.valueOf(12345));
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;
@@ -93,13 +93,12 @@ public class ServerInputThread extends Thread {
 				System.out.println("In login request");
 				returnObject = new TranObject<User>(TranObjectType.LOGINSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
-//				if(serverManager.getAccounts().get(updatedUser.getName()) != null) {
-//					System.out.println((String) serverManager.getAccounts().get(updatedUser.getName()));
-//				}
+
 				if(serverManager.getAccounts().get(requestObject.getName()) != null) {
 					if(serverManager.getAccounts().get(requestObject.getName()).equals(requestObject.getPassword())){
 						System.out.println("is online set to 1");
 						requestObject.setIsOnline(1);	
+						serverManager.createPlayer(requestObject.getName(), requestObject.getPassword(), requestObject.getId());
 					}	
 				}
 				else { //User doesn't exist
@@ -128,14 +127,35 @@ public class ServerInputThread extends Thread {
 			case GAMESTATEUPDATE:
 				System.out.println("In game state update request");
 				returnObject = new TranObject<User>(TranObjectType.SUCCESS);
+				serverManager.createLobby();
+				serverManager.createGame();
 				requestObject = (User) read_tranObject.getObject();
-				GameState gs = GameState.getInstance();
-				Lobby lobby = new Lobby();
-				gs.updateGameStateFromLobby(lobby);
-				requestObject.setCurrentState(gs);
+				requestObject.setCurrentState(serverManager.getGameState());
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;
+			case FIREFIGHTERPLACEMENT:
+				System.out.println("In firefighter placement request");
+				returnObject = new TranObject<User>(TranObjectType.FFPLACEMENTSUCCESS);
+				requestObject = (User) read_tranObject.getObject();
+				int[] coords = requestObject.getCoords();
+				serverManager.placeFirefighter(coords);
+				requestObject.setPlaced(true);
+				requestObject.setCurrentState(serverManager.getGameState());
+				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getCurrentPosition().getX());
+				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getAP());
+				returnObject.setObject(requestObject);
+				out.setMessage(returnObject);
+				break;
+			case ACTIONREQUEST:
+				System.out.println("In action request");
+				returnObject = new TranObject<User>(TranObjectType.ACTIONSUCCESS);
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.performAction(requestObject.getAction());
+				requestObject.setCurrentState(serverManager.getGameState());
+				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getAP());
+				returnObject.setObject(requestObject);
+				out.setMessage(returnObject);
 //			case REGISTER:// 锟斤拷锟斤拷没锟斤拷锟阶拷锟�
 //				User registerUser = (User) read_tranObject.getObject();
 ////				int registerResult = dao.register(registerUser);
