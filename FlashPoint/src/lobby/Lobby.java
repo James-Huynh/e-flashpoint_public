@@ -26,17 +26,17 @@ public class Lobby implements Serializable  {
 		//dummy
 		players = new ArrayList<Player>();
 		//			ArrayList<Player> playingPlayers = new ArrayList<Player>(3);
-		players.add(new Player("Mat", "Cuba123"));
-		players.add(new Player("Zaid", "zeroOneTwoThree"));
-		players.add(new Player("Junha", "myPassword"));
-		players.add(new Player("Ben", "Cuba123"));
-		players.add(new Player("Cao", "zeroOneTwoThree"));
-		players.add(new Player("James", "myPassword"));
+//		players.add(new Player("Mat", "Cuba123"));
+//		players.add(new Player("Zaid", "zeroOneTwoThree"));
+//		players.add(new Player("Junha", "myPassword"));
+//		players.add(new Player("Ben", "Cuba123"));
+//		players.add(new Player("Cao", "zeroOneTwoThree"));
+//		players.add(new Player("James", "myPassword"));
 		mode = "Family";
 		if(mode.equals("Family")) {
 			template = new FamilyGame();
 		}
-		assignColours();
+//		assignColours();
 
 	}
 
@@ -109,6 +109,11 @@ public class Lobby implements Serializable  {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+	
+	public void addPlayer(Player newPlayer) {
+		this.players.add(newPlayer);
+		assignColours();
 	}
 
 }

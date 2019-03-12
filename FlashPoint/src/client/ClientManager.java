@@ -2,6 +2,7 @@ package client;
 
 import java.io.IOException;
 
+import actions.Action;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
@@ -41,11 +42,20 @@ public class ClientManager {
 				flag = true;
 				break;
 			case REGISTERSUCCESS:
-				System.out.println("Succesuful login request");
+				System.out.println("Succesuful register request");
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				break;
-				
+			case FFPLACEMENTSUCCESS:
+				System.out.println("Succesuful placement request");
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
+				break;
+			case ACTIONSUCCESS:
+				System.out.println("Succesuful action request");
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
+				break;
 			}
 		}
 		return flag;
@@ -184,6 +194,62 @@ public class ClientManager {
 		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
 		return requestObject.getCurrentState();
 		
+	}
+
+	public GameState placeFFRequest(int[] coords) {
+		boolean flag = false;
+		requestObject.setCoords(coords);
+		requestObject.setPlaced(false);
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FIREFIGHTERPLACEMENT);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		
+		System.out.println("place check");
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		
+		return requestObject.getCurrentState();
+	}
+	
+	public GameState getUsersGameState() {
+		return this.requestObject.getCurrentState();
+	}
+
+	public GameState ActionRequest(Action a) {
+		boolean flag = false;
+		requestObject.setAction(a);
+//		requestObject.setActionCommited(false);
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.ACTIONREQUEST);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		
+		System.out.println("place check");
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		
+		return requestObject.getCurrentState();
 	}
 	
 }

@@ -24,7 +24,7 @@ public class Player implements Serializable {
     /*
      * GETTERS
      */
-    public Firefighter GetFirefighter() {
+    public Firefighter getFirefighter() {
     	return this.myFireFighter;
     }
     

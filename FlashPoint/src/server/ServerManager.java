@@ -4,101 +4,74 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 
+import actions.Action;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
 import game.GameState;
 import lobby.Lobby;
+import managers.GameManager;
 
 public class ServerManager {
-
+	
 	private HashMap<String,String> accounts;
-	private static Lobby lobby; // tmp
-	private TranObject read_tranObject;
-
+	private HashMap<Integer, Player> onlinePlayers;
+	
+	private Lobby testLobby;
+	private GameState testGS;
+	private GameManager gameManager;
+	
 	public ServerManager() {
+		onlinePlayers = new HashMap<Integer, Player>();
 		accounts = new HashMap<String,String>();
-
-	}
-
-	public void readMessage(OutputThread out, ObjectInputStream ois) throws IOException, ClassNotFoundException {
-		System.out.println("server loginUser1234:");
-		Object readObject = ois.readObject();
-		System.out.println("Here? now");
-		if (readObject != null && readObject instanceof TranObject) {
-			System.out.println("Entered IF");
-			read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
-			switch (read_tranObject.getType()) {
-			case CONNECT:
-				TranObject<User> register2TranObject = new TranObject<User>(TranObjectType.SUCCESS);
-				User newUser = (User) read_tranObject.getObject();
-				newUser.setId(12345);
-				register2TranObject.setObject(newUser);
-				out.setMessage(register2TranObject);
-				break;
-
-			case LOGIN:
-				TranObject<User> resultOfLogin = new TranObject<User>(TranObjectType.LOGINSUCCESS);
-				User updatedUser = (User) read_tranObject.getObject();
-				if(accounts.get(updatedUser.getName()).equals(updatedUser.getPassword())) {
-					System.out.println("is online set to 1");
-					updatedUser.setIsOnline(1);	
-				}
-				else {
-					System.out.println("is online set to 1");
-					updatedUser.setIsOnline(0);
-				}
-				resultOfLogin.setObject(updatedUser);
-				out.setMessage(resultOfLogin);
-				break;
-
-			case REGISTER:
-				System.out.println("check");
-				TranObject<User> resultOfRegister = new TranObject<User>(TranObjectType.REGISTERSUCCESS);
-				User updatedUserTwo = (User) read_tranObject.getObject();
-				if(accounts.containsKey(updatedUserTwo.getName())) {
-					System.out.println("account already exists1");
-					updatedUserTwo.setIsRegistered(false);
-				}else {
-					System.out.println("account added1");
-					accounts.put(updatedUserTwo.getName(), updatedUserTwo.getPassword());
-					updatedUserTwo.setIsRegistered(true);
-				}
-				resultOfRegister.setObject(updatedUserTwo);
-				out.setMessage(resultOfRegister);
-				break;
-
-			case GAMESTATEOUT:
-				TranObject<GameState> gameStateOutput = new TranObject<GameState>(TranObjectType.GAMESTATEUPDATE);
-				Lobby lobby1 = new Lobby();
-				GameState gamestate1 = GameState.getInstance();
-				gamestate1.updateGameStateFromLobby(lobby1);
-				gameStateOutput.setObject(gamestate1);
-				out.setMessage(gameStateOutput);
-				break;
-				
-			case LOBBYCREATION:
-				caseLobbyCreation(out);
-				break;
-				
-				
-			}
-
-		}
-
 	}
 	
+	public void createPlayer(String name, String password, Integer ID) {
+		onlinePlayers.put(ID, new Player(name, password));
+	}
 	
-	// James
-	private void caseLobbyCreation(OutputThread out) {
-		TranObject<User> resultOfCreateLobby = new TranObject<User>(TranObjectType.LOBBYCREATIONSUCCESS);
-		
-		lobby = ((User) read_tranObject.getObject()).getCurrentLobby();
+	public void createGame() {
+		testGS = GameState.getInstance();
+		testGS.updateGameStateFromLobby(testLobby);
+		initializeGameManager();
+		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
+		generateActions();
+	}
+	
+	public void initializeGameManager() {
+		gameManager = new GameManager(testGS);
+	}
+	
+	public void generateActions() {
+		gameManager.setAllAvailableActions(gameManager.generateAllPossibleActions());
+		testGS.updateActionList(gameManager.getAllAvailableActions());
 	}
 
+	
+	public void createLobby() {
+		testLobby = new Lobby();
+		testLobby.addPlayer(onlinePlayers.get(Integer.valueOf(12345)));
+	}
+	
+	public void placeFirefighter(int[] coords) {
+//		System.out.println(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter().getAP());
+		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(coords[0],coords[1]));
+//		testGS.getFireFighterList().get(0).setAP(10);
+//		System.out.println(testGS.returnTile(coords[0],coords[1]).getFirefighterList().get(0).getAP());
+	}
+	
+	public void performAction(Action a) {
+		a.perform(testGS);
+	}
+	
 	public HashMap<String, String> getAccounts(){
 		return this.accounts;
 	}
+	
+	public GameState getGameState() {
+		return this.testGS;
+	}
+
 
 
 }

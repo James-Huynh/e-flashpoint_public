@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -20,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -33,6 +35,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import actions.ActionList;
+import client.ClientManager;
 import game.GameState;
 import tile.Tile;
 import token.Colour;
@@ -70,6 +73,8 @@ public class Table {
 		private Color tileColorEngine = Color.decode("#FFFF05");
 		private Popup advFire;
 		private static boolean placing = true;
+		private ClientManager clientManager;
+		private Launcher launcher;
 		
 //		public Table(GameState inputBoard) {
 //			this.currentBoard = inputBoard;
@@ -89,9 +94,11 @@ public class Table {
 ////			this.gameFrame.setVisible(true);
 //		}
 		
-		public Table(GameState inputBoard) {
+		public Table(GameState inputBoard, ClientManager updatedClientManager, Launcher launcher) {
 			currentBoard = inputBoard;
 			gameTiles = inputBoard.getMatTiles();
+			this.clientManager = updatedClientManager;
+			this.launcher = launcher;
 		}
 		
 		public BoardPanel genBoard() {
@@ -107,26 +114,40 @@ public class Table {
 			this.rightPanel = new RightPanel(this.currentBoard);
 			return this.rightPanel;
 		}
+		
+		public BoardPanel getBoard() {
+			return this.boardPanel;
+			
+		}
+		public LeftPanel getLeftPanel() {
+			return this.leftPanel;
+		}
+		public RightPanel getRightPanel() {
+			return this.rightPanel;
+		}
+		
 		public void updateBoard(GameState newBoard) {
 			this.currentBoard = newBoard;
 		}
 		//add to launcher
-//		public void refresh(GameState newBoard) {
-//			boardPanel.drawBoard(newBoard);
-//			rightPanel.drawPanel(newBoard);
-//			leftPanel.drawPanel(newBoard);
-//			this.currentBoard = newBoard;
-//	//		this.boardPanel = new BoardPanel();
-//	//		this.rightPanel = new RightPanel(this.currentBoard);
-//	//		this.leftPanel = new LeftPanel(this.currentBoard);
+		
+		public void refresh(GameState newBoard) {
+			
+			boardPanel.drawBoard(newBoard);
+			rightPanel.drawPanel(newBoard);
+			leftPanel.drawPanel(newBoard);
+			this.currentBoard = newBoard;
+			this.boardPanel = new BoardPanel();
+			this.rightPanel = new RightPanel(this.currentBoard);
+			this.leftPanel = new LeftPanel(this.currentBoard);
 //			gameFrame.add(boardPanel, BorderLayout.CENTER);
 //			gameFrame.add(rightPanel, BorderLayout.EAST);
 //			gameFrame.add(leftPanel,BorderLayout.WEST);
-//	//		gameFrame.validate();
-//	//		gameFrame.repaint();
-//	//		this.gameFrame.setVisible(true);
+	//		gameFrame.validate();
+	//		gameFrame.repaint();
+	//		this.gameFrame.setVisible(true);
 //			this.gameFrame.validate();
-//		}
+		}
 
 		private void populateMenuBar(final JMenuBar tableMenuBar) {
 			tableMenuBar.add(createFileMenu());
@@ -815,6 +836,14 @@ public class Table {
 				    				public void actionPerformed(ActionEvent e) {
 				    					a.perform(currentBoard);
 				    					gameTest.repainter();
+				    					
+//				    					if(sendActionRequest(a)) {
+//											System.out.println("this is the print that board is refreshing");
+////											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint();
+//										}
+				    					
 				    				}
 				    			});
 				    	        onceMenu.add(newAction);
@@ -1090,8 +1119,14 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					a.perform(currentBoard);
-			    					gameTest.repainter();
+//			    					a.perform(currentBoard);
+//			    					gameTest.repainter();
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+										refresh(clientManager.getUsersGameState());
+										launcher.repaint();
+									}
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -1284,7 +1319,13 @@ public class Table {
 		        endTurn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						gameTest.placeFF(currentBoard.returnTile(coords[0],coords[1]));
+//						gameTest.placeFF(currentBoard.returnTile(coords[0],coords[1]));
+						if(sendPlaceFFRequest(coords)) {
+							System.out.println("this is the print that board is refreshing");
+//							clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+							refresh(clientManager.getUsersGameState());
+							launcher.repaint();
+						}
 					}
 				});
 		         
@@ -1449,5 +1490,25 @@ public class Table {
 				advFire.hide();
 			}
 			
-		}		
+		}	
+		
+		
+		private boolean sendPlaceFFRequest(int [] coords) {
+			if(clientManager.placeFFRequest(coords) == null) {
+				return false;
+			} else {
+//				updateGameState(clientManager.placeFFRequest(coords));
+				
+			}
+			return true;
+		}
+		
+		private boolean sendActionRequest(actions.Action a) {
+			if(clientManager.ActionRequest(a) == null) {
+				return false;
+			}
+			
+			return true;
+		}
+		
 }
