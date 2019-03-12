@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
+import client.ClientManager;
 import lobby.Lobby;
 import personalizedlisteners.lobbyListeners.LeaveListener;
 import personalizedlisteners.lobbyListeners.StartListener;
@@ -28,6 +29,7 @@ public class LobbyPanel extends JPanel {
 	private Lobby targetLobby; /*something needs to hold an instance of lobby (GameManager?)
 							   this instance can then be called (getActiveLobby) or be passed in
 							   it'll then be used here to initialize fields (e.g. getPlayers) - Zaid*/
+	private ClientManager clientMananger;
    	private JButton startBtn;
 	private JButton leaveBtn;
 	
@@ -48,8 +50,9 @@ public class LobbyPanel extends JPanel {
 	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
-	public LobbyPanel(Dimension panelDimension) {
+	public LobbyPanel(Dimension panelDimension, ClientManager myclientManager) {
 		//setPreferredSize(panelDimension);  /* Not working */
+		this.clientMananger = myclientManager;
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
 		
@@ -65,9 +68,10 @@ public class LobbyPanel extends JPanel {
 	// James
 	private void initialize() {
 
-
 		
-		createPlayers();
+		targetLobby = clientMananger.getLobby();
+		
+//		createPlayers();
 	}
 	
 	private void createHeaderPanel() {
@@ -122,6 +126,7 @@ public class LobbyPanel extends JPanel {
 	}
 	
 	private void createTextBoxes() {
+		
 		textRules = new JTextArea("Rules: ");
 		textRules.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textRules.setBounds(0, 0, 200, 100);
@@ -129,13 +134,15 @@ public class LobbyPanel extends JPanel {
 		textRules.setLineWrap(true);
 		lobbyDescPanel.add(textRules);
 		
-		textMode = new JTextArea("Mode:");
+		String mode = "Mode: " + targetLobby.getMode();
+		textMode = new JTextArea(mode);
 		textMode.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textMode.setBounds(220, 0, 200, 100);
 		textMode.setEditable(false);
 		textMode.setLineWrap(true);
 		lobbyDescPanel.add(textMode);
 		
+//		String difficulty = "Difficulty: " + targetLobby.get;
 		textDifficulty = new JTextArea("Difficulty:");
 		textDifficulty.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textDifficulty.setBounds(440, 0, 200, 100);
@@ -158,7 +165,7 @@ public class LobbyPanel extends JPanel {
 		 * setting will be done based on the Lobby object i.e. Lobby.getPlayerslist()
 		 * parameter below would be String as well
 		 */
-		for(int i=0;i<6;i++) {
+		for(int i=0;i<targetLobby.getPlayers().size();i++) {
 			setPlayer(i);
 		}
 	}
@@ -167,9 +174,11 @@ public class LobbyPanel extends JPanel {
 		switch(i) {
 		
 		case 0:
-//			playerOne = new JLabel("James Huynh");
+			String playerOneName = targetLobby.getPlayers().get(i).getUserName();
+			playerOne = new JLabel(playerOneName);
 			playerOne.setOpaque(true);
-			playerOne.setBackground(Color.YELLOW);
+			//the colour needs to match, lobby currently has an ordering set in stone, check there for the rest of the players
+			playerOne.setBackground(Color.GREEN);
 			playerOne.setHorizontalAlignment(SwingConstants.CENTER);
 			playerOne.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			playerOne.setBounds(0, 0, 662, 43);

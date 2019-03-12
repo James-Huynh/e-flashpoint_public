@@ -42,7 +42,7 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
 public class Launcher {
 
 	private static Client client;
-	private String ServerIP = "142.157.65.31";
+	private String ServerIP = "142.157.58.203";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
@@ -270,7 +270,7 @@ public class Launcher {
 	
 	//	LOBBY ------------------------------- 
 	private void setupLobbyPage() {
-		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION);
+		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION,this.clientManager);
 		contentPane.add(lobby);
 		
 		lobby.addSelectionPiecesListenerListener(new StartListener() {

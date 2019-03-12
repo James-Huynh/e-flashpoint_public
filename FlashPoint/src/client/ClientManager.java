@@ -50,6 +50,7 @@ public class ClientManager {
 				System.out.println("Succesuful placement request");
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
+				System.out.println(requestObject.getCurrentState().returnTile(0, 0).getFirefighterList().get(0).getOwner().getUserName()); //this is tester
 				break;
 			case ACTIONSUCCESS:
 				System.out.println("Succesuful action request");
@@ -60,6 +61,7 @@ public class ClientManager {
 				System.out.println("Successful lobby request");
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
+				System.out.println(requestObject.getCurrentLobby().getPlayers().get(0).getUserName()); //this is tester
 				break;
 			}
 		}
@@ -232,7 +234,10 @@ public class ClientManager {
 	}
 	
 	public GameState getUsersGameState() {
-		return this.requestObject.getCurrentState();
+		return requestObject.getCurrentState();
+	}
+	public Lobby getLobby() {
+		return requestObject.getCurrentLobby();
 	}
 
 	public GameState ActionRequest(Action a) {
