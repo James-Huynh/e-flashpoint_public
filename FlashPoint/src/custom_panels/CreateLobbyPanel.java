@@ -271,8 +271,10 @@ public class CreateLobbyPanel extends JPanel {
 		createBtn = new JButton("CREATE");
 		createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				createLobbyRequest();
-				raiseEventCreateBtn();
+				if(createLobbyRequest()) {
+					System.out.println("create successful");
+					raiseEventCreateBtn();
+				}
 			}
 		});
 		createBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));

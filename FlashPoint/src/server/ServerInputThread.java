@@ -156,6 +156,17 @@ public class ServerInputThread extends Thread {
 				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getAP());
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
+			case LOBBYCREATION:
+				System.out.println("In lobby creation");
+				returnObject = new TranObject<User>(TranObjectType.LOBBYCREATIONSUCCESS);
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.setLobby(requestObject.getCurrentLobby());
+				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
+				requestObject.setCurrentLobby(serverManager.getLobby());
+				System.out.println(requestObject.getCurrentLobby().getPlayers().get(0).getUserName());
+				returnObject.setObject(requestObject);
+				out.setMessage(returnObject);
+				
 //			case REGISTER:// 锟斤拷锟斤拷没锟斤拷锟阶拷锟�
 //				User registerUser = (User) read_tranObject.getObject();
 ////				int registerResult = dao.register(registerUser);

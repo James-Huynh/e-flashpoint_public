@@ -56,6 +56,11 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				break;
+			case LOBBYCREATIONSUCCESS:
+				System.out.println("Successful lobby request");
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
+				break;
 			}
 		}
 		return flag;
@@ -149,12 +154,16 @@ public class ClientManager {
 	public boolean createLobbyRequest(String name, String mode, int capacity) {
 		boolean flag = false;
 		
-		Lobby lobby = requestObject.getCurrentLobby();
+//		Lobby lobby = requestObject.getCurrentLobby();
+		Lobby lobby = new Lobby();
 		lobby.setName(name);
 		lobby.setMode(mode);
 		lobby.setCapacity(capacity);
 		
+		requestObject.setCurrentLobby(lobby);
+		
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOBBYCREATION);
+		
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 

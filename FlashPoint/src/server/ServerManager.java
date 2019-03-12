@@ -71,6 +71,22 @@ public class ServerManager {
 	public GameState getGameState() {
 		return this.testGS;
 	}
+	
+	public void setLobby(Lobby newLobby) {
+		this.testLobby = newLobby;
+	}
+	
+	public Player getPlayer(Integer inputInteger) {
+		return onlinePlayers.get(inputInteger);
+	}
+	
+	public void addPlayerToLobby(Player additionalPlayer) {
+		this.testLobby.addPlayer(additionalPlayer);
+	}
+	
+	public Lobby getLobby() {
+		return this.testLobby;
+	}
 
 
 

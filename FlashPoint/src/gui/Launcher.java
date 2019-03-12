@@ -42,7 +42,7 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
 public class Launcher {
 
 	private static Client client;
-	private String ServerIP = "142.157.145.231";
+	private String ServerIP = "142.157.65.31";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
