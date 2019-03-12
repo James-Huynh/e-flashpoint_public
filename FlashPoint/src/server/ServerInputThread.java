@@ -25,10 +25,11 @@ public class ServerInputThread extends Thread {
 	ServerManager serverManager;
 	Random rand = new Random();
 
-	public ServerInputThread(Socket socket, OutputThread out, OutputThreadMap map) {
+	public ServerInputThread(Socket socket, OutputThread out, OutputThreadMap map, ServerManager newServerManager) {
 		this.socket = socket;
 		this.out = out;
 		this.map = map;
+		this.serverManager = newServerManager;
 		try {
 			ois = new ObjectInputStream(socket.getInputStream());// 实锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟�
 		} catch (IOException e) {
@@ -43,7 +44,7 @@ public class ServerInputThread extends Thread {
 
 	@Override
 	public void run() {
-		serverManager = new ServerManager();
+//		serverManager = new ServerManager();
 		try {
 			while (isStart) {
 				System.out.println("Looping?");
@@ -156,8 +157,6 @@ public class ServerInputThread extends Thread {
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnObject);// 广播一下用户上线
 				}
-			
-		
 				break;
 			case ACTIONREQUEST:
 				System.out.println("In action request");
@@ -189,14 +188,28 @@ public class ServerInputThread extends Thread {
 				out.setMessage(returnObject);
 				break;
 			case JOINLOBBY:
+//				System.out.println("In join lobby");
+//				returnObject = new TranObject<User>(TranObjectType.JOINLOBBYSUCCESS);
+//				requestObject = (User) read_tranObject.getObject();
+//				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
+//				requestObject.setCurrentLobby(serverManager.getLobby());
+//				returnObject.setObject(requestObject);
+//				System.out.println("test 2 this should be entered username of second user" + requestObject.getCurrentLobby().getPlayers().get(1).getUserName());
+////				out.setMessage(returnObject);
+//				for (OutputThread onOut : map.getAll()) {
+//					onOut.setMessage(returnObject);// 广播一下用户上线
+//				}
+//				break;
+				
 				System.out.println("In join lobby");
-				returnObject = new TranObject<User>(TranObjectType.JOINLOBBYSUCCESS);
+				TranObject returnLobby = new TranObject<Lobby>(TranObjectType.JOINLOBBYSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
-				requestObject.setCurrentLobby(serverManager.getLobby());
-				returnObject.setObject(requestObject);
-				System.out.println("test 2 this should be entered username of second user" + requestObject.getCurrentLobby().getPlayers().get(1).getUserName());
-				out.setMessage(returnObject);
+//				requestObject.setCurrentLobby(serverManager.getLobby());
+				returnLobby.setObject(serverManager.getLobby());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnLobby);// 广播一下用户上线
+				}
 				break;
 				
 			case MESSAGE:

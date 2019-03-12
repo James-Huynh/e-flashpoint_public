@@ -97,11 +97,11 @@ public class ServerManager {
 	}
 
 	public ArrayList<Lobby> getLobbyList() {
-		this.activeLobby = new Lobby();
-		this.activeLobby.setName("FUNTIMES");
-		Player temp = new Player("hello", "goodbye");
-		addPlayerToLobby(temp);
-		this.currentLobbies.add(activeLobby);
+//		this.activeLobby = new Lobby();
+//		this.activeLobby.setName("FUNTIMES");
+//		Player temp = new Player("hello", "goodbye");
+//		addPlayerToLobby(temp);
+//		this.currentLobbies.add(activeLobby);
 		System.out.println(this.currentLobbies.size());
 		return this.currentLobbies;
 	}
