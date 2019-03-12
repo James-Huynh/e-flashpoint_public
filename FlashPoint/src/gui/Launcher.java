@@ -27,9 +27,11 @@ import game.GameState;
 import gui.Table.BoardPanel;
 import gui.Table.LeftPanel;
 import gui.Table.RightPanel;
+import lobby.Lobby;
 import managers.GameManager;
 import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.lobbyListeners.LeaveListener;
+import personalizedlisteners.lobbyListeners.SearchEntrySetUpListener;
 import personalizedlisteners.lobbyListeners.StartListener;
 import personalizedlisteners.loginListeners.LoginListener;
 import personalizedlisteners.mainMenuListeners.MainMenuListener;
@@ -263,6 +265,14 @@ public class Launcher {
 	//  FIND LOBBY -------------------------------  
 	private void setupFindLobbyPage() {
 		findLobby = new FindLobbyPanel(clientManager);
+		
+		findLobby.addSelectionPiecesListenerListener(new SearchEntrySetUpListener() {
+			@Override
+			public void SearchEntrySetUp() {
+				setupLobbyPage();
+			}
+		});
+		
 		contentPane.add(findLobby);		
 	}
 	

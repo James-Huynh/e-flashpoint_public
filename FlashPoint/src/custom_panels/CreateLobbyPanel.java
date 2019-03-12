@@ -27,6 +27,7 @@ import commons.tran.bean.TranObjectType;
 import lobby.Lobby;
 import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.createLobbyListeners.CreateListener;
+import personalizedlisteners.lobbyListeners.SearchEntrySetUpListener;
 /**
  * @author zaidyahya
  *Panel for create lobby page
@@ -71,10 +72,9 @@ public class CreateLobbyPanel extends JPanel {
 
 	private Lobby lobby;
 
-
-
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
+	
 	public CreateLobbyPanel(Dimension panelDimension, ClientManager clientManager) {
 		//setPreferredSize(panelDimension);  /* Not working */
 		setPreferredSize(new Dimension(1000,800));

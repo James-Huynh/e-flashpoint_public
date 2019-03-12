@@ -186,7 +186,8 @@ public class LobbyPanel extends JPanel {
 			break;
 			
 		case 1:
-//			playerTwo = new JLabel("Cao Ruoycu");
+			String playerTwoName = targetLobby.getPlayers().get(i).getUserName();
+			playerTwo = new JLabel(playerTwoName);
 			playerTwo.setOpaque(true);
 			playerTwo.setHorizontalAlignment(SwingConstants.CENTER);
 			playerTwo.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -196,7 +197,8 @@ public class LobbyPanel extends JPanel {
 			break;
 			
 		case 2:
-//			playerThree = new JLabel("Ben Ruddock");
+			String playerThreeName = targetLobby.getPlayers().get(i).getUserName();
+			playerThree = new JLabel(playerThreeName);
 			playerThree.setOpaque(true);
 			playerThree.setHorizontalAlignment(SwingConstants.CENTER);
 			playerThree.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -216,7 +218,8 @@ public class LobbyPanel extends JPanel {
 			break;
 			
 		case 4:
-//			playerFive = new JLabel("Mateusz Pyla");
+			String playerFourName = targetLobby.getPlayers().get(i).getUserName();
+			playerFive = new JLabel(playerFourName);
 			playerFive.setOpaque(true);
 			playerFive.setHorizontalAlignment(SwingConstants.CENTER);
 			playerFive.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -226,7 +229,8 @@ public class LobbyPanel extends JPanel {
 			break;
 			
 		case 5:
-//			playerSix = new JLabel("Zaid Yahya");
+			String playerFiveName = targetLobby.getPlayers().get(i).getUserName();
+			playerSix = new JLabel(playerFiveName);
 			playerSix.setOpaque(true);
 			playerSix.setHorizontalAlignment(SwingConstants.CENTER);
 			playerSix.setFont(new Font("Tahoma", Font.PLAIN, 20));

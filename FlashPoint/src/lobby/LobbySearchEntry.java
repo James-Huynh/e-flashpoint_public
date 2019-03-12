@@ -2,14 +2,18 @@ package lobby;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.event.EventListenerList;
 
 import client.ClientManager;
+import personalizedlisteners.createLobbyListeners.BackListener;
+import personalizedlisteners.lobbyListeners.SearchEntryListener;
+import personalizedlisteners.lobbyListeners.SearchEntrySetUpListener;
 
 /**
  * Represents a search entry on the finding lobby page
@@ -24,11 +28,27 @@ public class LobbySearchEntry extends JPanel {
 	private JLabel lbl_GameName;
 	private ClientManager clientManager;
 	
-	public LobbySearchEntry(Lobby lobby, ClientManager myClientManager) {
+	private final EventListenerList REGISTERED_OBJECTS;
+	
+	public LobbySearchEntry(final Lobby lobby, ClientManager myClientManager) {
 		setLayout(null);
+		
+		REGISTERED_OBJECTS = new EventListenerList();
 		clientManager = myClientManager;
+		
 		panel_main = new JPanel();
-		panel_main.setBounds(32, 35, 749, 177);
+		panel_main.setBackground(new Color(255, 222, 173));
+		panel_main.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (sendJoinLobbyRequest(lobby)) { 
+					 raiseEventSearchEntry();
+				} else {
+					System.out.println("Error: sum ting went wong");
+				}
+			}
+		});
+		panel_main.setBounds(32, 35, 600, 171);
 		add(panel_main);
 		panel_main.setLayout(null);
 		
@@ -36,7 +56,7 @@ public class LobbySearchEntry extends JPanel {
 		lbl_GameName.setForeground(Color.GREEN);
 		lbl_GameName.setFont(new Font("Open Sans", Font.PLAIN, 24));
 		lbl_GameName.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_GameName.setBounds(10, 10, 729, 55);
+		lbl_GameName.setBounds(10, 10, 580, 55);
 		lbl_GameName.setBackground(Color.BLACK);
 		lbl_GameName.setOpaque(true);
 		panel_main.add(lbl_GameName);
@@ -56,42 +76,18 @@ public class LobbySearchEntry extends JPanel {
 		String mode = "Mode: " + lobby.getMode();
 		lbl_Mode = new JLabel(mode);
 		lbl_Mode.setFont(new Font("Arial", Font.PLAIN, 20));
-		lbl_Mode.setBounds(542, 75, 197, 34);
-		panel_main.add(lbl_Mode);
-		
-		panel_main.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseClicked(final MouseEvent e) {
-				sendJoinLobbyRequest(lobby);
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		System.out.println("I'm here");
-		
+		lbl_Mode.setBounds(393, 75, 197, 34);
+		panel_main.add(lbl_Mode);	
+	}
+	
+	public void addSelectionPiecesListenerListener(SearchEntryListener obj) {
+		REGISTERED_OBJECTS.add(SearchEntryListener.class, obj);
+	}
+	
+	private void raiseEventSearchEntry() {
+		for (SearchEntryListener listener: REGISTERED_OBJECTS.getListeners(SearchEntryListener.class)) {
+			listener.clickSearchEntry();
+		}
 	}
 
 	public JPanel getPanel_main() {
@@ -134,8 +130,9 @@ public class LobbySearchEntry extends JPanel {
 		this.lbl_GameName = lbl_GameName;
 	}
 
-	private void sendJoinLobbyRequest(Lobby lobby) {
-		clientManager.joinLobbyRequest(lobby);
+	// keep
+	private boolean sendJoinLobbyRequest(Lobby lobby) {
+		return clientManager.joinLobbyRequest(lobby);
 		
 	}
 
