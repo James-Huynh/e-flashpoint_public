@@ -148,8 +148,8 @@ public class ServerInputThread extends Thread {
 				serverManager.placeFirefighter(coords);
 				requestObject.setPlaced(true);
 				requestObject.setCurrentState(serverManager.getGameState());
-				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getCurrentPosition().getX());
-				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getAP());
+				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getCurrentPosition().getX());
+				System.out.println(requestObject.getCurrentState().returnTile(0,0).getFirefighterList().get(0).getAP());
 				returnObject.setObject(requestObject);
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnObject);// 广播一下用户上线

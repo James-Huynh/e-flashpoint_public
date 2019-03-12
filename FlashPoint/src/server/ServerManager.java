@@ -34,8 +34,8 @@ public class ServerManager {
 		testGS = GameState.getInstance();
 		testGS.updateGameStateFromLobby(testLobby);
 		initializeGameManager();
-		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
-		generateActions();
+//		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
+//		generateActions();
 	}
 	
 	public void initializeGameManager() {
