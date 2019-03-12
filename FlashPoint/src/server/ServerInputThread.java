@@ -180,6 +180,26 @@ public class ServerInputThread extends Thread {
 				
 			
 				break;
+			case LOGOUT:
+				User logoutUser = (User) read_tranObject.getObject();
+				int offId = logoutUser.getId();
+				System.out
+						.println(MyDate.getDateCN() + " 用户：" + offId + " 下线了");
+			
+				isStart = false;
+				map.remove(offId);// 从缓存的线程中移除
+				out.setMessage(null);// 先要设置一个空消息去唤醒写线程
+				out.setStart(false);// 再结束写线程循环
+
+				TranObject<User> offObject = new TranObject<User>(
+						TranObjectType.LOGOUT);
+				User logout2User = new User();
+				logout2User.setId(logoutUser.getId());
+				offObject.setObject(logout2User);
+				for (OutputThread offOut : map.getAll()) {// 广播用户下线消息
+					offOut.setMessage(offObject);
+				}
+				break;
 //			case REGISTER:// 锟斤拷锟斤拷没锟斤拷锟阶拷锟�
 //				User registerUser = (User) read_tranObject.getObject();
 ////				int registerResult = dao.register(registerUser);
