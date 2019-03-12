@@ -88,6 +88,8 @@ public class ServerManager {
 
 	}
 	
+	
+	// James
 	private void caseLobbyCreation(OutputThread out) {
 		TranObject<User> resultOfCreateLobby = new TranObject<User>(TranObjectType.LOBBYCREATIONSUCCESS);
 		
