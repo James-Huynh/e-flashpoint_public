@@ -2,8 +2,8 @@ package custom_panels;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,6 +33,7 @@ public class FindLobbyPanel extends JPanel {
 	private ArrayList<Lobby> availLobbies;
 	private ArrayList<LobbySearchEntry> lobbyEntries;
 	private int nbLobbies = 10;		// arbitrary number
+	private int positionMultiplier = 150;
 	
 	private final EventListenerList REGISTERED_OBJECTS;
 	
@@ -92,10 +93,13 @@ public class FindLobbyPanel extends JPanel {
 	}
 
 	private void displaySearchEntries() {
-		 for (LobbySearchEntry entry : lobbyEntries) {
-			 entry.setVisible(true);
-			 panel_main.add(entry.getPanel_main());
-			 // how to place the entries in the right location
+		 for (int i = 0 ; i < lobbyEntries.size(); i ++) {
+			 LobbySearchEntry entry = lobbyEntries.get(i);
+			 JPanel entryPanel = entry.getPanel_main();
+	
+			 entryPanel.setLocation(new Point (0, positionMultiplier * i));
+			 panel_main.add(entryPanel);
+			 // how to place the entries in the right location?
 		} 
 		 
 		 
