@@ -44,7 +44,7 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
 public class Launcher {
 
 	private static Client client;
-	private String ServerIP = "142.157.58.203";
+	private String ServerIP = "142.157.145.231";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
@@ -64,6 +64,7 @@ public class Launcher {
 	private CreateLobbyPanel createLobby;
 	private FindLobbyPanel findLobby;
 	private LobbyPanel lobby;
+	private Table table;
 	
 	
 	//Used by Ben for in game testing. Not permanent.
@@ -276,9 +277,14 @@ public class Launcher {
 		
 		lobby.addSelectionPiecesListenerListener(new StartListener() {
 			public void clickStart() {
-				lobby.setVisible(false);
-				motherFrame.remove(lobby);
-				setupGamePage();
+				if(sendGameStateRequest()) {
+					lobby.setVisible(false);
+					motherFrame.remove(lobby);
+					setupGamePage();
+				} else {
+					System.out.println("faileddddd");
+				}
+				
 			}
 		});
 		
@@ -299,24 +305,13 @@ public class Launcher {
 		 * Ben's gamePanel comes here
 		 */
 		//A fake gamestate set up to allow the gui to build from something
-//		tester = GameState.getInstance();
-//		Lobby tempLobby = new Lobby();
-//		tester.updateGameStateFromLobby(tempLobby);
-//		Tile testTile = tester.returnTile(3, 1);
-//		Tile testTile2 = tester.returnTile(2, 4);
-//		Tile testTile3 = tester.returnTile(5, 6);
+
 		current = new GameManager(tester);
-//		tester.placeFireFighter(tester.getFireFighterList().get(0), testTile);
-//		tester.placeFireFighter(tester.getFireFighterList().get(1), testTile3);
-//		tester.placeFireFighter(tester.getFireFighterList().get(2), testTile2);
-//		testTile.getPoiList().get(0).reveal();
-//		current.generateAllPossibleActions();
-//		tester.updateActionList(current.getAllAvailableActions());
 		
-		Table table = new Table(tester);
+		table = new Table(clientManager.getUsersGameState(), clientManager, this);
 		BoardPanel board = table.genBoard();
-		LeftPanel LPanel = table.new LeftPanel(tester);
-		RightPanel RPanel = table.new RightPanel(tester);
+		LeftPanel LPanel = table.genLeftPanel();
+		RightPanel RPanel = table.genRightPanel();
 		
 //		Table boardView = new Table(tester);
 //		boardView.setVisible(true);
@@ -326,11 +321,11 @@ public class Launcher {
 		contentPane.add(RPanel, BorderLayout.EAST);
 		motherFrame.revalidate();
 	}
-	private void repaint() {
-		Table table = new Table(tester);
-		BoardPanel board = table.genBoard();
-		LeftPanel LPanel = table.new LeftPanel(tester);
-		RightPanel RPanel = table.new RightPanel(tester);
+	public void repaint() {
+		//Table table = new Table(tester, clientManager);
+		BoardPanel board = table.getBoard();
+		LeftPanel LPanel = table.getLeftPanel();
+		RightPanel RPanel = table.getRightPanel();
 		contentPane.removeAll();
 		contentPane.add(LPanel, BorderLayout.WEST);
 		contentPane.add(board, BorderLayout.CENTER);
@@ -338,7 +333,7 @@ public class Launcher {
 		motherFrame.revalidate();
 	}
 	
-//	public static void gameRepainter() {
+//	public void gameRepainter() {
 //		Table table = new Table(tester);
 //		BoardPanel board = table.genBoard();
 //		LeftPanel LPanel = table.new LeftPanel(tester);
@@ -392,4 +387,5 @@ public class Launcher {
 //		flag = true;
 //		return flag; 
 	}
+
 }
