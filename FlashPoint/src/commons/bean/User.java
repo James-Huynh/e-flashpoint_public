@@ -21,6 +21,7 @@ public class User implements Serializable {
 	private String ip;
 //	private int port;
 	private GameState currentState;
+	private GameState currentState2;
     private boolean isRegistered;
     private int[] coords;
     private boolean placed;
@@ -138,6 +139,14 @@ public class User implements Serializable {
 
 	public void setCurrentLobby(Lobby currentLobby) {
 		this.currentLobby = currentLobby;
+	}
+
+	public GameState getCurrentState2() {
+		return currentState2;
+	}
+
+	public void setCurrentState2(GameState currentState2) {
+		this.currentState2 = currentState2;
 	}
 
 
