@@ -133,11 +133,11 @@ public class Table {
 		//add to launcher
 		
 		public void refresh(GameState newBoard) {
-			
+			this.currentBoard = newBoard;
+			this.gameTiles = newBoard.getMatTiles();
 			boardPanel.drawBoard(newBoard);
 			rightPanel.drawPanel(newBoard);
 			leftPanel.drawPanel(newBoard);
-			this.currentBoard = newBoard;
 //			this.boardPanel = new BoardPanel();
 			this.rightPanel = new RightPanel(this.currentBoard);
 			this.leftPanel = new LeftPanel(this.currentBoard);
@@ -1503,8 +1503,8 @@ public class Table {
 //						gameTest.placeFF(currentBoard.returnTile(coords[0],coords[1]));
 						if(sendPlaceFFRequest(coords)) {
 							System.out.println("this is the print that board is refreshing");
-							clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//							System.out.println("helo!" + clientManager.getUsersGameState().returnTile(0, 0).getFirefighterList().size());
+//							clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+							System.out.println("helo!" + clientManager.getUsersGameState().returnTile(0, 5).getFirefighterList().size());
 							refresh(clientManager.getUsersGameState());
 							launcher.repaint();
 						}

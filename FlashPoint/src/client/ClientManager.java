@@ -52,7 +52,7 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 			//	System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
-				requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
+				//requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
 				break;
 			case ACTIONSUCCESS:
 				System.out.println("Succesuful action request");
@@ -71,7 +71,19 @@ public class ClientManager {
 				flag = true;
 				System.out.println(requestObject.getLobbyList().get(0).getPlayers().get(0).getUserName());
 				break;
+			case JOINLOBBYSUCCESS:
+				System.out.println("Successful findlobby request");
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
+				/*
+				 * if(requestObject.getCurrentLobby().getPlayers().size() == 2) {
+				 * 
+				 * }else ifrequestObject.getCurrentLobby().getPlayers().size() == 1()
+				 */
+				System.out.println(requestObject.getCurrentLobby().getPlayers().get(1).getUserName());
+				break;
 			}
+			
 		}
 		return flag;
 	}
@@ -301,8 +313,30 @@ public class ClientManager {
 		return flag;
 	}
 
-	public void joinLobbyRequest(Lobby lobby) {
-		// TODO Auto-generated method stub
+	public boolean joinLobbyRequest(Lobby lobby) {
+		
+		boolean flag = false;
+		
+		requestObject.setCurrentLobby(lobby);
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.JOINLOBBY);
+		
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		
+		catch(Exception E) {
+			System.out.println("Exception occured during joinLobbyRequest.");
+		}
+		
+		
+		return flag;
 		
 	}
 	
