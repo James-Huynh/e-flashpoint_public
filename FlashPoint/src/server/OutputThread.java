@@ -11,14 +11,14 @@ public class OutputThread extends Thread {
 	private OutputThreadMap map;
 	private ObjectOutputStream oos;
 	private TranObject object;
-	private boolean isStart = true;// ѭ����־λ
+	private boolean isStart = true;// 循锟斤拷锟斤拷志位
 	private Socket socket;
 
 	public OutputThread(Socket socket, OutputThreadMap map) {
 		try {
 			this.socket = socket;
 			this.map = map;
-			oos = new ObjectOutputStream(socket.getOutputStream());// �ڹ���������ʵ�������������
+			oos = new ObjectOutputStream(socket.getOutputStream());// 锟节癸拷锟斤拷锟斤拷锟斤拷锟斤拷实锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟�
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -28,7 +28,7 @@ public class OutputThread extends Thread {
 		this.isStart = isStart;
 	}
 
-	// ����д��Ϣ�̣߳���������Ϣ֮�󣬻���run���������Խ�Լ��Դ
+
 	public void setMessage(TranObject object) {
 		this.object = object;
 		synchronized (this) {
@@ -40,7 +40,7 @@ public class OutputThread extends Thread {
 	public void run() {
 		try {
 			while (isStart) {
-				// û����Ϣд����ʱ���̵߳ȴ�
+				// 没锟斤拷锟斤拷息写锟斤拷锟斤拷时锟斤拷锟竭程等达拷
 				synchronized (this) {
 					wait();
 				}
@@ -49,7 +49,7 @@ public class OutputThread extends Thread {
 					oos.flush();
 				}
 			}
-			if (oos != null)// ѭ�������󣬹ر������ͷ���Դ
+			if (oos != null)// 循锟斤拷锟斤拷锟斤拷锟襟，关憋拷锟斤拷锟斤拷锟酵凤拷锟斤拷源
 				oos.close();
 			if (socket != null)
 				socket.close();
