@@ -38,7 +38,8 @@ public class ClientManager {
 			case STARTGAMESTATESUCCESS:
 				System.out.println("Succesuful gameStateRetrieval");
 				System.out.println(read_tranObject.getType());
-				requestObject = (User) read_tranObject.getObject();
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				//requestObject.setCurrentState(currentState);
 				flag = true;
 				startGameFlag = 2;
 				break;
