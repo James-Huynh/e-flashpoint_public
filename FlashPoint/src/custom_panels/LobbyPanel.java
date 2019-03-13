@@ -301,6 +301,7 @@ public class LobbyPanel extends JPanel {
 	 * Raise an event: the start button has been clicked
 	 */
 	private void raiseEventStartBtn() {
+		System.out.println("Start button clicked to start game wohoo");
 		for (StartListener listener: REGISTERED_OBJECTS.getListeners(StartListener.class)) {
 			listener.clickStart();
 		}
@@ -324,6 +325,7 @@ public class LobbyPanel extends JPanel {
 			}
 			else if(flag == 2) {
 //				raiseEventStartBtn();
+				raiseEventLeaveBtn();
 				startBtn.doClick();
 			}
 		}
