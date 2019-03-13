@@ -36,11 +36,17 @@ public class ClientManager {
 			TranObject read_tranObject = (TranObject) readObject;
 			switch(read_tranObject.getType()) {
 			case STARTGAMESTATESUCCESS:
-				System.out.println("Succesuful return");
+				System.out.println("Succesuful gameStateRetrieval");
 				System.out.println(read_tranObject.getType());
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				startGameFlag = 2;
+				break;
+			case SUCCESS:
+				System.out.println("Succesuful connection");
+				System.out.println(read_tranObject.getType());
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
 				break;
 			case LOGINSUCCESS:
 				System.out.println("Succesuful login request");
