@@ -315,9 +315,16 @@ public class LobbyPanel extends JPanel {
 	
 	public void listen() {
 		System.out.println("I'm in listen");
-		while(clientManager.listenForResponses() != true) {
-			
+		int flag = 0;
+		while(flag == 0) {
+			flag = clientManager.listenForResponses();
+			if(flag == 1) {
+				updateLobby(clientManager.getLobby());
+			}
+			else if(flag == 2) {
+				raiseEventStartBtn();
+			}
 		}
-		updateLobby(clientManager.getLobby());
+		
 	}
 }

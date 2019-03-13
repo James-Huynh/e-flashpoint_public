@@ -307,14 +307,11 @@ public class Launcher {
 		lobby.addSelectionPiecesListenerListener(new LeaveListener() {
 			public void clickLeave() {
 				lobby.setVisible(false);
-//				motherFrame.remove(lobby);
-//				setupMainMenuPage();
 				motherFrame.remove(lobby);
 				lobby.refreshDisplay();
-				System.out.println("Trying to update");
+				System.out.println("Trying to update lobby page");
 				contentPane.add(lobby);
 				lobby.setVisible(true);
-//				lobby.re
 			}
 		});
 		

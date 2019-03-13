@@ -20,6 +20,7 @@ public class ClientManager {
 	private GameState currentGameState;
 	private Lobby currentLobby;
 //	private ArrayList<Lobby> onlineLobbies;
+	private int startGameFlag = 0;
 	
 	public ClientManager(ClientInputThread input, ClientOutputThread output) {
 		this.inputThread = input;
@@ -34,11 +35,12 @@ public class ClientManager {
 		if (readObject != null && readObject instanceof TranObject) {
 			TranObject read_tranObject = (TranObject) readObject;
 			switch(read_tranObject.getType()) {
-			case SUCCESS:
+			case STARTGAMESTATESUCCESS:
 				System.out.println("Succesuful return");
 				System.out.println(read_tranObject.getType());
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
+				startGameFlag = 2;
 				break;
 			case LOGINSUCCESS:
 				System.out.println("Succesuful login request");
@@ -80,6 +82,7 @@ public class ClientManager {
 				//currentLobby = (Lobby) read_tranObject.getObject();
 				//requestObject.setCurrentLobby(currentLobby);
 				requestObject.setCurrentLobby((Lobby) read_tranObject.getObject());
+				startGameFlag = 1;
 				flag = true;
 				/*
 				 * if(requestObject.getCurrentLobby().getPlayers().size() == 2) {
@@ -212,7 +215,7 @@ public class ClientManager {
 	
 	public GameState gameStateRequest(User userOne) {
 		boolean flag = false;
-		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.GAMESTATEUPDATE);
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.STARTGAMESTATE);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		System.out.println("test check");
@@ -346,14 +349,14 @@ public class ClientManager {
 		
 	}
 	
-	public boolean listenForResponses() {
+	public int listenForResponses() {
 		System.out.println("I am listening in client manager");
-		boolean flag = false;
+//		boolean flag = false;
 		try {
 			while(readMessage() != true) {
 				
 			}
-			flag = true;
+//			flag = true;
 		}
 		catch(ClassNotFoundException l) {
 			
@@ -361,7 +364,7 @@ public class ClientManager {
 		catch(IOException k) {
 			
 		}
-		return flag;
+		return startGameFlag;
 	}
 	
 }
