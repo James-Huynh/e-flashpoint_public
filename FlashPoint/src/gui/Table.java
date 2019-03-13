@@ -1202,8 +1202,15 @@ public class Table {
 		    				public void actionPerformed(ActionEvent e) {
 		    					if(sendEndTurnRequest()){
 		    						System.out.println("this is the print that board is refreshing");
-									refresh(clientManager.getUsersGameState());
-									launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+		    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
+		    						if(clientManager.getUsersGameState().isGameTerminated()) {
+		    							launcher.showGameTermination();
+		    						} else if(clientManager.getUsersGameState().isGameWon()) {
+		    							launcher.showGameTermination();
+		    						} else {
+		    							refresh(clientManager.getUsersGameState());
+		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+		    						}
 		    					}
 		    				}
 		    			});
@@ -1547,8 +1554,15 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
     					if(sendEndTurnRequest()){
     						System.out.println("this is the print that board is refreshing");
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
+    						if(clientManager.getUsersGameState().isGameTerminated()) {
+    							launcher.showGameTermination();
+    						} else if(clientManager.getUsersGameState().isGameWon()) {
+    							launcher.showGameTermination();
+    						} else {
+    							refresh(clientManager.getUsersGameState());
+    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+    						}
     					}
     					
     					
