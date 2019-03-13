@@ -63,12 +63,14 @@ public class ClientManager {
 				System.out.println("Succesuful placement request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				flag = true;
+				startGameFlag = 1;
 				//System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
 				//requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
 				break;
 			case ACTIONSUCCESS:
 				System.out.println("Succesuful action request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				startGameFlag = 1;
 				flag = true;
 				break;
 			case LOBBYCREATIONSUCCESS:
@@ -101,6 +103,7 @@ public class ClientManager {
 			case ENDTURNSUCCESS:
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				startGameFlag = 1;
 				flag = true;
 				break;
 			}

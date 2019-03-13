@@ -72,6 +72,7 @@ public class Table {
 		private Color tileColorAmbulance = Color.decode("#05E1FF");
 		private Color tileColorEngine = Color.decode("#FFFF05");
 		private Popup advFire;
+		private Popup gameTermination;
 		private static boolean placing = true;
 		private static boolean playing = true;
 		private ClientManager clientManager;
@@ -1205,8 +1206,12 @@ public class Table {
 		    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
 		    						if(clientManager.getUsersGameState().isGameTerminated()) {
 		    							launcher.showGameTermination();
+		    							refresh(clientManager.getUsersGameState());
+		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						} else if(clientManager.getUsersGameState().isGameWon()) {
 		    							launcher.showGameTermination();
+		    							refresh(clientManager.getUsersGameState());
+		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						} else {
 		    							refresh(clientManager.getUsersGameState());
 		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
@@ -1557,8 +1562,12 @@ public class Table {
     						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
     						if(clientManager.getUsersGameState().isGameTerminated()) {
     							launcher.showGameTermination();
+    							refresh(clientManager.getUsersGameState());
+    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
     						} else if(clientManager.getUsersGameState().isGameWon()) {
     							launcher.showGameTermination();
+    							refresh(clientManager.getUsersGameState());
+    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
     						} else {
     							refresh(clientManager.getUsersGameState());
     							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
@@ -1593,7 +1602,7 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-						if(true/*listening()*/) {
+						if(listening() == 1) {
 							refresh(clientManager.getUsersGameState());
 							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 						}
@@ -1670,7 +1679,7 @@ public class Table {
 		}
 		
 		public void showGameTermination() {
-			Popup gameTermination = null;
+			gameTermination = null;
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel();
 			
@@ -1751,7 +1760,9 @@ public class Table {
 		}
 		
 		
-//		listening(){}
+		public int listening(){
+			return clientManager.listenForResponses();
+		}
 		
 		public boolean sendEndTurnRequest() {
 			return clientManager.endTurnRequest();
