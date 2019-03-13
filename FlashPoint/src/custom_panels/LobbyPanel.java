@@ -107,7 +107,7 @@ public class LobbyPanel extends JPanel {
 		leaveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listen();
-//				raiseEventLeaveBtn();
+				raiseEventLeaveBtn();
 			}
 		});
 		leaveBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
@@ -187,6 +187,7 @@ public class LobbyPanel extends JPanel {
 			break;
 			
 		case 1:
+			System.out.println("Rewriting");
 			String playerTwoName = targetLobby.getPlayers().get(i).getUserName();
 			playerTwo = new JLabel(playerTwoName);
 			playerTwo.setOpaque(true);
@@ -195,7 +196,7 @@ public class LobbyPanel extends JPanel {
 			playerTwo.setBackground(Color.BLACK);
 			playerTwo.setBounds(0, 55, 662, 43);
 			playersPanel.add(playerTwo);
-			playersLabel[i] = playerOne;
+			playersLabel[i] = playerTwo;
 			break;
 			
 		case 2:
@@ -207,7 +208,7 @@ public class LobbyPanel extends JPanel {
 			playerThree.setBackground(Color.WHITE);
 			playerThree.setBounds(0, 110, 662, 43);
 			playersPanel.add(playerThree);
-			playersLabel[i] = playerOne;
+			playersLabel[i] = playerThree;
 			break;
 			
 		case 3:
@@ -219,7 +220,7 @@ public class LobbyPanel extends JPanel {
 			playerFour.setBackground(Color.RED);
 			playerFour.setBounds(0, 165, 662, 43);
 			playersPanel.add(playerFour);
-			playersLabel[i] = playerOne;
+			playersLabel[i] = playerFour;
 			break;
 			
 		case 4:
@@ -231,7 +232,7 @@ public class LobbyPanel extends JPanel {
 			playerFive.setBackground(Color.MAGENTA);
 			playerFive.setBounds(0, 220, 662, 43);
 			playersPanel.add(playerFive);
-			playersLabel[i] = playerOne;
+			playersLabel[i] = playerFive;
 			break;
 			
 		case 5:
@@ -243,7 +244,7 @@ public class LobbyPanel extends JPanel {
 			playerSix.setBackground(Color.BLUE);
 			playerSix.setBounds(0, 275, 662, 43);
 			playersPanel.add(playerSix);
-			playersLabel[i] = playerOne;
+			playersLabel[i] = playerSix;
 			break;
 		}	
 		
@@ -260,7 +261,7 @@ public class LobbyPanel extends JPanel {
 		currPlayerList = newPlayerList;
 		
 		targetLobby = newLobby; //added by Zaid
-		refreshDisplay();
+//		refreshDisplay();
 	}
 	
 	// James
@@ -271,19 +272,20 @@ public class LobbyPanel extends JPanel {
 	}
 	
 	// James
-	private void refreshDisplay() {
+	public void refreshDisplay() {
 		JLabel currLabel;
 		Player currPlayer;
 		
 		resetLabels();
-		
-		for (int i = 0; i < currPlayerList.size(); i++) {
-			currLabel = playersLabel[i];
-			currPlayer = currPlayerList.get(i);
-			
-			currLabel.setText(currPlayer.getUserName());
-			setPlayer(i);
-		}
+		createPlayers();
+//		for (int i = 0; i < currPlayerList.size(); i++) {
+//			currLabel = playersLabel[i];
+//			currPlayer = currPlayerList.get(i);
+//			
+//			
+//			currLabel.setText(currPlayer.getUserName());
+//			setPlayer(i);
+//		}
 	}
 
 	public void addSelectionPiecesListenerListener(StartListener obj) {
