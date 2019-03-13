@@ -5,9 +5,9 @@ import java.util.Date;
 
 public class MyDate {
 	public static String getDateCN() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日  HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
 		String date = format.format(new Date(System.currentTimeMillis()));
-		return date;// 2012年10月03日 23:41:31
+		return date;// 2012锟斤拷10锟斤拷03锟斤拷 23:41:31
 	}
 
 	public static String getDateEN() {

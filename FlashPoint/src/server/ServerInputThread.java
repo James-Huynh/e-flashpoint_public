@@ -84,6 +84,7 @@ public class ServerInputThread extends Thread {
 			System.out.println("Entered IF");
 			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
 			TranObject<User> returnObject;
+			TranObject<GameState> returnGameState;
 			User requestObject;
 			switch (read_tranObject.getType()) {
 			case CONNECT:
@@ -135,38 +136,58 @@ public class ServerInputThread extends Thread {
 			case CHATMESSAGE:
 				System.out.println("chat message received");
 				
-			case GAMESTATEUPDATE:
+			case STARTGAMESTATE:
 				System.out.println("In game state update request");
-				returnObject = new TranObject<User>(TranObjectType.SUCCESS);
-//				serverManager.createLobby();
+//				returnObject = new TranObject<User>(TranObjectType.STARTGAMESTATESUCCESS);
+				returnGameState = new TranObject<GameState>(TranObjectType.STARTGAMESTATESUCCESS);
 				serverManager.createGame();
-				requestObject = (User) read_tranObject.getObject();
-				requestObject.setCurrentState(serverManager.getGameState());
-				returnObject.setObject(requestObject);
-				out.setMessage(returnObject);
+//				requestObject = (User) read_tranObject.getObject();
+//				requestObject.setCurrentState(serverManager.getGameState());
+//				returnObject.setObject(requestObject);
+				returnGameState.setObject(serverManager.getGameState());
+				//out.setMessage(returnObject);
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
 				break;
 			case FIREFIGHTERPLACEMENT:
 				System.out.println("In firefighter placement request");
-				returnObject = new TranObject<User>(TranObjectType.FFPLACEMENTSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				int[] coords = requestObject.getCoords();
 				serverManager.placeFirefighter(coords, requestObject.getId());
-				requestObject.setPlaced(true);
-				requestObject.setCurrentState(serverManager.getGameState());
-				returnObject.setObject(requestObject);
+				returnGameState = new TranObject<GameState>(TranObjectType.FFPLACEMENTSUCCESS);
+				returnGameState.setObject(serverManager.getGameState());
 				for (OutputThread onOut : map.getAll()) {
-					onOut.setMessage(returnObject);// 广播一下用户上线
+					onOut.setMessage(returnGameState); 
 				}
+				
+				/**For when we were returning User**/
+//				returnObject = new TranObject<User>(TranObjectType.FFPLACEMENTSUCCESS);
+//				requestObject = (User) read_tranObject.getObject();
+//				int[] coords = requestObject.getCoords();
+//				serverManager.placeFirefighter(coords, requestObject.getId());
+//				requestObject.setPlaced(true);
+//				requestObject.setCurrentState(serverManager.getGameState());
+//				returnObject.setObject(requestObject);
+//				out.setMessage(returnObject);
 				break;
 			case ACTIONREQUEST:
 				System.out.println("In action request");
-				returnObject = new TranObject<User>(TranObjectType.ACTIONSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.performAction(requestObject.getAction());
-				requestObject.setCurrentState(serverManager.getGameState());
-				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getAP());
-				returnObject.setObject(requestObject);
-				out.setMessage(returnObject);
+				returnGameState = new TranObject<GameState>(TranObjectType.ACTIONSUCCESS);
+				returnGameState.setObject(serverManager.getGameState());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState); 
+				}
+				
+//				returnObject = new TranObject<User>(TranObjectType.ACTIONSUCCESS);
+//				requestObject = (User) read_tranObject.getObject();
+//				serverManager.performAction(requestObject.getAction());
+//				requestObject.setCurrentState(serverManager.getGameState());
+//				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getAP());
+//				returnObject.setObject(requestObject);
+//				out.setMessage(returnObject);
 				break;
 			case LOBBYCREATION:
 				System.out.println("In lobby creation");

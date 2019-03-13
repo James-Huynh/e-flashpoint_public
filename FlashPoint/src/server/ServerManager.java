@@ -23,6 +23,8 @@ public class ServerManager {
 	private GameState testGS;
 	private GameManager gameManager;
 	
+	private int placedFF = 0;
+	
 	public ServerManager() {
 		onlinePlayers = new HashMap<Integer, Player>();
 		accounts = new HashMap<String,String>();
@@ -35,9 +37,12 @@ public class ServerManager {
 	}
 	
 	public void createGame() {
-		testGS = GameState.getInstance();
-		testGS.updateGameStateFromLobby(activeLobby);
-		initializeGameManager();
+		if(testGS == null) {
+			System.out.println("ServerManager :- GameState was null and is now set up");
+			testGS = GameState.getInstance();
+			testGS.updateGameStateFromLobby(activeLobby);
+			initializeGameManager();
+		}
 //		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
 //		generateActions();
 	}
@@ -60,14 +65,16 @@ public class ServerManager {
 //	}
 	
 	public void placeFirefighter(int[] coords, Integer userId) {
-//		System.out.println(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter().getAP());
 		testGS.placeFireFighter(onlinePlayers.get(userId).getFirefighter(), testGS.returnTile(coords[0],coords[1]));
-//		testGS.getFireFighterList().get(0).setAP(10);
-//		System.out.println(testGS.returnTile(coords[0],coords[1]).getFirefighterList().get(0).getAP());
+		placedFF++;
+		if(placedFF == testGS.getFireFighterList().size()) {
+			generateActions();
+		}
 	}
 	
 	public void performAction(Action a) {
 		a.perform(testGS);
+		generateActions();
 	}
 	
 	public HashMap<String, String> getAccounts(){
