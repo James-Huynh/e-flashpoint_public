@@ -61,14 +61,14 @@ public class ClientManager {
 				break;
 			case FFPLACEMENTSUCCESS:
 				System.out.println("Succesuful placement request");
-				requestObject = (User) read_tranObject.getObject();
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				flag = true;
-			//	System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
+				//System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
 				//requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
 				break;
 			case ACTIONSUCCESS:
 				System.out.println("Succesuful action request");
-				requestObject = (User) read_tranObject.getObject();
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				flag = true;
 				break;
 			case LOBBYCREATIONSUCCESS:
@@ -243,7 +243,7 @@ public class ClientManager {
 		
 	}
 
-	public GameState placeFFRequest(int[] coords) {
+	public boolean placeFFRequest(int[] coords) {
 		boolean flag = false;
 		requestObject.setCoords(coords);
 		requestObject.setPlaced(false);
@@ -266,7 +266,8 @@ public class ClientManager {
 			
 		}
 		
-		return requestObject.getCurrentState();
+//		return requestObject.getCurrentState();
+		return flag;
 	}
 	
 	public GameState getUsersGameState() {
@@ -279,10 +280,9 @@ public class ClientManager {
 		return requestObject.getLobbyList();
 	}
 
-	public GameState ActionRequest(Action a) {
+	public boolean ActionRequest(Action a) {
 		boolean flag = false;
 		requestObject.setAction(a);
-//		requestObject.setActionCommited(false);
 		
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.ACTIONREQUEST);
 		objectToSend.setObject(requestObject);
@@ -301,8 +301,8 @@ public class ClientManager {
 		catch(IOException k) {
 			
 		}
-		
-		return requestObject.getCurrentState();
+		return flag;
+//		return requestObject.getCurrentState();
 	}
 
 	public boolean lobbyListRequest() {

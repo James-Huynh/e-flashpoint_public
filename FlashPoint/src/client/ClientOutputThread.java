@@ -45,8 +45,9 @@ public class ClientOutputThread extends Thread {
 			while (isStart) {
 				if (msg != null) {
 					System.out.println("msg:"+msg);
-					oos.writeObject(msg);
 					oos.flush();
+					oos.reset();
+					oos.writeObject(msg);
 					if (msg.getType() == TranObjectType.LOGOUT) {
 
 						break;

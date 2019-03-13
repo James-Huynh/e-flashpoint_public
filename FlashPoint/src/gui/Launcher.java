@@ -45,11 +45,11 @@ public class Launcher {
 	private String EricIP = "142.157.30.183";
 	private String JamesIP = "142.157.104.187";
 	private String JunhazIP = "142.157.";
-	private String ZaidIP = "142.157.";
+	private String ZaidIP = "145.231.";
 	private String BenIP = "142.157.";
 	
 	private static Client client;
-	private String ServerIP = "142.157.30.183";
+	private String ServerIP = "142.157.145.231";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
@@ -341,9 +341,11 @@ public class Launcher {
 		contentPane.add(RPanel, BorderLayout.EAST);
 		motherFrame.revalidate();
 	}
-	public void repaint() {
+	public void repaint(boolean placingChange, boolean playingChange) {
 		//Table table = new Table(tester, clientManager);
-		table.setPlaying(true);
+		table.setPlaying(playingChange);
+		table.setPlacing(placingChange);
+		System.out.println("started repainting");
 		BoardPanel board = table.getBoard();
 		LeftPanel LPanel = table.getLeftPanel();
 		RightPanel RPanel = table.getRightPanel();

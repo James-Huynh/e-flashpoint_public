@@ -133,12 +133,15 @@ public class Table {
 		//add to launcher
 		
 		public void refresh(GameState newBoard) {
+			System.out.println("starting refreshing");
 			this.currentBoard = newBoard;
+//			this.playing = playingchange;
+//			this.placing = placingchange;
 			this.gameTiles = newBoard.getMatTiles();
-			boardPanel.drawBoard(newBoard);
-			rightPanel.drawPanel(newBoard);
-			leftPanel.drawPanel(newBoard);
-//			this.boardPanel = new BoardPanel();
+//			boardPanel.drawBoard(newBoard);
+//			rightPanel.drawPanel(newBoard);
+//			leftPanel.drawPanel(newBoard);
+			this.boardPanel = new BoardPanel();
 			this.rightPanel = new RightPanel(this.currentBoard);
 			this.leftPanel = new LeftPanel(this.currentBoard);
 //			gameFrame.add(boardPanel, BorderLayout.CENTER);
@@ -679,7 +682,8 @@ public class Table {
 									} else {
 										showPopUpMenuOther(e.getComponent(), e.getX(), e.getY(), currentBoard);
 									}
-								} else {
+								} 
+								else {
 									showPopUpMenuOther(e.getComponent(), e.getX(), e.getY(), currentBoard);
 								}
 							}
@@ -846,7 +850,7 @@ public class Table {
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    					
 				    				}
@@ -866,7 +870,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -885,7 +889,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -904,7 +908,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -925,7 +929,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -944,7 +948,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -963,7 +967,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -982,7 +986,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1006,7 +1010,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1024,7 +1028,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1043,7 +1047,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1061,7 +1065,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1079,7 +1083,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1099,7 +1103,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1117,7 +1121,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1136,7 +1140,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1154,7 +1158,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1172,7 +1176,7 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											refresh(clientManager.getUsersGameState());
-											launcher.repaint();
+											launcher.repaint(false,true);
 										}
 				    				}
 				    			});
@@ -1216,7 +1220,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1234,7 +1238,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1252,7 +1256,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1270,7 +1274,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1290,7 +1294,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1309,7 +1313,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1328,7 +1332,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1347,7 +1351,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1368,7 +1372,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1387,7 +1391,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1406,7 +1410,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1425,7 +1429,7 @@ public class Table {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
-										launcher.repaint();
+										launcher.repaint(false,true);
 									}
 			    				}
 			    			});
@@ -1504,10 +1508,14 @@ public class Table {
 						if(sendPlaceFFRequest(coords)) {
 							System.out.println("this is the print that board is refreshing");
 //							clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-							System.out.println("helo!" + clientManager.getUsersGameState().returnTile(0, 5).getFirefighterList().size());
+							System.out.println("helo!      " + clientManager.getUsersGameState().returnTile(0, 0).getFirefighterList().size());
 							refresh(clientManager.getUsersGameState());
-							launcher.repaint();
+							launcher.repaint(false, true);
+							System.out.println("finished repainting");
 						}
+//						clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
+//						refresh(clientManager.getUsersGameState());
+//						launcher.repaint();
 					}
 				});
 		         
@@ -1680,21 +1688,23 @@ public class Table {
 		
 		
 		private boolean sendPlaceFFRequest(int [] coords) {
-			if(clientManager.placeFFRequest(coords) == null) {
-				return false;
-			} else {
-//				updateGameState(clientManager.placeFFRequest(coords));
-				
-			}
-			return true;
+			return(clientManager.placeFFRequest(coords));
+//			if(clientManager.placeFFRequest(coords)) {
+//				return true;
+//			} else {
+////				updateGameState(clientManager.placeFFRequest(coords));
+//				
+//			}
+//			return false;
 		}
 		
 		private boolean sendActionRequest(actions.Action a) {
-			if(clientManager.ActionRequest(a) == null) {
-				return false;
-			}
-			
-			return true;
+			return(clientManager.ActionRequest(a));
+//			if(clientManager.ActionRequest(a) == null) {
+//				return false;
+//			}
+//			
+//			return true;
 		}
 		
 }
