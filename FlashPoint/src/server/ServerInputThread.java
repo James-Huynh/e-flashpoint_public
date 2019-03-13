@@ -157,9 +157,10 @@ public class ServerInputThread extends Thread {
 				serverManager.placeFirefighter(coords, requestObject.getId());
 				returnGameState = new TranObject<GameState>(TranObjectType.FFPLACEMENTSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
-				for (OutputThread onOut : map.getAll()) {
-					onOut.setMessage(returnGameState); 
-				}
+				out.setMessage(returnGameState);
+//				for (OutputThread onOut : map.getAll()) {
+//					onOut.setMessage(returnGameState); 
+//				}
 				
 				/**For when we were returning User**/
 //				returnObject = new TranObject<User>(TranObjectType.FFPLACEMENTSUCCESS);
