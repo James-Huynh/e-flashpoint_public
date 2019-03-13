@@ -292,15 +292,21 @@ public class Launcher {
 		contentPane.add(lobby);
 
 		lobby.addSelectionPiecesListenerListener(new StartListener() {
-			public void clickStart() {
-				if(sendGameStateRequest()) {
+			public void clickStart(boolean flag) {
+				if(flag) {
 					lobby.setVisible(false);
 					motherFrame.remove(lobby);
 					setupGamePage();
-				} else {
-					System.out.println("faileddddd");
 				}
-				
+				else {
+					if(sendGameStateRequest()) {
+						lobby.setVisible(false);
+						motherFrame.remove(lobby);
+						setupGamePage();
+					} else {
+						System.out.println("faileddddd");
+					}
+				}				
 			}
 		});
 		

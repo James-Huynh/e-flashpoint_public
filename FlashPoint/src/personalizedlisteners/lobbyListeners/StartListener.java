@@ -7,5 +7,5 @@ import java.util.EventListener;
  *
  */
 public interface StartListener extends EventListener {
-	public void clickStart();	
+	public void clickStart(boolean flag);	
 }

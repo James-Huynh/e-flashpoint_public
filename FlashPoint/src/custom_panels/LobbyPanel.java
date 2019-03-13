@@ -46,6 +46,7 @@ public class LobbyPanel extends JPanel {
 	
 	private JLabel[] playersLabel;
 	private JLabel playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix;
+	private int myFlagger = -1;
 	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
@@ -303,7 +304,13 @@ public class LobbyPanel extends JPanel {
 	private void raiseEventStartBtn() {
 		System.out.println("Start button clicked to start game wohoo");
 		for (StartListener listener: REGISTERED_OBJECTS.getListeners(StartListener.class)) {
-			listener.clickStart();
+			if(myFlagger == 2) {
+				listener.clickStart(true);
+			}
+			else {
+				listener.clickStart(false);
+			}
+			
 		}
 	}
 	/**
@@ -324,6 +331,7 @@ public class LobbyPanel extends JPanel {
 				updateLobby(clientManager.getLobby());
 			}
 			else if(flag == 2) {
+				myFlagger = flag;
 //				raiseEventStartBtn();
 				raiseEventLeaveBtn();
 				startBtn.doClick();
