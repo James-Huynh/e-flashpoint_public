@@ -100,6 +100,7 @@ public class LobbyPanel extends JPanel {
 		startBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
 		startBtn.setBounds(482, 682, 140, 54);
 		this.add(startBtn);
+		
 	}
 	
 	private void createLeaveButton() {
@@ -322,7 +323,8 @@ public class LobbyPanel extends JPanel {
 				updateLobby(clientManager.getLobby());
 			}
 			else if(flag == 2) {
-				raiseEventStartBtn();
+//				raiseEventStartBtn();
+				startBtn.doClick();
 			}
 		}
 		
