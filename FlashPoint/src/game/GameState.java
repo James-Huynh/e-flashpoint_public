@@ -38,6 +38,8 @@ public class GameState implements Serializable {
 	protected Tile[][] matTiles;
 	protected ParkingSpot[] engines;
 	protected ParkingSpot[] ambulances;
+	
+	protected String advFireString;
 
 	protected int currentTile; // ??
 	protected Set<Action> availableActions;
@@ -802,6 +804,16 @@ public class GameState implements Serializable {
 		// TODO Auto-generated method stub
 		this.matTiles = matTiles2;
 		
+	}
+
+
+	public String getAdvFireString() {
+		// TODO Auto-generated method stub
+		return this.advFireString;
+	}
+	
+	public void setAdvFireString(String newAdvFireString) {
+		this.advFireString = newAdvFireString;
 	}
 
 

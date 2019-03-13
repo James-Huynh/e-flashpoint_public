@@ -143,6 +143,7 @@ public class ServerManager {
 	
 	public void advanceFire() {
 		gameManager.advanceFire();
+		testGS.setAdvFireString(gameManager.getAdvFireMessage());
 	}
 
 
