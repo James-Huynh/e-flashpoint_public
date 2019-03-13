@@ -12,6 +12,7 @@ import commons.tran.bean.TranObjectType;
 import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
+import token.Firefighter;
 
 public class ServerManager {
 	
@@ -68,6 +69,8 @@ public class ServerManager {
 		testGS.placeFireFighter(onlinePlayers.get(userId).getFirefighter(), testGS.returnTile(coords[0],coords[1]));
 		placedFF++;
 		if(placedFF == testGS.getFireFighterList().size()) {
+			//set the index to the initial player. This trigger the player to be able to view their actions.
+			//testGS.setActiveFireFighterIndex(0);
 			generateActions();
 		}
 	}
@@ -111,6 +114,35 @@ public class ServerManager {
 //		this.currentLobbies.add(activeLobby);
 		System.out.println(this.currentLobbies.size());
 		return this.currentLobbies;
+	}
+
+	public void endTurn() {
+		Firefighter temp = testGS.getPlayingFirefighter();
+		int AP = temp.getAP();
+		if(AP + 4 > 8) {
+			temp.setAP(8);
+		} else {
+			temp.setAP(AP + 4);
+		}
+		advanceFire();
+		if(testGS.isGameTerminated() || testGS.isGameWon()) {
+			
+		} else {
+			setFFNextTurn();
+			generateActions();
+		}
+		
+		
+		
+	}
+	
+	public void setFFNextTurn() {
+		testGS.setActiveFireFighterIndex( (testGS.getActiveFireFighterIndex() + 1)%(testGS.getFireFighterList().size()) );
+		
+	}
+	
+	public void advanceFire() {
+		gameManager.advanceFire();
 	}
 
 

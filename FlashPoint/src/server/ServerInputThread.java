@@ -232,7 +232,16 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnLobby);// 广播一下用户上线
 				}
 				break;
-				
+			case ENDTURN:
+				System.out.println("In end turn");
+				TranObject returnGameStateEnd = new TranObject<GameState>(TranObjectType.ENDTURNSUCCESS);
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.endTurn();
+				returnGameStateEnd.setObject(serverManager.getGameState());
+				for(OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameStateEnd);
+				}
+				break;
 			case MESSAGE:
 				
 				int id2 = read_tranObject.getToUser();
