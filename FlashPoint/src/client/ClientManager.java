@@ -373,5 +373,10 @@ public class ClientManager {
 		}
 		return startGameFlag;
 	}
+
+	public String getUserName() {
+		// TODO Auto-generated method stub
+		return this.requestObject.getName();
+	}
 	
 }

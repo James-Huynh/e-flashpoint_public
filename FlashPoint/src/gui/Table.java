@@ -76,6 +76,7 @@ public class Table {
 		private static boolean playing = true;
 		private ClientManager clientManager;
 		private Launcher launcher;
+		private int myIndex = 7;
 		
 //		public Table(GameState inputBoard) {
 //			this.currentBoard = inputBoard;
@@ -100,6 +101,13 @@ public class Table {
 			gameTiles = inputBoard.getMatTiles();
 			this.clientManager = updatedClientManager;
 			this.launcher = launcher;
+			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
+				Firefighter f = inputBoard.getFireFighterList().get(i);
+				if(updatedClientManager.getUserName().equals(f.getOwner().getUserName())) {
+					this.myIndex = i;
+				}
+			}
+//			System.out.println("this is the my index: " + this.myIndex);
 		}
 		
 		public BoardPanel genBoard() {
@@ -1510,7 +1518,7 @@ public class Table {
 //							clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 							System.out.println("helo!      " + clientManager.getUsersGameState().returnTile(0, 0).getFirefighterList().size());
 							refresh(clientManager.getUsersGameState());
-							launcher.repaint(false, true);
+							launcher.repaint(false, myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 							System.out.println("finished repainting");
 						}
 //						clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
@@ -1538,11 +1546,13 @@ public class Table {
 			public void showPopUpMenuOther(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 				JPopupMenu popupMenu = new JPopupMenu();
 		        
-		        JMenuItem endTurn = new JMenuItem("end turn");
+		        JMenuItem endTurn = new JMenuItem("waiting");
 		        endTurn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						
+						//listening();
+						refresh(clientManager.getUsersGameState());
+						launcher.repaint(false,true);
 						gameTest.nextTurn();
 					}
 				});
@@ -1689,22 +1699,12 @@ public class Table {
 		
 		private boolean sendPlaceFFRequest(int [] coords) {
 			return(clientManager.placeFFRequest(coords));
-//			if(clientManager.placeFFRequest(coords)) {
-//				return true;
-//			} else {
-////				updateGameState(clientManager.placeFFRequest(coords));
-//				
-//			}
-//			return false;
 		}
 		
 		private boolean sendActionRequest(actions.Action a) {
 			return(clientManager.ActionRequest(a));
-//			if(clientManager.ActionRequest(a) == null) {
-//				return false;
-//			}
-//			
-//			return true;
 		}
 		
+		
+//		listening(){}
 }
