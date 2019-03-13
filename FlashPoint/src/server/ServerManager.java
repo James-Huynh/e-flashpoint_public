@@ -126,7 +126,8 @@ public class ServerManager {
 		}
 		advanceFire();
 		if(testGS.isGameTerminated() || testGS.isGameWon()) {
-			
+//			setFFNextTurn();
+//			generateActions();
 		} else {
 			setFFNextTurn();
 			generateActions();
