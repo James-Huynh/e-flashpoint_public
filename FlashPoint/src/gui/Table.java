@@ -1206,11 +1206,11 @@ public class Table {
 		    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
 		    						if(clientManager.getUsersGameState().isGameTerminated()) {
 		    							launcher.showGameTermination();
-		    							refresh(clientManager.getUsersGameState());
+		    							//refresh(clientManager.getUsersGameState());
 		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						} else if(clientManager.getUsersGameState().isGameWon()) {
 		    							launcher.showGameTermination();
-		    							refresh(clientManager.getUsersGameState());
+		    							//refresh(clientManager.getUsersGameState());
 		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						} else {
 		    							refresh(clientManager.getUsersGameState());
@@ -1683,8 +1683,8 @@ public class Table {
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel();
 			
-			if(currentBoard.isGameTerminated()) {
-				if(currentBoard.getDamageCounter() >= 24) {
+			if(clientManager.getUsersGameState().isGameTerminated()) {
+				if(clientManager.getUsersGameState().getDamageCounter() >= 24) {
 					JLabel popupMsg = new JLabel("Game over.\n The house has collapsed.");
 					gameTPanel.setPreferredSize(new Dimension(300,300));
 					gameTPanel.setBackground(tileColorRed);
@@ -1693,7 +1693,7 @@ public class Table {
 					gameTPanel.add(popupMsg);
 					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 					
-				} else if(currentBoard.getLostVictimsList().size() >= 4) {
+				} else if(clientManager.getUsersGameState().getLostVictimsList().size() >= 4) {
 					JLabel popupMsg = new JLabel("Game over.\n 4 victims were lost.");
 					gameTPanel.setPreferredSize(new Dimension(300,300));
 					gameTPanel.setBackground(tileColorRed);
@@ -1702,7 +1702,7 @@ public class Table {
 					gameTPanel.add(popupMsg);
 					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 				}
-			} else if(currentBoard.isGameWon()) {
+			} else if(clientManager.getUsersGameState().isGameWon()) {
 				JLabel popupMsg = new JLabel("Game Won.\n 7 victims were saved in time.");
 				gameTPanel.setPreferredSize(new Dimension(300,300));
 				gameTPanel.setBackground(tileColorGreen);
