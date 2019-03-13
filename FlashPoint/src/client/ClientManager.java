@@ -228,12 +228,12 @@ public class ClientManager {
 		return flag;
 	}
 	
-	public GameState gameStateRequest(User userOne) {
+	public boolean gameStateRequest(User userOne) {
 		boolean flag = false;
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.STARTGAMESTATE);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
-		System.out.println("test check");
+		
 		try {
 			while(readMessage() != true) {
 				
@@ -247,7 +247,7 @@ public class ClientManager {
 			
 		}
 		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
-		return requestObject.getCurrentState();
+		return flag;
 		
 	}
 
@@ -366,7 +366,9 @@ public class ClientManager {
 	
 	public int listenForResponses() {
 		System.out.println("I am listening in client manager");
-//		boolean flag = false;
+//		
+		startGameFlag = 0;
+		boolean flag = false;
 		try {
 			while(readMessage() != true) {
 				

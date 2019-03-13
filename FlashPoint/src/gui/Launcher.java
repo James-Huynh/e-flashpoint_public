@@ -45,11 +45,11 @@ public class Launcher {
 	private String EricIP = "142.157.30.183";
 	private String JamesIP = "142.157.104.187";
 	private String JunhazIP = "142.157.65.31";
-	private String ZaidIP = "145.231.";
+	private String ZaidIP = "142.157.145.231";
 	private String BenIP = "142.157.58.203";
 	
 	private static Client client;
-	private String ServerIP = "142.157.58.203";
+	private String ServerIP = "142.157.145.231";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
@@ -380,11 +380,8 @@ public class Launcher {
 	//	------------------------------- GAME 
 	
 	private boolean sendGameStateRequest() {
-		if(clientManager.gameStateRequest(userOne) == null) {
-			return false;
-		}
-		updateGameState(clientManager.gameStateRequest(userOne));
-		return true;
+		
+		return clientManager.gameStateRequest(userOne);
 	}
 	
 	public void updateGameState(GameState updated) {
