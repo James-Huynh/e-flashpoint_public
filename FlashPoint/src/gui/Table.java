@@ -1200,7 +1200,7 @@ public class Table {
 		    	        newAction.addActionListener(new ActionListener() {
 		    				@Override
 		    				public void actionPerformed(ActionEvent e) {
-		    					if(true/*sendNextTurnRequest()*/){
+		    					if(sendEndTurnRequest()){
 		    						System.out.println("this is the print that board is refreshing");
 									refresh(clientManager.getUsersGameState());
 									launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
@@ -1545,7 +1545,7 @@ public class Table {
 		        endTurn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-    					if(true/*sendNextTurnRequest()*/){
+    					if(sendEndTurnRequest()){
     						System.out.println("this is the print that board is refreshing");
 							refresh(clientManager.getUsersGameState());
 							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
@@ -1739,5 +1739,7 @@ public class Table {
 		
 //		listening(){}
 		
-//		endTurnRequest(){}
+		public boolean sendEndTurnRequest() {
+			return clientManager.endTurnRequest();
+		}
 }

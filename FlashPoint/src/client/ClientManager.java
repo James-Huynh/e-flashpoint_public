@@ -85,7 +85,7 @@ public class ClientManager {
 				System.out.println(requestObject.getLobbyList().get(0).getPlayers().get(0).getUserName());
 				break;
 			case JOINLOBBYSUCCESS:
-				System.out.println("Successful findlobby request");
+				System.out.println("Successful joinlobby request");
 				//currentLobby = (Lobby) read_tranObject.getObject();
 				//requestObject.setCurrentLobby(currentLobby);
 				requestObject.setCurrentLobby((Lobby) read_tranObject.getObject());
@@ -97,6 +97,11 @@ public class ClientManager {
 				 * }else ifrequestObject.getCurrentLobby().getPlayers().size() == 1()
 				 */
 				System.out.println(requestObject.getCurrentLobby().getPlayers().get(1).getUserName());
+				break;
+			case ENDTURNSUCCESS:
+				System.out.println("Successful endTurn request");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				flag = true;
 				break;
 			}
 			
@@ -377,6 +382,28 @@ public class ClientManager {
 	public String getUserName() {
 		// TODO Auto-generated method stub
 		return this.requestObject.getName();
+	}
+
+	public boolean endTurnRequest() {
+		boolean flag = false;
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.ENDTURN);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		return flag;
 	}
 	
 }
