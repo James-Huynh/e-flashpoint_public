@@ -767,7 +767,8 @@ public class Table {
 					
 				if(this.connectedTile.containsFirefighter()) {
 					String builder = defaultImagesPath;
-					Firefighter currentFF = currentBoard.getPlayingFirefighter();
+					//Firefighter currentFF = currentBoard.getPlayingFirefighter();
+					Firefighter currentFF = clientManager.getUsersGameState().getFireFighterList().get(myIndex);
 					Tile currentPos = currentFF.getCurrentPosition();
 					Firefighter check;
 					if(this.connectedTile == currentPos) {
