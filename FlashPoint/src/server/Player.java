@@ -14,11 +14,13 @@ public class Player implements Serializable {
     private String password;
     private token.Colour myColour;
     private Firefighter myFireFighter;
+    private Integer ID;
     private static final long serialVersionUID = 1L;
     
-    public Player(String userName, String password) {
+    public Player(String userName, String password, Integer ID) {
     	this.userName = userName;
     	this.password = password;
+    	this.ID = ID;
     }
     
     /*
@@ -51,5 +53,9 @@ public class Player implements Serializable {
     
     public void setColour(token.Colour newColour) {
     	this.myColour = newColour;
+    }
+    
+    public Integer getID() {
+    	return this.ID;
     }
 }
