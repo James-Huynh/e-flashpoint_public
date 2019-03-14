@@ -1654,9 +1654,26 @@ public class Table {
 						firefighterMenu.add(info);
 					}
 					
+					
+					JMenuItem waiting = new JMenuItem("waiting");
+			        waiting.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							
+							if(listening() == 1) {
+								refresh(clientManager.getUsersGameState());
+								launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+							}
+							
+							
+						}
+					});
+					
 			        popupMenu.add(poiMenu);
 			        popupMenu.addSeparator();
 			        popupMenu.add(firefighterMenu);
+			        popupMenu.addSeparator();
+			        popupMenu.add(waiting);
 			        
 			        popupMenu.show(component, x, y);		// very important
 				}
