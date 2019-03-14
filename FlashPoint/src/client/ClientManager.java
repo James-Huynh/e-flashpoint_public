@@ -21,6 +21,7 @@ public class ClientManager {
 	private Lobby currentLobby;
 //	private ArrayList<Lobby> onlineLobbies;
 	private int startGameFlag = 0;
+	private TranObjectType anyString;
 	
 	public ClientManager(ClientInputThread input, ClientOutputThread output) {
 		this.inputThread = input;
@@ -64,6 +65,7 @@ public class ClientManager {
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				flag = true;
 				startGameFlag = 1;
+				anyString = read_tranObject.getType();
 				//System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
 				//requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
 				break;
@@ -266,6 +268,7 @@ public class ClientManager {
 				
 			}
 			flag = true;
+			System.out.println(anyString);
 		}
 		catch(ClassNotFoundException l) {
 			
@@ -367,7 +370,7 @@ public class ClientManager {
 	public int listenForResponses() {
 		System.out.println("I am listening in client manager");
 //		
-		startGameFlag = 0;
+//		startGameFlag = 0;
 		boolean flag = false;
 		try {
 			while(readMessage() != true) {
