@@ -255,10 +255,10 @@ public class Table {
 					
 				}
 				String inputString = "<html> <font size=\"5\"> Current Wall Damage: " + currentBoard.getDamageCounter() + "</font></html>";
-				JPanel walldis = new JPanel();
+//				JPanel walldis = new JPanel();
 				JLabel wallD = new JLabel(inputString);
-				Border blackline = BorderFactory.createLineBorder(tileColorBlack,2);
-//				walldis.setBorder(blackline);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,3);
+				wallD.setBorder(blackline);
 				add(wallD);
 			}
 		}
