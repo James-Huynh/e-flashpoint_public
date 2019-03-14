@@ -255,10 +255,11 @@ public class Table {
 					
 				}
 				String inputString = "<html> <font size=\"5\"> Current Wall Damage: " + currentBoard.getDamageCounter() + "</font></html>";
+				JPanel walldis = new JPanel();
 				JLabel wallD = new JLabel(inputString);
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,2);
-				wallD.setBorder(blackline);
-				add(new JLabel(inputString));
+//				walldis.setBorder(blackline);
+				add(wallD);
 			}
 		}
 		
@@ -1602,19 +1603,19 @@ public class Table {
 			public void showPopUpMenuWaiting(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 				JPopupMenu popupMenu = new JPopupMenu();
 		        
-		        JMenuItem endTurn = new JMenuItem("waiting");
-		        endTurn.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-						if(listening() == 1) {
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-						}
-						
-						
-					}
-				});
+//		        JMenuItem endTurn = new JMenuItem("waiting");
+//		        endTurn.addActionListener(new ActionListener() {
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+//						
+//						if(listening() == 1) {
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//						}
+//						
+//						
+//					}
+//				});
 		         
 		        JMenuItem fileMenu = new JMenuItem("exit");
 		        fileMenu.addActionListener(new ActionListener() {
@@ -1624,8 +1625,8 @@ public class Table {
 //						System.exit(0);
 					}
 				});
-		        popupMenu.add(endTurn);
-		        popupMenu.addSeparator();
+//		        popupMenu.add(endTurn);
+//		        popupMenu.addSeparator();
 		        popupMenu.add(fileMenu);
 		        
 		        popupMenu.show(component, x, y);		// very important
