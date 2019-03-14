@@ -64,7 +64,7 @@ public class Chop extends Action {
         Tile currPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
         Edge edge = currPosition.getEdge(this.direction);
-        int dmgCounter = edge.getDamage();
+        int dmgCounter = gs.getDamageCounter();//edge.getDamage();
         
         if(edge.isWall()) {
         	int damage = edge.getDamage();

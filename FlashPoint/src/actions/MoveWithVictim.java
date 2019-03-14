@@ -45,7 +45,7 @@ public class MoveWithVictim extends Move{
 				ArrayList<POI> pois = currentPosition.getPoiList();
 				if(fire < 2) {
 					if(edge.isDoor()) {
-						if(edge.getStatus() == true) {
+						if(edge.getStatus() == true || edge.isDestroyed()) {
 							for(POI p: pois) {
 								if(p.isVictim() && p.isRevealed() && aP >=2) {
 									return true;
