@@ -30,10 +30,11 @@ public class ServerManager {
 		onlinePlayers = new HashMap<Integer, Player>();
 		accounts = new HashMap<String,String>();
 		currentLobbies = new ArrayList<Lobby>();
+		accounts.put("Zaid", "apple");
 	}
 	
 	public void createPlayer(String name, String password, Integer ID) {
-		onlinePlayers.put(ID, new Player(name, password));
+		onlinePlayers.put(ID, new Player(name, password, ID));
 		System.out.println(this.onlinePlayers.size());
 	}
 	
@@ -86,6 +87,11 @@ public class ServerManager {
 	public HashMap<String, String> getAccounts(){
 		return this.accounts;
 	}
+	
+	public HashMap<Integer, Player> getPlayers(){
+		return this.onlinePlayers;
+	}
+	
 	
 	public GameState getGameState() {
 		return this.testGS;

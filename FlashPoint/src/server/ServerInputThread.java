@@ -47,7 +47,7 @@ public class ServerInputThread extends Thread {
 //		serverManager = new ServerManager();
 		try {
 			while (isStart) {
-				System.out.println("Looping?");
+				//System.out.println("Looping?");
 //				serverManager.readMessage(out, ois);
 				// JUNHA : this is supposed to be serverManager.readMessage();
 				 readMessage();
@@ -78,20 +78,25 @@ public class ServerInputThread extends Thread {
 
 	public void readMessage() throws IOException, ClassNotFoundException {
 		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
-		System.out.println("Insinde readMessage");
+		//System.out.println("Insinde readMessage");
 //		UserDao dao = UserDaoFactory.getInstance();// 通锟斤拷dao模式锟斤拷锟斤拷锟教�
 		if (readObject != null && readObject instanceof TranObject) {
-			System.out.println("Entered IF");
+		//	System.out.println("Entered IF");
 			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
 			TranObject<User> returnObject;
 			TranObject<GameState> returnGameState;
 			User requestObject;
+			int idGenerator;
 			switch (read_tranObject.getType()) {
 			case CONNECT:
 				System.out.println("In connect request");
 				returnObject = new TranObject<User>(TranObjectType.SUCCESS);
 				requestObject = (User) read_tranObject.getObject();
-				requestObject.setId(Integer.valueOf(rand.nextInt(10)));
+				idGenerator = rand.nextInt(10);
+				while(serverManager.getPlayers().containsKey(Integer.valueOf(idGenerator))) {
+					idGenerator = rand.nextInt(10);
+				}
+				requestObject.setId(Integer.valueOf(idGenerator));
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;
@@ -103,13 +108,13 @@ public class ServerInputThread extends Thread {
 
 				if(serverManager.getAccounts().get(requestObject.getName()) != null) {
 					if(serverManager.getAccounts().get(requestObject.getName()).equals(requestObject.getPassword())){
-						System.out.println("is online set to 1");
+						System.out.println("is online ");
 						requestObject.setIsOnline(1);	
 						serverManager.createPlayer(requestObject.getName(), requestObject.getPassword(), requestObject.getId());
 					}	
 				}
 				else { //User doesn't exist
-					System.out.println("is online set to 0");
+					//System.out.println("is online set to 0");
 					requestObject.setIsOnline(0);
 				}
 				returnObject.setObject(requestObject);
@@ -137,7 +142,7 @@ public class ServerInputThread extends Thread {
 				System.out.println("chat message received");
 				
 			case STARTGAMESTATE:
-				System.out.println("In game state update request");
+				//System.out.println("In game state update request");
 //				returnObject = new TranObject<User>(TranObjectType.STARTGAMESTATESUCCESS);
 				returnGameState = new TranObject<GameState>(TranObjectType.STARTGAMESTATESUCCESS);
 				serverManager.createGame();
@@ -151,7 +156,7 @@ public class ServerInputThread extends Thread {
 				}
 				break;
 			case FIREFIGHTERPLACEMENT:
-				System.out.println("In firefighter placement request");
+				System.out.println("firefighter placement request");
 				requestObject = (User) read_tranObject.getObject();
 				int[] coords = requestObject.getCoords();
 				serverManager.placeFirefighter(coords, requestObject.getId());
@@ -173,7 +178,7 @@ public class ServerInputThread extends Thread {
 //				out.setMessage(returnObject);
 				break;
 			case ACTIONREQUEST:
-				System.out.println("In action request");
+				//System.out.println("In action request");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.performAction(requestObject.getAction());
 				returnGameState = new TranObject<GameState>(TranObjectType.ACTIONSUCCESS);
@@ -191,7 +196,7 @@ public class ServerInputThread extends Thread {
 //				out.setMessage(returnObject);
 				break;
 			case LOBBYCREATION:
-				System.out.println("In lobby creation");
+				//System.out.println("In lobby creation");
 				returnObject = new TranObject<User>(TranObjectType.LOBBYCREATIONSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setLobby(requestObject.getCurrentLobby());
@@ -223,18 +228,21 @@ public class ServerInputThread extends Thread {
 //				}
 //				break;
 				
-				System.out.println("In join lobby");
+				System.out.println("request join lobby");
 				TranObject returnLobby = new TranObject<Lobby>(TranObjectType.JOINLOBBYSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
 //				requestObject.setCurrentLobby(serverManager.getLobby());
 				returnLobby.setObject(serverManager.getLobby());
-				for (OutputThread onOut : map.getAll()) {
-					onOut.setMessage(returnLobby);// 广播一下用户上线
+//				for (OutputThread onOut : map.getAll()) {
+//					onOut.setMessage(returnLobby);// 广播一下用户上线
+//				}
+				for(Player p : serverManager.getLobby().getPlayers()) {
+					map.getById(p.getID()).setMessage(returnLobby);;
 				}
 				break;
 			case ENDTURN:
-				System.out.println("In end turn");
+				System.out.println(" end turn");
 				TranObject returnGameStateEnd = new TranObject<GameState>(TranObjectType.ENDTURNSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.endTurn();
@@ -403,7 +411,7 @@ public class ServerInputThread extends Thread {
 				break;
 			}
 		}
-		System.out.println("Did not enter IF -- exiting method");
+		//System.out.println("Did not enter IF -- exiting method");
 	}
 
 	/*

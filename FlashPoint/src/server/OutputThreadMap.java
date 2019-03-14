@@ -23,12 +23,12 @@ public class OutputThreadMap {
 		return instance;
 	}
 
-	// ���д�̵߳ķ���
+	
 	public synchronized void add(Integer id, OutputThread out) {
 		map.put(id, out);
 	}
 
-	// �Ƴ�д�̵߳ķ���
+	
 	public synchronized void remove(Integer id) {
 		map.remove(id);
 	}
