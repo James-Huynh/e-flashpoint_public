@@ -42,6 +42,8 @@ public class ServerManager {
 			System.out.println("ServerManager :- GameState was null and is now set up");
 			testGS = GameState.getInstance();
 			testGS.updateGameStateFromLobby(activeLobby);
+			testGS.setActiveFireFighterIndex(-1);
+			System.out.println("active FF index is (3) :- " + testGS.getActiveFireFighterIndex());
 			initializeGameManager();
 		}
 //		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
@@ -71,6 +73,7 @@ public class ServerManager {
 		if(placedFF == testGS.getFireFighterList().size()) {
 			//set the index to the initial player. This trigger the player to be able to view their actions.
 			//testGS.setActiveFireFighterIndex(0);
+			testGS.setActiveFireFighterIndex(0);
 			generateActions();
 		}
 	}

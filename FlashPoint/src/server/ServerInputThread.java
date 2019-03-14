@@ -145,7 +145,7 @@ public class ServerInputThread extends Thread {
 //				requestObject.setCurrentState(serverManager.getGameState());
 //				returnObject.setObject(requestObject);
 				returnGameState.setObject(serverManager.getGameState());
-				//out.setMessage(returnObject);
+//				out.setMessage(returnGameState);
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnGameState);
 				}
@@ -157,11 +157,11 @@ public class ServerInputThread extends Thread {
 				serverManager.placeFirefighter(coords, requestObject.getId());
 				returnGameState = new TranObject<GameState>(TranObjectType.FFPLACEMENTSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
-				out.setMessage(returnGameState);
-//				for (OutputThread onOut : map.getAll()) {
-//					onOut.setMessage(returnGameState); 
-//				}
-				
+//				out.setMessage(returnGameState);
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+					System.out.println(java.lang.Thread.activeCount());
+				}
 				/**For when we were returning User**/
 //				returnObject = new TranObject<User>(TranObjectType.FFPLACEMENTSUCCESS);
 //				requestObject = (User) read_tranObject.getObject();
