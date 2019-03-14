@@ -1668,7 +1668,7 @@ public class Table {
 								
 								if(listening() == 1) {
 									refresh(clientManager.getUsersGameState());
-									launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+									launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() != null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 								}
 								
 								
