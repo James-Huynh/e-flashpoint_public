@@ -195,7 +195,7 @@ public class LobbyPanel extends JPanel {
 			playerTwo.setOpaque(true);
 			playerTwo.setHorizontalAlignment(SwingConstants.CENTER);
 			playerTwo.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			playerTwo.setBackground(Color.BLACK);
+			playerTwo.setBackground(Color.GRAY);
 			playerTwo.setBounds(0, 55, 662, 43);
 			playersPanel.add(playerTwo);
 			playersLabel[i] = playerTwo;

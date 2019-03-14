@@ -185,7 +185,7 @@ public class Table {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					System.exit(0);
+//					System.exit(0);
 				}
 			});
 			
@@ -245,16 +245,19 @@ public class Table {
 					//needs fixing
 					String ffColour = currentFF.getColour().toString(currentFF.getColour());
 					if(this.currentBoard.getActiveFireFighterIndex() == i) {
-						inputString = "<html> <font size=\"5\", color='"+ffColour+"'>" + playerInfo + "</font></html>";
+						inputString = "<html> <font size=\"8\", color='"+ffColour+"'><b>" + playerInfo + "</b></font></html>";
 					} 
 					else {
-						inputString = "<html> <font color='"+ ffColour + "'>" + playerInfo + "</font></html>";
+						inputString = "<html> <font size =\"5\", color='"+ ffColour + "'>" + playerInfo + "</font></html>";
 					}
 					
 					add(new JLabel(inputString));
 					
 				}
 				String inputString = "<html> <font size=\"5\"> Current Wall Damage: " + currentBoard.getDamageCounter() + "</font></html>";
+				JLabel wallD = new JLabel(inputString);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,2);
+				wallD.setBorder(blackline);
 				add(new JLabel(inputString));
 			}
 		}
@@ -733,6 +736,7 @@ public class Table {
 			
 			public void drawTile(GameState currentBoard) {
 				// TODO Auto-generated method stub
+				
 				removeAll();
 				assignFires();
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack);
@@ -1462,7 +1466,7 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-						System.exit(0);
+//						System.exit(0);
 					}
 				});
 		        
@@ -1540,7 +1544,7 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-						System.exit(0);
+//						System.exit(0);
 					}
 				});
 		        popupMenu.add(endTurn);
@@ -1584,7 +1588,7 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-						System.exit(0);
+//						System.exit(0);
 					}
 				});
 		        popupMenu.add(endTurn);
@@ -1617,7 +1621,7 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-						System.exit(0);
+//						System.exit(0);
 					}
 				});
 		        popupMenu.add(endTurn);
