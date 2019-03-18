@@ -3,8 +3,10 @@ package gui;
 import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
+import server.Player;
 import tile.Tile;
 import token.Firefighter;
+import token.POI;
 
 public class gameTest {
 	
@@ -17,13 +19,91 @@ public static void main(String[] args) {
 		tester = GameState.getInstance();
 		
 		Lobby tempLobby = new Lobby();
+		tempLobby.addPlayer(new Player("Logan", "ben", 12));
+		tempLobby.addPlayer(new Player("Ben", "ben", 12));
+//		tempLobby.addPlayer(new Player("Cao", "ben", 12));
+//		tempLobby.addPlayer(new Player("James", "ben", 12));
+		
 		
 		tester.updateGameStateFromLobby(tempLobby);
+		
+		
+//		//Player placement
+//		tester.placeFireFighter(tester.getFireFighterList().get(0), tester.returnTile(5,0));
+//		tester.placeFireFighter(tester.getFireFighterList().get(1), tester.returnTile(5,0));
+//		
+//		//Wall Damage tracker.
+//		tester.returnTile(1,1).getEdge(0).chop();
+//		tester.returnTile(1,1).getEdge(0).chop();
+//		tester.returnTile(2,1).getEdge(0).chop();
+//		tester.returnTile(2,1).getEdge(0).chop();
+//		tester.returnTile(4,1).getEdge(0).chop();
+//		tester.returnTile(4,1).getEdge(0).chop();
+//		tester.returnTile(5,1).getEdge(0).chop();
+//		tester.returnTile(5,1).getEdge(0).chop();
+//		tester.returnTile(1,1).getEdge(1).chop();
+//		tester.returnTile(1,1).getEdge(1).chop();
+//		tester.returnTile(1,2).getEdge(1).chop();
+//		tester.returnTile(1,2).getEdge(1).chop();
+//		tester.returnTile(1,3).getEdge(1).chop();
+//		tester.returnTile(1,3).getEdge(1).chop();
+//		tester.returnTile(1,4).getEdge(1).chop();
+//		tester.returnTile(1,4).getEdge(1).chop();
+//		tester.returnTile(1,5).getEdge(1).chop();
+//		tester.returnTile(1,5).getEdge(1).chop();
+//		tester.returnTile(1,7).getEdge(1).chop();
+//		tester.returnTile(1,7).getEdge(1).chop();
+//		tester.returnTile(1,8).getEdge(1).chop();
+//		tester.returnTile(1,8).getEdge(1).chop();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		tester.updateDamageCounter();
+//		
+//		
+//		
+//		//victims lost conditions
+//		tester.getLostVictimsList().add(new POI(true));
+//		tester.getLostVictimsList().add(new POI(true));
+//		tester.getLostVictimsList().add(new POI(true));
+//		
+//		tester.returnTile(4, 5).addPoi(new POI(true));
+//		tester.returnTile(6, 7).addPoi(new POI(true));
+//		tester.returnTile(2,4).getPoiList().remove(0);
+//		tester.returnTile(5,8).getPoiList().remove(0);
+//		
+//		//victims won conditions
+//		tester.getSavedVictimsList().add(new POI(true));
+//		tester.getSavedVictimsList().add(new POI(true));
+//		tester.getSavedVictimsList().add(new POI(true));
+//		tester.getSavedVictimsList().add(new POI(true));
+//		tester.getSavedVictimsList().add(new POI(true));
+//		tester.getSavedVictimsList().add(new POI(true));
+		
 		
 		current = new GameManager(tester);
 
 		
 		table = new LocalizedTable(tester);
+//		current.setAllAvailableActions(current.generateAllPossibleActions());
+//		tester.updateActionList(current.getAllAvailableActions());
 		
 	}
 	
@@ -46,12 +126,15 @@ public static void main(String[] args) {
 		}
 		current.advanceFire();
 		table.showAdvanceFireString(current.getAdvFireMessage());
-		if(tester.isGameTerminated()) {
-			table.showGameTermination();
-			System.out.println("Game Over");
-		} else if(tester.isGameWon()) {
+		if(tester.isGameWon()) {
 			table.showGameTermination();
 			System.out.println("Game Won");
+			table.refresh(tester);
+			table.showGameTermination();
+		} else if(tester.isGameTerminated()) {
+			System.out.println("Game Over");
+			table.refresh(tester);
+			table.showGameTermination();
 		}else {
 			tester.setActiveFireFighterIndex( (tester.getActiveFireFighterIndex() + 1)%(tester.getFireFighterList().size()) );
 			current.setAllAvailableActions(current.generateAllPossibleActions());

@@ -1371,7 +1371,16 @@ public class LocalizedTable {
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel();
 			
-			if(currentBoard.isGameTerminated()) {
+			
+			if(currentBoard.isGameWon()) {
+				JLabel popupMsg = new JLabel("Game Won.\n 7 victims were saved in time.");
+				gameTPanel.setPreferredSize(new Dimension(300,300));
+				gameTPanel.setBackground(tileColorGreen);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
+				gameTPanel.setBorder(blackline);
+				gameTPanel.add(popupMsg);
+				gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+			} else if(currentBoard.isGameTerminated()) {
 				if(currentBoard.getDamageCounter() >= 24) {
 					JLabel popupMsg = new JLabel("Game over.\n The house has collapsed.");
 					gameTPanel.setPreferredSize(new Dimension(300,300));
@@ -1390,15 +1399,7 @@ public class LocalizedTable {
 					gameTPanel.add(popupMsg);
 					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 				}
-			} else if(currentBoard.isGameWon()) {
-				JLabel popupMsg = new JLabel("Game Won.\n 7 victims were saved in time.");
-				gameTPanel.setPreferredSize(new Dimension(300,300));
-				gameTPanel.setBackground(tileColorGreen);
-				Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
-				gameTPanel.setBorder(blackline);
-				gameTPanel.add(popupMsg);
-				gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
-			}
+			} 
 			
 			gameTermination.show();
 		}
