@@ -12,8 +12,6 @@ public class AdvancedGame extends TemplateGame{
 	
 	public AdvancedGame(String mode) {
 		
-		
-		
 	}
 	
 	@Override
