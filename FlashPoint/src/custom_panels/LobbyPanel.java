@@ -143,8 +143,8 @@ public class LobbyPanel extends JPanel {
 		textMode.setLineWrap(true);
 		lobbyDescPanel.add(textMode);
 		
-//		String difficulty = "Difficulty: " + targetLobby.get;
-		textDifficulty = new JTextArea("Difficulty:");
+		String difficulty = "Difficulty: " + targetLobby.getDifficulty();
+		textDifficulty = new JTextArea(difficulty);
 		textDifficulty.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textDifficulty.setBounds(440, 0, 200, 100);
 		textDifficulty.setEditable(false);

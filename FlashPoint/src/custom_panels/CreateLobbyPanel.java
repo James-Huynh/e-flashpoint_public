@@ -68,6 +68,7 @@ public class CreateLobbyPanel extends JPanel {
 
 	private int nbPlayers;
 	private String gameMode;
+	private String gameDifficulty = "notSelected";
 	private String lobbyName = "Loren Ipsum";
 
 	private Lobby lobby;
@@ -166,6 +167,10 @@ public class CreateLobbyPanel extends JPanel {
 	private void GameModeSelected (JToggleButton button) {
 		gameMode = button.getText();
 	}
+	
+	private void GameDifficultySelected (JToggleButton button) {
+		gameDifficulty = button.getText();
+	}
 
 	private void createDifficultyPanel() {
 		difficultyPanel = new JPanel();
@@ -187,14 +192,35 @@ public class CreateLobbyPanel extends JPanel {
 	private void createDifficultyButtons() {
 		recruitBtn = new JToggleButton("Recruit");
 		recruitBtn.setBounds(0, 25, 117, 29);
+		recruitBtn.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange()==ItemEvent.SELECTED){
+					GameDifficultySelected (recruitBtn);
+				}
+			}
+		});
 		difficultyPanel.add(recruitBtn);
-
+		
 		veteranBtn = new JToggleButton("Veteran");
 		veteranBtn.setBounds(113, 25, 117, 29);
+		veteranBtn.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange()==ItemEvent.SELECTED){
+					GameDifficultySelected (veteranBtn);
+				}
+			}
+		});
 		difficultyPanel.add(veteranBtn);
 
 		heroicBtn = new JToggleButton("Heroic");
 		heroicBtn.setBounds(225, 25, 117, 29);
+		heroicBtn.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange()==ItemEvent.SELECTED){
+					GameDifficultySelected (heroicBtn);
+				}
+			}
+		});
 		difficultyPanel.add(heroicBtn);
 
 		diffOpts = new ButtonGroup();
@@ -296,7 +322,7 @@ public class CreateLobbyPanel extends JPanel {
 
 	// James
 	private boolean createLobbyRequest() {
-		return clientManager.createLobbyRequest(lobbyName, gameMode, nbPlayers);
+		return clientManager.createLobbyRequest(lobbyName, gameMode, nbPlayers, gameDifficulty);
 	}
 
 	public void addSelectionPiecesListenerListener(CreateListener obj) {

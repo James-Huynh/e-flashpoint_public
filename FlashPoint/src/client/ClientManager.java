@@ -7,6 +7,7 @@ import actions.Action;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
+import game.FamilyGame;
 import game.GameState;
 import lobby.Lobby;
 
@@ -199,7 +200,7 @@ public class ClientManager {
 	 * Asks the server to create a lobby
 	 * @return boolean indicating the status of the operation
 	 */
-	public boolean createLobbyRequest(String name, String mode, int capacity) {
+	public boolean createLobbyRequest(String name, String mode, int capacity, String difficulty) {
 		boolean flag = false;
 		
 //		Lobby lobby = requestObject.getCurrentLobby();
@@ -207,6 +208,15 @@ public class ClientManager {
 		lobby.setName(name);
 		lobby.setMode(mode);
 		lobby.setCapacity(capacity);
+		lobby.setDifficulty(difficulty);
+		if(mode.equals("Family")){
+			lobby.setFamilyGame();
+		}else{
+			if(difficulty.equals("Recruit")) lobby.setRecruitGame();
+			else if(difficulty.equals("Veteran")) lobby.setVeteranGame();
+			else lobby.setHeoircGame();
+			
+		}
 		
 		requestObject.setCurrentLobby(lobby);
 		
