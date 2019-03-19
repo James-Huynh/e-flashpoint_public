@@ -4,6 +4,7 @@ import java.io.Serializable;
 // Start of user code for imports
 import java.util.ArrayList;
 
+import game.AdvancedGame;
 import game.FamilyGame;
 import game.TemplateGame;
 import server.Player;
@@ -14,7 +15,7 @@ public class Lobby implements Serializable  {
 	private ArrayList<Player> players;
 	private ArrayList<token.Colour> assignableColours;
 
-	private String mode, name;
+	private String mode, name, difficulty;
 	private int capacity;
 
 	private TemplateGame template;
@@ -32,10 +33,6 @@ public class Lobby implements Serializable  {
 //		players.add(new Player("Ben", "Cuba123"));
 //		players.add(new Player("Cao", "zeroOneTwoThree"));
 //		players.add(new Player("James", "myPassword"));
-		mode = "Family";
-		if(mode.equals("Family")) {
-			template = new FamilyGame();
-		}
 //		assignColours();
 
 	}
@@ -114,6 +111,33 @@ public class Lobby implements Serializable  {
 	public void addPlayer(Player newPlayer) {
 		this.players.add(newPlayer);
 		assignColours();
+	}
+
+	public void setDifficulty(String difficulty) {
+		if(!difficulty.equals("notSelected"))
+			this.difficulty = difficulty;
+		
+	}
+	public String getDifficulty() {
+		return difficulty;
+	}
+	public void setFamilyGame() {
+		template = new FamilyGame();
+	}
+
+	public void setRecruitGame() {
+		template = new AdvancedGame("Recruit");
+		
+	}
+
+	public void setVeteranGame() {
+		template = new AdvancedGame("Veteran");
+		
+	}
+
+	public void setHeoircGame() {
+		template = new AdvancedGame("Heroic");
+		
 	}
 
 }

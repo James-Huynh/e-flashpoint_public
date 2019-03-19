@@ -146,6 +146,11 @@ public class GameState implements Serializable {
 		initializeTiles();
 		setClosest();
 		initializeEdges(lobby.getTemplate().getEdgeLocations());
+		//we are setting outer doors open!
+		matTiles[0][6].getEdge(3).change();
+		matTiles[3][0].getEdge(2).change();
+		matTiles[4][9].getEdge(0).change();
+		matTiles[7][3].getEdge(1).change();
 		initializeBasicTokens(lobby.getTemplate().getTokenLocations());
 		this.listOfPlayers = lobby.getPlayers();
 		setFirefighters();

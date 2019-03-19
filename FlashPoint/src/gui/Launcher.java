@@ -49,7 +49,7 @@ public class Launcher {
 	private String BenIP = "142.157.58.203";
 	
 	private static Client client;
-	private String ServerIP = EricIP;
+	private String ServerIP = "142.119.4.73";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
