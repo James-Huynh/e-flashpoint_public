@@ -2,7 +2,8 @@ package game;
 
 public class FamilyGame extends TemplateGame {
 	
-	protected int[][] tokenLocations = new int[8][10];
+	protected int[][] fireLocations = new int[8][10];
+	protected int[][] POILocations = new int[8][10];
 	protected int[][] edgeLocations = new int[9][21]; 	// subject to change
 	
 	
@@ -10,28 +11,35 @@ public class FamilyGame extends TemplateGame {
 	
 	//21/9 10/8
 	
-	//Set initially no fire & no POI in tile
+	//Set initially no fire in tile
 	for (int i=0; i<8; i++) {
 		for (int j=0; j<10; j++) {
-			tokenLocations[i][j] = 0;
+			fireLocations[i][j] = 0;
 		}
 	}
 	
 	//10 Fire locations
-	tokenLocations[2][2] = 1;
-	tokenLocations[2][3] = 1;
-	tokenLocations[3][2] = 1;
-	tokenLocations[3][3] = 1;
-	tokenLocations[3][4] = 1;
-	tokenLocations[4][4] = 1;
-	tokenLocations[3][5] = 1;
-	tokenLocations[5][6] = 1;
-	tokenLocations[6][6] = 1;
-	tokenLocations[5][7] = 1;
+	fireLocations[2][2] = 2;
+	fireLocations[2][3] = 2;
+	fireLocations[3][2] = 2;
+	fireLocations[3][3] = 2;
+	fireLocations[3][4] = 2;
+	fireLocations[4][4] = 2;
+	fireLocations[3][5] = 2;
+	fireLocations[5][6] = 2;
+	fireLocations[6][6] = 2;
+	fireLocations[5][7] = 2;
+	
+	//Set initially no POI in tile
+	for (int i=0; i<8; i++) {
+		for (int j=0; j<10; j++) {
+			POILocations[i][j] = 0;
+		}
+	}
 	//3 POI locations
-	tokenLocations[2][4] = 2;
-	tokenLocations[5][1] = 2;
-	tokenLocations[5][8] = 2;
+	POILocations[2][4] = 1;
+	POILocations[5][1] = 1;
+	POILocations[5][8] = 1;
 	
 
 	//Set initially with all no edges except bottom edge
@@ -125,8 +133,11 @@ public class FamilyGame extends TemplateGame {
 		
 	}
 	//Getters and setters
-	public int[][] getTokenLocations() {
-        return tokenLocations;
+	public int[][] getFireLocations() {
+        return fireLocations;
+    }
+	public int[][] getPOILocations() {
+        return POILocations;
     }
     public int[][] getEdgeLocations() {
         return edgeLocations;

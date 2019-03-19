@@ -16,7 +16,9 @@ abstract public class TemplateGame implements Serializable {
     protected int[][] edgeLocations;
     private static final long serialVersionUID = 1L;
     
-    public abstract int[][] getTokenLocations();
-
+    public abstract int[][] getPOILocations();
+    
+    public abstract int[][] getFireLocations();
+    
     public abstract int[][] getEdgeLocations();
 }
