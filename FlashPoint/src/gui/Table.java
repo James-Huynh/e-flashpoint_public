@@ -215,7 +215,7 @@ public class Table {
 				infoPanel.drawInfo(currentBoard);
 				add(infoPanel);
 				add(chatArea);
-				validate();
+				revalidate();
 				repaint();
 			}
 		}
@@ -232,7 +232,7 @@ public class Table {
 				// TODO Auto-generated method stub
 				removeAll();
 				createPlayerInfo();
-				validate();
+				revalidate();
 				repaint();
 				
 			}
@@ -291,7 +291,7 @@ public class Table {
 				add(lostPoiPanel, BorderLayout.NORTH);
 				add(savedPoiPanel, BorderLayout.SOUTH);
 				add(revealPoiPanel, BorderLayout.CENTER);
-				validate();
+				revalidate();
 				repaint();
 				
 			}
@@ -311,7 +311,7 @@ public class Table {
 				removeAll();
 				this.currentBoard = newBoard;
 				getLost();
-				validate();
+				revalidate();
 				repaint();
 				
 			}
@@ -345,7 +345,7 @@ public class Table {
 				// TODO Auto-generated method stub
 				removeAll();
 				getSaved();
-				validate();
+				revalidate();
 				repaint();
 			}
 			public void getSaved() {
@@ -377,7 +377,7 @@ public class Table {
 				// TODO Auto-generated method stub
 				removeAll();
 				getRevealed();
-				validate();
+				revalidate();
 				repaint();
 			}
 			public void getRevealed() {
@@ -418,7 +418,7 @@ public class Table {
 					newTile.DrawTile(currentBoard);
 					add(newTile);
 				}
-				validate();
+				revalidate();
 				repaint();
 			}
 		}
@@ -444,7 +444,7 @@ public class Table {
 				assignTileWall();
 				tilePanel.drawTile(currentBoard);
 				add(tilePanel, BorderLayout.CENTER);
-				validate(); 
+				revalidate(); 
 				repaint();
 				
 				
@@ -743,7 +743,7 @@ public class Table {
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack);
 				setBorder(blackline);
 				assignTokens();
-				validate();
+				revalidate();
 				repaint();
 			}
 
@@ -1316,6 +1316,8 @@ public class Table {
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
 										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										clientThread t1 = new clientThread(launcher);
+//										t1.start();
 									}
 			    				}
 			    			});
@@ -1335,6 +1337,9 @@ public class Table {
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
 										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+										clientThread t1 = new clientThread(launcher);
+										t1.begin();
+//										t1.run();
 									}
 			    				}
 			    			});
@@ -1776,6 +1781,9 @@ public class Table {
 			
 		}	
 		
+		public int getMyIndex() {
+			return this.myIndex;
+		}
 		
 		private boolean sendPlaceFFRequest(int [] coords) {
 			return(clientManager.placeFFRequest(coords));

@@ -1,5 +1,6 @@
 package gui;
 
+import game.FamilyGame;
 import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
@@ -23,6 +24,9 @@ public static void main(String[] args) {
 		tempLobby.addPlayer(new Player("Ben", "ben", 12));
 //		tempLobby.addPlayer(new Player("Cao", "ben", 12));
 
+		
+		tempLobby.setMode("Family");
+		tempLobby.setTemplete(new FamilyGame());
 		
 		
 		tester.updateGameStateFromLobby(tempLobby);

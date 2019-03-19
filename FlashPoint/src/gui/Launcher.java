@@ -45,11 +45,11 @@ public class Launcher {
 	private String EricIP = "142.157.31.162";
 	private String JamesIP = "142.157.104.187";
 	private String JunhazIP = "142.157.65.31";
-	private String ZaidIP = "142.157.145.231";
+	private String ZaidIP = "142.157.145.58";
 	private String BenIP = "142.157.58.203";
 	
 	private static Client client;
-	private String ServerIP = "142.119.4.73";
+	private String ServerIP = "142.157.104.187";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
@@ -111,7 +111,7 @@ public class Launcher {
 		userOne.setPassword("zzz");
 		client = new Client(ServerIP, port);
 		client.start();
-		clientManager = new ClientManager(client.getClientInputThread(), client.getClientOutputThread());
+		clientManager = new ClientManager(client.getClientInputThread(), client.getClientOutputThread(), this);
 		if(sendConnectionRequest()) {	
 			initialize();
 		};
@@ -360,6 +360,11 @@ public class Launcher {
 		contentPane.add(board, BorderLayout.CENTER);
 		contentPane.add(RPanel, BorderLayout.EAST);
 		motherFrame.revalidate();
+	}
+	
+	public void refreshBoard() {
+		table.refresh(clientManager.getUsersGameState());
+		repaint(false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
 	}
 	
 	public void showAdvanceFireString(String advFireString) {

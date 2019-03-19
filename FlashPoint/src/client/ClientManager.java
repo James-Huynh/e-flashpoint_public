@@ -9,6 +9,7 @@ import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
 import game.FamilyGame;
 import game.GameState;
+import gui.Launcher;
 import lobby.Lobby;
 
 public class ClientManager {
@@ -23,10 +24,12 @@ public class ClientManager {
 //	private ArrayList<Lobby> onlineLobbies;
 	private int startGameFlag = 0;
 	private TranObjectType anyString;
+	private Launcher launcher;
 	
-	public ClientManager(ClientInputThread input, ClientOutputThread output) {
+	public ClientManager(ClientInputThread input, ClientOutputThread output, Launcher myLauncher) {
 		this.inputThread = input;
 		this.outputThread = output;
+		this.launcher = myLauncher;
 		
 	}
 	
@@ -106,6 +109,7 @@ public class ClientManager {
 			case ENDTURNSUCCESS:
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+//				launcher.refreshBoard();
 				startGameFlag = 1;
 				flag = true;
 				break;
