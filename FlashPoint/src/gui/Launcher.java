@@ -364,7 +364,7 @@ public class Launcher {
 	
 	public void refreshBoard() {
 		table.refresh(clientManager.getUsersGameState());
-		repaint(false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
+		repaint(clientManager.getUsersGameState().getFireFighterList().get(table.getMyIndex()).getCurrentPosition()!=null, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
 	}
 	
 	public void showAdvanceFireString(String advFireString) {
