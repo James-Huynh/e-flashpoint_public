@@ -1212,7 +1212,7 @@ public class Table {
 		    				public void actionPerformed(ActionEvent e) {
 		    					if(sendEndTurnRequest()){
 		    						System.out.println("this is the print that board is refreshing");
-		    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
+//		    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
 		    						if(clientManager.getUsersGameState().isGameTerminated()) {
 		    							launcher.showGameTermination();
 		    							//refresh(clientManager.getUsersGameState());
@@ -1571,7 +1571,7 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
     					if(sendEndTurnRequest()){
     						System.out.println("this is the print that board is refreshing");
-    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
+//    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
     						if(clientManager.getUsersGameState().isGameTerminated()) {
     							launcher.showGameTermination();
     							refresh(clientManager.getUsersGameState());

@@ -26,6 +26,8 @@ public class ClientManager {
 	private TranObjectType anyString;
 	private Launcher launcher;
 	
+	private boolean endTurnTrigger = false;
+	
 	public ClientManager(ClientInputThread input, ClientOutputThread output, Launcher myLauncher) {
 		this.inputThread = input;
 		this.outputThread = output;
@@ -110,6 +112,7 @@ public class ClientManager {
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				startGameFlag = 1;
+				setEndTurnTrigger(true);
 				flag = true;
 				break;
 			}
@@ -426,5 +429,15 @@ public class ClientManager {
 //		}
 		return true;
 	}
+
+	public boolean getEndTurnTrigger() {
+		return endTurnTrigger;
+	}
+
+	public void setEndTurnTrigger(boolean endTurnTrigger) {
+		this.endTurnTrigger = endTurnTrigger;
+	}
+	
+	
 	
 }

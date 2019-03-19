@@ -363,6 +363,10 @@ public class Launcher {
 	}
 	
 	public void refreshBoard() {
+		if(clientManager.getEndTurnTrigger()) {
+			showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
+			clientManager.setEndTurnTrigger(false);
+		}
 		table.refresh(clientManager.getUsersGameState());
 		repaint(clientManager.getUsersGameState().getFireFighterList().get(table.getMyIndex()).getCurrentPosition()==null, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
 	}

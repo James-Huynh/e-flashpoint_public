@@ -22,7 +22,10 @@ public class clientThread implements Runnable{
 			if(myClientManager.listenForResponses() == 1) {
 				System.out.println("I heard a resposne");
 				myLauncher.refreshBoard();
-			}
+			} 
+//			else if (myClientManager.listenForResponses()==2){
+//				myLauncher.refreshLobby();
+//			}
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
