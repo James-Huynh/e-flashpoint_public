@@ -1317,7 +1317,7 @@ public class Table {
 										refresh(clientManager.getUsersGameState());
 										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 //										clientThread t1 = new clientThread(launcher);
-//										t1.run();
+//										t1.start();
 									}
 			    				}
 			    			});
@@ -1337,7 +1337,8 @@ public class Table {
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 										refresh(clientManager.getUsersGameState());
 										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-//										clientThread t1 = new clientThread(launcher);
+										clientThread t1 = new clientThread(launcher);
+										t1.begin();
 //										t1.run();
 									}
 			    				}

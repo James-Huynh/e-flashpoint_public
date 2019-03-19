@@ -25,4 +25,10 @@ public class clientThread implements Runnable{
 		
 	}
 
+	public void begin() {
+		// TODO Auto-generated method stub
+		Thread t1 = new Thread(this);
+		t1.start();
+	}
+
 }
