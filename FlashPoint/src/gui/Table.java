@@ -78,6 +78,7 @@ public class Table {
 		private ClientManager clientManager;
 		private Launcher launcher;
 		private int myIndex = 7;
+		private clientThread listenerThread;
 		
 //		public Table(GameState inputBoard) {
 //			this.currentBoard = inputBoard;
@@ -102,12 +103,14 @@ public class Table {
 			gameTiles = inputBoard.getMatTiles();
 			this.clientManager = updatedClientManager;
 			this.launcher = launcher;
+			this.listenerThread = new clientThread(this.launcher, this.clientManager);
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
 				if(updatedClientManager.getUserName().equals(f.getOwner().getUserName())) {
 					this.myIndex = i;
 				}
 			}
+			this.listenerThread.begin();
 //			System.out.println("this is the my index: " + this.myIndex);
 		}
 		
@@ -864,8 +867,8 @@ public class Table {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 											
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    					
 				    				}
@@ -884,8 +887,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -903,8 +906,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -922,8 +925,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -943,8 +946,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -962,8 +965,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -981,8 +984,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1000,8 +1003,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1024,8 +1027,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1042,8 +1045,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1061,8 +1064,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1079,8 +1082,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1097,8 +1100,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1117,8 +1120,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1135,8 +1138,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1154,8 +1157,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1172,8 +1175,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1190,8 +1193,8 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 //											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											refresh(clientManager.getUsersGameState());
-											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//											refresh(clientManager.getUsersGameState());
+//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 										}
 				    				}
 				    			});
@@ -1219,8 +1222,8 @@ public class Table {
 		    							//refresh(clientManager.getUsersGameState());
 		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						} else {
-		    							refresh(clientManager.getUsersGameState());
-		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//		    							refresh(clientManager.getUsersGameState());
+//		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						}
 		    					}
 		    				}
@@ -1240,8 +1243,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1258,8 +1261,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1276,8 +1279,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1294,8 +1297,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1314,10 +1317,9 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-//										clientThread t1 = new clientThread(launcher);
-//										t1.start();
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+
 									}
 			    				}
 			    			});
@@ -1335,11 +1337,9 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										clientThread t1 = new clientThread(launcher);
-										t1.begin();
-//										t1.run();
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+
 									}
 			    				}
 			    			});
@@ -1357,8 +1357,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1376,8 +1376,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1397,8 +1397,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1416,8 +1416,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1435,8 +1435,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1454,8 +1454,8 @@ public class Table {
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
 //										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-										refresh(clientManager.getUsersGameState());
-										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//										refresh(clientManager.getUsersGameState());
+//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 									}
 			    				}
 			    			});
@@ -1535,8 +1535,9 @@ public class Table {
 							System.out.println("this is the print that board is refreshing");
 //							clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
 							System.out.println("helo!      " + clientManager.getUsersGameState().returnTile(0, 0).getFirefighterList().size());
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(false, myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(false, myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							listenerThread.begin();
 							System.out.println("finished repainting");
 						}
 //						clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));

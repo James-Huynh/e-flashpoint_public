@@ -277,19 +277,19 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		
 		System.out.println("place check");
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-			System.out.println(anyString);
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//			System.out.println(anyString);
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
 		
 //		return requestObject.getCurrentState();
 		return flag;
@@ -314,19 +314,19 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		
 		System.out.println("place check");
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
-		return flag;
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
+		return true;
 //		return requestObject.getCurrentState();
 	}
 

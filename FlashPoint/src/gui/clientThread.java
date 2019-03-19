@@ -1,11 +1,16 @@
 package gui;
 
+import client.ClientManager;
+
 public class clientThread implements Runnable{
 
-	Launcher launcher;
+	Launcher myLauncher;
+	ClientManager myClientManager;
 	
-	clientThread(Launcher mylauncher){
-		this.launcher = mylauncher;
+	clientThread(Launcher mylauncher, ClientManager myManager){
+		this.myLauncher = mylauncher;
+		this.myClientManager = myManager;
+		
 	}
 	
 	@Override
@@ -13,8 +18,11 @@ public class clientThread implements Runnable{
 		
 		
 		while(true) {
-			System.out.println("this is working");
-//			launcher.refreshBoard();
+//			System.out.println("this is working");
+			if(myClientManager.listenForResponses() == 1) {
+				System.out.println("I heard a resposne");
+				myLauncher.refreshBoard();
+			}
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
