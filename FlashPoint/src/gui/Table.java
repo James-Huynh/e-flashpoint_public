@@ -1581,8 +1581,8 @@ public class Table {
     							refresh(clientManager.getUsersGameState());
     							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
     						} else {
-    							refresh(clientManager.getUsersGameState());
-    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//    							refresh(clientManager.getUsersGameState());
+//    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
     						}
     					}
     					

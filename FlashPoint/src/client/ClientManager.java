@@ -109,7 +109,6 @@ public class ClientManager {
 			case ENDTURNSUCCESS:
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
-//				launcher.refreshBoard();
 				startGameFlag = 1;
 				flag = true;
 				break;
@@ -413,19 +412,19 @@ public class ClientManager {
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
-		return flag;
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
+		return true;
 	}
 	
 }
