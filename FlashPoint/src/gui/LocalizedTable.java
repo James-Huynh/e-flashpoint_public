@@ -606,6 +606,42 @@ public class LocalizedTable {
 					}
 				}
 				
+				if(connectedTile.getCoords()[0] == 0 && connectedTile.getCoords()[1] == 5) {
+					try {
+						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_LEFT.gif"));
+						JLabel temp = new JLabel(new ImageIcon(imageDoor));
+						temp.setBackground(tileColorAmbulance);
+						add(temp, BorderLayout.EAST);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}if(connectedTile.getCoords()[0] == 0 && connectedTile.getCoords()[1] == 6) {
+					try {
+						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_RIGHT.gif"));
+						add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				if(connectedTile.getCoords()[0] == 0 && connectedTile.getCoords()[1] == 7) {
+					try {
+						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_LEFT.gif"));
+						JLabel temp = new JLabel(new ImageIcon(imageDoor));
+						temp.setBackground(tileColorAmbulance);
+						add(temp, BorderLayout.EAST);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}if(connectedTile.getCoords()[0] == 0 && connectedTile.getCoords()[1] == 8) {
+					try {
+						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_RIGHT.gif"));
+						add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
 			}
 		}
 		
@@ -712,6 +748,17 @@ public class LocalizedTable {
 				}else {
 					add(new JLabel());
 				}
+				
+				if(true /*this.connectedTile.containsHazmat()*/) {
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT.gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}else {
+					add(new JLabel());
+				}
 					
 				if(this.connectedTile.containsFirefighter()) {
 					String builder = defaultImagesPath;
@@ -747,6 +794,49 @@ public class LocalizedTable {
 				} else {
 					add(new JLabel());
 				}
+				
+				if(connectedTile.getCoords()[0] == 1 && connectedTile.getCoords()[1] == 0) {
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "AMBULANCE.gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+				}else if(connectedTile.getCoords()[0] == 2 && connectedTile.getCoords()[1] == 0) {
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "AMBULANCE.gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+				} else if(connectedTile.getCoords()[0] == 3 && connectedTile.getCoords()[1] == 0) {
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "ENGINE.gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}else if(connectedTile.getCoords()[0] == 4 && connectedTile.getCoords()[1] == 0) {
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "ENGINE.gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+				}
+				else /*(this.connectedTile.hasHotSpot())*/ {
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HOTSPOT.gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} //else {
+//					add(new JLabel());
+//				}
 			}
 			
 		

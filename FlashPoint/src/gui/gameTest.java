@@ -22,7 +22,7 @@ public static void main(String[] args) {
 		tempLobby.addPlayer(new Player("Logan", "ben", 12));
 		tempLobby.addPlayer(new Player("Ben", "ben", 12));
 //		tempLobby.addPlayer(new Player("Cao", "ben", 12));
-//		tempLobby.addPlayer(new Player("James", "ben", 12));
+
 		
 		
 		tester.updateGameStateFromLobby(tempLobby);
