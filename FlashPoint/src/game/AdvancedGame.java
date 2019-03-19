@@ -14,8 +14,6 @@ public class AdvancedGame extends TemplateGame{
 		
 		
 		
-		
-		
 	}
 	
 	@Override
