@@ -109,7 +109,7 @@ public class ClientManager {
 			case ENDTURNSUCCESS:
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
-				launcher.refreshBoard();
+//				launcher.refreshBoard();
 				startGameFlag = 1;
 				flag = true;
 				break;
