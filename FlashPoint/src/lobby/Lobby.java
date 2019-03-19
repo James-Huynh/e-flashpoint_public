@@ -15,7 +15,7 @@ public class Lobby implements Serializable  {
 	private ArrayList<Player> players;
 	private ArrayList<token.Colour> assignableColours;
 
-	private String mode, name, difficulty;
+	private String mode, name, difficulty, board;
 	private int capacity;
 
 	private TemplateGame template;
@@ -126,17 +126,26 @@ public class Lobby implements Serializable  {
 	}
 
 	public void setRecruitGame() {
-		template = new AdvancedGame("Recruit");
+		template = new AdvancedGame("Recruit", 0);
 		
 	}
 
 	public void setVeteranGame() {
-		template = new AdvancedGame("Veteran");
+		template = new AdvancedGame("Veteran", 0);
 		
 	}
 
 	public void setHeoircGame() {
-		template = new AdvancedGame("Heroic");
+		template = new AdvancedGame("Heroic", 0);
+		
+	}
+
+	public String getBoard() {
+		return board;
+	}
+
+	public void setBoard(String board) {
+		this.board = board;
 		
 	}
 

@@ -145,6 +145,7 @@ public class GameState implements Serializable {
 		setClosest();
 		initializeEdges(lobby.getTemplate().getEdgeLocations());
 		// we are setting outer doors open!
+		//if exterior door then open the door not implemented!!
 		matTiles[0][6].getEdge(3).change();
 		matTiles[3][0].getEdge(2).change();
 		matTiles[4][9].getEdge(0).change();

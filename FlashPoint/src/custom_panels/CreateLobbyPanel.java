@@ -49,6 +49,13 @@ public class CreateLobbyPanel extends JPanel {
 	private JToggleButton expBtn;
 	private JLabel modeLabel;
 
+	private JPanel boardPanel;
+	private ButtonGroup boardOpts;
+	private JToggleButton boardOneBtn;
+	private JToggleButton boardTwoBtn;
+	private JToggleButton boardRandomBtn;
+	private JLabel boardLabel;
+	
 	private JPanel difficultyPanel;
 	private JLabel diffLabel;
 	private ButtonGroup diffOpts;
@@ -69,6 +76,7 @@ public class CreateLobbyPanel extends JPanel {
 	private int nbPlayers;
 	private String gameMode;
 	private String gameDifficulty = "notSelected";
+	private String gameBoard;
 	private String lobbyName = "Loren Ipsum";
 
 	private Lobby lobby;
@@ -88,6 +96,7 @@ public class CreateLobbyPanel extends JPanel {
 		createBackButton();
 		createHeaderPanel();
 		createModePanel();
+		createBoardPanel();
 		createDifficultyPanel();
 		createRulesPanel();
 		createPlayerPanel();
@@ -120,12 +129,25 @@ public class CreateLobbyPanel extends JPanel {
 
 	private void createModePanel() {
 		modePanel = new JPanel();
-		modePanel.setBounds(316, 291, 230, 54);
+		modePanel.setBounds(361, 234, 230, 54);
 		modePanel.setLayout(null);
 		this.add(modePanel);
 
 		createToggleButtons();
 		createModeHeader();
+	}
+	
+	private void createBoardPanel() {
+		boardPanel = new JPanel();
+		boardPanel.setBounds(528, 354, 342, 54);
+		boardPanel.setLayout(null);
+		this.add(boardPanel);
+		
+		
+		
+		createBoardButtons(); 
+		createBoardHeader();
+		 
 	}
 
 	private void createToggleButtons() {
@@ -171,11 +193,15 @@ public class CreateLobbyPanel extends JPanel {
 	private void GameDifficultySelected (JToggleButton button) {
 		gameDifficulty = button.getText();
 	}
-
+	
+	private void GameBoardSelected (JToggleButton button) {
+		gameBoard = button.getText();
+	}
+	
 	private void createDifficultyPanel() {
 		difficultyPanel = new JPanel();
 		difficultyPanel.setLayout(null);
-		difficultyPanel.setBounds(254, 391, 342, 54);
+		difficultyPanel.setBounds(84, 354, 342, 54);
 		this.add(difficultyPanel);
 		createDifficultyHeader();
 		createDifficultyButtons();
@@ -227,6 +253,54 @@ public class CreateLobbyPanel extends JPanel {
 		diffOpts.add(recruitBtn);
 		diffOpts.add(veteranBtn);
 		diffOpts.add(heroicBtn);
+	}
+	
+	private void createBoardHeader() {
+		boardLabel = new JLabel("Select Board");
+		boardLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		boardLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		boardLabel.setBounds(6, 0, 336, 20);
+		boardPanel.add(boardLabel);
+	}
+	
+	private void createBoardButtons() {
+		boardOneBtn = new JToggleButton("Board 1");
+		boardOneBtn.setBounds(0, 25, 117, 29);
+		boardOneBtn.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange()==ItemEvent.SELECTED){
+					GameBoardSelected (boardOneBtn);
+				}
+			}
+		});
+		boardPanel.add(boardOneBtn);
+		
+		boardTwoBtn = new JToggleButton("Board 2");
+		boardTwoBtn.setBounds(113, 25, 117, 29);
+		boardTwoBtn.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange()==ItemEvent.SELECTED){
+					GameBoardSelected (veteranBtn);
+				}
+			}
+		});
+		boardPanel.add(boardTwoBtn);
+
+		boardRandomBtn = new JToggleButton("Board 3");
+		boardRandomBtn.setBounds(225, 25, 117, 29);
+		boardRandomBtn.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange()==ItemEvent.SELECTED){
+					GameBoardSelected (boardRandomBtn);
+				}
+			}
+		});
+		boardPanel.add(boardRandomBtn);
+
+		boardOpts = new ButtonGroup();
+		boardOpts.add(boardOneBtn);
+		boardOpts.add(boardTwoBtn);
+		boardOpts.add(boardRandomBtn);
 	}
 
 	private void createRulesPanel() {
@@ -322,7 +396,7 @@ public class CreateLobbyPanel extends JPanel {
 
 	// James
 	private boolean createLobbyRequest() {
-		return clientManager.createLobbyRequest(lobbyName, gameMode, nbPlayers, gameDifficulty);
+		return clientManager.createLobbyRequest(lobbyName, gameMode, nbPlayers, gameDifficulty, gameBoard);
 	}
 
 	public void addSelectionPiecesListenerListener(CreateListener obj) {

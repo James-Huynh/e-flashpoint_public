@@ -37,8 +37,7 @@ public class LobbyPanel extends JPanel {
 	
 	private JPanel lobbyDescPanel;
 	private JTextArea textRules;
-	private JTextArea textMode;
-	private JTextArea textDifficulty;
+	private JTextArea textGameDesc;
 	
 	private JPanel playersPanel;
 	private ArrayList<Player> currPlayerList;
@@ -119,7 +118,7 @@ public class LobbyPanel extends JPanel {
 	
 	private void createLobbyDescription() {
 		lobbyDescPanel = new JPanel();
-		lobbyDescPanel.setBounds(123, 563, 662, 84);
+		lobbyDescPanel.setBounds(195, 563, 426, 84);
 		lobbyDescPanel.setLayout(null);
 		this.add(lobbyDescPanel);
 		
@@ -136,20 +135,15 @@ public class LobbyPanel extends JPanel {
 		lobbyDescPanel.add(textRules);
 		
 		String mode = "Mode: " + targetLobby.getMode();
-		textMode = new JTextArea(mode);
-		textMode.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		textMode.setBounds(220, 0, 200, 100);
-		textMode.setEditable(false);
-		textMode.setLineWrap(true);
-		lobbyDescPanel.add(textMode);
-		
 		String difficulty = "Difficulty: " + targetLobby.getDifficulty();
-		textDifficulty = new JTextArea(difficulty);
-		textDifficulty.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		textDifficulty.setBounds(440, 0, 200, 100);
-		textDifficulty.setEditable(false);
-		textDifficulty.setLineWrap(true);
-		lobbyDescPanel.add(textDifficulty);
+		String board = "Board: " + targetLobby.getBoard();
+		textGameDesc = new JTextArea(mode + "\n" + difficulty + "\n" + board);
+//		textGameDesc = new JTextArea(mode + "\n" + "hello");
+		textGameDesc.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		textGameDesc.setBounds(220, 0, 200, 100);
+		textGameDesc.setEditable(false);
+		textGameDesc.setLineWrap(true);
+		lobbyDescPanel.add(textGameDesc);
 	}
 	
 	private void createPlayersPanel() {

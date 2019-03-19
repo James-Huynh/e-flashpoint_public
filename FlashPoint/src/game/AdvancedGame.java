@@ -10,8 +10,8 @@ public class AdvancedGame extends TemplateGame{
 	protected int[][] tokenLocations = new int[8][10];
 	protected int[][] edgeLocations = new int[9][21];
 	
-	public AdvancedGame(String mode) {
-		
+	public AdvancedGame(String mode, int board) {
+		if(board == 0)
 	}
 	
 	@Override

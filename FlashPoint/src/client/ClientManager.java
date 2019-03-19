@@ -200,7 +200,7 @@ public class ClientManager {
 	 * Asks the server to create a lobby
 	 * @return boolean indicating the status of the operation
 	 */
-	public boolean createLobbyRequest(String name, String mode, int capacity, String difficulty) {
+	public boolean createLobbyRequest(String name, String mode, int capacity, String difficulty, String board) {
 		boolean flag = false;
 		
 //		Lobby lobby = requestObject.getCurrentLobby();
@@ -209,6 +209,7 @@ public class ClientManager {
 		lobby.setMode(mode);
 		lobby.setCapacity(capacity);
 		lobby.setDifficulty(difficulty);
+		lobby.setBoard(board);
 		if(mode.equals("Family")){
 			lobby.setFamilyGame();
 		}else{
