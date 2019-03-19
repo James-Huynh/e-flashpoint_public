@@ -292,7 +292,7 @@ public class ClientManager {
 //		}
 		
 //		return requestObject.getCurrentState();
-		return flag;
+		return true;
 	}
 	
 	public GameState getUsersGameState() {
