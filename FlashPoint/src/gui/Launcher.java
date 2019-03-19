@@ -49,7 +49,7 @@ public class Launcher {
 	private String BenIP = "142.157.58.203";
 	
 	private static Client client;
-	private String ServerIP = "142.119.4.73";
+	private String ServerIP = "142.157.65.237";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
@@ -111,7 +111,7 @@ public class Launcher {
 		userOne.setPassword("zzz");
 		client = new Client(ServerIP, port);
 		client.start();
-		clientManager = new ClientManager(client.getClientInputThread(), client.getClientOutputThread());
+		clientManager = new ClientManager(client.getClientInputThread(), client.getClientOutputThread(), this);
 		if(sendConnectionRequest()) {	
 			initialize();
 		};
@@ -360,6 +360,11 @@ public class Launcher {
 		contentPane.add(board, BorderLayout.CENTER);
 		contentPane.add(RPanel, BorderLayout.EAST);
 		motherFrame.revalidate();
+	}
+	
+	public void refreshBoard() {
+		table.refresh(clientManager.getUsersGameState());
+		repaint(false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
 	}
 	
 	public void showAdvanceFireString(String advFireString) {

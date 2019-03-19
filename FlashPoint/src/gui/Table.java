@@ -1219,8 +1219,8 @@ public class Table {
 		    							//refresh(clientManager.getUsersGameState());
 		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						} else {
-		    							refresh(clientManager.getUsersGameState());
-		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//		    							refresh(clientManager.getUsersGameState());
+//		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						}
 		    					}
 		    				}
@@ -1776,6 +1776,9 @@ public class Table {
 			
 		}	
 		
+		public int getMyIndex() {
+			return this.myIndex;
+		}
 		
 		private boolean sendPlaceFFRequest(int [] coords) {
 			return(clientManager.placeFFRequest(coords));
