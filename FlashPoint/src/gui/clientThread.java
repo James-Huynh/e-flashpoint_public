@@ -24,9 +24,10 @@ public class clientThread implements Runnable{
 		while(true) {
 			
 			if(this.inLobby) {
-				if(myClientManager.listenForResponses() == 1) {
+				int flag = myClientManager.listenForResponses();
+				if(flag == 1) {
 					myLauncher.refreshLobby();
-				} else if(myClientManager.listenForResponses() == 2) {
+				} else if(flag == 2) {
 					myLauncher.startGame();
 					this.inLobby = false;
 				}

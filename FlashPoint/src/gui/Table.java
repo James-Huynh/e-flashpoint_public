@@ -111,7 +111,6 @@ public class Table {
 				}
 			}
 			this.listenerThread.restart();
-//			System.out.println("this is the my index: " + this.myIndex);
 		}
 		
 		public BoardPanel genBoard() {
