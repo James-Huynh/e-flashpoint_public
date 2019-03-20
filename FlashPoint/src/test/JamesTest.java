@@ -30,6 +30,7 @@ public class JamesTest {
 	
 	public JamesTest() {
 		mainFrame = new JFrame();
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setBounds(0, 0, 800, 746);
 		mainFrame.getContentPane().setLayout(null);
 		mainFrame.setVisible(true);
