@@ -333,6 +333,7 @@ public class Launcher {
 		lobby.refreshDisplay();
 		contentPane.add(lobby);
 		lobby.setVisible(true);
+		motherFrame.revalidate();
 //		setupLobbyPage();
 		
 	}
