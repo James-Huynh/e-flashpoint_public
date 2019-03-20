@@ -110,7 +110,7 @@ public class Table {
 					this.myIndex = i;
 				}
 			}
-			this.listenerThread.restart();
+//			this.listenerThread.restart();
 		}
 		
 		public BoardPanel genBoard() {

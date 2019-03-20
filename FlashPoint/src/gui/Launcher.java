@@ -304,9 +304,9 @@ public class Launcher {
 				}
 				else {
 					if(sendGameStateRequest()) {
-						lobby.setVisible(false);
-						motherFrame.remove(lobby);
-						setupGamePage();
+//						lobby.setVisible(false);
+//						motherFrame.remove(lobby);
+//						setupGamePage();
 					} else {
 						System.out.println("faileddddd");
 					}
@@ -333,18 +333,19 @@ public class Launcher {
 		lobby.refreshDisplay();
 		contentPane.add(lobby);
 		lobby.setVisible(true);
+//		setupLobbyPage();
 		
 	}
 	
 	public void startGame() {
 		lobby.setVisible(false);
 		motherFrame.remove(lobby);
-		try {
-			listenerThread.holdUp();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			listenerThread.holdUp();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		setupGamePage();
 	}
 	//------------------------------- LOBBY

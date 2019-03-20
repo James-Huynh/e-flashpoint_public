@@ -264,7 +264,7 @@ public class ClientManager {
 //		catch(IOException k) {
 //			
 //		}
-		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
+//		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
 		return flag;
 		
 	}
