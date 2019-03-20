@@ -11,6 +11,10 @@ import game.FamilyGame;
 import game.GameState;
 import gui.Launcher;
 import lobby.Lobby;
+import chat.ChatMsgEntity;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ClientManager {
 	
@@ -25,6 +29,7 @@ public class ClientManager {
 	private int startGameFlag = 0;
 	private TranObjectType anyString;
 	private Launcher launcher;
+	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	
 	public ClientManager(ClientInputThread input, ClientOutputThread output, Launcher myLauncher) {
 		this.inputThread = input;
@@ -113,7 +118,26 @@ public class ClientManager {
 				startGameFlag = 1;
 				flag = true;
 				break;
-			}
+			case CHATMESSAGE:
+				requestObject = (User) read_tranObject.getObject();
+				
+			
+					ChatMsgEntity entity = null ;
+						if (entity.getName().equals("")) {
+							entity.setName(requestObject.getName());
+						}
+				
+							entity.setImg(requestObject.getId());
+							entity.setMessage(requestObject.getMessage());
+						
+						mDataArrays.add(entity);
+					}
+					Collections.reverse(mDataArrays);
+				
+			
+		
+		
+			
 			
 		}
 		return flag;

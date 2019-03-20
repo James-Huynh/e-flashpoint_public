@@ -30,6 +30,7 @@ public class User implements Serializable {
     private actions.Action action;
     private Lobby currentLobby;
     private ArrayList<Lobby> currentLobbies;
+    private String message;
 
 	public Integer getId() {
 		return id;
@@ -53,6 +54,12 @@ public class User implements Serializable {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 //	public int getPort() {
