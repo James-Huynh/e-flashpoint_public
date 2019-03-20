@@ -18,6 +18,8 @@ public class Tile implements Serializable{
     
     protected int fire;
     protected int[] coords;
+    protected int hotspot;
+    protected int hazmat;
     protected Edge[] adjacentEdges;
     protected ArrayList<Firefighter> listOfFirefighters;
     protected int x;
@@ -26,7 +28,7 @@ public class Tile implements Serializable{
     protected boolean isInterior;
     protected ParkingSpot pointerParkingSpot; 
     protected ParkingSpot nearestAmbulance;
-    protected Vehicle ParkingType;
+    protected Vehicle ParkingType; 
     
     public Tile(boolean isInterior, int[] coords) {
         this.x = coords[0];
@@ -189,12 +191,27 @@ public class Tile implements Serializable{
 		// TODO Auto-generated method stub
 		
 	}
+	public int getHotSpot() {
+		return this.hotspot;
+	}
+	
+	public void setHotSpot(int number) {
+		this.hotspot = number; 
+	}
 
 	@Override
 	public String toString() {
 		return "Tile [fire=" + fire + ", coords=" + Arrays.toString(coords) + ", interior=" +  ", adjacentEdges=" + Arrays.toString(adjacentEdges) + ", listOfFirefighters=" + listOfFirefighters
 				+ ", x=" + x + ", y=" + y + ", poiList=" + poiList + ", isInterior=" + isInterior
 				+ ", pointerParkingSpot=" + pointerParkingSpot + "]";
+	}
+
+	public void setHazmat(int number) {
+		this.hazmat = number;
+		
+	}
+	public int getHazmat() {
+		return this.hazmat;
 	}
 
 	

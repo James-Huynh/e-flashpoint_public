@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import actions.Action;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
@@ -12,6 +11,7 @@ import commons.tran.bean.TranObjectType;
 import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
+import tile.Tile;
 import token.Firefighter;
 
 public class ServerManager {
@@ -43,9 +43,31 @@ public class ServerManager {
 			System.out.println("ServerManager :- GameState was null and is now set up");
 			testGS = GameState.getInstance();
 			testGS.updateGameStateFromLobby(activeLobby);
+			initializeGameManager();
+			testGS.setListOfPlayers(activeLobby.getPlayers());
+			
+			if(activeLobby.getBoard().equals("Board 1")) {
+				if(activeLobby.getMode().equals("Family")) {
+				testGS.initializeEdges(activeLobby.getTemplate().getEdgeLocations());
+				// we are setting outer doors open!
+				//if exterior door then open the door not implemented!!
+				testGS.openExteriorDoors();
+				testGS.initializePOI(activeLobby.getTemplate().getPOILocations());
+				testGS.initializeFire(activeLobby.getTemplate().getFireLocations());
+				}
+				if(activeLobby.getMode().equals("Experienced")) {
+					if(activeLobby.getDifficulty().equals("Recruit")) initExperiencedGame(3,3);
+					if(activeLobby.getDifficulty().equals("Veteran")) initExperiencedGame(3,4);
+					if(activeLobby.getDifficulty().equals("Heroic")) initExperiencedGame(4,5);
+				}
+				
+				}
+				testGS.setFirefighters();
+			
+			
+			
 			testGS.setActiveFireFighterIndex(-1);
 			System.out.println("active FF index is (3) :- " + testGS.getActiveFireFighterIndex());
-			initializeGameManager();
 		}
 //		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
 //		generateActions();
@@ -155,7 +177,177 @@ public class ServerManager {
 		gameManager.advanceFire();
 		testGS.setAdvFireString(gameManager.getAdvFireMessage());
 	}
-
-
+	public void initExperiencedGame(int initialExplosions, int hazmats) {
+		//resolve initialExplosion amount of explosions
+		for(int i=initialExplosions; i > 0; i--) {
+		
+			int blackDice = 0;
+			
+			if(i == initialExplosions) {
+				int explosionAt = testGS.getRandomNumberInRange(1,8);
+				blackDice = explosionAt;
+				
+				if (explosionAt == 1) {
+					testGS.returnTile(3,3).setFire(2);
+					testGS.returnTile(4,3).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(3,3));
+				}
+				else if (explosionAt == 2) {
+					testGS.returnTile(4,3).setFire(2);
+					testGS.returnTile(4,3).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(4,3));
+				}
+				else if (explosionAt == 3) {
+					testGS.returnTile(5,3).setFire(2);
+					testGS.returnTile(5,3).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(5,3));
+				}
+				else if (explosionAt == 4) {
+					testGS.returnTile(6,3).setFire(2);
+					testGS.returnTile(6,3).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(6,3));
+				}
+				else if (explosionAt == 5) {
+					testGS.returnTile(6,4).setFire(2);
+					testGS.returnTile(6,4).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(6,4));
+				}
+				else if (explosionAt == 6) {
+					testGS.returnTile(5,4).setFire(2);
+					testGS.returnTile(5,4).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(5,4));
+				}
+				else if (explosionAt == 7) {
+					testGS.returnTile(4,4).setFire(2);
+					testGS.returnTile(4,4).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(4,4));
+				}
+				else {
+					testGS.returnTile(3,4).setFire(2);
+					testGS.returnTile(3,4).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(3,4));
+				}
+			}else if(i == initialExplosions - 1) {
+				boolean exit = true;
+				
+				while(exit) {
+					Tile explosionAt = testGS.rollForTile();
+					if(explosionAt.getFire() != 2) {
+						explosionAt.setFire(2);
+						explosionAt.setHotSpot(1);
+						gameManager.explosion(explosionAt);
+						blackDice = explosionAt.getX();
+						exit = false;
+					}
+				}
+			}else if(i == initialExplosions - 2) {
+				Tile explosionAt = testGS.returnTile((9 - blackDice),testGS.getRandomNumberInRange(1, 10));
+				if(explosionAt.getFire() != 2) {
+					explosionAt.setFire(2);
+					explosionAt.setHotSpot(1);
+					gameManager.explosion(explosionAt);
+					//blackDice = explosionAt.getX();
+				}
+				
+				boolean exit = true;
+				
+				while(exit) {
+					Tile newExplosionAt = testGS.rollForTile();
+					
+					if(newExplosionAt.getFire() != 2) {
+						newExplosionAt.setFire(2);
+						newExplosionAt.setHotSpot(1);
+						gameManager.explosion(newExplosionAt);
+						//blackDice = newExplosionAt.getX();
+						exit = false;
+					}
+				}
+				
+			}else {
+				boolean exit = true;
+				
+				while(exit) {
+					Tile newExplosionAt = testGS.rollForTile();
+					
+					if(newExplosionAt.getFire() != 2) {
+						newExplosionAt.setFire(2);
+						newExplosionAt.setHotSpot(1);
+						gameManager.explosion(newExplosionAt);
+						//blackDice = newExplosionAt.getX();
+						exit = false;
+					}
+				}
+			}
+		}
+		//roll to place hazmats
+		
+		for(int i = 0; i < hazmats; i++) {
+		boolean exit = true;
+		
+		while(exit) {
+			Tile hazmatAt = testGS.rollForTile();
+			
+			if(hazmatAt.getFire() != 2) {
+				hazmatAt.setHazmat(1);
+				exit = false;
+			}
+		}
+		
+		}
+		//place additional 3 hotspots for veteran/heroic mode
+		if((initialExplosions == 3 && hazmats == 4) || (initialExplosions == 4 && hazmats == 5)) {
+			for(int i = 0; i < 3; i++) {
+				boolean exit = true;
+				
+				while(exit) {
+					Tile hotspotAt = testGS.rollForTile();
+					
+					if(hotspotAt.getHotSpot() != 1) {
+						hotspotAt.setHotSpot(1);
+						exit = false;
+					}
+				}
+				
+				}
+		}
+		//place additional hotspot depedning on player number
+		if(testGS.getListOfPlayers().size() >= 4) {
+			for(int i = 0; i < 3; i++) {
+				boolean exit = true;
+				
+				while(exit) {
+					Tile hotspotAt = testGS.rollForTile();
+					
+					if(hotspotAt.getHotSpot() != 1) {
+						hotspotAt.setHotSpot(1);
+						exit = false;
+					}
+				}
+				
+				}
+		}
+		//place additional hotspot if player = 3
+		if(testGS.getListOfPlayers().size() == 3) {
+			for(int i = 0; i < 2; i++) {
+				boolean exit = true;
+				
+				while(exit) {
+					Tile hotspotAt = testGS.rollForTile();
+					
+					if(hotspotAt.getHotSpot() != 1) {
+						hotspotAt.setHotSpot(1);
+						exit = false;
+					}
+				}
+				
+				}
+		}
+			
+		
+		
+		
+		
+		
+	}
 
 }

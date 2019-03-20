@@ -126,17 +126,17 @@ public class Lobby implements Serializable  {
 	}
 
 	public void setRecruitGame() {
-		template = new AdvancedGame("Recruit", 0);
+		template = new AdvancedGame("Recruit");
 		
 	}
 
 	public void setVeteranGame() {
-		template = new AdvancedGame("Veteran", 0);
+		template = new AdvancedGame("Veteran");
 		
 	}
 
 	public void setHeoircGame() {
-		template = new AdvancedGame("Heroic", 0);
+		template = new AdvancedGame("Heroic");
 		
 	}
 

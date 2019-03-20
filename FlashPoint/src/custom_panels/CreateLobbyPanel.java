@@ -286,7 +286,7 @@ public class CreateLobbyPanel extends JPanel {
 		});
 		boardPanel.add(boardTwoBtn);
 
-		boardRandomBtn = new JToggleButton("Board 3");
+		boardRandomBtn = new JToggleButton("Board Random");
 		boardRandomBtn.setBounds(225, 25, 117, 29);
 		boardRandomBtn.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {

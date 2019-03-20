@@ -23,7 +23,7 @@ import edge.Wall;
 import edge.Blank;
 
 public class GameState implements Serializable {
-
+	
 	protected int remainingVictims; // start with 12 //10 for Family
 	protected int remainingFalseAlarms; // start with 6 //5 for Family
 	protected int wallsDamaged; // start with 0 upto MAX_WALL_DMGD
@@ -143,23 +143,31 @@ public class GameState implements Serializable {
 		createEnginge();
 		initializeTiles();
 		setClosest();
-		initializeEdges(lobby.getTemplate().getEdgeLocations());
-		// we are setting outer doors open!
-		//if exterior door then open the door not implemented!!
-		matTiles[0][6].getEdge(3).change();
-		matTiles[3][0].getEdge(2).change();
-		matTiles[4][9].getEdge(0).change();
-		matTiles[7][3].getEdge(1).change();
-		initializePOI(lobby.getTemplate().getPOILocations());
-		initializeFire(lobby.getTemplate().getFireLocations());
 		
-		
-		this.listOfPlayers = lobby.getPlayers();
-		setFirefighters();
 
 	}
+	
 
-	private void initializeFire(int[][] fireLocations) {
+	//this method checks if the door is an exterior door and opens it at game init.
+	public void openExteriorDoors() {
+		
+		for (int j = 0; j < 10; j++) {
+			if(matTiles[0][j].getEdge(3).isDoor()) matTiles[0][j].getEdge(3).change();
+		}
+		for (int j = 0; j < 10; j++) {
+			if(matTiles[7][j].getEdge(1).isDoor()) matTiles[7][j].getEdge(1).change();
+		}
+		for (int i = 0; i < 8; i++) {
+			if(matTiles[i][0].getEdge(2).isDoor()) matTiles[i][0].getEdge(2).change();
+		}
+		for (int i = 0; i < 8; i++) {
+			if(matTiles[i][9].getEdge(0).isDoor()) matTiles[i][9].getEdge(0).change();
+		}
+
+		
+	}
+
+	public void initializeFire(int[][] fireLocations) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 10; j++) {
 				if (fireLocations[i][j] == 2)
@@ -171,12 +179,13 @@ public class GameState implements Serializable {
 
 	}
 
-	private void initializePOI(int[][] poiLocations) {
+	public void initializePOI(int[][] poiLocations) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 10; j++) {
 				if (poiLocations[i][j] == 1) {
 					POI addition = generatePOI();
 					this.matTiles[i][j].addPoi(addition);
+					updatePOI(addition);
 				}
 			}
 		}
@@ -373,7 +382,15 @@ public class GameState implements Serializable {
 //			forEngine = new ParkingSpot(Vehicle.Engine, false);
 //		}
 	}
-
+	
+	public ArrayList<Player> getListOfPlayers(){
+		return this.listOfPlayers;
+	}
+	
+	public void setListOfPlayers(ArrayList<Player> playerList) {
+		this.listOfPlayers = playerList;
+	}
+	
 	public void setFirefighters() {
 		this.listOfFirefighters = new ArrayList<Firefighter>();
 		for (int i = 0; i < listOfPlayers.size(); i++) {
@@ -810,5 +827,14 @@ public class GameState implements Serializable {
 	public void setAdvFireString(String newAdvFireString) {
 		this.advFireString = newAdvFireString;
 	}
+	
+	public int getRandomNumberInRange(int min, int max) {
 
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
+	}
 }
