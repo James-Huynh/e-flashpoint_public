@@ -37,14 +37,6 @@ public class clientThread implements Runnable{
 					myLauncher.refreshBoard();
 				} 
 			}
-////			System.out.println("this is working");
-//			if(myClientManager.listenForResponses() == 1) {
-//				System.out.println("I heard a resposne");
-//				myLauncher.refreshBoard();
-//			} 
-////			else if (myClientManager.listenForResponses()==2){
-////				myLauncher.refreshLobby();
-////			}
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -61,18 +53,6 @@ public class clientThread implements Runnable{
 		t1.start();
 	}
 
-	public void holdUp() throws InterruptedException {
-		// TODO Auto-generated method stub
-		synchronized(t1){
-			wait();
-		}
-		
-	}
 	
-	public void restart() {
-		synchronized(t1) {
-			notify();
-		}
-	}
 
 }

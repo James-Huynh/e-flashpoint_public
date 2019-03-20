@@ -294,34 +294,35 @@ public class Launcher {
 		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION,this.clientManager);
 		contentPane.add(lobby);
 		listenerThread.begin();
-
-		lobby.addSelectionPiecesListenerListener(new StartListener() {
-			public void clickStart(boolean flag) {
-				if(flag) {
-					lobby.setVisible(false);
-					motherFrame.remove(lobby);
-					setupGamePage();
-				}
-				else {
-					if(sendGameStateRequest()) {
-//						lobby.setVisible(false);
-//						motherFrame.remove(lobby);
-//						setupGamePage();
-					} else {
-						System.out.println("faileddddd");
+		if(clientManager.getLobby().getPlayers().get(0).getUserName().equals(clientManager.getUserName())) {
+			lobby.addSelectionPiecesListenerListener(new StartListener() {
+				public void clickStart(boolean flag) {
+					if(clientManager.getLobby().getPlayers().get(0).getUserName().equals(clientManager.getUserName())) {
+	//					lobby.setVisible(false);
+	//					motherFrame.remove(lobby);
+	//					setupGamePage();
 					}
-				}				
-			}
-		});
+					else {
+						if(sendGameStateRequest()) {
+	//						lobby.setVisible(false);
+	//						motherFrame.remove(lobby);
+	//						setupGamePage();
+						} else {
+							System.out.println("faileddddd");
+						}
+					}				
+				}
+			});
+		}
 		
 		lobby.addSelectionPiecesListenerListener(new LeaveListener() {
 			public void clickLeave() {
-				lobby.setVisible(false);
-				motherFrame.remove(lobby);
-				lobby.refreshDisplay();
-				System.out.println("Trying to update lobby page");
-				contentPane.add(lobby);
-				lobby.setVisible(true);
+//				lobby.setVisible(false);
+//				motherFrame.remove(lobby);
+//				lobby.refreshDisplay();
+//				System.out.println("Trying to update lobby page");
+//				contentPane.add(lobby);
+//				lobby.setVisible(true);
 			}
 		});
 		
@@ -334,7 +335,6 @@ public class Launcher {
 		contentPane.add(lobby);
 		lobby.setVisible(true);
 		motherFrame.revalidate();
-//		setupLobbyPage();
 		
 	}
 	
