@@ -332,7 +332,8 @@ public class Launcher {
 		 */
 		//A fake gamestate set up to allow the gui to build from something
 
-		current = new GameManager(tester);
+//		current = new GameManager(tester);
+		current = new GameManager(clientManager.getLobby());
 		
 		table = new Table(clientManager.getUsersGameState(), clientManager, this);
 		BoardPanel board = table.genBoard();

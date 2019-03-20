@@ -243,7 +243,7 @@ public class ClientManager {
 		}else{
 			if(difficulty.equals("Recruit")) lobby.setRecruitGame();
 			else if(difficulty.equals("Veteran")) lobby.setVeteranGame();
-			else lobby.setHeoircGame();
+			else lobby.setHeroicGame();
 			
 		}
 		

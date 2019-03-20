@@ -56,9 +56,9 @@ public class GameManager {
     	
     }
     
-    public GameManager(GameState input, Lobby lobby) {
+    public GameManager(GameState input) {
     	gs = input;
-    	representsLobby = lobby;
+
     	
     }
     
@@ -96,6 +96,7 @@ public class GameManager {
     
 	public void initializeExperiencedGame(int initialExplosions, int hazmats) {
 		//resolve initialExplosion amount of explosions
+		System.out.println("Called experienced game");
 		for(int i=initialExplosions; i > 0; i--) {
 		
 			int blackDice = 0;

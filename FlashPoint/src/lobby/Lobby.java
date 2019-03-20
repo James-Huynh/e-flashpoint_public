@@ -26,13 +26,7 @@ public class Lobby implements Serializable  {
 
 		//dummy
 		players = new ArrayList<Player>();
-		//			ArrayList<Player> playingPlayers = new ArrayList<Player>(3);
-//		players.add(new Player("Mat", "Cuba123"));
-//		players.add(new Player("Zaid", "zeroOneTwoThree"));
-//		players.add(new Player("Junha", "myPassword"));
-//		players.add(new Player("Ben", "Cuba123"));
-//		players.add(new Player("Cao", "zeroOneTwoThree"));
-//		players.add(new Player("James", "myPassword"));
+
 //		assignColours();
 
 	}
@@ -135,7 +129,7 @@ public class Lobby implements Serializable  {
 		
 	}
 
-	public void setHeoircGame() {
+	public void setHeroicGame() {
 		template = new AdvancedGame("Heroic");
 		
 	}
