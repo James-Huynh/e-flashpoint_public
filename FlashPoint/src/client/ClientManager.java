@@ -252,18 +252,18 @@ public class ClientManager {
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
 		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
 		return flag;
 		

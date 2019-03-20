@@ -49,7 +49,7 @@ public class Launcher {
 	private String BenIP = "142.157.58.203";
 	
 	private static Client client;
-	private String ServerIP = "142.157.65.237";
+	private String ServerIP = "142.157.145.58";
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
@@ -70,11 +70,13 @@ public class Launcher {
 	private FindLobbyPanel findLobby;
 	private LobbyPanel lobby;
 	private Table table;
+	private clientThread listenerThread;
 	
 	
 	//Used by Ben for in game testing. Not permanent.
 	private static GameManager current;
 	private static GameState tester;
+	
 
 	/**
 	 * Below is for to get around a problem. Wanted to specify an outline for the frame
@@ -112,6 +114,7 @@ public class Launcher {
 		client = new Client(ServerIP, port);
 		client.start();
 		clientManager = new ClientManager(client.getClientInputThread(), client.getClientOutputThread(), this);
+		listenerThread = new clientThread(this, clientManager, true);
 		if(sendConnectionRequest()) {	
 			initialize();
 		};
@@ -290,6 +293,7 @@ public class Launcher {
 	private void setupLobbyPage() {
 		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION,this.clientManager);
 		contentPane.add(lobby);
+		listenerThread.begin();
 
 		lobby.addSelectionPiecesListenerListener(new StartListener() {
 			public void clickStart(boolean flag) {
@@ -322,6 +326,27 @@ public class Launcher {
 		});
 		
 	}
+	
+	public void refreshLobby() {
+		lobby.setVisible(false);
+		motherFrame.remove(lobby);
+		lobby.refreshDisplay();
+		contentPane.add(lobby);
+		lobby.setVisible(true);
+		
+	}
+	
+	public void startGame() {
+		lobby.setVisible(false);
+		motherFrame.remove(lobby);
+		try {
+			listenerThread.holdUp();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setupGamePage();
+	}
 	//------------------------------- LOBBY
 	
 	
@@ -334,7 +359,7 @@ public class Launcher {
 
 		current = new GameManager(tester);
 		
-		table = new Table(clientManager.getUsersGameState(), clientManager, this);
+		table = new Table(clientManager.getUsersGameState(), clientManager, this, listenerThread);
 		BoardPanel board = table.genBoard();
 		LeftPanel LPanel = table.genLeftPanel();
 		RightPanel RPanel = table.genRightPanel();
@@ -364,6 +389,7 @@ public class Launcher {
 	
 	public void refreshBoard() {
 		if(clientManager.getEndTurnTrigger()) {
+			table.hideAdvPanel();
 			showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
 			clientManager.setEndTurnTrigger(false);
 		}

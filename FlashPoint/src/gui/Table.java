@@ -98,19 +98,19 @@ public class Table {
 ////			this.gameFrame.setVisible(true);
 //		}
 		
-		public Table(GameState inputBoard, ClientManager updatedClientManager, Launcher launcher) {
+		public Table(GameState inputBoard, ClientManager updatedClientManager, Launcher launcher, clientThread myThread) {
 			currentBoard = inputBoard;
 			gameTiles = inputBoard.getMatTiles();
 			this.clientManager = updatedClientManager;
 			this.launcher = launcher;
-			this.listenerThread = new clientThread(this.launcher, this.clientManager);
+			this.listenerThread = myThread;
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
 				if(updatedClientManager.getUserName().equals(f.getOwner().getUserName())) {
 					this.myIndex = i;
 				}
 			}
-			this.listenerThread.begin();
+			this.listenerThread.restart();
 //			System.out.println("this is the my index: " + this.myIndex);
 		}
 		
