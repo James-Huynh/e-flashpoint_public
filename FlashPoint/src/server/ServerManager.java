@@ -189,33 +189,33 @@ public class ServerManager {
 				
 				if (explosionAt == 1) {
 					testGS.returnTile(3,3).setFire(2);
-					testGS.returnTile(4,3).setHotSpot(1);
+					testGS.returnTile(3,3).setHotSpot(1);
 					gameManager.explosion(testGS.returnTile(3,3));
 				}
 				else if (explosionAt == 2) {
-					testGS.returnTile(4,3).setFire(2);
-					testGS.returnTile(4,3).setHotSpot(1);
-					gameManager.explosion(testGS.returnTile(4,3));
+					testGS.returnTile(3,4).setFire(2);
+					testGS.returnTile(3,4).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(3,4));
 				}
 				else if (explosionAt == 3) {
-					testGS.returnTile(5,3).setFire(2);
-					testGS.returnTile(5,3).setHotSpot(1);
-					gameManager.explosion(testGS.returnTile(5,3));
+					testGS.returnTile(3,5).setFire(2);
+					testGS.returnTile(3,5).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(3,5));
 				}
 				else if (explosionAt == 4) {
-					testGS.returnTile(6,3).setFire(2);
-					testGS.returnTile(6,3).setHotSpot(1);
-					gameManager.explosion(testGS.returnTile(6,3));
+					testGS.returnTile(3,6).setFire(2);
+					testGS.returnTile(3,6).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(3,6));
 				}
 				else if (explosionAt == 5) {
-					testGS.returnTile(6,4).setFire(2);
-					testGS.returnTile(6,4).setHotSpot(1);
-					gameManager.explosion(testGS.returnTile(6,4));
+					testGS.returnTile(4,6).setFire(2);
+					testGS.returnTile(4,6).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(4,6));
 				}
 				else if (explosionAt == 6) {
-					testGS.returnTile(5,4).setFire(2);
-					testGS.returnTile(5,4).setHotSpot(1);
-					gameManager.explosion(testGS.returnTile(5,4));
+					testGS.returnTile(4,5).setFire(2);
+					testGS.returnTile(4,5).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(4,5));
 				}
 				else if (explosionAt == 7) {
 					testGS.returnTile(4,4).setFire(2);
@@ -223,9 +223,9 @@ public class ServerManager {
 					gameManager.explosion(testGS.returnTile(4,4));
 				}
 				else {
-					testGS.returnTile(3,4).setFire(2);
-					testGS.returnTile(3,4).setHotSpot(1);
-					gameManager.explosion(testGS.returnTile(3,4));
+					testGS.returnTile(4,3).setFire(2);
+					testGS.returnTile(4,3).setHotSpot(1);
+					gameManager.explosion(testGS.returnTile(4,3));
 				}
 			}else if(i == initialExplosions - 1) {
 				boolean exit = true;
@@ -236,30 +236,44 @@ public class ServerManager {
 						explosionAt.setFire(2);
 						explosionAt.setHotSpot(1);
 						gameManager.explosion(explosionAt);
-						blackDice = explosionAt.getX();
+						blackDice = explosionAt.getY(); //Confirm with Ben!
 						exit = false;
 					}
 				}
 			}else if(i == initialExplosions - 2) {
-				Tile explosionAt = testGS.returnTile((9 - blackDice),testGS.getRandomNumberInRange(1, 10));
-				if(explosionAt.getFire() != 2) {
-					explosionAt.setFire(2);
-					explosionAt.setHotSpot(1);
-					gameManager.explosion(explosionAt);
-					//blackDice = explosionAt.getX();
-				}
+//				Tile explosionAt = testGS.returnTile((9 - blackDice),testGS.getRandomNumberInRange(1, 6));
+//				if(explosionAt.getFire() != 2) {
+//					explosionAt.setFire(2);
+//					explosionAt.setHotSpot(1);
+//					gameManager.explosion(explosionAt);
+//					//blackDice = explosionAt.getX();
+//				}
 				
 				boolean exit = true;
+
+//				while(exit) {
+//					Tile newExplosionAt = testGS.rollForTile();
+//					
+//					if(newExplosionAt.getFire() != 2) {
+//						newExplosionAt.setFire(2);
+//						newExplosionAt.setHotSpot(1);
+//						gameManager.explosion(newExplosionAt);
+//						//blackDice = newExplosionAt.getX();
+//						exit = false;
+//					}
+//				}
 				
+				Tile newExplosionAt = testGS.returnTile(testGS.getRandomNumberInRange(1, 6), (9 - blackDice));
 				while(exit) {
-					Tile newExplosionAt = testGS.rollForTile();
-					
 					if(newExplosionAt.getFire() != 2) {
 						newExplosionAt.setFire(2);
 						newExplosionAt.setHotSpot(1);
 						gameManager.explosion(newExplosionAt);
 						//blackDice = newExplosionAt.getX();
 						exit = false;
+					}
+					else {
+						newExplosionAt = testGS.rollForTile();
 					}
 				}
 				
@@ -342,12 +356,7 @@ public class ServerManager {
 				
 				}
 		}
-			
-		
-		
-		
-		
-		
+				
 	}
 
 }
