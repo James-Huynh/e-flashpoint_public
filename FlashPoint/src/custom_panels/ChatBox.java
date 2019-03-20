@@ -1,18 +1,19 @@
 package custom_panels;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
+import javax.swing.JTextField;
 
 public class ChatBox extends JPanel{
 	private JTextField textField;
@@ -33,7 +34,6 @@ public class ChatBox extends JPanel{
 		
 		panel_main = new JPanel();
 		panel_main.setBounds(rect_main);
-//		add(panel_main);
 		panel_main.setLayout(null);
 		
 		textField = new JTextField();
@@ -48,17 +48,20 @@ public class ChatBox extends JPanel{
 		});
 		
 		textArea = new JTextArea();
-		textArea.setFont(new Font("Monospaced", Font.BOLD, 18));
+		textArea.setFont(new Font("Open Sans", Font.BOLD, 18));
 		textArea.setText("lololol");
-		textArea.setForeground(Color.BLUE);
+		textArea.setBackground(Color.YELLOW);
+		textArea.setLineWrap(true);
 		textArea.setEnabled(false);
+		textArea.setBounds(rect_textArea);
 		
-		scrollPane = new JScrollPane();
+		
+		scrollPane = new JScrollPane(textArea);
+		
 		panel_main.add(scrollPane);
 		scrollPane.setBounds(new Rectangle(0, 0, 400, 470));
-		scrollPane.setLayout(null);
-		scrollPane.add(textArea);
-		textArea.setBounds(rect_textArea);
+	//	scrollPane.setLayout(null);
+		
 		
 		textField.setBounds(rect_chat);
 		panel_main.add(textField);
