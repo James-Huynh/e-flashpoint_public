@@ -455,5 +455,8 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		return true;
 	}
+	public List<ChatMsgEntity> displayChat(){
+		return mDataArrays;
+	}
 	
 }
