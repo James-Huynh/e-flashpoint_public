@@ -241,6 +241,10 @@ public class Table {
 				for(int i = 0; i<this.currentBoard.getFireFighterList().size(); i++) {
 					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
 					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() /*+ "  Saved Ap: " + currentFF.getSavedAP()*/);
+					if(1 == 2 /*currentBoard.mode == advanced*/) {
+						//playerInfo = playerInfo + "Specialty: "+ currentFF.getSpeciality.toString();
+					}
+					
 					String inputString;
 					//needs fixing
 					String ffColour = currentFF.getColour().toString(currentFF.getColour());
@@ -799,6 +803,28 @@ public class Table {
 						int numberFF = this.connectedTile.getFirefighterList().size();
 						final BufferedImage FFimage = ImageIO.read(new File(builder +"_"+ numberFF +".gif"));
 						add(new JLabel(new ImageIcon(FFimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					add(new JLabel());
+				}
+				
+				if(this.connectedTile.containsHazmat()) {
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT.gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}else {
+					add(new JLabel());
+				}
+				
+				if(this.connectedTile.containsHotSpot()) {
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HOTSPOT.gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

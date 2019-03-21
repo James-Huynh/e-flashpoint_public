@@ -200,6 +200,13 @@ public class Tile implements Serializable{
 	public void setHotSpot(int number) {
 		this.hotspot = number; 
 	}
+	
+	public boolean containsHotSpot() {
+		if(this.hotspot > 0) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {
@@ -220,6 +227,14 @@ public class Tile implements Serializable{
 	
 	public int getHazmat() {
 		return this.hazmat;
+	}
+	
+	public boolean containsHazmat() {
+		if(this.hazmatList.size() > 0) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	
