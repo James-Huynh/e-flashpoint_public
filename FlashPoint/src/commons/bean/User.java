@@ -3,6 +3,7 @@ package commons.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import chat.ChatMsgEntity;
 import game.GameState;
 import lobby.Lobby;
 import tile.Tile;
@@ -23,6 +24,7 @@ public class User implements Serializable {
 	private String ip;
 //	private int port;
 	private GameState currentState;
+	private ChatMsgEntity currentChat;
 	private Tile[][] matTiles;
     private boolean isRegistered;
     private int[] coords;
@@ -30,7 +32,7 @@ public class User implements Serializable {
     private actions.Action action;
     private Lobby currentLobby;
     private ArrayList<Lobby> currentLobbies;
-    private String message;
+    private TextMessage message;
 
 	public Integer getId() {
 		return id;
@@ -55,11 +57,13 @@ public class User implements Serializable {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	public String getMessage() {
-		return message;
+
+	
+	public void setChat(ChatMsgEntity currentChat) {
+		this.currentChat=currentChat;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+	public ChatMsgEntity getChat() {
+		return currentChat;
 	}
 
 //	public int getPort() {
@@ -168,7 +172,14 @@ public class User implements Serializable {
 		
 	}
 
-
+	public TextMessage getMessage() {
+		
+		return message;
+	}
+	
+	public void setMessage(TextMessage message) {
+		this.message=message;
+	}
 
 //	public int getImg() {
 //		return img;

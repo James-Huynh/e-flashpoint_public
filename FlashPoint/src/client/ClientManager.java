@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import actions.Action;
+import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
@@ -120,15 +121,15 @@ public class ClientManager {
 				break;
 			case CHATMESSAGE:
 				requestObject = (User) read_tranObject.getObject();
-				
+	
 			
 					ChatMsgEntity entity = null ;
 						if (entity.getName().equals("")) {
 							entity.setName(requestObject.getName());
 						}
 				
-							entity.setImg(requestObject.getId());
-							entity.setMessage(requestObject.getMessage());
+							
+							entity.setMessage(requestObject.getMessage().getMessage());
 						
 						mDataArrays.add(entity);
 					}
@@ -445,6 +446,14 @@ public class ClientManager {
 			
 		}
 		return flag;
+	}
+	public boolean sendMsgRequest(TextMessage message) {
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.MESSAGE);
+		requestObject.setMessage(message);
+		objectToSend.setObject(requestObject);
+		
+		outputThread.setMsg(objectToSend);
+		return true;
 	}
 	
 }
