@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import edge.Edge;
 import token.Firefighter;
+import token.Hazmat;
 import token.POI;
 import token.Vehicle;
 
@@ -25,6 +26,7 @@ public class Tile implements Serializable{
     protected int x;
     protected int y;
     protected ArrayList<POI> poiList;
+    protected ArrayList<Hazmat> hazmatList;
     protected boolean isInterior;
     protected ParkingSpot pointerParkingSpot; 
     protected ParkingSpot nearestAmbulance;
@@ -210,6 +212,12 @@ public class Tile implements Serializable{
 		this.hazmat = number;
 		
 	}
+	
+	public void setHazmat(Hazmat hazmat) {
+		hazmatList.add(hazmat);
+		hazmat.setCurrentLocation(this);
+	}
+	
 	public int getHazmat() {
 		return this.hazmat;
 	}

@@ -25,6 +25,7 @@ import lobby.Lobby;
 import tile.ParkingSpot;
 import tile.Tile;
 import token.Firefighter;
+import token.Hazmat;
 import token.POI;
 
 /**
@@ -205,9 +206,10 @@ public class GameManager {
 		
 			while(exit) {
 				Tile hazmatAt = gs.rollForTile();
-			
+				
 				if(hazmatAt.getFire() != 2) {
 					hazmatAt.setHazmat(1);
+					//hazmatAt.setHazmat(new Hazmat());
 					exit = false;
 				}
 			}
