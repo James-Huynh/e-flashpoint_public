@@ -238,14 +238,8 @@ public class ClientManager {
 		lobby.setCapacity(capacity);
 		lobby.setDifficulty(difficulty);
 		lobby.setBoard(board);
-		if(mode.equals("Family")){
-			lobby.setFamilyGame();
-		}else{
-			if(difficulty.equals("Recruit")) lobby.setRecruitGame();
-			else if(difficulty.equals("Veteran")) lobby.setVeteranGame();
-			else lobby.setHeroicGame();
-			
-		}
+		
+		lobby.createTemplate();
 		
 		requestObject.setCurrentLobby(lobby);
 		

@@ -89,9 +89,10 @@ public class GameManager {
 				else if(representsLobby.getDifficulty().equals("Heroic")) {
 					initializeExperiencedGame(4,5);
 				}
+				setupPOIS();
 			}
-		
 		}
+		
     }
     
 	public void initializeExperiencedGame(int initialExplosions, int hazmats) {
@@ -175,7 +176,7 @@ public class GameManager {
 						exit = false;
 					}
 					else {
-						newExplosionAt = gs.rollForTile();
+						newExplosionAt = gs.returnTile(gs.getRandomNumberInRange(1, 6), (9 - blackDice));
 					}
 				}
 				
@@ -262,6 +263,18 @@ public class GameManager {
 			}
 		}
 				
+	}
+	
+	public void setupPOIS() {
+		int[][] locations = representsLobby.getTemplate().getPOILocations();
+		for(int i=0; i<3; i++) {
+			Tile targetTile = gs.rollForTile();
+			while(targetTile.getFire() == 2) {
+				targetTile = gs.rollForTile();
+			}
+			locations[targetTile.getX()][targetTile.getY()] = 1;
+		}
+		gs.initializePOI(locations);
 	}
     
     public void doTurns() {

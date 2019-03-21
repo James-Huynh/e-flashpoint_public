@@ -4,7 +4,7 @@ import java.io.Serializable;
 // Start of user code for imports
 import java.util.ArrayList;
 
-import game.AdvancedGame;
+import game.BoardTwo;
 import game.FamilyGame;
 import game.TemplateGame;
 import server.Player;
@@ -116,22 +116,8 @@ public class Lobby implements Serializable  {
 		return difficulty;
 	}
 	public void setFamilyGame() {
+		System.out.println("IN FAMILY GAME EVER GETTING CALLED?");
 		template = new FamilyGame();
-	}
-
-	public void setRecruitGame() {
-		template = new AdvancedGame("Recruit");
-		
-	}
-
-	public void setVeteranGame() {
-		template = new AdvancedGame("Veteran");
-		
-	}
-
-	public void setHeroicGame() {
-		template = new AdvancedGame("Heroic");
-		
 	}
 
 	public String getBoard() {
@@ -140,7 +126,30 @@ public class Lobby implements Serializable  {
 
 	public void setBoard(String board) {
 		this.board = board;
+	}
+	
+	public void createTemplate() {
+		if(this.board.equals("Board 1")){
+			if(this.difficulty.equals("Family")) {
+				template = new FamilyGame();
+			}
+			else if(this.difficulty.equals("Experienced")) {
+				//Same as below
+			}
+		}
 		
+		else if(this.board.equals("Board 2")) {
+			if(this.difficulty.equals("Family")) {
+				template = new BoardTwo("Family");
+			}
+			else if(this.difficulty.equals("Experienced")) {
+				template = new BoardTwo("Experienced");
+			}
+		}
+		
+		else {
+			//Random Board
+		}
 	}
 
 }
