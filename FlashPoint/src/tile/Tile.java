@@ -38,6 +38,7 @@ public class Tile implements Serializable{
         this.isInterior = isInterior;
         adjacentEdges = new Edge[4];
         poiList = new ArrayList<POI>();
+        hazmatList = new ArrayList<Hazmat>();
         listOfFirefighters = new ArrayList<Firefighter>();
     }
 

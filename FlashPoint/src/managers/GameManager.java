@@ -208,8 +208,8 @@ public class GameManager {
 				Tile hazmatAt = gs.rollForTile();
 				
 				if(hazmatAt.getFire() != 2) {
-					hazmatAt.setHazmat(1);
-					//hazmatAt.setHazmat(new Hazmat());
+//					hazmatAt.setHazmat(1);
+					hazmatAt.setHazmat(new Hazmat());
 					exit = false;
 				}
 			}
