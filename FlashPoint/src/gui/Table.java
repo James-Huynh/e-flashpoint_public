@@ -441,11 +441,13 @@ public class Table {
 				add(tilePanel, BorderLayout.CENTER);
 				this.tileId = tileId;
 				assignTileWall();
+				assignVehicle();
 			}
 			public void DrawTile(GameState currentBoard) {
 				// TODO Auto-generated method stub
 				removeAll();
 				assignTileWall();
+				assignVehicle();
 				tilePanel.drawTile(currentBoard);
 				add(tilePanel, BorderLayout.CENTER);
 				revalidate(); 
@@ -661,6 +663,156 @@ public class Table {
 					}
 				}
 				
+			}
+			public void assignVehicle() {
+				for(int i = 0; i< currentBoard.getAmbulances().length; i++) {
+					if(currentBoard.getAmbulances()[i].getCar()) {
+						int x = currentBoard.getAmbulances()[i].getTiles()[0].getX();
+						int y = currentBoard.getAmbulances()[i].getTiles()[0].getY();
+						if(x == connectedTile.getCoords()[0]) {
+							if(connectedTile.getCoords()[0] == 0) {
+								if(connectedTile.getCoords()[1] == 5) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_LEFT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (connectedTile.getCoords()[1] == 6) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_RIGHT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							} else if(connectedTile.getCoords()[0] == 7) {
+								if(connectedTile.getCoords()[1] == 3) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_LEFT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (connectedTile.getCoords()[1] == 4) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_RIGHT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							}
+						} else if (y == connectedTile.getCoords()[1]) {
+							if(connectedTile.getCoords()[1] == 0) {
+								if(connectedTile.getCoords()[1] == 3) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_TOP.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (connectedTile.getCoords()[1] == 4) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_BOT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							} else if(connectedTile.getCoords()[1] == 9) {
+								if(connectedTile.getCoords()[1] == 3) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_TOP.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (connectedTile.getCoords()[1] == 4) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_BOT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							}
+						}
+					}
+					if(currentBoard.getEngines()[i].getCar()) {
+						int x = currentBoard.getEngines()[i].getTiles()[0].getX();
+						int y = currentBoard.getEngines()[i].getTiles()[0].getY();
+						if(x == connectedTile.getCoords()[0]) {
+							if(connectedTile.getCoords()[0] == 0) {
+								if(connectedTile.getCoords()[1] == 7) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_LEFT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (connectedTile.getCoords()[1] == 8) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_RIGHT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							} else if(connectedTile.getCoords()[0] == 7) {
+								if(connectedTile.getCoords()[1] == 1) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_LEFT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.EAST);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (connectedTile.getCoords()[1] == 2) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_RIGHT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							}
+						} else if (y == connectedTile.getCoords()[1]) {
+							if(connectedTile.getCoords()[1] == 0) {
+								if(connectedTile.getCoords()[1] == 1) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_TOP.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (connectedTile.getCoords()[1] == 2) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_BOT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							} else if(connectedTile.getCoords()[1] == 9) {
+								if(connectedTile.getCoords()[1] == 5) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_TOP.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (connectedTile.getCoords()[1] == 6) {
+									try {
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_BOT.gif"));
+										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		
@@ -1634,19 +1786,109 @@ public class Table {
 			public void showPopUpMenuWaiting(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 				JPopupMenu popupMenu = new JPopupMenu();
 		        
-//		        JMenuItem endTurn = new JMenuItem("waiting");
-//		        endTurn.addActionListener(new ActionListener() {
-//					@Override
-//					public void actionPerformed(ActionEvent e) {
-//						
-//						if(listening() == 1) {
-//							refresh(clientManager.getUsersGameState());
-//							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-//						}
-//						
-//						
-//					}
-//				});
+		        JMenu placeAmbulance = new JMenu("Place Ambulance");
+		        JMenu placeEngine = new JMenu("Place Engine");
+		        
+		        JMenuItem ambulanceLeft = new JMenuItem("Left");
+		        ambulanceLeft.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(sendPlaceVehicleRequest(0, Vehicle.Ambulance)) {
+							refresh(clientManager.getUsersGameState());
+							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+						
+						}
+					}
+				});
+		        
+		        JMenuItem ambulanceTop = new JMenuItem("Top");
+		        ambulanceTop.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(sendPlaceVehicleRequest(1, Vehicle.Ambulance)) {
+							refresh(clientManager.getUsersGameState());
+							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+						
+						}
+					}
+				});
+		        JMenuItem ambulanceRight = new JMenuItem("Right");
+		        ambulanceRight.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(sendPlaceVehicleRequest(2, Vehicle.Ambulance)) {
+							refresh(clientManager.getUsersGameState());
+							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+						
+						}
+					}
+				});
+		        JMenuItem ambulanceBottom = new JMenuItem("Bottom");
+		        ambulanceBottom.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(sendPlaceVehicleRequest(3, Vehicle.Ambulance)) {
+							refresh(clientManager.getUsersGameState());
+							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+						
+						}
+					}
+				});
+		        
+		        JMenuItem engineLeft = new JMenuItem("Left");
+		        engineLeft.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(sendPlaceVehicleRequest(0, Vehicle.Engine)) {
+							refresh(clientManager.getUsersGameState());
+							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+						
+						}
+					}
+				});
+		        
+		        JMenuItem engineTop = new JMenuItem("Top");
+		        engineTop.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(sendPlaceVehicleRequest(1, Vehicle.Engine)) {
+							refresh(clientManager.getUsersGameState());
+							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+						
+						}
+					}
+				});
+		        JMenuItem engineRight = new JMenuItem("Right");
+		        engineRight.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(sendPlaceVehicleRequest(2, Vehicle.Engine)) {
+							refresh(clientManager.getUsersGameState());
+							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+						
+						}
+					}
+				});
+		        
+		        JMenuItem engineBottom = new JMenuItem("Bottom");
+		        engineBottom.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(sendPlaceVehicleRequest(3, Vehicle.Engine)) {
+							refresh(clientManager.getUsersGameState());
+							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+						
+						}
+					}
+				});
 		         
 		        JMenuItem fileMenu = new JMenuItem("exit");
 		        fileMenu.addActionListener(new ActionListener() {
@@ -1656,8 +1898,20 @@ public class Table {
 //						System.exit(0);
 					}
 				});
-//		        popupMenu.add(endTurn);
-//		        popupMenu.addSeparator();
+		        
+		        placeAmbulance.add(ambulanceLeft);
+		        placeAmbulance.add(ambulanceTop);
+		        placeAmbulance.add(ambulanceRight);
+		        placeAmbulance.add(ambulanceBottom);
+		        placeEngine.add(engineLeft);
+		        placeEngine.add(engineTop);
+		        placeEngine.add(engineRight);
+		        placeEngine.add(engineBottom);
+		        
+		        popupMenu.add(placeAmbulance);
+		        popupMenu.addSeparator();
+		        popupMenu.add(placeEngine);
+		        popupMenu.addSeparator();
 		        popupMenu.add(fileMenu);
 		        
 		        popupMenu.show(component, x, y);		// very important
@@ -1826,5 +2080,9 @@ public class Table {
 		
 		public boolean sendEndTurnRequest() {
 			return clientManager.endTurnRequest();
+		}
+		
+		public boolean sendPlaceVehicleRequest(int direction, Vehicle type) {
+			return clientManager.placeVehicleRequest(direction, type);
 		}
 }

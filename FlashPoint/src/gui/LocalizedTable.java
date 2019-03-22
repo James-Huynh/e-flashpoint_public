@@ -612,7 +612,6 @@ public class LocalizedTable {
 					try {
 						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_LEFT.gif"));
 						JLabel temp = new JLabel(new ImageIcon(imageDoor));
-						temp.setBackground(tileColorAmbulance);
 						add(temp, BorderLayout.EAST);
 					} catch (IOException e) {
 						e.printStackTrace();
