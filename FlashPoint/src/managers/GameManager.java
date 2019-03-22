@@ -82,15 +82,7 @@ public class GameManager {
 			
 			else if(representsLobby.getMode().equals("Experienced")) {
 				if(representsLobby.getDifficulty().equals("Recruit")) {
-					System.out.println("Got here in setup");
-					System.out.println("g" + representsLobby.getTemplate().getEdgeLocations().length);
-					System.out.println("z" + representsLobby.getTemplate().getEdgeLocations()[0].length);
 					gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
-					for(int i=0;i<representsLobby.getTemplate().getEdgeLocations().length;i++) {
-						for(int j=0;i<representsLobby.getTemplate().getEdgeLocations()[0].length;i++) {
-							System.out.println("Edge at" + i + j + "is " + representsLobby.getTemplate().getEdgeLocations()[i][j]);
-						}
-					}
 					gs.openExteriorDoors();
 					initializeExperiencedGame(3,3);
 				}
@@ -113,9 +105,10 @@ public class GameManager {
 	public void initializeExperiencedGame(int initialExplosions, int hazmats) {
 		//resolve initialExplosion amount of explosions
 		System.out.println("Called experienced game");
+		int blackDice = 0;
 		for(int i=initialExplosions; i > 0; i--) {
 		
-			int blackDice = 0;
+			
 			
 			if(i == initialExplosions) {
 				int explosionAt = gs.getRandomNumberInRange(1,8);
@@ -125,42 +118,51 @@ public class GameManager {
 					gs.returnTile(3,3).setFire(2);
 					gs.returnTile(3,3).setHotSpot(1);
 					this.explosion(gs.returnTile(3,3));
+					System.out.println("Explosion was at 3 3");
 				}
 				else if (explosionAt == 2) {
 					gs.returnTile(3,4).setFire(2);
 					gs.returnTile(3,4).setHotSpot(1);
 					this.explosion(gs.returnTile(3,4));
+					System.out.println("Explosion was at 3 5");
 				}
 				else if (explosionAt == 3) {
 					gs.returnTile(3,5).setFire(2);
 					gs.returnTile(3,5).setHotSpot(1);
 					this.explosion(gs.returnTile(3,5));
+					System.out.println("Explosion was at 3 5");
 				}
 				else if (explosionAt == 4) {
 					gs.returnTile(3,6).setFire(2);
 					gs.returnTile(3,6).setHotSpot(1);
 					this.explosion(gs.returnTile(3,6));
+					System.out.println("Explosion was at 3 6");
 				}
 				else if (explosionAt == 5) {
 					gs.returnTile(4,6).setFire(2);
 					gs.returnTile(4,6).setHotSpot(1);
 					this.explosion(gs.returnTile(4,6));
+					System.out.println("Explosion was at 4 6");
 				}
 				else if (explosionAt == 6) {
 					gs.returnTile(4,5).setFire(2);
 					gs.returnTile(4,5).setHotSpot(1);
 					this.explosion(gs.returnTile(4,5));
+					System.out.println("Explosion was at 4 5");
 				}
 				else if (explosionAt == 7) {
 					gs.returnTile(4,4).setFire(2);
 					gs.returnTile(4,4).setHotSpot(1);
 					this.explosion(gs.returnTile(4,4));
+					System.out.println("Explosion was at 4 4");
 				}
 				else {
 					gs.returnTile(4,3).setFire(2);
 					gs.returnTile(4,3).setHotSpot(1);
 					this.explosion(gs.returnTile(4,3));
+					System.out.println("Explosion was at 4 3");
 				}
+				
 			}
 			
 			else if(i == initialExplosions - 1) {
@@ -172,8 +174,9 @@ public class GameManager {
 						explosionAt.setFire(2);
 						explosionAt.setHotSpot(1);
 						this.explosion(explosionAt);
-						blackDice = explosionAt.getY(); //Confirm with Ben!
+						blackDice = explosionAt.getY();
 						exit = false;
+						System.out.println("Explosion was at " + explosionAt.getX() + explosionAt.getY());
 					}
 				}
 			}
@@ -189,6 +192,7 @@ public class GameManager {
 						this.explosion(newExplosionAt);
 						//blackDice = newExplosionAt.getX();
 						exit = false;
+						System.out.println("Explosion was at " + newExplosionAt.getX() + newExplosionAt.getY());
 					}
 					else {
 						newExplosionAt = gs.returnTile(gs.getRandomNumberInRange(1, 6), (9 - blackDice));
@@ -213,6 +217,8 @@ public class GameManager {
 				}
 			}
 		}
+		
+		clearExteriorFire();
 		
 		//roll to place hazmats
 		for(int i = 0; i < hazmats; i++) {
@@ -246,7 +252,7 @@ public class GameManager {
 		}
 		
 		//place additional hotspot depedning on player number
-		if(gs.getListOfPlayers().size() >= 4) {
+		if(gs.getListOfPlayers().size() >= 1) {
 			for(int i = 0; i < 3; i++) {
 				boolean exit = true;
 				

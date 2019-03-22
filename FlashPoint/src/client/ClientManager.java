@@ -12,6 +12,7 @@ import game.FamilyGame;
 import game.GameState;
 import gui.Launcher;
 import lobby.Lobby;
+import token.Vehicle;
 import chat.ChatMsgEntity;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,7 +76,6 @@ public class ClientManager {
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				flag = true;
 				startGameFlag = 1;
-				anyString = read_tranObject.getType();
 				//System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
 				//requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
 				break;
@@ -112,6 +112,10 @@ public class ClientManager {
 				 */
 				System.out.println(requestObject.getCurrentLobby().getPlayers().get(1).getUserName());
 				break;
+			case VEHICLEPLACEMENTSUCCESS:
+				System.out.println("Successful joinlobby request");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				flag = true;
 			case ENDTURNSUCCESS:
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
@@ -311,7 +315,6 @@ public class ClientManager {
 			
 		}
 		
-//		return requestObject.getCurrentState();
 		return flag;
 	}
 	
@@ -447,6 +450,7 @@ public class ClientManager {
 		}
 		return flag;
 	}
+	
 	public boolean sendMsgRequest(TextMessage message) {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.MESSAGE);
 		requestObject.setMessage(message);
@@ -455,8 +459,37 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		return true;
 	}
+	
 	public List<ChatMsgEntity> displayChat(){
 		return mDataArrays;
 	}
+	
+	public boolean placeVehicleRequest(int direction, Vehicle type) {
+		boolean flag = false;
+
+		requestObject.setVehicleIndex(direction);
+		requestObject.setVehicleType(type);
+		
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.VEHICLEPLACEMENT);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		
+		System.out.println("Placing a Vehicle");
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		
+		return flag;
+	} 
 	
 }

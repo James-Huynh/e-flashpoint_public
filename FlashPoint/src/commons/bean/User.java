@@ -7,6 +7,7 @@ import chat.ChatMsgEntity;
 import game.GameState;
 import lobby.Lobby;
 import tile.Tile;
+import token.Vehicle;
 
 
 public class User implements Serializable {
@@ -33,6 +34,8 @@ public class User implements Serializable {
     private Lobby currentLobby;
     private ArrayList<Lobby> currentLobbies;
     private TextMessage message;
+    private int vehicleIndex;
+    private Vehicle vehicleType;
 
 	public Integer getId() {
 		return id;
@@ -179,6 +182,22 @@ public class User implements Serializable {
 	
 	public void setMessage(TextMessage message) {
 		this.message=message;
+	}
+
+	public int getVehicleIndex() {
+		return vehicleIndex;
+	}
+
+	public void setVehicleIndex(int vehicleIndex) {
+		this.vehicleIndex = vehicleIndex;
+	}
+
+	public Vehicle getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(Vehicle vehicleType) {
+		this.vehicleType = vehicleType;
 	}
 
 //	public int getImg() {

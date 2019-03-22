@@ -13,6 +13,7 @@ import lobby.Lobby;
 import managers.GameManager;
 import tile.Tile;
 import token.Firefighter;
+import token.Vehicle;
 
 public class ServerManager {
 	
@@ -111,6 +112,15 @@ public class ServerManager {
 		}
 	}
 	
+	public void placeVehicle(int direction, Vehicle type) {
+		if(type.equals(Vehicle.Ambulance)) {
+			gameState.getAmbulances()[direction].setCar(true);
+		}
+		else if(type.equals(Vehicle.Engine)) {
+			gameState.getEngines()[direction].setCar(true);
+		}
+	}
+	
 	public void performAction(Action a) {
 		a.perform(gameState);
 		generateActions();
@@ -187,186 +197,5 @@ public class ServerManager {
 		gameManager.advanceFire();
 		gameState.setAdvFireString(gameManager.getAdvFireMessage());
 	}
-	public void initExperiencedGame(int initialExplosions, int hazmats) {
-		//resolve initialExplosion amount of explosions
-		for(int i=initialExplosions; i > 0; i--) {
-		
-			int blackDice = 0;
-			
-			if(i == initialExplosions) {
-				int explosionAt = gameState.getRandomNumberInRange(1,8);
-				blackDice = explosionAt;
-				
-				if (explosionAt == 1) {
-					gameState.returnTile(3,3).setFire(2);
-					gameState.returnTile(3,3).setHotSpot(1);
-					gameManager.explosion(gameState.returnTile(3,3));
-				}
-				else if (explosionAt == 2) {
-					gameState.returnTile(3,4).setFire(2);
-					gameState.returnTile(3,4).setHotSpot(1);
-					gameManager.explosion(gameState.returnTile(3,4));
-				}
-				else if (explosionAt == 3) {
-					gameState.returnTile(3,5).setFire(2);
-					gameState.returnTile(3,5).setHotSpot(1);
-					gameManager.explosion(gameState.returnTile(3,5));
-				}
-				else if (explosionAt == 4) {
-					gameState.returnTile(3,6).setFire(2);
-					gameState.returnTile(3,6).setHotSpot(1);
-					gameManager.explosion(gameState.returnTile(3,6));
-				}
-				else if (explosionAt == 5) {
-					gameState.returnTile(4,6).setFire(2);
-					gameState.returnTile(4,6).setHotSpot(1);
-					gameManager.explosion(gameState.returnTile(4,6));
-				}
-				else if (explosionAt == 6) {
-					gameState.returnTile(4,5).setFire(2);
-					gameState.returnTile(4,5).setHotSpot(1);
-					gameManager.explosion(gameState.returnTile(4,5));
-				}
-				else if (explosionAt == 7) {
-					gameState.returnTile(4,4).setFire(2);
-					gameState.returnTile(4,4).setHotSpot(1);
-					gameManager.explosion(gameState.returnTile(4,4));
-				}
-				else {
-					gameState.returnTile(4,3).setFire(2);
-					gameState.returnTile(4,3).setHotSpot(1);
-					gameManager.explosion(gameState.returnTile(4,3));
-				}
-			}else if(i == initialExplosions - 1) {
-				boolean exit = true;
-				
-				while(exit) {
-					Tile explosionAt = gameState.rollForTile();
-					if(explosionAt.getFire() != 2) {
-						explosionAt.setFire(2);
-						explosionAt.setHotSpot(1);
-						gameManager.explosion(explosionAt);
-						blackDice = explosionAt.getY(); //Confirm with Ben!
-						exit = false;
-					}
-				}
-			}else if(i == initialExplosions - 2) {
-//				Tile explosionAt = testGS.returnTile((9 - blackDice),testGS.getRandomNumberInRange(1, 6));
-//				if(explosionAt.getFire() != 2) {
-//					explosionAt.setFire(2);
-//					explosionAt.setHotSpot(1);
-//					gameManager.explosion(explosionAt);
-//					//blackDice = explosionAt.getX();
-//				}
-				
-				boolean exit = true;
-
-//				while(exit) {
-//					Tile newExplosionAt = testGS.rollForTile();
-//					
-//					if(newExplosionAt.getFire() != 2) {
-//						newExplosionAt.setFire(2);
-//						newExplosionAt.setHotSpot(1);
-//						gameManager.explosion(newExplosionAt);
-//						//blackDice = newExplosionAt.getX();
-//						exit = false;
-//					}
-//				}
-				
-				Tile newExplosionAt = gameState.returnTile(gameState.getRandomNumberInRange(1, 6), (9 - blackDice));
-				while(exit) {
-					if(newExplosionAt.getFire() != 2) {
-						newExplosionAt.setFire(2);
-						newExplosionAt.setHotSpot(1);
-						gameManager.explosion(newExplosionAt);
-						//blackDice = newExplosionAt.getX();
-						exit = false;
-					}
-					else {
-						newExplosionAt = gameState.rollForTile();
-					}
-				}
-				
-			}else {
-				boolean exit = true;
-				
-				while(exit) {
-					Tile newExplosionAt = gameState.rollForTile();
-					
-					if(newExplosionAt.getFire() != 2) {
-						newExplosionAt.setFire(2);
-						newExplosionAt.setHotSpot(1);
-						gameManager.explosion(newExplosionAt);
-						//blackDice = newExplosionAt.getX();
-						exit = false;
-					}
-				}
-			}
-		}
-		//roll to place hazmats
-		
-		for(int i = 0; i < hazmats; i++) {
-		boolean exit = true;
-		
-		while(exit) {
-			Tile hazmatAt = gameState.rollForTile();
-			
-			if(hazmatAt.getFire() != 2) {
-				hazmatAt.setHazmat(1);
-				exit = false;
-			}
-		}
-		
-		}
-		//place additional 3 hotspots for veteran/heroic mode
-		if((initialExplosions == 3 && hazmats == 4) || (initialExplosions == 4 && hazmats == 5)) {
-			for(int i = 0; i < 3; i++) {
-				boolean exit = true;
-				
-				while(exit) {
-					Tile hotspotAt = gameState.rollForTile();
-					
-					if(hotspotAt.getHotSpot() != 1) {
-						hotspotAt.setHotSpot(1);
-						exit = false;
-					}
-				}
-				
-				}
-		}
-		//place additional hotspot depedning on player number
-		if(gameState.getListOfPlayers().size() >= 4) {
-			for(int i = 0; i < 3; i++) {
-				boolean exit = true;
-				
-				while(exit) {
-					Tile hotspotAt = gameState.rollForTile();
-					
-					if(hotspotAt.getHotSpot() != 1) {
-						hotspotAt.setHotSpot(1);
-						exit = false;
-					}
-				}
-				
-				}
-		}
-		//place additional hotspot if player = 3
-		if(gameState.getListOfPlayers().size() == 3) {
-			for(int i = 0; i < 2; i++) {
-				boolean exit = true;
-				
-				while(exit) {
-					Tile hotspotAt = gameState.rollForTile();
-					
-					if(hotspotAt.getHotSpot() != 1) {
-						hotspotAt.setHotSpot(1);
-						exit = false;
-					}
-				}
-				
-				}
-		}
-				
-	}
-
+	
 }

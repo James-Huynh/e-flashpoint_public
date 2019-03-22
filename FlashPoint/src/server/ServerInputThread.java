@@ -167,15 +167,7 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameState);
 					System.out.println(java.lang.Thread.activeCount());
 				}
-				/**For when we were returning User**/
-//				returnObject = new TranObject<User>(TranObjectType.FFPLACEMENTSUCCESS);
-//				requestObject = (User) read_tranObject.getObject();
-//				int[] coords = requestObject.getCoords();
-//				serverManager.placeFirefighter(coords, requestObject.getId());
-//				requestObject.setPlaced(true);
-//				requestObject.setCurrentState(serverManager.getGameState());
-//				returnObject.setObject(requestObject);
-//				out.setMessage(returnObject);
+
 				break;
 			case ACTIONREQUEST:
 				//System.out.println("In action request");
@@ -264,6 +256,17 @@ public class ServerInputThread extends Thread {
 					
 				
 			
+				break;
+			case VEHICLEPLACEMENT:
+				System.out.println("Vehicle placement request");
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.placeVehicle(requestObject.getVehicleIndex(), requestObject.getVehicleType());
+				returnGameState = new TranObject<GameState>(TranObjectType.VEHICLEPLACEMENTSUCCESS);
+				returnGameState.setObject(serverManager.getGameState());
+
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
 				break;
 			case LOGOUT:
 				User logoutUser = (User) read_tranObject.getObject();
