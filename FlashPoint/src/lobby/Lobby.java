@@ -129,27 +129,31 @@ public class Lobby implements Serializable  {
 	}
 	
 	public void createTemplate() {
-		if(this.board.equals("Board 1")){
-			if(this.difficulty.equals("Family")) {
+		System.out.println("this is in createTemplate");
+		System.out.println(this.board);
+		if(this.board.equals("Board 1")) {
+			System.out.println(this.difficulty);
+			if(this.mode.equals("Family")) {
 				template = new FamilyGame();
 				System.out.println("Do I come here?");
 			}
-			else if(this.difficulty.equals("Experienced")) {
+			else if(this.mode.equals("Experienced")) {
 				//Same as below
 			}
 		}
 		
 		else if(this.board.equals("Board 2")) {
-			if(this.difficulty.equals("Family")) {
+			if(this.mode.equals("Family")) {
 				template = new BoardTwo("Family");
 			}
-			else if(this.difficulty.equals("Experienced")) {
+			else if(this.mode.equals("Experienced")) {
 				template = new BoardTwo("Experienced");
 			}
 		}
 		
 		else {
 			//Random Board
+			System.out.println("this is in createTemplate last else");
 		}
 	}
 
