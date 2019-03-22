@@ -8,7 +8,7 @@ public class FamilyGame extends TemplateGame {
 	
 	
 	public FamilyGame() {
-	
+		System.out.println("Came in Family constructor");
 	//21/9 10/8
 	
 	//Set initially no fire in tile

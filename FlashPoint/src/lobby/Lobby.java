@@ -132,6 +132,7 @@ public class Lobby implements Serializable  {
 		if(this.board.equals("Board 1")){
 			if(this.difficulty.equals("Family")) {
 				template = new FamilyGame();
+				System.out.println("Do I come here?");
 			}
 			else if(this.difficulty.equals("Experienced")) {
 				//Same as below
