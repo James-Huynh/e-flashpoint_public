@@ -82,12 +82,18 @@ public class GameManager {
 			
 			else if(representsLobby.getMode().equals("Experienced")) {
 				if(representsLobby.getDifficulty().equals("Recruit")) {
+					gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
+					gs.openExteriorDoors();
 					initializeExperiencedGame(3,3);
 				}
 				else if(representsLobby.getDifficulty().equals("Veteran")) {
+					gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
+					gs.openExteriorDoors();
 					initializeExperiencedGame(3,4);
 				}
 				else if(representsLobby.getDifficulty().equals("Heroic")) {
+					gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
+					gs.openExteriorDoors();
 					initializeExperiencedGame(4,5);
 				}
 				setupPOIS();
