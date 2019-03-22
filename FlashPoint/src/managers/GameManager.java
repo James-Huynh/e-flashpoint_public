@@ -82,7 +82,15 @@ public class GameManager {
 			
 			else if(representsLobby.getMode().equals("Experienced")) {
 				if(representsLobby.getDifficulty().equals("Recruit")) {
+					System.out.println("Got here in setup");
+					System.out.println("g" + representsLobby.getTemplate().getEdgeLocations().length);
+					System.out.println("z" + representsLobby.getTemplate().getEdgeLocations()[0].length);
 					gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
+					for(int i=0;i<representsLobby.getTemplate().getEdgeLocations().length;i++) {
+						for(int j=0;i<representsLobby.getTemplate().getEdgeLocations()[0].length;i++) {
+							System.out.println("Edge at" + i + j + "is " + representsLobby.getTemplate().getEdgeLocations()[i][j]);
+						}
+					}
 					gs.openExteriorDoors();
 					initializeExperiencedGame(3,3);
 				}

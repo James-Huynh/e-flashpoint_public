@@ -138,7 +138,7 @@ public class Lobby implements Serializable  {
 				System.out.println("Do I come here?");
 			}
 			else if(this.mode.equals("Experienced")) {
-				//Same as below
+				template = new BoardTwo("Experienced");
 			}
 		}
 		
