@@ -13,6 +13,7 @@ import edge.Edge;
 import tile.ParkingSpot;
 import tile.Tile;
 import token.Firefighter;
+import token.Speciality;
 import token.POI;
 import token.Vehicle;
 import game.FamilyGame;
@@ -55,6 +56,7 @@ public class GameState implements Serializable {
 	protected ArrayList<POI> lostVictimsList;
 	protected ArrayList<POI> savedVictimsList;
 	protected ArrayList<POI> revealedFalseAlarmsList;
+	protected ArrayList<Speciality> freeSpecialities;
 
 	private static final long serialVersionUID = 1L; // serialization
 
@@ -139,6 +141,7 @@ public class GameState implements Serializable {
 		this.revealedFalseAlarmsList = new ArrayList<POI>();
 		this.lostVictimsList = new ArrayList<POI>();
 		this.savedVictimsList = new ArrayList<POI>();
+		this.freeSpecialities = new ArrayList<Speciality>();
 		createAmbulances();
 		createEngine();
 		initializeTiles();
@@ -274,6 +277,10 @@ public class GameState implements Serializable {
 		return availableActions;
 	}
 
+	public ArrayList<Speciality> getFreeSpecialities(){
+		return freeSpecialities;
+	}
+	
 	/*
 	 * SETTERS
 	 */
@@ -342,7 +349,27 @@ public class GameState implements Serializable {
 		this.ambulances = ambulances;
 	}
 
-	// @matekrk question about efficiency, do we need this?
+	public void setAllSpecialities() {
+		for (Speciality s : token.Speciality.values()) {
+			this.freeSpecialities.add(s);
+		}
+	}
+	
+	public void setFreeSpecialities(ArrayList<Speciality> sp) {
+		this.freeSpecialities = sp;
+	}
+	
+	//for command
+	public void setPlayingFirefighter(Firefighter f) {
+		int j = 0;
+		for (int i=0; i < this.listOfFirefighters.size(); i++) {
+			if (listOfFirefighters.get(i).equals(f)){
+				j=i;
+				break;
+			}
+		}
+		this.activeFireFighterIndex = j;
+	}
 
 	// @James
 	/**
@@ -355,6 +382,12 @@ public class GameState implements Serializable {
 		// listOfFireFighter.add(f);
 		t.addToFirefighterList(f);
 		f.setCurrentPosition(t);
+	}
+	
+	public void setFirefighterSpeciality(Firefighter f, Speciality s) {
+		freeSpecialities.add(f.getSpeciality());
+		f.setSpeciality(s);
+		freeSpecialities.remove(s);
 	}
 
 	// @matekrk + Zaid

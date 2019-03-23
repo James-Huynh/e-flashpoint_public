@@ -2,12 +2,13 @@ package token;
 
 import java.io.Serializable;
 
-public class POI implements Serializable {
+public class POI extends Token implements Serializable {
     
     protected boolean revealed;
     protected boolean isVictim;
     protected boolean isRescued;
     private static final long serialVersionUID = 1L;
+    protected Firefighter follow;
     
     /**
      * Constructor for Poi
@@ -15,6 +16,7 @@ public class POI implements Serializable {
      */
     public POI(boolean isVictim) {
        this.isVictim  = isVictim;
+       this.follow = null;
     }
 
     /*
@@ -32,6 +34,18 @@ public class POI implements Serializable {
     public boolean isRevealed() {
     	return revealed;
     }
+    
+    public boolean isResuscitated() {
+    	return !follow.equals(null);
+    }
+    
+    public Firefighter follower() {
+    	return follow;
+    }
+    
+    public boolean checkStatus() {
+      	return revealed;
+    }
 
     /*
      * SETTERS
@@ -41,18 +55,15 @@ public class POI implements Serializable {
         //Invoke placing POI
     	revealed = true;
     }
-
-    public boolean checkStatus() {
-      	return revealed;
+    
+    public void setResuscitate(Firefighter f) {
+    	assert isVictim == true;
+    	follow = f;
+    	//f.setVictim(this);
     }
 
 	@Override
 	public String toString() {
 		return "POI [revealed=" + revealed + ", isVictim=" + isVictim + ", isRescued=" + isRescued + "]";
-	}
-
-	public void destroy() {
-		// TODO Auto-generated method stub
-		
 	}
 }

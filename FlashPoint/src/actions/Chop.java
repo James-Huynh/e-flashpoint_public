@@ -4,6 +4,7 @@ import edge.Edge;
 import game.GameState;
 import tile.Tile;
 import token.Firefighter;
+import token.Speciality;
 
 /**
  * Chop class definition.
@@ -14,10 +15,21 @@ public class Chop extends Action {
     
     protected int direction;
     protected ActionList title = ActionList.Chop;
+    private static final long serialVersionUID = 1L;
     
+    // constr
     public Chop(int direction, int cost) {
     	this.APcost = cost;
     	this.direction = direction;
+    }
+    
+    //for advanced
+    @Override
+    public void adjustAction(GameState gs) {
+    	Firefighter current = gs.getPlayingFirefighter();
+    	if (current.getSpeciality().equals(Speciality.RESCUE_SPECIALIST)) {
+			this.APcost = this.APcost/2;
+		}
     }
     
     /*
@@ -43,11 +55,11 @@ public class Chop extends Action {
         int aP = playingFirefighter.getAP();
         Edge edge = currPosition.getEdge(this.direction);
         
-        if (this.APcost == 2) {
+        if (this.APcost == 2 || (this.APcost == 1 && playingFirefighter.speciality.equals(Speciality.RESCUE_SPECIALIST))) {
         	edge.chop();
         	gs.updateDamageCounter();
         }
-        else if(this.APcost == 4) { // == 4
+        else if(this.APcost == 4 || (this.APcost == 2 && playingFirefighter.speciality.equals(Speciality.RESCUE_SPECIALIST))) { // == 4 or (rescue and ==2)
         	edge.chop();
         	edge.chop();
         	gs.updateDamageCounter();
@@ -76,9 +88,21 @@ public class Chop extends Action {
         					flag = true;
         				}
         			case 2:
-        				if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
-        					flag = true;
+        				if (playingFirefighter.speciality.equals(Speciality.RESCUE_SPECIALIST)) {
+        					if(dmgCounter + 2 < gs.MAX_WALL_DMGD) {
+            					flag = true;
+            				}
         				}
+        				else {
+        					if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+        						flag = true;
+        					}
+        				}
+        			case 1:
+        				assert playingFirefighter.speciality.equals(Speciality.RESCUE_SPECIALIST);
+        				if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+    						flag = true;
+    					}
         			}
         		}
         	}
@@ -88,9 +112,19 @@ public class Chop extends Action {
         			case 4:
         				break;
         			case 2:
-        				if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
-        					flag = true;
+        				if (playingFirefighter.speciality.equals(Speciality.RESCUE_SPECIALIST)) {
+        					flag = false;
         				}
+        				else {
+        					if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+        						flag = true;
+        					}
+        				}
+        			case 1:
+        				assert playingFirefighter.speciality.equals(Speciality.RESCUE_SPECIALIST);
+        				if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+    						flag = true;
+    					}
         			}
         		}
         	}
@@ -101,8 +135,10 @@ public class Chop extends Action {
 
 	@Override
 	public String toString() {
-		return "Chop [direction=" + direction + ", APcost=" + APcost + "]";
+		return "Chop [direction=" + direction + ", title=" + title + ", APcost=" + APcost + "]";
 	}
+
+	
     
     
 }

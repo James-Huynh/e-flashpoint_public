@@ -237,6 +237,17 @@ public class Tile implements Serializable{
 		
 		return false;
 	}
-
 	
+	public boolean containsHazmat(Hazmat hazmat) {
+		return hazmatList.contains(hazmat);
+	}
+
+	public Hazmat popHazmat() {
+		Hazmat hazmat = hazmatList.remove(hazmatList.size()-1);
+		return hazmat;
+	}
+	
+	public void popHazmat(Hazmat h) {
+		hazmatList.remove(h);
+	}
 }
