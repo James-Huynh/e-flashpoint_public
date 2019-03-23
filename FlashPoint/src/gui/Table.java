@@ -705,14 +705,16 @@ public class Table {
 							}
 						} else if (y == connectedTile.getCoords()[1]) {
 							if(connectedTile.getCoords()[1] == 0) {
-								if(connectedTile.getCoords()[1] == 3) {
+								if(connectedTile.getCoords()[0] == 3) {
+									System.out.println("upper called");
 									try {
 										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_TOP.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
 									} catch (IOException e) {
 										e.printStackTrace();
 									}
-								} else if (connectedTile.getCoords()[1] == 4) {
+								} else if (connectedTile.getCoords()[0] == 4) {
+									System.out.println("downer called");
 									try {
 										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_BOT.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
@@ -721,14 +723,16 @@ public class Table {
 									}
 								}
 							} else if(connectedTile.getCoords()[1] == 9) {
-								if(connectedTile.getCoords()[1] == 3) {
+								if(connectedTile.getCoords()[0] == 3) {
+									System.out.println("upper called");
 									try {
 										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_TOP.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
 									} catch (IOException e) {
 										e.printStackTrace();
 									}
-								} else if (connectedTile.getCoords()[1] == 4) {
+								} else if (connectedTile.getCoords()[0] == 4) {
+									System.out.println("downer called");
 									try {
 										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_BOT.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
@@ -753,7 +757,7 @@ public class Table {
 									}
 								} else if (connectedTile.getCoords()[1] == 8) {
 									try {
-										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_RIGHT.gif"));
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_RIGHT.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
 									} catch (IOException e) {
 										e.printStackTrace();
@@ -769,7 +773,7 @@ public class Table {
 									}
 								} else if (connectedTile.getCoords()[1] == 2) {
 									try {
-										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_RIGHT.gif"));
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_RIGHT.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
 									} catch (IOException e) {
 										e.printStackTrace();
@@ -778,32 +782,34 @@ public class Table {
 							}
 						} else if (y == connectedTile.getCoords()[1]) {
 							if(connectedTile.getCoords()[1] == 0) {
-								if(connectedTile.getCoords()[1] == 1) {
+								if(connectedTile.getCoords()[0] == 1) {
+									System.out.println("upper called");
 									try {
-										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_TOP.gif"));
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_TOP.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
 									} catch (IOException e) {
 										e.printStackTrace();
 									}
-								} else if (connectedTile.getCoords()[1] == 2) {
+								} else if (connectedTile.getCoords()[0] == 2) {
 									try {
-										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_BOT.gif"));
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_BOT.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
 									} catch (IOException e) {
 										e.printStackTrace();
 									}
 								}
 							} else if(connectedTile.getCoords()[1] == 9) {
-								if(connectedTile.getCoords()[1] == 5) {
+								if(connectedTile.getCoords()[0] == 5) {
+									System.out.println("upper called");
 									try {
-										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_TOP.gif"));
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_TOP.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.SOUTH);
 									} catch (IOException e) {
 										e.printStackTrace();
 									}
-								} else if (connectedTile.getCoords()[1] == 6) {
+								} else if (connectedTile.getCoords()[0] == 6) {
 									try {
-										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_BOT.gif"));
+										BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_BOT.gif"));
 										add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
 									} catch (IOException e) {
 										e.printStackTrace();
