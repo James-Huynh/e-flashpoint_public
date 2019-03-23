@@ -297,7 +297,7 @@ public class Launcher {
 		if(clientManager.getLobby().getPlayers().get(0).getUserName().equals(clientManager.getUserName())) {
 			lobby.addSelectionPiecesListenerListener(new StartListener() {
 				public void clickStart(boolean flag) {
-					if(clientManager.getLobby().getPlayers().get(0).getUserName().equals(clientManager.getUserName())) {
+					if(!clientManager.getLobby().getPlayers().get(0).getUserName().equals(clientManager.getUserName())) {
 	//					lobby.setVisible(false);
 	//					motherFrame.remove(lobby);
 	//					setupGamePage();
