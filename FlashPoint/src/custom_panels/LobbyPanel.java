@@ -39,7 +39,6 @@ public class LobbyPanel extends JPanel {
 	private JTextArea textRules;
 	private JTextArea textMode;
 	private JTextArea textDifficulty;
-	
 	private JPanel playersPanel;
 	private ArrayList<Player> currPlayerList;
 	private ArrayList<Player> newPlayerList;
