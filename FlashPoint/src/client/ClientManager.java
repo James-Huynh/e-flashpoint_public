@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import actions.Action;
+import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
@@ -11,6 +12,11 @@ import game.FamilyGame;
 import game.GameState;
 import gui.Launcher;
 import lobby.Lobby;
+import token.Vehicle;
+import chat.ChatMsgEntity;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ClientManager {
 	
@@ -25,6 +31,7 @@ public class ClientManager {
 	private int startGameFlag = 0;
 	private TranObjectType anyString;
 	private Launcher launcher;
+	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	
 	private boolean endTurnTrigger = false;
 	
@@ -71,7 +78,6 @@ public class ClientManager {
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				flag = true;
 				startGameFlag = 1;
-				anyString = read_tranObject.getType();
 				//System.out.println(requestObject.getMatTiles()[0][0].getFirefighterList().get(0).getOwner().getUserName() + "haha we made it!"); //this is tester
 				//requestObject.getCurrentState().setTiles(requestObject.getMatTiles());
 				break;
@@ -108,6 +114,10 @@ public class ClientManager {
 				 */
 				System.out.println(requestObject.getCurrentLobby().getPlayers().get(1).getUserName());
 				break;
+			case VEHICLEPLACEMENTSUCCESS:
+				System.out.println("Successful joinlobby request");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				flag = true;
 			case ENDTURNSUCCESS:
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
@@ -115,7 +125,17 @@ public class ClientManager {
 				setEndTurnTrigger(true);
 				flag = true;
 				break;
+			case CHATMESSAGE:
+				requestObject = (User) read_tranObject.getObject();
+				mDataArrays=(requestObject.getChatArray());
+			
+					
+					Collections.reverse(mDataArrays);
 			}
+			
+		
+		
+			
 			
 		}
 		return flag;
@@ -206,7 +226,7 @@ public class ClientManager {
 	 * Asks the server to create a lobby
 	 * @return boolean indicating the status of the operation
 	 */
-	public boolean createLobbyRequest(String name, String mode, int capacity, String difficulty) {
+	public boolean createLobbyRequest(String name, String mode, int capacity, String difficulty, String board) {
 		boolean flag = false;
 		
 //		Lobby lobby = requestObject.getCurrentLobby();
@@ -215,14 +235,9 @@ public class ClientManager {
 		lobby.setMode(mode);
 		lobby.setCapacity(capacity);
 		lobby.setDifficulty(difficulty);
-		if(mode.equals("Family")){
-			lobby.setFamilyGame();
-		}else{
-			if(difficulty.equals("Recruit")) lobby.setRecruitGame();
-			else if(difficulty.equals("Veteran")) lobby.setVeteranGame();
-			else lobby.setHeoircGame();
-			
-		}
+		lobby.setBoard(board);
+		
+		lobby.createTemplate();
 		
 		requestObject.setCurrentLobby(lobby);
 		
@@ -252,6 +267,7 @@ public class ClientManager {
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		
+
 //		try {
 //			while(readMessage() != true) {
 //				
@@ -292,9 +308,9 @@ public class ClientManager {
 //		catch(IOException k) {
 //			
 //		}
-		
 //		return requestObject.getCurrentState();
 		return true;
+
 	}
 	
 	public GameState getUsersGameState() {
@@ -440,4 +456,47 @@ public class ClientManager {
 	
 	
 	
+	public boolean sendMsgRequest(TextMessage message) {
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.MESSAGE);
+		requestObject.setMessage(message);
+		objectToSend.setObject(requestObject);
+		
+		outputThread.setMsg(objectToSend);
+		return true;
+	}
+	
+	public List<ChatMsgEntity> displayChat(){
+		return mDataArrays;
+	}
+	
+	public boolean placeVehicleRequest(int direction, Vehicle type) {
+		boolean flag = false;
+
+		requestObject.setVehicleIndex(direction);
+		requestObject.setVehicleType(type);
+		
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.VEHICLEPLACEMENT);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		
+		System.out.println("Placing a Vehicle");
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		catch(ClassNotFoundException l) {
+			
+		}
+		catch(IOException k) {
+			
+		}
+		
+		return flag;
+	} 
+	public List<ChatMsgEntity> getChatArray(){
+		return this.mDataArrays;
+	}
 }

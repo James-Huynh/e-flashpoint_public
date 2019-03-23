@@ -4,7 +4,7 @@ import java.io.Serializable;
 // Start of user code for imports
 import java.util.ArrayList;
 
-import game.AdvancedGame;
+import game.BoardTwo;
 import game.FamilyGame;
 import game.TemplateGame;
 import server.Player;
@@ -15,7 +15,7 @@ public class Lobby implements Serializable  {
 	private ArrayList<Player> players;
 	private ArrayList<token.Colour> assignableColours;
 
-	private String mode, name, difficulty;
+	private String mode, name, difficulty, board;
 	private int capacity;
 
 	private TemplateGame template;
@@ -26,13 +26,7 @@ public class Lobby implements Serializable  {
 
 		//dummy
 		players = new ArrayList<Player>();
-		//			ArrayList<Player> playingPlayers = new ArrayList<Player>(3);
-//		players.add(new Player("Mat", "Cuba123"));
-//		players.add(new Player("Zaid", "zeroOneTwoThree"));
-//		players.add(new Player("Junha", "myPassword"));
-//		players.add(new Player("Ben", "Cuba123"));
-//		players.add(new Player("Cao", "zeroOneTwoThree"));
-//		players.add(new Player("James", "myPassword"));
+
 //		assignColours();
 
 	}
@@ -122,22 +116,45 @@ public class Lobby implements Serializable  {
 		return difficulty;
 	}
 	public void setFamilyGame() {
+		System.out.println("IN FAMILY GAME EVER GETTING CALLED?");
 		template = new FamilyGame();
 	}
 
-	public void setRecruitGame() {
-		template = new AdvancedGame("Recruit");
-		
+	public String getBoard() {
+		return board;
 	}
 
-	public void setVeteranGame() {
-		template = new AdvancedGame("Veteran");
-		
+	public void setBoard(String board) {
+		this.board = board;
 	}
-
-	public void setHeoircGame() {
-		template = new AdvancedGame("Heroic");
+	
+	public void createTemplate() {
+		System.out.println("this is in createTemplate");
+		System.out.println(this.board);
+		if(this.board.equals("Board 1")) {
+			System.out.println(this.difficulty);
+			if(this.mode.equals("Family")) {
+				template = new FamilyGame();
+				System.out.println("Do I come here?");
+			}
+			else if(this.mode.equals("Experienced")) {
+				template = new BoardTwo("Experienced");
+			}
+		}
 		
+		else if(this.board.equals("Board 2")) {
+			if(this.mode.equals("Family")) {
+				template = new BoardTwo("Family");
+			}
+			else if(this.mode.equals("Experienced")) {
+				template = new BoardTwo("Experienced");
+			}
+		}
+		
+		else {
+			//Random Board
+			System.out.println("this is in createTemplate last else");
+		}
 	}
 
 }

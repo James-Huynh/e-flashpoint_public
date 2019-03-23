@@ -26,11 +26,16 @@ public static void main(String[] args) {
 
 		
 		tempLobby.setMode("Family");
-		tempLobby.setTemplete(new FamilyGame());
+//		tempLobby.setTemplete(new FamilyGame());
 		
+		tempLobby.setBoard("Board1");
+		tempLobby.createTemplate();
 		
-		tester.updateGameStateFromLobby(tempLobby);
+//		tester.updateGameStateFromLobby(tempLobby);
 		
+		current = new GameManager(tempLobby);
+		current.setup();
+		tester = current.getGameState();
 		
 //		//Player placement
 //		tester.placeFireFighter(tester.getFireFighterList().get(0), tester.returnTile(5,0));
@@ -102,7 +107,7 @@ public static void main(String[] args) {
 //		tester.getSavedVictimsList().add(new POI(true));
 		
 		
-		current = new GameManager(tester);
+//		current = new GameManager(tester);
 
 		
 		table = new LocalizedTable(tester);

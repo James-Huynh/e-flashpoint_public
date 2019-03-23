@@ -18,7 +18,7 @@ public class Finish extends Action{
 
 	@Override
 	public String toString() {
-		return "Finish [APcost=" + APcost + "]";
+		return "Finish [title=" + title + ", APcost=" + APcost + ", direction=" + direction + "]";
 	}
 
 	@Override
@@ -37,5 +37,12 @@ public class Finish extends Action{
         }
 		return true;  //pop-in window?
 	}
+	
+	@Override
+	public void adjustAction(GameState gs) {
+		
+	}
+	
+	
 	
 }

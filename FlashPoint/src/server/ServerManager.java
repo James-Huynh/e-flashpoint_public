@@ -4,15 +4,19 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import actions.Action;
+import chat.ChatMsgEntity;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
 import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
+import tile.Tile;
 import token.Firefighter;
+import token.Vehicle;
 
 public class ServerManager {
 	
@@ -21,11 +25,11 @@ public class ServerManager {
 	private ArrayList<Lobby> currentLobbies;
 	
 	private Lobby activeLobby;
-	private GameState testGS;
+	private GameState gameState;
 	private GameManager gameManager;
 	
 	private int placedFF = 0;
-	
+	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public ServerManager() {
 		onlinePlayers = new HashMap<Integer, Player>();
 		accounts = new HashMap<String,String>();
@@ -39,25 +43,57 @@ public class ServerManager {
 	}
 	
 	public void createGame() {
-		if(testGS == null) {
+	/**	if(gameState == null) {
 			System.out.println("ServerManager :- GameState was null and is now set up");
-			testGS = GameState.getInstance();
-			testGS.updateGameStateFromLobby(activeLobby);
-			testGS.setActiveFireFighterIndex(-1);
-			System.out.println("active FF index is (3) :- " + testGS.getActiveFireFighterIndex());
+			gameState = GameState.getInstance();
+			gameState.updateGameStateFromLobby(activeLobby);
 			initializeGameManager();
+			gameState.setListOfPlayers(activeLobby.getPlayers());
+			
+			if(activeLobby.getBoard().equals("Board 1")) {
+				if(activeLobby.getMode().equals("Family")) {
+				gameState.initializeEdges(activeLobby.getTemplate().getEdgeLocations());
+				// we are setting outer doors open!
+				//if exterior door then open the door not implemented!!
+				gameState.openExteriorDoors();
+				gameState.initializePOI(activeLobby.getTemplate().getPOILocations());
+				gameState.initializeFire(activeLobby.getTemplate().getFireLocations());
+				}
+				if(activeLobby.getMode().equals("Experienced")) {
+					if(activeLobby.getDifficulty().equals("Recruit")) initExperiencedGame(3,3);
+					if(activeLobby.getDifficulty().equals("Veteran")) initExperiencedGame(3,4);
+					if(activeLobby.getDifficulty().equals("Heroic")) initExperiencedGame(4,5);
+				}
+				
+				}
+				gameState.setFirefighters();
+			
+			
+			
+			gameState.setActiveFireFighterIndex(-1);
+			System.out.println("active FF index is (3) :- " + gameState.getActiveFireFighterIndex());
 		}
-//		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
-//		generateActions();
+		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
+		generateActions();**/
+		
+		/**New Initialization**/
+		if(gameState == null) {
+			initializeGameManager();
+			gameManager.setup();
+			gameState = gameManager.getGameState();
+			gameState.setActiveFireFighterIndex(-1);
+		}
+		
 	}
 	
 	public void initializeGameManager() {
-		gameManager = new GameManager(testGS);
+//		gameManager = new GameManager(gameState, activeLobby);
+		gameManager = new GameManager(activeLobby);
 	}
 	
 	public void generateActions() {
 		gameManager.setAllAvailableActions(gameManager.generateAllPossibleActions());
-		testGS.updateActionList(gameManager.getAllAvailableActions());
+		gameState.updateActionList(gameManager.getAllAvailableActions());
 	}
 
 	
@@ -69,18 +105,27 @@ public class ServerManager {
 //	}
 	
 	public void placeFirefighter(int[] coords, Integer userId) {
-		testGS.placeFireFighter(onlinePlayers.get(userId).getFirefighter(), testGS.returnTile(coords[0],coords[1]));
+		gameState.placeFireFighter(onlinePlayers.get(userId).getFirefighter(), gameState.returnTile(coords[0],coords[1]));
 		placedFF++;
-		if(placedFF == testGS.getFireFighterList().size()) {
+		if(placedFF == gameState.getFireFighterList().size()) {
 			//set the index to the initial player. This trigger the player to be able to view their actions.
 			//testGS.setActiveFireFighterIndex(0);
-			testGS.setActiveFireFighterIndex(0);
+			gameState.setActiveFireFighterIndex(0);
 			generateActions();
 		}
 	}
 	
+	public void placeVehicle(int direction, Vehicle type) {
+		if(type.equals(Vehicle.Ambulance)) {
+			gameState.getAmbulances()[direction].setCar(true);
+		}
+		else if(type.equals(Vehicle.Engine)) {
+			gameState.getEngines()[direction].setCar(true);
+		}
+	}
+	
 	public void performAction(Action a) {
-		a.perform(testGS);
+		a.perform(gameState);
 		generateActions();
 	}
 	
@@ -94,7 +139,13 @@ public class ServerManager {
 	
 	
 	public GameState getGameState() {
-		return this.testGS;
+		return this.gameState;
+	}
+	public List<ChatMsgEntity> getChatArray(){
+		return this.mDataArrays;
+	}
+	public void addChatArray(ChatMsgEntity chatMsgEntity) {
+		mDataArrays.add(chatMsgEntity);
 	}
 	
 	public void setLobby(Lobby newLobby) {
@@ -126,7 +177,7 @@ public class ServerManager {
 	}
 
 	public void endTurn() {
-		Firefighter temp = testGS.getPlayingFirefighter();
+		Firefighter temp = gameState.getPlayingFirefighter();
 		int AP = temp.getAP();
 		if(AP + 4 > 8) {
 			temp.setAP(8);
@@ -134,7 +185,7 @@ public class ServerManager {
 			temp.setAP(AP + 4);
 		}
 		advanceFire();
-		if(testGS.isGameTerminated() || testGS.isGameWon()) {
+		if(gameState.isGameTerminated() || gameState.isGameWon()) {
 			setFFNextTurn();
 			generateActions();
 		} else {
@@ -147,15 +198,13 @@ public class ServerManager {
 	}
 	
 	public void setFFNextTurn() {
-		testGS.setActiveFireFighterIndex( (testGS.getActiveFireFighterIndex() + 1)%(testGS.getFireFighterList().size()) );
+		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
 		
 	}
 	
 	public void advanceFire() {
 		gameManager.advanceFire();
-		testGS.setAdvFireString(gameManager.getAdvFireMessage());
+		gameState.setAdvFireString(gameManager.getAdvFireMessage());
 	}
-
-
-
+	
 }

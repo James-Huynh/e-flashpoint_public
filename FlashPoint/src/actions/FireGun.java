@@ -1,14 +1,20 @@
 package actions;
+import java.util.Arrays;
 import java.util.Random;
 
 import edge.Edge;
 import game.GameState;
 import tile.Tile;
 import token.Firefighter;
+import token.Speciality;
+import token.Vehicle;
 
 public class FireGun extends Action {
 	
+	private static final long serialVersionUID = 1L;
 	protected ActionList title = ActionList.FireGun;
+	protected boolean driver;
+	protected int[] result;
 
 	protected int[][] quadrantIndices = new int[12][2]; //To hold the indices of the quadrant
 	public FireGun() {									//FF location corresponds to
@@ -18,6 +24,10 @@ public class FireGun extends Action {
 	public ActionList getTitle() {
     	return this.title;
     }
+	
+	public int[] getResult() {
+		return result;
+	}
 
 	@Override
 	public void perform(GameState gs) {
@@ -59,23 +69,32 @@ public class FireGun extends Action {
 		boolean flag = false;
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
 		Tile currentPosition = playingFirefighter.getCurrentPosition();
-		
-		//Here I can set up quadrantIndices -> setIndices(currentPosition.getCoords());
-		//Then I can use this array below, in rollDice and in perform
-		
-		/*if(currentPosition.ParkingSpot == Vehicle.Engine) {
-			Check associated quadrant based on FF location - if FF present, can't fire **Math required**
-			int aP = playingFirefighter.getAP();
-			if(aP >= 4) {
+		if (currentPosition.getParkingSpot() == null && currentPosition.getParkingSpot().getParkingType().equals(Vehicle.Engine) 
+				&& currentPosition.getParkingSpot().getCar() == true) {
+			if (playingFirefighter.getAP() >= APcost) {
 				flag = true;
 			}
-		}*/
+		}
 		
 		return flag;
 	}
 	
+	@Override
+	public void adjustAction(GameState gs) {
+		if (gs.getPlayingFirefighter().getSpeciality().equals(Speciality.DRIVER)) {
+			driver = true;
+			APcost = 2;
+		}
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "FireGun [title=" + title + ", quadrantIndices=" + Arrays.toString(quadrantIndices) + ", APcost="
+				+ APcost + ", direction=" + direction + "]";
+	}
+
 	public int[] rollDice(int[] location) {
-		//Or I can call the regular roll dice method that will exist in GameState
 		Random rand = new Random();
 		int red = rand.nextInt(5);
 		red += 1;
@@ -90,6 +109,35 @@ public class FireGun extends Action {
 		}
 		int[] targetSpace = new int[2];
 		targetSpace[0] = red;
+		targetSpace[1] = black;
+		return targetSpace;
+	}
+	
+	//both public important for Driver!
+	public int[] rerollRedDice(int[] location, int[] result) {
+		Random rand = new Random();
+		int red = rand.nextInt(5);
+		red += 1;
+		while(red < location[0]) {
+			red = rand.nextInt(5);
+			red += 1;
+		}
+		int[] targetSpace = new int[2];
+		targetSpace[0] = red;
+		targetSpace[1] = result[1];
+		return targetSpace;
+	}
+	
+	public int[] rerollBlackDice(int[] location, int[] result) {
+		Random rand = new Random();
+		int black = rand.nextInt(7);
+		black += 1;
+		while(black < location[1]) {
+			black = rand.nextInt(7);
+			black += 1;
+		}
+		int[] targetSpace = new int[2];
+		targetSpace[0] = result[0];
 		targetSpace[1] = black;
 		return targetSpace;
 	}

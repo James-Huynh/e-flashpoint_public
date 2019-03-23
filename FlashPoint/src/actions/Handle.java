@@ -63,7 +63,12 @@ public class Handle extends Action{
 	}
     
     @Override
+	public void adjustAction(GameState gs) {
+		
+	}
+    
+    @Override
 	public String toString() {
-		return "Handle [direction=" + direction + ", APcost=" + APcost + "]";
+		return "Handle [title=" + title + ", direction=" + direction + ", APcost=" + APcost + "]";
 	}
 }

@@ -195,7 +195,9 @@ public class LocalizedTable {
 					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
 					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() /*+ "  Saved Ap: " + currentFF.getSavedAP()*/);
 					String inputString;
-					//needs fixing
+					if(1 == 2 /*currentBoard.mode == advanced*/) {
+						//playerInfo = playerInfo + "Specialty: "+ currentFF.getSpeciality.toString();
+					}
 					String ffColour = currentFF.getColour().toString(currentFF.getColour());
 					if(this.currentBoard.getActiveFireFighterIndex() == i) {
 						inputString = "<html> <font size=\"5\", color='"+ffColour+"'>" + playerInfo + "</font></html>";
@@ -610,7 +612,6 @@ public class LocalizedTable {
 					try {
 						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_LEFT.gif"));
 						JLabel temp = new JLabel(new ImageIcon(imageDoor));
-						temp.setBackground(tileColorAmbulance);
 						add(temp, BorderLayout.EAST);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -637,6 +638,42 @@ public class LocalizedTable {
 					try {
 						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_RIGHT.gif"));
 						add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.WEST);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				if(connectedTile.getCoords()[0] == 3 && connectedTile.getCoords()[1] == 0) {
+					try {
+						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_TOP.gif"));
+						JLabel temp = new JLabel(new ImageIcon(imageDoor));
+						temp.setBackground(tileColorAmbulance);
+						add(temp, BorderLayout.SOUTH);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}if(connectedTile.getCoords()[0] == 4 && connectedTile.getCoords()[1] == 0) {
+					try {
+						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "AMBULANCE_BOT.gif"));
+						add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				if(connectedTile.getCoords()[0] == 1 && connectedTile.getCoords()[1] == 0) {
+					try {
+						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_TOP.gif"));
+						JLabel temp = new JLabel(new ImageIcon(imageDoor));
+						temp.setBackground(tileColorAmbulance);
+						add(temp, BorderLayout.SOUTH);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}if(connectedTile.getCoords()[0] == 2 && connectedTile.getCoords()[1] == 0) {
+					try {
+						BufferedImage imageDoor = ImageIO.read(new File(defaultImagesPath + "ENGINE_BOT.gif"));
+						add(new JLabel(new ImageIcon(imageDoor)), BorderLayout.NORTH);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -748,17 +785,6 @@ public class LocalizedTable {
 				}else {
 					add(new JLabel());
 				}
-				
-				if(true /*this.connectedTile.containsHazmat()*/) {
-					try {
-						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT.gif"));
-						add(new JLabel(new ImageIcon(POIimage)));	
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}else {
-					add(new JLabel());
-				}
 					
 				if(this.connectedTile.containsFirefighter()) {
 					String builder = defaultImagesPath;
@@ -827,16 +853,27 @@ public class LocalizedTable {
 					}
 					
 				}
-				else /*(this.connectedTile.hasHotSpot())*/ {
+				
+				if(this.connectedTile.containsHazmat()) {
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT.gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}else {
+					add(new JLabel());
+				}
+				if(this.connectedTile.containsHotSpot()) {
 					try {
 						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HOTSPOT.gif"));
 						add(new JLabel(new ImageIcon(POIimage)));	
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				} //else {
-//					add(new JLabel());
-//				}
+				} else {
+					add(new JLabel());
+				}
 			}
 			
 		

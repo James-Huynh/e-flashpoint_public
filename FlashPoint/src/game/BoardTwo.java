@@ -1,56 +1,83 @@
 package game;
 
-public class FamilyGame extends TemplateGame {
-	
-	protected int[][] fireLocations = new int[8][10];
-	protected int[][] POILocations = new int[8][10];
-	protected int[][] edgeLocations = new int[9][21]; 	// subject to change
-	
-	
-	public FamilyGame() {
-		System.out.println("Came in Family constructor");
-	//21/9 10/8
-	
-	//Set initially no fire in tile
-	for (int i=0; i<8; i++) {
-		for (int j=0; j<10; j++) {
-			fireLocations[i][j] = 0;
-		}
-	}
-	
-	//10 Fire locations
-	fireLocations[2][2] = 2;
-	fireLocations[2][3] = 2;
-	fireLocations[3][2] = 2;
-	fireLocations[3][3] = 2;
-	fireLocations[3][4] = 2;
-	fireLocations[4][4] = 2;
-	fireLocations[3][5] = 2;
-	fireLocations[5][6] = 2;
-	fireLocations[6][6] = 2;
-	fireLocations[5][7] = 2;
-	
-	//Set initially no POI in tile
-	for (int i=0; i<8; i++) {
-		for (int j=0; j<10; j++) {
-			POILocations[i][j] = 0;
-		}
-	}
-	//3 POI locations
-	POILocations[2][4] = 1;
-	POILocations[5][1] = 1;
-	POILocations[5][8] = 1;
-	
+public class BoardTwo extends TemplateGame{
 
-	//Set initially with all no edges except bottom edge
-		for (int i=0; i<9; i++) {
-			for (int j=0; j<21; j++) {
-				edgeLocations[i][j] = 0;
-//			if (j==8 && ((i+1)%2 == 0) ) edgeLocations[i][j] = -1; //if side edges of bottom edge, then set unused edges -1
-//				else edgeLocations[i][j] = 0;
-			}
-		}
+	/**
+	 * Junha : 
+	 */
+	private static final long serialVersionUID = 1L;
 	
+	protected int[][] edgeLocations = new int[9][21];
+	protected int[][] POILocations = new int[8][10];
+	protected int[][] fireLocations = new int[8][10];
+	private String difficultyLevel; //Family or Experienced
+//	private String subLevel; //Recruit, Heroic or Veteran
+	
+	public BoardTwo(String difficulty) { //Constructor for Family since it will not have subLevel
+		this.setDifficultyLevel(difficulty);
+		setupBoard();
+	}
+	
+	public void setupBoard() {
+		if(this.difficultyLevel.equals("Family")) {
+			setEdgeLocations();
+			setPOILocations();
+			setFireLocations();
+		}
+		else {
+			setEdgeLocations();
+		}
+	}
+
+	
+	public String getDifficultyLevel() {
+		return difficultyLevel;
+	}
+
+	public void setDifficultyLevel(String difficultyLevel) {
+		this.difficultyLevel = difficultyLevel;
+	}
+
+
+	@Override
+	public int[][] getFireLocations() {
+		// TODO Auto-generated method stub
+		return fireLocations;
+	}
+	
+	@Override
+	public int[][] getPOILocations() {
+		// TODO Auto-generated method stub
+		return POILocations;
+	}
+	
+	@Override
+	public int[][] getEdgeLocations() {
+		// TODO Auto-generated method stub
+		return edgeLocations;
+	}
+	
+	public void setPOILocations() {
+		POILocations[2][4] = 1;
+		POILocations[5][1] = 1;
+		POILocations[5][8] = 1;
+	}
+	
+	public void setFireLocations() {
+		//10 Fire locations
+		fireLocations[2][2] = 2;
+		fireLocations[2][3] = 2;
+		fireLocations[3][2] = 2;
+		fireLocations[3][3] = 2;
+		fireLocations[3][4] = 2;
+		fireLocations[4][4] = 2;
+		fireLocations[3][5] = 2;
+		fireLocations[5][6] = 2;
+		fireLocations[6][6] = 2;
+		fireLocations[5][7] = 2;
+	}
+	
+	public void setEdgeLocations() {
 		//51 Wall locations
 		edgeLocations[1][3] = 1;
 		edgeLocations[1][5] = 1;
@@ -130,19 +157,6 @@ public class FamilyGame extends TemplateGame {
 		edgeLocations[8][16] = -1;
 		edgeLocations[8][18] = -1;
 		edgeLocations[8][20] = -1;
-		
 	}
-	//Getters and setters
-	public int[][] getFireLocations() {
-        return fireLocations;
-    }
-	public int[][] getPOILocations() {
-        return POILocations;
-    }
-    public int[][] getEdgeLocations() {
-        return edgeLocations;
-    }
-    
-    
-}
 
+}

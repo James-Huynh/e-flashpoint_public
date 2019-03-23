@@ -2,10 +2,13 @@ package commons.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
+import chat.ChatMsgEntity;
 import game.GameState;
 import lobby.Lobby;
 import tile.Tile;
+import token.Vehicle;
 
 
 public class User implements Serializable {
@@ -23,6 +26,7 @@ public class User implements Serializable {
 	private String ip;
 //	private int port;
 	private GameState currentState;
+	private ChatMsgEntity currentChat;
 	private Tile[][] matTiles;
     private boolean isRegistered;
     private int[] coords;
@@ -30,7 +34,10 @@ public class User implements Serializable {
     private actions.Action action;
     private Lobby currentLobby;
     private ArrayList<Lobby> currentLobbies;
-
+    private TextMessage message;
+    private int vehicleIndex;
+    private Vehicle vehicleType;
+    private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public Integer getId() {
 		return id;
 	}
@@ -53,6 +60,20 @@ public class User implements Serializable {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	
+	public void setChat(ChatMsgEntity currentChat) {
+		this.currentChat=currentChat;
+	}
+	public ChatMsgEntity getChat() {
+		return currentChat;
+	}
+	public List<ChatMsgEntity> getChatArray() {
+		return mDataArrays;
+	}
+	public void setChatArray(List<ChatMsgEntity> mDataArrays) {
+		this.mDataArrays=mDataArrays;
 	}
 
 //	public int getPort() {
@@ -161,7 +182,30 @@ public class User implements Serializable {
 		
 	}
 
+	public TextMessage getMessage() {
+		
+		return message;
+	}
+	
+	public void setMessage(TextMessage message) {
+		this.message=message;
+	}
 
+	public int getVehicleIndex() {
+		return vehicleIndex;
+	}
+
+	public void setVehicleIndex(int vehicleIndex) {
+		this.vehicleIndex = vehicleIndex;
+	}
+
+	public Vehicle getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(Vehicle vehicleType) {
+		this.vehicleType = vehicleType;
+	}
 
 //	public int getImg() {
 //		return img;

@@ -112,8 +112,13 @@ public class MoveWithVictim extends Move{
 	}
 
 	@Override
+	public void adjustAction(GameState gs) {
+		
+	}
+	
+	@Override
 	public String toString() {
-		return "MoveWithVictim [direction=" + direction + ", APcost=" + APcost + "]";
+		return "MoveWithVictim [title=" + title + ", direction=" + direction + ", APcost=" + APcost + "]";
 	}
 	
 	

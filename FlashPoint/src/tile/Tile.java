@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import edge.Edge;
 import token.Firefighter;
+import token.Hazmat;
 import token.POI;
 import token.Vehicle;
 
@@ -18,15 +19,18 @@ public class Tile implements Serializable{
     
     protected int fire;
     protected int[] coords;
+    protected int hotspot;
+    protected int hazmat;
     protected Edge[] adjacentEdges;
     protected ArrayList<Firefighter> listOfFirefighters;
     protected int x;
     protected int y;
     protected ArrayList<POI> poiList;
+    protected ArrayList<Hazmat> hazmatList;
     protected boolean isInterior;
     protected ParkingSpot pointerParkingSpot; 
     protected ParkingSpot nearestAmbulance;
-    protected Vehicle ParkingType;
+    protected Vehicle ParkingType; 
     
     public Tile(boolean isInterior, int[] coords) {
         this.x = coords[0];
@@ -34,6 +38,7 @@ public class Tile implements Serializable{
         this.isInterior = isInterior;
         adjacentEdges = new Edge[4];
         poiList = new ArrayList<POI>();
+        hazmatList = new ArrayList<Hazmat>();
         listOfFirefighters = new ArrayList<Firefighter>();
     }
 
@@ -189,6 +194,20 @@ public class Tile implements Serializable{
 		// TODO Auto-generated method stub
 		
 	}
+	public int getHotSpot() {
+		return this.hotspot;
+	}
+	
+	public void setHotSpot(int number) {
+		this.hotspot = number; 
+	}
+	
+	public boolean containsHotSpot() {
+		if(this.hotspot > 0) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {
@@ -197,5 +216,38 @@ public class Tile implements Serializable{
 				+ ", pointerParkingSpot=" + pointerParkingSpot + "]";
 	}
 
+	public void setHazmat(int number) {
+		this.hazmat = number;
+		
+	}
 	
+	public void setHazmat(Hazmat hazmat) {
+		hazmatList.add(hazmat);
+		hazmat.setCurrentLocation(this);
+	}
+	
+	public int getHazmat() {
+		return this.hazmat;
+	}
+	
+	public boolean containsHazmat() {
+		if(this.hazmatList.size() > 0) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean containsHazmat(Hazmat hazmat) {
+		return hazmatList.contains(hazmat);
+	}
+
+	public Hazmat popHazmat() {
+		Hazmat hazmat = hazmatList.remove(hazmatList.size()-1);
+		return hazmat;
+	}
+	
+	public void popHazmat(Hazmat h) {
+		hazmatList.remove(h);
+	}
 }

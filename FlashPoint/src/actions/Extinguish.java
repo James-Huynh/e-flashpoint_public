@@ -4,6 +4,7 @@ import edge.Edge;
 import game.GameState;
 import tile.Tile;
 import token.Firefighter;
+import token.Speciality;
 
 /**
  * Extinguish class definition.
@@ -12,8 +13,9 @@ import token.Firefighter;
  */
 public class Extinguish extends Action {
     
-    protected int direction;
+	protected int direction;
     protected ActionList title = ActionList.Extinguish;
+    private static final long serialVersionUID = 1L;
     
     public Extinguish() {
     	this.APcost = 1;
@@ -51,8 +53,11 @@ public class Extinguish extends Action {
         	return false;
         }
         int cost = super.getCost();
+        if (playingFirefighter.getSpeciality().equals(Speciality.PARAMEDIC) || 
+        		playingFirefighter.getSpeciality().equals(Speciality.RESCUE_SPECIALIST)) {
+        	cost /= 2;
+        }
         
-        //We cannot extinguish by 2 where have only smoke
         int fire = neighbour.getFire();
 
         if(fire > 0 && currentPosition.getFire() == 2 && neighbour != currentPosition && aP == cost) {
@@ -101,14 +106,27 @@ public class Extinguish extends Action {
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
         int prevFire = neighbour.getFire();
-        neighbour.setFire(prevFire - this.APcost);
-    }
+        if (playingFirefighter.getSpeciality().equals(Speciality.PARAMEDIC) || 
+        		playingFirefighter.getSpeciality().equals(Speciality.RESCUE_SPECIALIST)) {
+        	neighbour.setFire(prevFire - this.APcost/2);
+        }
+        else {
+        	neighbour.setFire(prevFire - this.APcost);
+        }
+    }	
+    
+	@Override
+	public void adjustAction(GameState gs) {
+		Speciality s = gs.getPlayingFirefighter().getSpeciality();
+		if (s.equals(Speciality.PARAMEDIC) || s.equals(Speciality.RESCUE_SPECIALIST)) {
+			this.APcost = 2*this.APcost;
+		}
+	}
 
 	@Override
 	public String toString() {
-		return "Extinguish [direction=" + direction + "] by AP = " + this.APcost + "."; 
-		//Add "Fire was converted to smoke/..", another level of detail that might help in debugging and game terminal
+		return "Extinguish [direction=" + direction + ", title=" + title + ", APcost=" + APcost + "]";
 	}
-    
+	
     
 }
