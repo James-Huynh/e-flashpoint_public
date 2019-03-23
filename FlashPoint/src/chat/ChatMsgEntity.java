@@ -1,5 +1,8 @@
 package chat;
-public class ChatMsgEntity {
+
+import java.io.Serializable;
+
+public class ChatMsgEntity  implements Serializable {
 	private String name;
 	private String date;
 	private String message;

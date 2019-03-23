@@ -3,6 +3,7 @@ package custom_panels;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -37,9 +38,11 @@ public class LobbyPanel extends JPanel {
 	
 	private JPanel lobbyDescPanel;
 	private JTextArea textRules;
-	private JTextArea textMode;
-	private JTextArea textDifficulty;
-
+	private JTextArea textGameDesc;
+	
+	private ChatBox chatbox;
+	private JPanel chatPanel;
+	
 	private JPanel playersPanel;
 	private ArrayList<Player> currPlayerList;
 	private ArrayList<Player> newPlayerList;
@@ -63,15 +66,25 @@ public class LobbyPanel extends JPanel {
 		createLeaveButton();
 		createLobbyDescription();
 		createPlayersPanel();
+		createChatBox();
 	}
-	
+
 	// James
 	private void initialize() {
-
+		
 		
 		targetLobby = clientManager.getLobby();
 //		createPlayers();
 	}
+	
+	
+	private void createChatBox() {
+		chatbox = new ChatBox(300, 500, clientManager);
+		chatPanel = chatbox.getPanel_main();
+		chatPanel.setLocation(new Point(600, 150));
+		this.add(chatPanel);
+	}
+	
 	
 	private void createHeaderPanel() {
 		headerPanel = new JPanel();

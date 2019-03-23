@@ -128,9 +128,7 @@ public class ClientManager {
 			case CHATMESSAGE:
 				requestObject = (User) read_tranObject.getObject();
 				mDataArrays=(requestObject.getChatArray());
-			
-					
-					Collections.reverse(mDataArrays);
+				Collections.reverse(mDataArrays);
 			}
 			
 		
@@ -266,7 +264,6 @@ public class ClientManager {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.STARTGAMESTATE);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
-		
 
 //		try {
 //			while(readMessage() != true) {
@@ -278,7 +275,7 @@ public class ClientManager {
 //			
 //		}
 //		catch(IOException k) {
-//			
+//
 //		}
 //		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
 		return flag;
@@ -457,9 +454,16 @@ public class ClientManager {
 	
 	
 	public boolean sendMsgRequest(TextMessage message) {
-		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.MESSAGE);
-		requestObject.setMessage(message);
-		objectToSend.setObject(requestObject);
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CHATMESSAGE);
+		ChatMsgEntity entity = new ChatMsgEntity();
+		entity.setMessage(message.getMessage());
+		User a= new User();
+		a.setChat(entity);
+		objectToSend.setObject(a);
+		
+		
+		//requestObject.setMessage(message);
+		//objectToSend.setObject(objectToSend);
 		
 		outputThread.setMsg(objectToSend);
 		return true;
