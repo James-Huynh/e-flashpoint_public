@@ -37,8 +37,9 @@ public class LobbyPanel extends JPanel {
 	
 	private JPanel lobbyDescPanel;
 	private JTextArea textRules;
-	private JTextArea textGameDesc;
-	
+	private JTextArea textMode;
+	private JTextArea textDifficulty;
+
 	private JPanel playersPanel;
 	private ArrayList<Player> currPlayerList;
 	private ArrayList<Player> newPlayerList;
@@ -164,16 +165,19 @@ public class LobbyPanel extends JPanel {
 			setPlayer(i);
 		}
 		
+		System.out.println("tester for create lobby" + targetLobby.getPlayers().size());
+		
 	}
 	
 	private void setPlayer(int i) {
 		switch(i) {
 		
+		
+		
 		case 0:
 			String playerOneName = targetLobby.getPlayers().get(i).getUserName();
 			playerOne = new JLabel(playerOneName);
 			playerOne.setOpaque(true);
-			//the colour needs to match, lobby currently has an ordering set in stone, check there for the rest of the players
 			playerOne.setBackground(Color.GREEN);
 			playerOne.setHorizontalAlignment(SwingConstants.CENTER);
 			playerOne.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -183,7 +187,7 @@ public class LobbyPanel extends JPanel {
 			break;
 			
 		case 1:
-			System.out.println("Rewriting");
+			System.out.println("Rewriting!!!");
 			String playerTwoName = targetLobby.getPlayers().get(i).getUserName();
 			playerTwo = new JLabel(playerTwoName);
 			playerTwo.setOpaque(true);
@@ -272,8 +276,10 @@ public class LobbyPanel extends JPanel {
 		JLabel currLabel;
 		Player currPlayer;
 		
+		updateLobby(clientManager.getLobby());
 		resetLabels();
 		createPlayers();
+//		revalidate();
 //		for (int i = 0; i < currPlayerList.size(); i++) {
 //			currLabel = playersLabel[i];
 //			currPlayer = currPlayerList.get(i);
