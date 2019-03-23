@@ -33,6 +33,8 @@ public class ClientManager {
 	private Launcher launcher;
 	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	
+	private boolean endTurnTrigger = false;
+	
 	public ClientManager(ClientInputThread input, ClientOutputThread output, Launcher myLauncher) {
 		this.inputThread = input;
 		this.outputThread = output;
@@ -119,8 +121,8 @@ public class ClientManager {
 			case ENDTURNSUCCESS:
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
-//				launcher.refreshBoard();
 				startGameFlag = 1;
+				setEndTurnTrigger(true);
 				flag = true;
 				break;
 			case CHATMESSAGE:
@@ -265,6 +267,7 @@ public class ClientManager {
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		
+<<<<<<< HEAD
 		try {
 			while(readMessage() != true) {
 				
@@ -277,6 +280,20 @@ public class ClientManager {
 		catch(IOException k) {
 			
 		}
+=======
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
+>>>>>>> refs/remotes/origin/M7-Thread
 //		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
 		return flag;
 		
@@ -292,21 +309,26 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		
 		System.out.println("place check");
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-			System.out.println(anyString);
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//			System.out.println(anyString);
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
 		
+<<<<<<< HEAD
 		return flag;
+=======
+//		return requestObject.getCurrentState();
+		return true;
+>>>>>>> refs/remotes/origin/M7-Thread
 	}
 	
 	public GameState getUsersGameState() {
@@ -328,19 +350,19 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		
 		System.out.println("place check");
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
-		return flag;
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
+		return true;
 //		return requestObject.getCurrentState();
 	}
 
@@ -427,20 +449,30 @@ public class ClientManager {
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
-		return flag;
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
+		return true;
 	}
+
+	public boolean getEndTurnTrigger() {
+		return endTurnTrigger;
+	}
+
+	public void setEndTurnTrigger(boolean endTurnTrigger) {
+		this.endTurnTrigger = endTurnTrigger;
+	}
+	
+	
 	
 	public boolean sendMsgRequest(TextMessage message) {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.MESSAGE);
