@@ -125,20 +125,11 @@ public class ClientManager {
 				break;
 			case CHATMESSAGE:
 				requestObject = (User) read_tranObject.getObject();
-	
+				mDataArrays=(requestObject.getChatArray());
 			
-					ChatMsgEntity entity = null ;
-						if (entity.getName().equals("")) {
-							entity.setName(requestObject.getName());
-						}
-				
-							
-							entity.setMessage(requestObject.getMessage().getMessage());
-						
-						mDataArrays.add(entity);
-					}
+					
 					Collections.reverse(mDataArrays);
-				
+			}
 			
 		
 		
@@ -491,5 +482,7 @@ public class ClientManager {
 		
 		return flag;
 	} 
-	
+	public List<ChatMsgEntity> getChatArray(){
+		return this.mDataArrays;
+	}
 }

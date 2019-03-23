@@ -2,6 +2,7 @@ package commons.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import chat.ChatMsgEntity;
 import game.GameState;
@@ -36,7 +37,7 @@ public class User implements Serializable {
     private TextMessage message;
     private int vehicleIndex;
     private Vehicle vehicleType;
-
+    private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public Integer getId() {
 		return id;
 	}
@@ -67,6 +68,12 @@ public class User implements Serializable {
 	}
 	public ChatMsgEntity getChat() {
 		return currentChat;
+	}
+	public List<ChatMsgEntity> getChatArray() {
+		return mDataArrays;
+	}
+	public void setChatArray(List<ChatMsgEntity> mDataArrays) {
+		this.mDataArrays=mDataArrays;
 	}
 
 //	public int getPort() {

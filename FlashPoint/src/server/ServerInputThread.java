@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import commons.bean.TextMessage;
@@ -85,6 +86,7 @@ public class ServerInputThread extends Thread {
 			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
 			TranObject<User> returnObject;
 			TranObject<GameState> returnGameState;
+			TranObject<List> returnChat;
 			User requestObject;
 			int idGenerator;
 			switch (read_tranObject.getType()) {
@@ -140,6 +142,16 @@ public class ServerInputThread extends Thread {
 				break;
 			case CHATMESSAGE:
 				System.out.println("chat message received");
+				returnObject=new TranObject<User>(TranObjectType.CHATMESSAGE);
+				requestObject = (User) read_tranObject.getObject();
+				
+				serverManager.getChatArray().add(requestObject.getChat());
+				requestObject.setChatArray(serverManager.getChatArray());
+				
+				returnObject.setObject(requestObject);
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnObject);
+				}
 				
 			case STARTGAMESTATE:
 				//System.out.println("In game state update request");
@@ -245,8 +257,7 @@ public class ServerInputThread extends Thread {
 				break;
 			case MESSAGE:
 				
-				int id2 = read_tranObject.getToUser();
-				OutputThread toOut = map.getById(id2);
+				
 				
 				
 				for (OutputThread onOut : map.getAll()) {

@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import actions.Action;
+import chat.ChatMsgEntity;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
@@ -26,7 +29,7 @@ public class ServerManager {
 	private GameManager gameManager;
 	
 	private int placedFF = 0;
-	
+	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public ServerManager() {
 		onlinePlayers = new HashMap<Integer, Player>();
 		accounts = new HashMap<String,String>();
@@ -137,6 +140,12 @@ public class ServerManager {
 	
 	public GameState getGameState() {
 		return this.gameState;
+	}
+	public List<ChatMsgEntity> getChatArray(){
+		return this.mDataArrays;
+	}
+	public void addChatArray(ChatMsgEntity chatMsgEntity) {
+		mDataArrays.add(chatMsgEntity);
 	}
 	
 	public void setLobby(Lobby newLobby) {
