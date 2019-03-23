@@ -264,19 +264,7 @@ public class ClientManager {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.STARTGAMESTATE);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
-		
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
+
 //		try {
 //			while(readMessage() != true) {
 //				
@@ -287,7 +275,7 @@ public class ClientManager {
 //			
 //		}
 //		catch(IOException k) {
-//			
+//
 //		}
 //		System.out.println("|3|" + requestObject.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
 		return flag;
@@ -317,10 +305,9 @@ public class ClientManager {
 //		catch(IOException k) {
 //			
 //		}
-		
-//		return flag;
 //		return requestObject.getCurrentState();
 		return true;
+
 	}
 	
 	public GameState getUsersGameState() {

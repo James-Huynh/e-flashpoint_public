@@ -102,20 +102,22 @@ public class Move extends Action {
         currentPosition.removeFromFirefighterList(playingFirefighter);
         neighbour.addToFirefighterList(playingFirefighter);
         
+        //@matekrk - logic POI move/poiFlip
         if(neighbour.containsPOI() == true) {
-        	ArrayList<POI> Pois = neighbour.getPoiList();
+        	ArrayList<POI> Pois = neighbour.getPoiList(); //where we going
+        	ArrayList<POI> POIStoRemove = new ArrayList<POI>(); //exploration
         	
-        	//Ben code to try to reveal pois
-        	ArrayList<POI> POIStoRemove = new ArrayList<POI>();
         	for(POI poi:Pois) {
         		if(!poi.isRevealed()){
-        		  if(poi.isVictim()){
-        		   	poi.reveal();
-        		  } else {
-        			POIStoRemove.add(poi);
-        		  }
+        			if(poi.isVictim()){
+        				poi.reveal();
+        			} 
+        			else {
+        				POIStoRemove.add(poi);
+        			}
         		}
         	}
+        	
         	for(POI poi:POIStoRemove) {
         		gs.removePOI(poi);
         		Pois.remove(poi);
@@ -133,7 +135,12 @@ public class Move extends Action {
     }
     
     @Override
+	public void adjustAction(GameState gs) {
+		
+	}
+    
+    @Override
 	public String toString() {
-		return "Move [direction=" + direction + ", APcost=" + APcost + "]";
+		return "Move [direction=" + direction + ", title=" + title + ", APcost=" + APcost + "]";
 	}
 }

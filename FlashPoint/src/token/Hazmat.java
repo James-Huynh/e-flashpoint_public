@@ -20,4 +20,8 @@ public class Hazmat extends Token {
 			//Needs to be destroyed
 		}
 	}
+	
+	public void setDisposed() {
+		this.disposed = !disposed;
+	}
 }

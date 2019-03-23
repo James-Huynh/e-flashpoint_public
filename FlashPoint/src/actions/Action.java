@@ -14,6 +14,7 @@ public abstract class Action implements Serializable {
     protected int APcost;
     public abstract void perform(GameState gs);
     public abstract boolean validate(GameState gs);
+    public abstract void adjustAction(GameState gs);
     protected ActionList title;
     //placeholder for the GUI 
     protected int direction;

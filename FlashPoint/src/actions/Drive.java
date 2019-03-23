@@ -82,4 +82,16 @@ public class Drive extends Action {
 		return flag;
 	}
 
+	@Override
+	public void adjustAction(GameState gs) {
+		
+	}
+
+	@Override
+	public String toString() {
+		return "Drive [direction=" + direction + ", moveWith=" + moveWith + ", vehicle=" + vehicle + ", title=" + title
+				+ "]";
+	}
+	
+	
 }
