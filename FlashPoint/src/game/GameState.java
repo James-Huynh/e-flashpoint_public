@@ -58,6 +58,8 @@ public class GameState implements Serializable {
 	protected ArrayList<POI> revealedFalseAlarmsList;
 	protected ArrayList<Speciality> freeSpecialities;
 
+	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
+	
 	private static final long serialVersionUID = 1L; // serialization
 
 	/**
@@ -142,6 +144,7 @@ public class GameState implements Serializable {
 		this.lostVictimsList = new ArrayList<POI>();
 		this.savedVictimsList = new ArrayList<POI>();
 		this.freeSpecialities = new ArrayList<Speciality>();
+		this.remainingHotSpots = 0;
 		createAmbulances();
 		createEngine();
 		initializeTiles();
@@ -869,6 +872,14 @@ public class GameState implements Serializable {
 
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
+	}
+	
+	public void setHotSpot(int updated) {
+		this.remainingHotSpots = updated;
+	}
+	
+	public int getHotSpot() {
+		return this.remainingHotSpots;
 	}
 	
 	
