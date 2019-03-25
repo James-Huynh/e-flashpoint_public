@@ -205,7 +205,7 @@ public class ServerManager {
 	}
 	
 	public void advanceFire() {
-		gameManager.advanceFire();
+		gameManager.advanceFire(false); //this boolean is saying that it is the initial advanced fire and not one caused by a hotspot flare up
 		gameState.setAdvFireString(gameManager.getAdvFireMessage());
 	}
 	
