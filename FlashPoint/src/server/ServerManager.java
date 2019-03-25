@@ -132,7 +132,7 @@ public class ServerManager {
 	public HashMap<String, String> getAccounts(){
 		return this.accounts;
 	}
-	w
+	
 	public HashMap<Integer, Player> getPlayers(){
 		return this.onlinePlayers;
 	}
