@@ -71,7 +71,7 @@ public class GameManager {
     }
 	
     public void setupGameType() {
-		if(representsLobby.getBoard().equals("Board 1")) {
+		if(true/*representsLobby.getBoard().equals("Board 1")*/) {
 			/**Board structure edges structure would go here**/
 			if(representsLobby.getMode().equals("Family")) {
 				gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
