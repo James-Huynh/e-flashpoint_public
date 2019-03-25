@@ -805,17 +805,36 @@ public class GameManager {
     		}
     		if(flag) {
     			targetTile.setFire(2);
-    			recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke and caught Fire.\n";
+    			if(additionalHotspot) {
+    				recentAdvFire += "Another advanced fire triggered\n Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke and caught Fire.\n";
+    			} else {
+    				recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke and caught Fire.\n";
+    			}
     		}else {
     			targetTile.setFire(1);
-    			recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke.\n";
+    			if(additionalHotspot) {
+    				recentAdvFire += "Another advanced fire triggered\n Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke.\n";
+    			} else {
+    				recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke.\n";
+    			}
+    			
     		}
     	}else if(curFire == 1) {
     		targetTile.setFire(2);
-    		recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " caught Fire.\n";
+    		if(additionalHotspot) {
+    			recentAdvFire += "Another advanced fire triggered\n Tile "+ tempCoords[0] +"," + tempCoords[1] + " caught Fire.\n";
+    		}
+    		else {
+    			recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " caught Fire.\n";
+    		}
+    		
     	}
     	else {
-    		recentAdvFire = "An explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". \n";
+    		if(additionalHotspot) {
+    			recentAdvFire += "Another advanced fire triggered\n An explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". \n";
+    		} else {
+    			recentAdvFire = "An explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". \n";
+    		}
     		explosion(targetTile);
     		
     	}
