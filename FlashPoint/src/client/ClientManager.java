@@ -8,7 +8,7 @@ import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
-import game.FamilyGame;
+import game.BoardOne;
 import game.GameState;
 import gui.Launcher;
 import lobby.Lobby;

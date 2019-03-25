@@ -16,7 +16,7 @@ import token.Firefighter;
 import token.Speciality;
 import token.POI;
 import token.Vehicle;
-import game.FamilyGame;
+import game.BoardOne;
 import lobby.Lobby;
 import server.Player;
 import edge.Door;

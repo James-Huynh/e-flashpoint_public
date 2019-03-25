@@ -78,6 +78,13 @@ public class BoardTwo extends TemplateGame{
 	}
 	
 	public void setEdgeLocations() {
+		
+		for (int i=0; i<9; i++) {
+			for (int j=0; j<21; j++) {
+				edgeLocations[i][j] = 0;
+			}
+		}
+	
 		//51 Wall locations
 		//exterior tile top
 		edgeLocations[1][3] = 1;
