@@ -280,7 +280,7 @@ public class CreateLobbyPanel extends JPanel {
 		boardTwoBtn.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange()==ItemEvent.SELECTED){
-					GameBoardSelected (veteranBtn);
+					GameBoardSelected (boardTwoBtn);
 				}
 			}
 		});

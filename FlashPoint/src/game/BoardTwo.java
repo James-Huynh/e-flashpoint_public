@@ -25,6 +25,8 @@ public class BoardTwo extends TemplateGame{
 			setFireLocations();
 		}
 		else {
+			System.out.println("helloooo");
+			
 			setEdgeLocations();
 		}
 	}
