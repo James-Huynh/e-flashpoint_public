@@ -2,6 +2,11 @@ package chat;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author Eric
+ *
+ */
 public class ChatMsgEntity  implements Serializable {
 	private String name;
 	private String date;

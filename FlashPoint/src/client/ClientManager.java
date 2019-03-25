@@ -129,6 +129,7 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				mDataArrays=(requestObject.getChatArray());
 				Collections.reverse(mDataArrays);
+				//launcher.refreshLobby();		// James
 			}
 			
 		

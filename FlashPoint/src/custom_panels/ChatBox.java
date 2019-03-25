@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -19,9 +20,15 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
+import chat.ChatMsgEntity;
 import client.ClientManager;
 import commons.bean.TextMessage;
 
+/**
+ * 
+ * @author James
+ *
+ */
 public class ChatBox extends JPanel{
 	private JTextField textField;
 	private JScrollPane scrollPane;
@@ -41,6 +48,7 @@ public class ChatBox extends JPanel{
 	private Style style = context.addStyle("James", null);
 
 	private ClientManager clientManager;
+	private List<ChatMsgEntity> mDataArrays;
 
 	public ChatBox(int x, int y, ClientManager myClientManager) {
 		setLayout(null);
@@ -110,7 +118,24 @@ public class ChatBox extends JPanel{
 	}
 
 
-	public void updateChatGUI(String text) {
+	public void refreshChatBox() {
+		final StringBuilder finalText = new StringBuilder();
+		document = new DefaultStyledDocument();
+		
+		mDataArrays = clientManager.getChatArray();
+		
+		for (ChatMsgEntity entity : mDataArrays) {
+			finalText.append("[" + entity.getDate() + "] ");
+			finalText.append(entity.getName() + ": ");
+			finalText.append(entity.getMessage());
+			
+			updateChatGUI(finalText.toString());
+		}
+		
+		
+	}
+
+	private void updateChatGUI(String text) {
 		try {
 			document.insertString(document.getLength(), text, style);
 		} catch(BadLocationException exc) {
@@ -138,7 +163,7 @@ public class ChatBox extends JPanel{
 
 		clientManager.sendMsgRequest(message);
 
-	//	this.updateChatGUI(textField.getText() + "\n");				// will be moved to client
+		//	this.updateChatGUI(textField.getText() + "\n");				// will be moved to client
 		textField.setText("");
 	}
 
