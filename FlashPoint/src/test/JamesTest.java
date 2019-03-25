@@ -36,7 +36,7 @@ public class JamesTest {
 		mainFrame.setVisible(true);
 		contentPane = mainFrame.getContentPane();
 		
-		testChat = new ChatBox();
+		//testChat = new ChatBox(0, 0, null);
 		chatBoxPanel = testChat.getPanel_main();
 		chatBoxPanel.setLocation(100, 100);
 		contentPane.add(chatBoxPanel);

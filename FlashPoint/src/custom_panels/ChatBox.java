@@ -138,7 +138,7 @@ public class ChatBox extends JPanel{
 
 		clientManager.sendMsgRequest(message);
 
-		this.updateChatGUI(textField.getText() + "\n");				// will be moved to client
+	//	this.updateChatGUI(textField.getText() + "\n");				// will be moved to client
 		textField.setText("");
 	}
 
