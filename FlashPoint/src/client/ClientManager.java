@@ -486,18 +486,18 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		
 		System.out.println("Placing a Vehicle");
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
 		
 		return flag;
 	} 
