@@ -79,28 +79,16 @@ public class BoardTwo extends TemplateGame{
 	
 	public void setEdgeLocations() {
 		//51 Wall locations
+		//exterior tile top
 		edgeLocations[1][3] = 1;
 		edgeLocations[1][5] = 1;
 		edgeLocations[1][7] = 1;
 		edgeLocations[1][9] = 1;
 		edgeLocations[1][11] = 1;
+		edgeLocations[1][13] = 1;
 		edgeLocations[1][15] = 1;
-		edgeLocations[1][17] = 1;
-		
-		edgeLocations[3][7] = 1;
-		edgeLocations[3][9] = 1;
-		edgeLocations[3][11] = 1;
-		edgeLocations[3][13] = 1;
-		edgeLocations[3][15] = 1;
-	
-		edgeLocations[5][3] = 1;
-		edgeLocations[5][5] = 1;
-		edgeLocations[5][7] = 1;
-		edgeLocations[5][11] = 1;
-		edgeLocations[5][13] = 1;
-		edgeLocations[5][15] = 1;
-		edgeLocations[5][17] = 1;
-		
+		edgeLocations[1][17] = 1;		
+		//exterior tile bot
 		edgeLocations[7][3] = 1;
 		edgeLocations[7][5] = 1;
 		edgeLocations[7][7] = 1;
@@ -109,41 +97,56 @@ public class BoardTwo extends TemplateGame{
 		edgeLocations[7][13] = 1;
 		edgeLocations[7][15] = 1;
 		edgeLocations[7][17] = 1;
-		
+		//exterior tile left
 		edgeLocations[1][2] = 1;
 		edgeLocations[2][2] = 1;
 		edgeLocations[4][2] = 1;
 		edgeLocations[5][2] = 1;
 		edgeLocations[6][2] = 1;
-		
+		//exterior tile right
 		edgeLocations[1][18] = 1;
 		edgeLocations[2][18] = 1;
 		edgeLocations[3][18] = 1;
+		edgeLocations[4][18] = 1;
 		edgeLocations[5][18] = 1;
 		edgeLocations[6][18] = 1;
 		
-		edgeLocations[1][12] = 1;
+		edgeLocations[1][8] = 1;
 		edgeLocations[2][8] = 1;
-		edgeLocations[3][14] = 1;
-		edgeLocations[4][6] = 1;
-		edgeLocations[5][12] = 1;
-		edgeLocations[5][16] = 1;
+		edgeLocations[2][9] = 1;
+		edgeLocations[2][11] = 1;
+		edgeLocations[2][12] = 1;
+		edgeLocations[3][3] = 1;
+		edgeLocations[3][5] = 1;
+		edgeLocations[3][8] = 1;
+		edgeLocations[4][9] = 1;
+		edgeLocations[4][15] = 1;
+		edgeLocations[4][17] = 1;
+		edgeLocations[5][3] = 1;
+		edgeLocations[5][5] = 1;
+		edgeLocations[5][8] = 1;
+		edgeLocations[5][9] = 1;
+		edgeLocations[5][11] = 1;
+		edgeLocations[5][14] = 1;
+		edgeLocations[6][8] = 1;
+		edgeLocations[6][14] = 1;
+		
+		
+		
 		
 		//house entrences... unclear if they are in the game or no
-		edgeLocations[1][13] = 2;
-		edgeLocations[4][18] = 2;
-		edgeLocations[3][2] = 2;
 		edgeLocations[7][7] = 2;
+		edgeLocations[3][2] = 2;
 		
-		//8 closed door location
-		edgeLocations[5][9] = 2;
-		edgeLocations[3][17] = 2;
-		edgeLocations[3][6] = 2;
-		edgeLocations[1][8] = 2;
-		edgeLocations[2][12] = 2;
+		// 7 closed door location
+		edgeLocations[1][12] = 2;
+		edgeLocations[3][12] = 2;
+		edgeLocations[4][11] = 2;
+		edgeLocations[4][13] = 2;
 		edgeLocations[4][14] = 2;
-		edgeLocations[6][12] = 2;
-		edgeLocations[6][16] = 2;
+		edgeLocations[5][7] = 2;
+		edgeLocations[5][13] = 2;
+		
 		
 		//negtive edges
 		edgeLocations[8][0] = -1;
