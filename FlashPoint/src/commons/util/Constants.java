@@ -5,9 +5,9 @@ public class Constants {
 	private static String JamesIP = "142.157.104.187";
 	private static String JunhazIP = "142.157.65.31";
 	private static String ZaidIP = "142.157.145.58";
-	private static String BenIP = "142.157.58.203";
+	private static String BenIP = "142.157.58.197";
 	
-	public static final String SERVER_IP = "142.119.4.73";// ������IP
+	public static final String SERVER_IP = BenIP;// ������IP
 	public static final int SERVER_PORT = 8888;// �������˿�
 	 public static int questionnum;
 	 public static int switch1;

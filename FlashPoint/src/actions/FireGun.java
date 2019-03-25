@@ -69,7 +69,7 @@ public class FireGun extends Action {
 		boolean flag = false;
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
 		Tile currentPosition = playingFirefighter.getCurrentPosition();
-		if (currentPosition.getParkingSpot() == null && currentPosition.getParkingSpot().getParkingType().equals(Vehicle.Engine) 
+		if (currentPosition.getParkingSpot() == null && currentPosition.getParkingSpot().getParkingType() == (Vehicle.Engine) 
 				&& currentPosition.getParkingSpot().getCar() == true) {
 			if (playingFirefighter.getAP() >= APcost) {
 				flag = true;
@@ -81,7 +81,7 @@ public class FireGun extends Action {
 	
 	@Override
 	public void adjustAction(GameState gs) {
-		if (gs.getPlayingFirefighter().getSpeciality().equals(Speciality.DRIVER)) {
+		if (gs.getPlayingFirefighter().getSpeciality() == (Speciality.DRIVER)) {
 			driver = true;
 			APcost = 2;
 		}

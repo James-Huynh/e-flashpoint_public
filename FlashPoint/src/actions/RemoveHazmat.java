@@ -26,7 +26,7 @@ public class RemoveHazmat extends Action {
 	@Override
 	public boolean validate(GameState gs) {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
-		if (playingFirefighter.getSpeciality().equals(Speciality.HAZMAT_TECHNICIAN)) {
+		if (playingFirefighter.getSpeciality() == (Speciality.HAZMAT_TECHNICIAN)) {
 			if (playingFirefighter.getCurrentPosition().containsHazmat()) {
 				if (playingFirefighter.getAP() >= APcost) {
 					return true;

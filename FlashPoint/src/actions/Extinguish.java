@@ -53,8 +53,8 @@ public class Extinguish extends Action {
         	return false;
         }
         int cost = super.getCost();
-        if (playingFirefighter.getSpeciality().equals(Speciality.PARAMEDIC) || 
-        		playingFirefighter.getSpeciality().equals(Speciality.RESCUE_SPECIALIST)) {
+        if (playingFirefighter.getSpeciality() == (Speciality.PARAMEDIC) || 
+        		playingFirefighter.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
         	cost /= 2;
         }
         
@@ -106,8 +106,8 @@ public class Extinguish extends Action {
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
         int prevFire = neighbour.getFire();
-        if (playingFirefighter.getSpeciality().equals(Speciality.PARAMEDIC) || 
-        		playingFirefighter.getSpeciality().equals(Speciality.RESCUE_SPECIALIST)) {
+        if (playingFirefighter.getSpeciality() == (Speciality.PARAMEDIC) || 
+        		playingFirefighter.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
         	neighbour.setFire(prevFire - this.APcost/2);
         }
         else {
@@ -118,7 +118,7 @@ public class Extinguish extends Action {
 	@Override
 	public void adjustAction(GameState gs) {
 		Speciality s = gs.getPlayingFirefighter().getSpeciality();
-		if (s.equals(Speciality.PARAMEDIC) || s.equals(Speciality.RESCUE_SPECIALIST)) {
+		if (s == (Speciality.PARAMEDIC) || s == (Speciality.RESCUE_SPECIALIST)) {
 			this.APcost = 2*this.APcost;
 		}
 	}
