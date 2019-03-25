@@ -110,8 +110,8 @@ public class ServerManager {
 		if(placedFF == gameState.getFireFighterList().size()) {
 			//set the index to the initial player. This trigger the player to be able to view their actions.
 			//testGS.setActiveFireFighterIndex(0);
-			gameState.setActiveFireFighterIndex(0);
-			generateActions();
+//			gameState.setActiveFireFighterIndex(0);
+//			generateActions();
 		}
 	}
 	
@@ -121,6 +121,8 @@ public class ServerManager {
 		}
 		else if(type.equals(Vehicle.Engine)) {
 			gameState.getEngines()[direction].setCar(true);
+			gameState.setActiveFireFighterIndex(0);
+			generateActions();
 		}
 	}
 	
