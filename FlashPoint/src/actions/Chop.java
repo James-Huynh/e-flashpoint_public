@@ -27,7 +27,7 @@ public class Chop extends Action {
     @Override
     public void adjustAction(GameState gs) {
     	Firefighter current = gs.getPlayingFirefighter();
-    	if (current.getSpeciality().equals(Speciality.RESCUE_SPECIALIST)) {
+    	if (current.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
 			this.APcost = this.APcost/2;
 		}
     }
@@ -88,7 +88,7 @@ public class Chop extends Action {
         					flag = true;
         				}
         			case 2:
-        				if (playingFirefighter.speciality.equals(Speciality.RESCUE_SPECIALIST)) {
+        				if (playingFirefighter.speciality == Speciality.RESCUE_SPECIALIST) {
         					if(dmgCounter + 2 < gs.MAX_WALL_DMGD) {
             					flag = true;
             				}
