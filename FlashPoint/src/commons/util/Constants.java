@@ -1,7 +1,7 @@
 package commons.util;
 
 public class Constants {
-	public static final String SERVER_IP = "142.119.4.73";// ������IP
+	public static final String SERVER_IP = "142.157.145.58";// ������IP
 	public static final int SERVER_PORT = 8888;// �������˿�
 	 public static int questionnum;
 	 public static int switch1;
