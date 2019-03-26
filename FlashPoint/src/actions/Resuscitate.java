@@ -10,7 +10,7 @@ public class Resuscitate extends Action{
 
 	private static final long serialVersionUID = 1L;
 	protected POI victim;
-	protected ActionList title = ActionList.Reusciate;
+	protected ActionList title = ActionList.Resuscitate;
 	
 	public Resuscitate() {
 		this.APcost = 1;
