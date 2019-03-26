@@ -25,6 +25,7 @@ public class MainMenuPanel extends JPanel {
 	private ClientManager clientManager;
 	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
+	private JButton btn_LoadGame;
 
 	/**
 	 * Create the visible components
@@ -36,7 +37,7 @@ public class MainMenuPanel extends JPanel {
 		this.clientManager = myClientManager;
 
 		JPanel menuPanel = new JPanel();
-		menuPanel.setBounds(200, 200, 540, 297);
+		menuPanel.setBounds(200, 129, 540, 473);
 		menuPanel.setLayout(null);
 
 		createButtons();
@@ -44,11 +45,22 @@ public class MainMenuPanel extends JPanel {
 		menuPanel.add(createBtn);
 		menuPanel.add(findBtn);
 		menuPanel.add(rulesBtn);
-
+		menuPanel.add(btn_LoadGame);
+		
 		this.add(menuPanel);
+		
 	}
 
 	private void createButtons() {
+		btn_LoadGame = new JButton("Load Game");
+		btn_LoadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btn_LoadGame.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
+		btn_LoadGame.setBounds(67, 194, 423, 49);
+		
+		
 		createBtn = new JButton("Create Lobby");
 		createBtn.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
 		createBtn.setBounds(67, 35, 423, 49);
@@ -77,7 +89,7 @@ public class MainMenuPanel extends JPanel {
 		});
 
 		rulesBtn = new JButton("Rules");
-		rulesBtn.setBounds(67, 206, 423, 49);
+		rulesBtn.setBounds(67, 274, 423, 49);
 		rulesBtn.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
 		rulesBtn.setEnabled(false);
 
@@ -111,6 +123,4 @@ public class MainMenuPanel extends JPanel {
 	private boolean findLobbyRequest() {
 		return clientManager.lobbyListRequest();
 	}
-	
-	
 }
