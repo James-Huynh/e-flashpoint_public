@@ -2,18 +2,23 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.SpringLayout;
 
 import client.Client;
 import client.ClientManager;
@@ -27,7 +32,6 @@ import game.GameState;
 import gui.Table.BoardPanel;
 import gui.Table.LeftPanel;
 import gui.Table.RightPanel;
-import lobby.Lobby;
 import managers.GameManager;
 import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.lobbyListeners.LeaveListener;
@@ -73,7 +77,6 @@ public class Launcher {
 	private Table table;
 	private clientThread listenerThread;
 	
-	
 	//Used by Ben for in game testing. Not permanent.
 	private static GameManager current;
 	private static GameState tester;
@@ -110,6 +113,8 @@ public class Launcher {
 	 * Create the application.
 	 */
 	public Launcher() {
+		SpringLayout sl_dummyCenterPanel = new SpringLayout();
+		dummyCenterPanel.setLayout(sl_dummyCenterPanel);
 		userOne.setName("Zaid");
 		userOne.setPassword("zzz");
 		client = new Client(ServerIP, port);
@@ -235,6 +240,18 @@ public class Launcher {
 				mainMenu.setVisible(false);
 				motherFrame.remove(mainMenu);
 				setupFindLobbyPage();
+			}
+
+			// James
+			@Override
+			public void clickLoad() {
+				generatePopupMenu();
+				
+			}
+
+			private void generatePopupMenu() {
+				
+				
 			}
 
 		});
@@ -463,7 +480,21 @@ public class Launcher {
 //		flag = true;
 //		return flag; 
 	}
-
-	
-
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 }

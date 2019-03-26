@@ -8,9 +8,6 @@ import java.util.EventListener;
  */
 public interface MainMenuListener extends EventListener {
 	public void clickCreate();	
-	
-	/**
-	 * Find lobby button from the main menu
-	 */
-	public void clickFind(); // James
+	public void clickFind();
+	public void clickLoad();
 }

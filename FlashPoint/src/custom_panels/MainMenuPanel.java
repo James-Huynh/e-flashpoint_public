@@ -55,6 +55,7 @@ public class MainMenuPanel extends JPanel {
 		btn_LoadGame = new JButton("Load Game");
 		btn_LoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				raiseEventLoadBtn();
 			}
 		});
 		btn_LoadGame.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
@@ -117,6 +118,13 @@ public class MainMenuPanel extends JPanel {
 	private void raiseEventFindBtn() {
 		for (MainMenuListener listener: REGISTERED_OBJECTS.getListeners(MainMenuListener.class)) {
 			listener.clickFind();
+		}
+	}
+	
+	
+	private void raiseEventLoadBtn() {
+		for (MainMenuListener listener: REGISTERED_OBJECTS.getListeners(MainMenuListener.class)) {
+			listener.clickLoad();
 		}
 	}
 	
