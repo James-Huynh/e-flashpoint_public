@@ -40,7 +40,7 @@ public class LobbyPanel extends JPanel {
 	private JTextArea textRules;
 	private JTextArea textGameDesc;
 	
-	private ChatBox chatbox;
+	private ChatBox chatBox;
 	private JPanel chatPanel;
 	
 	private JPanel playersPanel;
@@ -79,8 +79,8 @@ public class LobbyPanel extends JPanel {
 	
 	
 	private void createChatBox() {
-		chatbox = new ChatBox(300, 500, clientManager);
-		chatPanel = chatbox.getPanel_main();
+		chatBox = new ChatBox(300, 500, clientManager);
+		chatPanel = chatBox.getPanel_main();
 		chatPanel.setLocation(new Point(600, 150));
 		this.add(chatPanel);
 	}
@@ -292,6 +292,8 @@ public class LobbyPanel extends JPanel {
 		updateLobby(clientManager.getLobby());
 		resetLabels();
 		createPlayers();
+		chatBox.refreshChatBox();
+		
 //		revalidate();
 //		for (int i = 0; i < currPlayerList.size(); i++) {
 //			currLabel = playersLabel[i];

@@ -34,7 +34,7 @@ public class Resuscitate extends Action{
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
-        if (playingFirefighter.speciality.equals(Speciality.PARAMEDIC)) {
+        if (playingFirefighter.speciality == (Speciality.PARAMEDIC)) {
         	if (currentPosition.getPoiList().contains(victim)){
         		if (aP >= APcost) {
         			if (!victim.isResuscitated()) {

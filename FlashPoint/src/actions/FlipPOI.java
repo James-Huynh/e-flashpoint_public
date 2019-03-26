@@ -60,7 +60,7 @@ public class FlipPOI extends Action {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
 		int aP = playingFirefighter.getAP();
 		
-		if (playingFirefighter.getSpeciality().equals(Speciality.IMAGING_TECHNICIAN)) {
+		if (playingFirefighter.getSpeciality() == (Speciality.IMAGING_TECHNICIAN)) {
 			if (victim.isVictim() && !victim.isRevealed()) {
 				if (aP >= APcost) {
 					return true;

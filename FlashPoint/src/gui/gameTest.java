@@ -1,6 +1,6 @@
 package gui;
 
-import game.FamilyGame;
+import game.BoardOne;
 import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;

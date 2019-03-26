@@ -29,8 +29,8 @@ public class Command extends Action {
 	@Override
 	public boolean validate(GameState gs) {
 		boolean flag = false;
-		if (action.title.equals(ActionList.Handle) || action.title.equals(ActionList.Move) || 
-				action.title.equals(ActionList.MoveWithHazmat) || action.title.equals(ActionList.MoveWithHazmat)) {
+		if (action.title == (ActionList.Handle) || action.title ==(ActionList.Move) || 
+				action.title == (ActionList.MoveWithHazmat) || action.title == (ActionList.MoveWithHazmat)) {
 			flag = true; //finish it mat.
 		}
 		

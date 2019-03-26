@@ -71,7 +71,7 @@ public class GameManager {
     }
 	
     public void setupGameType() {
-		if(representsLobby.getBoard().equals("Board 1")) {
+		if(true/*representsLobby.getBoard().equals("Board 1")*/) {
 			/**Board structure edges structure would go here**/
 			if(representsLobby.getMode().equals("Family")) {
 				gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
@@ -84,16 +84,19 @@ public class GameManager {
 				if(representsLobby.getDifficulty().equals("Recruit")) {
 					gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
 					gs.openExteriorDoors();
+					gs.setHotSpot(6);
 					initializeExperiencedGame(3,3);
 				}
 				else if(representsLobby.getDifficulty().equals("Veteran")) {
 					gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
 					gs.openExteriorDoors();
+					gs.setHotSpot(6);
 					initializeExperiencedGame(3,4);
 				}
 				else if(representsLobby.getDifficulty().equals("Heroic")) {
 					gs.initializeEdges(representsLobby.getTemplate().getEdgeLocations());
 					gs.openExteriorDoors();
+					gs.setHotSpot(12);
 					initializeExperiencedGame(4,5);
 				}
 				setupPOIS();
@@ -252,7 +255,7 @@ public class GameManager {
 		}
 		
 		//place additional hotspot depedning on player number
-		if(gs.getListOfPlayers().size() >= 1) {
+		if(gs.getListOfPlayers().size() >= 4) {
 			for(int i = 0; i < 3; i++) {
 				boolean exit = true;
 				
@@ -551,6 +554,38 @@ public class GameManager {
     	}
     	
     }
+    
+    private void resolveHazmatExplosions() {
+  		// TODO Auto-generated method stub
+    	Tile targetTile = gs.returnTile(0,0);
+    	int[] tempCoords = targetTile.getCoords();
+    	while(true) {       // all tiles
+    		tempCoords = targetTile.getCoords();
+    		if(targetTile.getFire() == 2 && targetTile.containsHazmat()) {
+    			while(targetTile.containsHazmat()) {
+    				Hazmat temp = targetTile.popHazmat();
+    				recentAdvFire += "hazmat explosion caused at:  " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1] +"\n";
+    				explosion(targetTile);
+    			}
+    			if(gs.getHotSpot() > 0) {
+    				targetTile.setHotSpot(1);
+    				gs.setHotSpot(gs.getHotSpot() - 1);
+    				recentAdvFire += "hotSpot added to final tile at coords: " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1]  +"\n";
+    			}
+    			targetTile = gs.returnTile(0, 0);
+    			tempCoords = targetTile.getCoords();
+    		}
+    		if(tempCoords[0] == 7 && tempCoords[1] == 9) {
+				break;
+			}
+			if(tempCoords[1] == 9) {
+    			targetTile = gs.returnTile(tempCoords[0] + 1, 0);
+    		}else {
+    			targetTile = gs.getNeighbour(targetTile, 2);
+    		}
+    		
+    	}
+  	}
 
   //Ben and eric, skeleton code 
     public void checkKnockDowns() {
@@ -576,14 +611,29 @@ public class GameManager {
     		if(containsFireFighter == true) {
     			
     			if(curFire == 2) {
+    				
+    				
     				fire = true;
     				ParkingSpot respawnTile = targetTile.getNearestAmbulance();
+    				if(this.representsLobby.getMode().equals("Experienced")){
+    					for(int i = 0; i<4; i++) {
+    						if(gs.getAmbulances()[i].getCar()) {
+    							respawnTile = gs.getAmbulances()[i];
+    						}
+    					}
+    				} 
+    				
     				
     				Firefighter tempFire = targetTile.removeFirstFireFighter();
-    				Tile target = respawnTile.getTiles()[0];
+    				
+    				int tile = gs.getRandomNumberInRange(0, 1);
+    						
+    				Tile target = respawnTile.getTiles()[tile];
+    				
     				tempFire.updateLocation(respawnTile);
     				target.addToFirefighterList(tempFire);
     				recentAdvFire += "Firefighter knocked down at tile " + coords[0] + "," + coords[1] + ".\n";
+    				
     			}
     		}
     		//kill and remove all POI found on tiles with fire
@@ -630,61 +680,92 @@ public class GameManager {
     public void placePOI() {
     	recentAdvFire += "\n";
         int currentPOI = gs.getCurrentPOI();
+        Tile targetTile = gs.rollForTile();
         while (currentPOI < 3) {
-        	Tile targetTile = gs.rollForTile();
         	boolean containsPOI = targetTile.containsPOI();
         	boolean containsFireFighter = targetTile.containsFirefighter();
         	int curFire = targetTile.getFire();
         	if(containsPOI == false) {
-        		//could skip this if else and just set fire to 0 every time, could also write this to check tile and so on and only add the poi if the tile does not contain a firefighter or if it does and the poi is a victim.
-        		if(curFire != 0) {
-        			targetTile.setFire(0);
-        			POI newPOI = gs.generatePOI();
-        			targetTile.addPoi(newPOI);
-        			gs.updatePOI(newPOI);
-        			recentAdvFire += "POI placed on tile " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1];
-        			
-        			if(containsFireFighter == true) {
-        				newPOI.reveal();
-        				recentAdvFire += " and revealed. \n";
-        				if(newPOI.isVictim() == false) {
-        					recentAdvFire += "The POI was a false alarm and remvoed. \n";
-        					targetTile.removeFromPoiList(newPOI);
-        					gs.removePOI(newPOI);
-        					gs.updateRevealPOI(newPOI);
-        				}
+        		if(this.representsLobby.getMode().equals("Experienced")) {
+        			if(curFire > 0 || containsFireFighter) {
+        				//targetTile = getNewPOITile(targetTile.getCoords());
+        				targetTile = gs.rollForTile();
+        			} else {
+        				POI newPOI = gs.generatePOI();
+            			targetTile.addPoi(newPOI);
+            			gs.updatePOI(newPOI);
+            			recentAdvFire += "POI placed on tile " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1];
         			}
-        		}
-        		else if(curFire == 0) {
-        			POI newPOI = gs.generatePOI();
-        			targetTile.addPoi(newPOI);
-        			gs.updatePOI(newPOI);
-        			recentAdvFire += "POI placed on tile " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1];
-        			
-        			if(containsFireFighter == true) {
-        				newPOI.reveal();
-        				recentAdvFire += " and revealed. \n";
-        				if(newPOI.isVictim() == false) {
-        					recentAdvFire += "The POI was a false alarm and remvoed. \n";
-        					targetTile.removeFromPoiList(newPOI);
-        					gs.removePOI(newPOI);
-        					gs.updateRevealPOI(newPOI);
-        				}
-        			}
+        		} else {
+        			//could skip this if else and just set fire to 0 every time, could also write this to check tile and so on and only add the poi if the tile does not contain a firefighter or if it does and the poi is a victim.
+            		if(curFire != 0) {
+            			targetTile.setFire(0);
+            			POI newPOI = gs.generatePOI();
+            			targetTile.addPoi(newPOI);
+            			gs.updatePOI(newPOI);
+            			recentAdvFire += "POI placed on tile " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1];
+            			
+            			if(containsFireFighter == true) {
+            				newPOI.reveal();
+            				recentAdvFire += " and revealed. \n";
+            				if(newPOI.isVictim() == false) {
+            					recentAdvFire += "The POI was a false alarm and remvoed. \n";
+            					targetTile.removeFromPoiList(newPOI);
+            					gs.removePOI(newPOI);
+            					gs.updateRevealPOI(newPOI);
+            				}
+            			}
+            		}
+            		else if(curFire == 0) {
+            			POI newPOI = gs.generatePOI();
+            			targetTile.addPoi(newPOI);
+            			gs.updatePOI(newPOI);
+            			recentAdvFire += "POI placed on tile " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1];
+            			
+            			if(containsFireFighter == true) {
+            				newPOI.reveal();
+            				recentAdvFire += " and revealed. \n";
+            				if(newPOI.isVictim() == false) {
+            					recentAdvFire += "The POI was a false alarm and remvoed. \n";
+            					targetTile.removeFromPoiList(newPOI);
+            					gs.removePOI(newPOI);
+            					gs.updateRevealPOI(newPOI);
+            				}
+            			}
+            		}
         		}
         	}
         	currentPOI = gs.getCurrentPOI();
+        	if(this.representsLobby.getMode().equals("Experienced")) {
+
+        	} else {
+        		targetTile = gs.rollForTile();
+        	}
         }
+    }
+    
+    public Tile getNewPOITile(int[] coords) {
+    	int row = coords[0];
+    	int coloumn = coords[1];
+    	//if(row == 0 ||)
+    	
+    	
+    	
+    	return null;
     }
 
     //Ben and eric, skeleton code 
-    public void advanceFire() {
+    public void advanceFire(boolean additionalHotspot) {
         /* TODO: No message view defined */
     	recentAdvFire = "";
     	
     	//gs.endTurn();
     	
     	Tile targetTile = gs.rollForTile();
+    	boolean initialHotSpot = false;
+    	if(this.representsLobby.getMode().equals("Experienced")) {
+    		initialHotSpot = targetTile.containsHotSpot();
+    	} 
     	
     	int curFire = targetTile.getFire();
     	int[] tempCoords = targetTile.getCoords();
@@ -724,40 +805,83 @@ public class GameManager {
     		}
     		if(flag) {
     			targetTile.setFire(2);
-    			recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke and caught Fire.\n";
+    			if(additionalHotspot) {
+    				recentAdvFire += "Another advanced fire triggered\n Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke and caught Fire.\n";
+    			} else {
+    				recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke and caught Fire.\n";
+    			}
     		}else {
     			targetTile.setFire(1);
-    			recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke.\n";
+    			if(additionalHotspot) {
+    				recentAdvFire += "Another advanced fire triggered\n Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke.\n";
+    			} else {
+    				recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke.\n";
+    			}
+    			
     		}
     	}else if(curFire == 1) {
     		targetTile.setFire(2);
-    		recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " caught Fire.\n";
+    		if(additionalHotspot) {
+    			recentAdvFire += "Another advanced fire triggered\n Tile "+ tempCoords[0] +"," + tempCoords[1] + " caught Fire.\n";
+    		}
+    		else {
+    			recentAdvFire = "Tile "+ tempCoords[0] +"," + tempCoords[1] + " caught Fire.\n";
+    		}
+    		
     	}
     	else {
-    		recentAdvFire = "An explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". \n";
+    		if(additionalHotspot) {
+    			recentAdvFire += "Another advanced fire triggered\n An explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". \n";
+    		} else {
+    			recentAdvFire = "An explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". \n";
+    		}
     		explosion(targetTile);
     		
     	}
     	resolveFlashOver();
-    	checkKnockDowns();
-    	placePOI();
-    	clearExteriorFire();
     	
-    	
-    	
-    	int wallCheck = gs.getDamageCounter();//should this running the same time with the main process? @Eric
-    	int victimCheck = gs.getLostVictimsList().size();
-    	int savedVictimCheck = gs.getSavedVictimsList().size();
-    	
-    	
-    	if(wallCheck >= 24 || victimCheck >= 4) {
-    		gs.terminateGame();
-    	} else if(savedVictimCheck >= 7) {
-    		gs.winGame();
+    	//checking each tile for if a hazmat is present, causing explosions if yes
+    	if(this.representsLobby.getMode().equals("Experienced")) {
+    		recentAdvFire += "hazmat Explosion check commenced \n";
+    		resolveHazmatExplosions();
     	}
+    	
+    	
+    	//checking if the first rolled tile contains a hotspot
+    	if(!initialHotSpot) {
+    		if(additionalHotspot) {
+    			if(gs.getHotSpot()>0) {
+    				targetTile.setHotSpot(1);
+        			gs.setHotSpot(gs.getHotSpot() - 1);
+        			recentAdvFire += "hotSpot added to final tile at coords: " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1]  +"\n";
+    			}
+    		}
+    		
+    		checkKnockDowns();
+        	placePOI();
+        	clearExteriorFire();
+        	
+        	
+        	
+        	int wallCheck = gs.getDamageCounter();//should this running the same time with the main process? @Eric
+        	int victimCheck = gs.getLostVictimsList().size();
+        	int savedVictimCheck = gs.getSavedVictimsList().size();
+        	
+        	
+        	if(wallCheck >= 24 || victimCheck >= 4) {
+        		gs.terminateGame();
+        	} else if(savedVictimCheck >= 7) {
+        		gs.winGame();
+        	}
+    	} else {
+    		recentAdvFire += "hotSpot triggered another advanceFire \n";
+    		advanceFire(true);
+    		
+    	}
+    	
     }
-   
-    private void clearExteriorFire() {
+
+	private void clearExteriorFire() {
 		for(int i = 0; i<8; i++) {
 			gs.returnTile(i,0).setFire(0);
 			gs.returnTile(i, 9).setFire(0);

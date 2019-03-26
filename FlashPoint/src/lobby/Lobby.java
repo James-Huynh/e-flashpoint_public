@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import game.BoardTwo;
-import game.FamilyGame;
+import game.BoardOne;
 import game.TemplateGame;
 import server.Player;
 
@@ -117,7 +117,7 @@ public class Lobby implements Serializable  {
 	}
 	public void setFamilyGame() {
 		System.out.println("IN FAMILY GAME EVER GETTING CALLED?");
-		template = new FamilyGame();
+		template = new BoardOne("Family");
 	}
 
 	public String getBoard() {
@@ -134,11 +134,11 @@ public class Lobby implements Serializable  {
 		if(this.board.equals("Board 1")) {
 			System.out.println(this.difficulty);
 			if(this.mode.equals("Family")) {
-				template = new FamilyGame();
+				template = new BoardOne("Family");
 				System.out.println("Do I come here?");
 			}
 			else if(this.mode.equals("Experienced")) {
-				template = new BoardTwo("Experienced");
+				template = new BoardOne("Experienced");
 			}
 		}
 		

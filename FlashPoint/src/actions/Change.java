@@ -32,7 +32,7 @@ public class Change extends Action {
 		Firefighter current = gs.getPlayingFirefighter();
 
 		if (current.getAP() >= APcost) {
-			if (gs.getFreeSpecialities().contains(toSpeciality) || toSpeciality.equals(null)) {
+			if (gs.getFreeSpecialities().contains(toSpeciality) || toSpeciality == (null)) {
 				return true;
 			}
 			else {

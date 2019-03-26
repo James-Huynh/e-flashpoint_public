@@ -8,7 +8,7 @@ import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
-import game.FamilyGame;
+import game.BoardOne;
 import game.GameState;
 import gui.Launcher;
 import lobby.Lobby;
@@ -129,6 +129,7 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				mDataArrays=(requestObject.getChatArray());
 				Collections.reverse(mDataArrays);
+				//launcher.refreshLobby();		// James
 			}
 			
 		
@@ -485,18 +486,18 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		
 		System.out.println("Placing a Vehicle");
-		try {
-			while(readMessage() != true) {
-				
-			}
-			flag = true;
-		}
-		catch(ClassNotFoundException l) {
-			
-		}
-		catch(IOException k) {
-			
-		}
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
 		
 		return flag;
 	} 
