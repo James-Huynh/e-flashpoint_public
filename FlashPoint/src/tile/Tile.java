@@ -21,7 +21,6 @@ public class Tile implements Serializable{
 	protected int fire;
     protected int[] coords;
     protected int hotspot;
-    protected int hazmat;
     protected Edge[] adjacentEdges;
     protected ArrayList<Firefighter> listOfFirefighters;
     protected int x;
@@ -216,19 +215,10 @@ public class Tile implements Serializable{
 				+ ", x=" + x + ", y=" + y + ", poiList=" + poiList + ", isInterior=" + isInterior
 				+ ", pointerParkingSpot=" + pointerParkingSpot + "]";
 	}
-
-	public void setHazmat(int number) {
-		this.hazmat = number;
-		
-	}
 	
 	public void setHazmat(Hazmat hazmat) {
 		hazmatList.add(hazmat);
 		hazmat.setCurrentLocation(this);
-	}
-	
-	public int getHazmat() {
-		return this.hazmat;
 	}
 	
 	public boolean containsHazmat() {
@@ -241,6 +231,11 @@ public class Tile implements Serializable{
 	
 	public boolean containsHazmat(Hazmat hazmat) {
 		return hazmatList.contains(hazmat);
+	}
+	
+	public Hazmat obtainHazmat() {
+		assert !hazmatList.isEmpty();
+		return hazmatList.get(hazmatList.size()-1);
 	}
 
 	public Hazmat popHazmat() {

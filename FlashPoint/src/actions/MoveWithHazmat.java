@@ -12,41 +12,36 @@ public class MoveWithHazmat extends Move {
 
 	private static final long serialVersionUID = 1L;
 	protected ActionList title = ActionList.MoveWithHazmat;
-	protected Hazmat hazmat;
 	
-	public MoveWithHazmat(int direction, Hazmat hazmat){
+	public MoveWithHazmat(int direction){
 		super(direction);
 		this.APcost = 2;
-		this.hazmat = hazmat;
 	}
 	
 	public ActionList getTitle() {
     	return this.title;
     }
 	
-	public Hazmat getHazmat() {
-		return hazmat;
-	}
-	
-	public void setHazmat(Hazmat hazmat) {
-		this.hazmat = hazmat;
-	}
-	
 	@Override
 	public void perform(GameState gs) {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
 		int aP = playingFirefighter.getAP();
+		playingFirefighter.setAP(aP - APcost);
+		
 		Tile currentPosition = playingFirefighter.getCurrentPosition();
 		Tile neighbour = gs.getNeighbour(currentPosition, direction);
+		
+		Hazmat hazmat = currentPosition.obtainHazmat();
 		
 		super.perform(gs);
 		currentPosition.popHazmat(hazmat);
 		neighbour.setHazmat(hazmat); //includes setting position of hazmat
 		if (!neighbour.checkInterior()) {
 			hazmat.setDisposed();
+			neighbour.popHazmat();
 			//place in rescued spot!
 		}
-
+		
 	}
 
 	@Override
@@ -56,9 +51,12 @@ public class MoveWithHazmat extends Move {
 			Firefighter playingFirefighter = gs.getPlayingFirefighter();
 			int aP = playingFirefighter.getAP();
 			Tile currentPosition = playingFirefighter.getCurrentPosition();
+			Hazmat hazmat = currentPosition.obtainHazmat();
+			
 	        Edge edge = currentPosition.getEdge(direction);
 	        Tile neighbour = gs.getNeighbour(currentPosition, direction);
 	        int fire = neighbour.getFire();			
+	        
 			if(currentPosition.containsHazmat(hazmat) && direction!=-1) {
 				if(fire < 2) {
 					if(edge.isDoor()) {

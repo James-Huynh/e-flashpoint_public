@@ -10,6 +10,7 @@ import token.POI;
 
 public class MoveWithVictim extends Move{
 	
+	private static final long serialVersionUID = 1L;
 	protected ActionList title = ActionList.MoveWithVictim;
 	
 	public MoveWithVictim(int direction){
@@ -24,15 +25,6 @@ public class MoveWithVictim extends Move{
 	@Override
 	public boolean validate(GameState gs) {
 		boolean normalMove = super.validate(gs);
-		/*
-		Firefighter playingFirefighter = gs.getPlayingFirefighter();
-		int aP = playingFirefighter.getAP();
-		if (normalMove && playingFirefighter.getCarrying() && aP >= 2 ) {
-			return true;
-		}
-		else {
-			return false;
-		}*/
 
 		if(normalMove) {
 			Firefighter playingFirefighter = gs.getPlayingFirefighter();
@@ -82,7 +74,6 @@ public class MoveWithVictim extends Move{
 		
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
-		//boolean carrying = playingFirefighter.getCarrying(); //Is this check necessary? The action is Move w Victim - Z
 		Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
 		
 		ArrayList<POI> pois = currentPosition.getPoiList(); //This is under the assumption we can have only
@@ -92,23 +83,11 @@ public class MoveWithVictim extends Move{
 			POI temp = pois.remove(0);
 			gs.removePOI(temp);
 			gs.updateSavedCount(temp);
-		}else {
-			neighbour.addPoi(pois.remove(0));
 		}
-		
-		
-//		for(POI p: pois) { 									//one victim POI on a Tile at any time
-//			if(p.isVictim() && p.isRevealed()) {			//
-//				currentPosition.removeFromPoiList(p);
-//				neighbour.addPoi(p);
-//			}
-//		}
+		else {
+			neighbour.addPoi(pois.remove(0)); //smart
+		}
 		super.perform(gs);
-        /*if (carrying == true) {							//carrying property is Firefighter is of no use yet
-        	currentPosition.removeFromPoiList( playingFirefighter.getVictim() ); //If want to model multiple victims on one Tile and want to access a particular one
-        	neighbour.addPoi( playingFirefighter.getVictim() );				//Then it's useful - however would have to be careful to reset property when Firefighter opts to just 'Move'
-        }*/
-        
 	}
 
 	@Override

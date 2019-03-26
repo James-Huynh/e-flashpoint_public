@@ -17,10 +17,9 @@ public class RemoveHazmat extends Action {
 	@Override
 	public void perform(GameState gs) {
 		gs.getPlayingFirefighter().setAP( gs.getPlayingFirefighter().getAP() - APcost);
+		hazmat = gs.getPlayingFirefighter().getCurrentPosition().popHazmat();
 		hazmat.setDisposed();
-		gs.getPlayingFirefighter().getCurrentPosition().popHazmat(hazmat);
-		//place in rescued spot!
-
+		//place in rescued spot! ask Ben
 	}
 
 	@Override
@@ -38,7 +37,6 @@ public class RemoveHazmat extends Action {
 
 	@Override
 	public void adjustAction(GameState gs) {
-		// TODO Auto-generated method stub
 
 	}
 

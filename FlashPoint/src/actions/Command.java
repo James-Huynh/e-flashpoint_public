@@ -24,7 +24,22 @@ public class Command extends Action {
 		action.perform(gs);
 		gs.getPlayingFirefighter().setAP(gs.getPlayingFirefighter().getAP() + action.APcost);
 		gs.setPlayingFirefighter(me);
-		me.setSP(me.getSP() - action.APcost);
+
+		if (me.getSP() >= action.APcost) { //if i can do everything from SP
+			me.setSP(me.getSP() - action.APcost);
+		}
+		else if(me.getSP() > 0) { //splitted
+			int difference = action.APcost - me.getSP();
+			me.setSP(0);
+			me.setAP(me.getAP() - difference);
+		}
+		else { //everything from AP
+			me.setAP(me.getAP() - action.APcost);
+		}
+		
+		if (toObey.getSpeciality() == Speciality.CAFS) {
+			me.setIfCommandCAPSthisTurn(true);
+		}
 	}
 
 	@Override
@@ -32,10 +47,10 @@ public class Command extends Action {
 		boolean flag = false;
 		Firefighter captain = gs.getPlayingFirefighter();
 		if (action.title == (ActionList.Handle) || action.title ==(ActionList.Move) || 
-				action.title == (ActionList.MoveWithHazmat) || action.title == (ActionList.MoveWithHazmat)) {
-			if (captain.getSP()>= action.APcost) {
+				action.title == (ActionList.MoveWithHazmat) || action.title == (ActionList.MoveWithVictim)) {
+			if (captain.getSP() + captain.getAP() >= action.APcost) {
 				gs.setPlayingFirefighter(toObey);
-				if (action.validate(gs) && !captain.getIfCommandCAPSthisTurn() && !(toObey.getSpeciality()==Speciality.CAFS && action.APcost==2)) {
+				if (action.validate(gs) && !captain.getIfCommandCAPSthisTurn() && !(toObey.getSpeciality()==Speciality.CAFS && action.APcost>1)) {
 					//request and permission from toObey.
 					flag = true;
 				}

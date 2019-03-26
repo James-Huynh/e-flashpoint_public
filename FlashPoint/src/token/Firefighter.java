@@ -68,7 +68,7 @@ public class Firefighter extends Token {
 			this.SP = 0;
 		}
 		else if (speciality == Speciality.VETERAN) {
-			this.AP = 0; //?
+			this.AP = 4; //?
 			this.SP = 0; //?
 		}
 		else {
@@ -114,7 +114,7 @@ public class Firefighter extends Token {
 		return this.SP;
 	}
 	
-	public POI getPOI() {
+	public POI getFollow() {
 		return this.follow;
 	}
 	
@@ -194,11 +194,11 @@ public class Firefighter extends Token {
 			this.SP = 3;
 		}
 		else if (speciality == Speciality.DOG) {
-			this.AP = 12;
+			this.AP = Math.min(12, this.AP + 6);
 			this.SP = 0;
 		}
 		else if (speciality == Speciality.VETERAN) {
-			this.AP = 0; //?
+			this.AP = Math.min(8, this.AP + 4); //?
 			this.SP = 0; //?
 		}
 		else {

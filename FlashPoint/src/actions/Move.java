@@ -7,6 +7,7 @@ import game.GameState;
 import tile.Tile;
 import token.Firefighter;
 import token.POI;
+import token.Speciality;
 
 /**
  * Move class definition.
@@ -87,6 +88,12 @@ public class Move extends Action {
         			}
         		}
         }
+        
+        //speciality paramedic
+        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null && neighbour.getFire() == 2) {
+        	flag = false;
+        }
+        
         return flag;
     }
 
@@ -123,15 +130,14 @@ public class Move extends Action {
         		Pois.remove(poi);
         		gs.getRevealedFalseAlarmsList().add(poi);
         	}
-        		   
-        		   	
-//        	for(POI poi:Pois) {
-//        		if(!poi.isVictim()) { //Why? POIs should get revealed if victim or not
-//        			poi.reveal();
-//        		}
-//        	}
         }
-        //Do when move saves the victim
+        
+      //speciality paramedic
+        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null) {
+        	playingFirefighter.getFollow().setCurrentPosition(neighbour);
+        	currentPosition.getPoiList().remove(playingFirefighter.getFollow());
+        	neighbour.getPoiList().add(playingFirefighter.getFollow());
+        }
     }
     
     @Override

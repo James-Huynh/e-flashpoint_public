@@ -49,11 +49,12 @@ public class Launcher {
 	private String EricIP = "142.157.30.157";
 	private String JamesIP = "142.157.105.75";
 	private String JunhazIP = "142.157.65.31";
-	private String ZaidIP = "142.157.145.58";
+	private String ZaidIP = "142.157.145.202";
 	private String BenIP = "142.157.58.203";
+	private String MatIP = "142.157.63.40";
 	
 	private static Client client;
-	private String ServerIP = JamesIP;
+	private String ServerIP = ZaidIP;
 
 	int port = 8888;
 	User userOne = new User();
