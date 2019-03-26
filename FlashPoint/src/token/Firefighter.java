@@ -23,6 +23,7 @@ public class Firefighter extends Token {
 	protected int SP;
 	private static final long serialVersionUID = 1L;
 	protected POI follow;
+	protected boolean ifCommandCAPSthisTurn;
 	
 	
 	//constr
@@ -35,7 +36,49 @@ public class Firefighter extends Token {
 		this.myColour = setColour;
 		this.speciality = null;
 		this.SP = 0;
+		this.follow = null;
+		this.ifCommandCAPSthisTurn = false;
 		//Colour = Player.getColour();
+	}
+	
+	public Firefighter(Colour setColour, Speciality speciality) {
+		super();
+		this.savedAP = 0;
+		this.myColour = setColour;
+		this.speciality = speciality;
+		if (speciality == Speciality.CAPTAIN) {
+			this.AP = 4;
+			this.SP = 2;
+			
+		}
+		else if (speciality == Speciality.CAFS) {
+			this.AP = 3;
+			this.SP = 3;
+		}
+		else if (speciality == Speciality.GENERALIST) {
+			this.AP = 5;
+			this.SP = 0;
+		}
+		else if (speciality == Speciality.RESCUE_SPECIALIST) {
+			this.AP = 4;
+			this.SP = 3;
+		}
+		else if (speciality == Speciality.DOG) {
+			this.AP = 12;
+			this.SP = 0;
+		}
+		else if (speciality == Speciality.VETERAN) {
+			this.AP = 0; //?
+			this.SP = 0; //?
+		}
+		else {
+			this.AP = 4;
+			this.SP = 0;
+		}
+		
+		this.follow = null;
+		this.ifCommandCAPSthisTurn = false;
+		
 	}
 
 	//------------------------ GETTERS -------------------------//
@@ -73,6 +116,10 @@ public class Firefighter extends Token {
 	
 	public POI getPOI() {
 		return this.follow;
+	}
+	
+	public boolean getIfCommandCAPSthisTurn() {
+		return this.ifCommandCAPSthisTurn;
 	}
 	
 	//------------------------ SETTTERS -------------------------//
@@ -120,6 +167,44 @@ public class Firefighter extends Token {
 	
 	public void setFollow(POI victim) {
 		follow = victim;
+	}
+	
+	public void setIfCommandCAPSthisTurn(boolean value) {
+		ifCommandCAPSthisTurn = value;
+	}
+	
+	// end of turn
+	
+	public void endOfTurn() {
+		if (speciality == Speciality.CAPTAIN) {
+			this.AP = Math.min(8, this.AP + 4);
+			this.SP = 2;
+			this.ifCommandCAPSthisTurn = false;
+		}
+		else if (speciality == Speciality.CAFS) {
+			this.AP = Math.min(8, this.AP + 3);
+			this.SP = 3;
+		}
+		else if (speciality == Speciality.GENERALIST) {
+			this.AP = Math.min(8, this.AP + 5);
+			this.SP = 0;
+		}
+		else if (speciality == Speciality.RESCUE_SPECIALIST) {
+			Math.min(8, this.AP + 4);
+			this.SP = 3;
+		}
+		else if (speciality == Speciality.DOG) {
+			this.AP = 12;
+			this.SP = 0;
+		}
+		else if (speciality == Speciality.VETERAN) {
+			this.AP = 0; //?
+			this.SP = 0; //?
+		}
+		else {
+			Math.min(8, this.AP + 4);
+			this.SP = 0;
+		}
 	}
 	
 

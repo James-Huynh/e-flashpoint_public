@@ -17,7 +17,8 @@ import token.Vehicle;
  */
 public class Tile implements Serializable{
     
-    protected int fire;
+	private static final long serialVersionUID = 1L;
+	protected int fire;
     protected int[] coords;
     protected int hotspot;
     protected int hazmat;

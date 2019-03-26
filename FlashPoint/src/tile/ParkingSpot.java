@@ -12,7 +12,8 @@ import token.Vehicle;
  */
 public class ParkingSpot implements Serializable{
     
-    protected Vehicle parkingType;
+	private static final long serialVersionUID = 1L;
+	protected Vehicle parkingType;
     protected Tile[] tiles;
     boolean isCar;
     

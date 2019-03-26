@@ -4,6 +4,7 @@ import java.util.Random;
 
 import edge.Edge;
 import game.GameState;
+import tile.ParkingSpot;
 import tile.Tile;
 import token.Firefighter;
 import token.Speciality;
@@ -15,10 +16,61 @@ public class FireGun extends Action {
 	protected ActionList title = ActionList.FireGun;
 	protected boolean driver;
 	protected int[] result;
-
-	protected int[][] quadrantIndices = new int[12][2]; //To hold the indices of the quadrant
-	public FireGun() {									//FF location corresponds to
+	protected ParkingSpot veh;
+	protected int[][] quadrantIndices = new int[12][2]; //hardcoded for advanced
+	
+	public FireGun() {							
 		APcost = 4;
+	}
+	
+	public FireGun(ParkingSpot veh) {
+		APcost = 4;
+		this.veh = veh;
+		
+		if (veh.getTiles()[0].getCoords()[0] == 0) {
+			int i=0;
+			for (int k=1; k<=4; k++) {
+				for (int j=4; j<=6; j++) {
+					this.quadrantIndices[i][0] = k;
+					this.quadrantIndices[i][1] = j;
+					i++;
+				}
+			}
+		}
+		
+		else if ((veh.getTiles()[0].getCoords()[0] == 9)) {
+			int i=0;
+			for (int k=5; k<=8; k++) {
+				for (int j=1; j<=3; j++) {
+					this.quadrantIndices[i][0] = k;
+					this.quadrantIndices[i][1] = j;
+					i++;
+				}
+			}
+		}
+		
+		else if ((veh.getTiles()[0].getCoords()[1] == 0)) {
+			int i=0;
+			for (int k=1; k<=4; k++) {
+				for (int j=1; j<=3; j++) {
+					this.quadrantIndices[i][0] = k;
+					this.quadrantIndices[i][1] = j;
+					i++;
+				}
+			}
+		}
+		
+		else if ((veh.getTiles()[0].getCoords()[1] == 7)) {
+			int i=0;
+			for (int k=5; k<=8; k++) {
+				for (int j=4; j<=6; j++) {
+					this.quadrantIndices[i][0] = k;
+					this.quadrantIndices[i][1] = j;
+					i++;
+				}
+			}
+		}
+		
 	}
 	
 	public ActionList getTitle() {
@@ -32,44 +84,35 @@ public class FireGun extends Action {
 	@Override
 	public void perform(GameState gs) {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
-        Tile currentPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
         playingFirefighter.setAP(aP - this.APcost);
         
-        int[] coords = rollDice(currentPosition.getCoords());
+        int[] coords = rollDice();
         
         Tile target = gs.returnTile(coords[0], coords[1]);
         target.setFire(0);
         Edge adjacent;
         for(int i=0;i<4;i++) {
         	adjacent = target.getEdge(i);
-        	if(adjacent.isBlank() || (adjacent.isDoor() && (adjacent.getStatus() || adjacent.isDestroyed())) || (adjacent.isWall() && adjacent.getDamage() == 0)){
-        		Tile neighbour;
-        		if(i == 0) {
-        			neighbour = gs.returnTile(coords[0] -1, coords[1]); //Direction with indices w Ben
-        			//If neighbour's coords are in quadrantIndices but 'splashover can extend beyond boundary'?
-        					neighbour.setFire(0);
-        		}
-        		else if(i == 1) {
-        			neighbour = gs.returnTile(coords[0] + 1, coords[1]);
-        		}
-        		else if(i == 2) {
-        			neighbour = gs.returnTile(coords[0], coords[1] + 1);
-        			
-        		}
-        		else {
-        			neighbour = gs.returnTile(coords[0], coords[1] - 1);
-        		}
+        	if(adjacent.isBlank() || 
+        			(adjacent.isDoor() && (adjacent.getStatus() || adjacent.isDestroyed())) || 
+        			(adjacent.isWall() && adjacent.getDamage() == 0)){
+        		Tile neighbour = gs.getNeighbour(target, i);
+        		neighbour.setFire(0);
         	}
         }
 	}
+	
+	//perform driver
+	
+	//?
 
 	@Override
 	public boolean validate(GameState gs) {
 		boolean flag = false;
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
 		Tile currentPosition = playingFirefighter.getCurrentPosition();
-		if (currentPosition.getParkingSpot() == null && currentPosition.getParkingSpot().getParkingType() == (Vehicle.Engine) 
+		if (currentPosition.getParkingSpot() == this.veh && currentPosition.getParkingSpot().getParkingType() == (Vehicle.Engine) 
 				&& currentPosition.getParkingSpot().getCar() == true) {
 			if (playingFirefighter.getAP() >= APcost) {
 				flag = true;
@@ -94,19 +137,27 @@ public class FireGun extends Action {
 				+ APcost + ", direction=" + direction + "]";
 	}
 
-	public int[] rollDice(int[] location) {
+	public int[] rollDice() {
+		/*
 		Random rand = new Random();
 		int red = rand.nextInt(5);
 		red += 1;
 		int black = rand.nextInt(7);
 		black += 1;
 		
-		while(red < location[0] && black < location[1]) { //Some Math here to get the indices of possible quadrant tiles
-			red = rand.nextInt(5);						  //Based on FF location -- Ask Ben
+		while(red < location[0] && black < location[1]) {
+			red = rand.nextInt(5);
 			red += 1;
 			black = rand.nextInt(7);
 			black += 1;
 		}
+		*/
+		
+		Random rand = new Random();
+		int whichOne = rand.nextInt(12);
+		int red = quadrantIndices[whichOne][0];
+		int black = quadrantIndices[whichOne][1];
+		
 		int[] targetSpace = new int[2];
 		targetSpace[0] = red;
 		targetSpace[1] = black;
@@ -114,28 +165,40 @@ public class FireGun extends Action {
 	}
 	
 	//both public important for Driver!
-	public int[] rerollRedDice(int[] location, int[] result) {
+	public int[] rerollRedDice(int[] result) {
 		Random rand = new Random();
+		/*
 		int red = rand.nextInt(5);
 		red += 1;
 		while(red < location[0]) {
 			red = rand.nextInt(5);
 			red += 1;
 		}
+		*/
+		int whichOne = rand.nextInt(12);
+		int red = quadrantIndices[whichOne][0];
+		
 		int[] targetSpace = new int[2];
 		targetSpace[0] = red;
 		targetSpace[1] = result[1];
 		return targetSpace;
 	}
 	
-	public int[] rerollBlackDice(int[] location, int[] result) {
+	public int[] rerollBlackDice(int[] result) {
+		
 		Random rand = new Random();
+		/*
 		int black = rand.nextInt(7);
 		black += 1;
 		while(black < location[1]) {
 			black = rand.nextInt(7);
 			black += 1;
 		}
+		*/
+		
+		int whichOne = rand.nextInt(12);
+		int black = quadrantIndices[whichOne][1];
+		
 		int[] targetSpace = new int[2];
 		targetSpace[0] = result[0];
 		targetSpace[1] = black;

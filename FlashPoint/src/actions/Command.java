@@ -2,6 +2,7 @@ package actions;
 
 import game.GameState;
 import token.Firefighter;
+import token.Speciality;
 
 public class Command extends Action {
 
@@ -23,15 +24,22 @@ public class Command extends Action {
 		action.perform(gs);
 		gs.getPlayingFirefighter().setAP(gs.getPlayingFirefighter().getAP() + action.APcost);
 		gs.setPlayingFirefighter(me);
-		me.setAP(me.getAP() - action.APcost);
+		me.setSP(me.getSP() - action.APcost);
 	}
 
 	@Override
 	public boolean validate(GameState gs) {
 		boolean flag = false;
+		Firefighter captain = gs.getPlayingFirefighter();
 		if (action.title == (ActionList.Handle) || action.title ==(ActionList.Move) || 
 				action.title == (ActionList.MoveWithHazmat) || action.title == (ActionList.MoveWithHazmat)) {
-			flag = true; //finish it mat.
+			if (captain.getSP()>= action.APcost) {
+				gs.setPlayingFirefighter(toObey);
+				if (action.validate(gs) && !captain.getIfCommandCAPSthisTurn() && !(toObey.getSpeciality()==Speciality.CAFS && action.APcost==2)) {
+					//request and permission from toObey.
+					flag = true;
+				}
+			}
 		}
 		
 		return flag;
