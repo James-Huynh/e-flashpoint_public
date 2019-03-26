@@ -498,7 +498,7 @@ public class GameState implements Serializable {
 					engines[0].setTile(matTiles[i][j]);
 				}
 
-				else if (i == 7 && (j == 5 || j == 6)) {
+				else if (i == 7 && (j == 1 || j == 2)) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Engine);
 					matTiles[i][j].setParkingSpot(engines[1]);
