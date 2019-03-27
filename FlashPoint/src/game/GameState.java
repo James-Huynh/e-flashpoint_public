@@ -59,6 +59,8 @@ public class GameState implements Serializable {
 	protected ArrayList<Speciality> freeSpecialities;
 
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
+	protected boolean experiencedMode;
+	
 	
 	private static final long serialVersionUID = 1L; // serialization
 
@@ -145,10 +147,14 @@ public class GameState implements Serializable {
 		this.savedVictimsList = new ArrayList<POI>();
 		this.freeSpecialities = new ArrayList<Speciality>();
 		this.remainingHotSpots = 0;
+		if(lobby.getMode().equals("Experienced")) {
+			this.experiencedMode = true;
+		} else this.experiencedMode = false;
 		createAmbulances();
 		createEngine();
 		initializeTiles();
 		setClosest();
+		
 		
 
 	}
@@ -882,5 +888,8 @@ public class GameState implements Serializable {
 		return this.remainingHotSpots;
 	}
 	
+	public boolean isExperienced() {
+		return this.experiencedMode;
+	}
 	
 }
