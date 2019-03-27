@@ -21,7 +21,14 @@ public class Drive extends Action {
 	public Drive() {
 		APcost = 2;
 	}
-	
+	/** -- For constructors
+	 * Similar to MoveWithVictim & RemoveHazmat, the Action factory does not have access to the ParkingSpot
+	 * So they cannot be passed in the constructor. We have to 'get' them ourselves
+	 * Same thing for HashSet of moving Firefighters
+	 * 
+	 * We do however need some kind of indicator in constructor to tell which Vehicle is to be Driven
+	 * Either take in String/ActionList?
+	 */
 	public Drive(ParkingSpot parking, int direction) {
 		APcost = 2;
 		this.parking = parking;
@@ -63,7 +70,12 @@ public class Drive extends Action {
     	        }
             }
         	
-        	if (moveWith) {
+        	/** --For below--
+        	 * Input will have to be taken for each Firefighter that is on an Ambulance ParkingSpot
+        	 * So it will be more like a loop over all Ambulance PS's -> make Ride request -> add them to HashSet
+        	 * Add the end probably, we will loop over this HashSet and reset their positions
+        	 */
+        	if (moveWith) {  
         		for (Firefighter f : moveWithWho) {
         			int whichOne;
         			if (parking.getTiles()[0].equals(f.getCurrentPosition())){
@@ -89,7 +101,7 @@ public class Drive extends Action {
         }
         
         Tile target = null;
-        if (this.parking.getParkingType() == Vehicle.Ambulance) {
+        if (this.parking.getParkingType() == Vehicle.Ambulance) { 
 	        for (int i=0; i<4; i++) {
 	        	if (gs.getAmbulances()[i].equals(parking)) {
 	        		ParkingSpot nextAmbulance = gs.getAmbulances()[ (i+direction)%4 ];
@@ -110,7 +122,11 @@ public class Drive extends Action {
 	        	}
 	        }
         }
-        
+        /** --For moveWith
+         * moveWith was supposed to say if the playingFF wants to Move or not. So in Engine instance, it would be set to true and in Ambulance,
+         * there'd be one instance of both? (if we don't want to get into input taking, we can validate both and display both)
+         * So when resetting positions, we have to check moveWith since it won't happen always
+         */
         currentPosition.getFirefighterList().remove(playingFirefighter);
         playingFirefighter.setCurrentLocation(target);
         
@@ -161,12 +177,19 @@ public class Drive extends Action {
 	        		nextEngine = gs.getEngines()[ (i+direction)%4 ];
 	        	}
 			}
-			if(currentPosition.getParkingSpot().equals(parking) && aP >= APcost && !nextEngine.getCar()) {
+			if(currentPosition.getParkingSpot().equals(parking) && aP >= APcost && !nextEngine.getCar()) { //One more check than above, why?
 					flag = true;
 			}
 		}
 		
 		return flag;
+		
+		/**
+		 * Logically, moving from PS to opposite PS will require (4AP), so two Drive Actions. 
+		 * So far, we have incorporated all such things as one option (e.g. Chop by 4) so it would be nice to do this also
+		 * If so, APcost will initialized accordingly. But the 'next' check in validate will require edit as you worry about 
+		 * two after, not the next one. Same thing in perform
+		 */
 	}
 
 	@Override

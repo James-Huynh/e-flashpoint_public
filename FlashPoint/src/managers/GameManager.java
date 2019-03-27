@@ -12,13 +12,8 @@ import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import actions.Action;
-import actions.Chop;
-import actions.Extinguish;
-import actions.Finish;
-import actions.Handle;
-import actions.Move;
-import actions.MoveWithVictim;
+import actions.*;
+
 import edge.Edge;
 import game.GameState;
 import lobby.Lobby;
@@ -27,6 +22,7 @@ import tile.Tile;
 import token.Firefighter;
 import token.Hazmat;
 import token.POI;
+import token.Speciality;
 
 /**
  * GameManager class definition.
@@ -334,6 +330,7 @@ public class GameManager {
     		allPossibleActions.add(new Chop(dir, 2));
     		allPossibleActions.add(new Chop(dir, 4));
     		allPossibleActions.add(new Handle(dir));
+    		//allPossibleActions.add(new MoveWithHazmat(dir));
     	}
     	
     	//extinguish
@@ -341,14 +338,61 @@ public class GameManager {
     		allPossibleActions.add(new Extinguish(dir, 1)); 
     		allPossibleActions.add(new Extinguish(dir, 2));
     	}
- 
-//    	//handle
-//    	allPossibleActions.add(new Handle());
-    	
+     	
+    	//----ADVANCED GENERATION----//
+//    	Firefighter inTurn = gs.getPlayingFirefighter();
+//    	Speciality speciality = inTurn.getSpeciality();
+//    	//OK methods as default & with existing Action logic :- Chop, Move, Extinguish, Handle, MoveWithHazmat
+//    	
+//    	//Drive
+//    	for (int dir : new int[]{-1,1} ) {  
+//			allPossibleActions.add(new Drive("Ambulance", false, dir)); //type, moveWith, direction
+//			allPossibleActions.add(new Drive("Ambulance", true, dir));
+//			allPossibleActions.add(new Drive("Engine", true, dir));
+//    	}
+//    	
+//    	//FireGun
+//		if(speciality == Speciality.DRIVER) { //IF==Driver needed because validate doesn't have it but makes sense why not
+//			allPossibleActions.add(new FireGun(true, 2)); //driver boolean and APcost
+//		}
+//		else {
+//			allPossibleActions.add(new FireGun(false, 4));
+//		}
+//		
+//		Tile currentLocation = inTurn.getCurrentPosition();
+//		
+//		//Helper for Paramedic - PickOrDrop
+//		for(POI p: currentLocation.getPoiList()) {
+//			allPossibleActions.add(new PickOrDrop(p)); //IF == Param not needed because validate has it
+//		}
+//		
+//		//Paramedic - Resuscitate
+//		for(POI p: currentLocation.getPoiList()) {
+//			allPossibleActions.add(new Resuscitate(p)); //IF == Param not needed because validate has it
+//		}
+//		
+//		//FireCaptain - Command
+//		/*Constructor needs FF and Action
+//		 * So loop over allPlayingFF's and all legal Actions
+//		 * and see if they validate?
+//		 */
+//    	
+//		//Imaging Technician - FlipPOI 
+//		for(POI p: currentLocation.getPoiList()) {
+//			allPossibleActions.add(new FlipPOI(p)); //IF == ImagTech not needed because validate has it
+//		}
+//		
+//		//HazmatTechnician - RemoveHazmat
+//		allPossibleActions.add(new RemoveHazmat()); //IF check not neeed cos it is in validate
+//		
+//		//Crew Change - Change  
+//		for(Speciality s: Speciality.values()) {
+//			allPossibleActions.add(new Change(s)); //Need to make this only on first turn -- ask Ben
+//    	}
+		
     	//finish
     	allPossibleActions.add(new Finish());
     	
-    	//
     	return allPossibleActions;
     }
     

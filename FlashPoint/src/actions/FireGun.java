@@ -14,7 +14,7 @@ public class FireGun extends Action {
 	
 	private static final long serialVersionUID = 1L;
 	protected ActionList title = ActionList.FireGun;
-	protected boolean driver;
+	protected boolean driver; //This works I think - we should overload constructors, one for everyone, other for Driver (his APcost is also different) and Action Factory responsible for intializing properly. 
 	protected int[] result;
 	protected ParkingSpot veh;
 	protected int[][] quadrantIndices = new int[12][2]; //hardcoded for advanced
@@ -25,7 +25,7 @@ public class FireGun extends Action {
 	
 	public FireGun(ParkingSpot veh) {
 		APcost = 4;
-		this.veh = veh;
+		this.veh = veh; //Same thing, won't be passed in
 		
 		if (veh.getTiles()[0].getCoords()[0] == 0) {
 			int i=0;
@@ -138,21 +138,7 @@ public class FireGun extends Action {
 	}
 
 	public int[] rollDice() {
-		/*
-		Random rand = new Random();
-		int red = rand.nextInt(5);
-		red += 1;
-		int black = rand.nextInt(7);
-		black += 1;
-		
-		while(red < location[0] && black < location[1]) {
-			red = rand.nextInt(5);
-			red += 1;
-			black = rand.nextInt(7);
-			black += 1;
-		}
-		*/
-		
+	
 		Random rand = new Random();
 		int whichOne = rand.nextInt(12);
 		int red = quadrantIndices[whichOne][0];
