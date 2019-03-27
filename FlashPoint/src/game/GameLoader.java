@@ -25,10 +25,7 @@ public class GameLoader {
 	        }
 	        return null;
 	    }
-
-
- 
-
+	 
 }
 
 

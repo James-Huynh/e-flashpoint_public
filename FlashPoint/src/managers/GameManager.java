@@ -66,6 +66,15 @@ public class GameManager {
     	gs.setFirefighters();
     }
 	
+    public void loadGameState(GameState ngs) {
+    	gs=ngs;
+    	Lobby lobby = new Lobby(); //dumb lobby for now
+        
+    	lobby.setCapacity(gs.getnumPlayer());
+    	gs.updateGameStateFromLobby(lobby);
+    	setup();
+    	doTurns();
+    }
     public void setupGameType() {
 		if(true/*representsLobby.getBoard().equals("Board 1")*/) {
 			/**Board structure edges structure would go here**/

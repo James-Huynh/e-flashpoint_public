@@ -71,32 +71,7 @@ public class GameSaver {
     }
 
 
-	/**
-	 * creating file
-	 * 
-	 * @throws IOException
-	 */
-
 	
-
-
-
-	/**
-
-	 * writing fire
-
-	 * 
-
-	 * @param newStr
-
-	 *           
-
-	 * @throws IOException
-
-	 */
-
-
-
 
 }
 
