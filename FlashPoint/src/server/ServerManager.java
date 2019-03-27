@@ -1,7 +1,12 @@
 package server;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -224,6 +229,50 @@ public class ServerManager {
 	
 	public void saveGame() {
 		//@eric take the current game state and save it here
+		
+		try {
+			int savedGameNumber = new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\src\\savedGame").listFiles().length; //check how many games are already saved
+			FileOutputStream f = new FileOutputStream(new File("savedGame" + (savedGameNumber++) + ".txt")); //save it as "savedGame#.txt"
+			
+			ObjectOutputStream o = new ObjectOutputStream(f);
+	
+			o.writeObject(gameState);
+			
+			o.close();
+			f.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	//JUNHA : theoretically this should read our savedGame#.txt file and read our object 
+	public void loadGame(int gameNumber) {
+		
+		try {
+			FileInputStream fi = new FileInputStream(new File("savedGame" + gameNumber + ".txt"));
+			ObjectInputStream oi = new ObjectInputStream(fi);
+			
+			this.gameState = (GameState) oi.readObject();
+					
+			oi.close();
+			fi.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 }
