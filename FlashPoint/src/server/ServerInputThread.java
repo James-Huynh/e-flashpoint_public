@@ -190,14 +190,16 @@ public class ServerInputThread extends Thread {
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnGameState); 
 				}
+				break;
+			case SENDRIDEREQUEST:
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.askRelevantFirefighters(requestObject.getRidingObject());
 				
-//				returnObject = new TranObject<User>(TranObjectType.ACTIONSUCCESS);
-//				requestObject = (User) read_tranObject.getObject();
-//				serverManager.performAction(requestObject.getAction());
-//				requestObject.setCurrentState(serverManager.getGameState());
-//				System.out.println(requestObject.getCurrentState().returnTile(3,0).getFirefighterList().get(0).getAP());
-//				returnObject.setObject(requestObject);
-//				out.setMessage(returnObject);
+				returnGameState = new TranObject<GameState>(TranObjectType.SENDRIDERECEIVED);
+				returnGameState.setObject(serverManager.getGameState());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState); 
+				}
 				break;
 			case LOBBYCREATION:
 				//System.out.println("In lobby creation");

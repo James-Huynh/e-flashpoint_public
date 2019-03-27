@@ -87,6 +87,11 @@ public class ClientManager {
 				startGameFlag = 1;
 				flag = true;
 				break;
+			case SENDRIDERECEIVED:
+				System.out.println("Ride request to intiate pop-up received");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				flag = true;
+				break;
 			case LOBBYCREATIONSUCCESS:
 				System.out.println("Successful lobby request");
 				requestObject = (User) read_tranObject.getObject();
@@ -507,8 +512,38 @@ public class ClientManager {
 //		}
 		
 		return flag;
-	} 
+	}
+	
 	public List<ChatMsgEntity> getChatArray(){
 		return this.mDataArrays;
 	}
+	
+	public boolean sendRideRequests(Vehicle type) {
+		boolean flag = false;
+//
+//		requestObject.setVehicleIndex(direction);
+//		requestObject.setVehicleType(type);
+		
+		requestObject.setRidingObject(type);
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SENDRIDEREQUEST);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		
+		System.out.println("In ClientManager :- Sending Ride Requests to Everyone");
+//		try {
+//			while(readMessage() != true) {
+//				
+//			}
+//			flag = true;
+//		}
+//		catch(ClassNotFoundException l) {
+//			
+//		}
+//		catch(IOException k) {
+//			
+//		}
+		
+		return flag;
+	} 
 }

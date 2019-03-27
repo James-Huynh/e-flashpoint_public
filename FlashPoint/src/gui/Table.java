@@ -2125,4 +2125,8 @@ public class Table {
 		public boolean sendPlaceVehicleRequest(int direction, Vehicle type) {
 			return clientManager.placeVehicleRequest(direction, type);
 		}
+		
+		public boolean sendRideRequests(Vehicle type) {
+			return clientManager.sendRideRequests(type);
+		}
 }

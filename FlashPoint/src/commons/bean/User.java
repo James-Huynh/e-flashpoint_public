@@ -37,6 +37,8 @@ public class User implements Serializable {
     private TextMessage message;
     private int vehicleIndex;
     private Vehicle vehicleType;
+    private Vehicle ridingObject;
+    
     private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public Integer getId() {
 		return id;
@@ -205,6 +207,14 @@ public class User implements Serializable {
 
 	public void setVehicleType(Vehicle vehicleType) {
 		this.vehicleType = vehicleType;
+	}
+
+	public Vehicle getRidingObject() {
+		return ridingObject;
+	}
+
+	public void setRidingObject(Vehicle ridingObject) {
+		this.ridingObject = ridingObject;
 	}
 
 //	public int getImg() {

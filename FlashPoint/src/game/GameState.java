@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -60,6 +61,7 @@ public class GameState implements Serializable {
 	protected ArrayList<Speciality> freeSpecialities;
 	protected ArrayList<Hazmat> lostHazmat;
 	protected ArrayList<Hazmat> disposedHazmat;
+	protected HashMap<Firefighter, Boolean> rideMapper; //For Ride in Experienced Mode
 
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
 	protected boolean experiencedMode;
@@ -154,7 +156,12 @@ public class GameState implements Serializable {
 		this.disposedHazmat = new ArrayList<Hazmat>();
 		if(lobby.getMode().equals("Experienced")) {
 			this.experiencedMode = true;
-		} else this.experiencedMode = false;
+			rideMapper = new HashMap<Firefighter, Boolean>();
+		} 
+		else {
+			this.experiencedMode = false;
+		}
+		
 		createAmbulances();
 		createEngine();
 		initializeTiles();
@@ -232,6 +239,10 @@ public class GameState implements Serializable {
 
 	public ParkingSpot[] getEngines() {
 		return engines;
+	}
+	
+	public HashMap<Firefighter, Boolean> getRideMapper(){
+		return this.rideMapper;
 	}
 
 	// QUESTION
@@ -462,6 +473,7 @@ public class GameState implements Serializable {
 				tempFirefighter.setPlayer(this.listOfPlayers.get(i));
 				this.listOfPlayers.get(i).setFirefighter(tempFirefighter);
 				this.listOfFirefighters.add(tempFirefighter);
+				this.rideMapper.put(tempFirefighter, false);
 			}
 		}
 	}
@@ -893,6 +905,49 @@ public class GameState implements Serializable {
 		return this.experiencedMode;
 	}
 	
+	public void createFFToAsk(Vehicle type) {
+		
+		if(type == Vehicle.Ambulance) {
+			for(int i=0;i<ambulances.length;i++) {
+				Tile[] placedOn = ambulances[i].getTiles();
+				for(int j=0;j<placedOn.length;i++) {
+					if(placedOn[i].containsFirefighter()) {
+						for(Firefighter f: placedOn[i].getFirefighterList()) {
+							if( f != this.getPlayingFirefighter()) {
+								rideMapper.put(f, true);
+							}
+						}
+					}
+				}
+			}
+		}
+		else {
+			for(int i=0;i<engines.length;i++) {
+				Tile[] placedOn = engines[i].getTiles();
+				for(int j=0;j<placedOn.length;i++) {
+					if(placedOn[i].containsFirefighter()) {
+						for(Firefighter f: placedOn[i].getFirefighterList()) {
+							if( f != this.getPlayingFirefighter()) {
+								rideMapper.put(f, true);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public boolean toDisplayRidePopUp(int myIndex) {
+		return rideMapper.get(listOfFirefighters.get(myIndex)); //Index passed from Table 
+	}
+	
+	//Gets called when pop-up option is selected
+	//A server request needs to happen which will call this method, the output will get sent to all
+	//It needs to happens server side so everyone is updated, and not locally
+	public void setRideOption(boolean val, int myIndex) { //Index passed from Table 
+		rideMapper.put(listOfFirefighters.get(myIndex), val); 
+	}
+	
 	
 	/*
 	 * SAVING
@@ -914,3 +969,10 @@ public class GameState implements Serializable {
 	}
 	
 }
+
+/* next steps :-
+ * Request from in turn player (SENDRIDEREQUEST) is done, output is sent as SENDRIDERECEIVED to everyone with appropriate boolean in rideMapper set
+ * GUI should read rideMapper boolean to display pop up menu
+ * Next step is to, create a request after an option is clicked to call setRideOption and send GS to everyone
+ * A while loop also needs to put in Table so that while(allHaveNotResponded) { //do nothing } once done then Drive.perform();
+ */

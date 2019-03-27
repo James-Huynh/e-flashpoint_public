@@ -1,6 +1,8 @@
 package actions;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import game.GameState;
@@ -9,12 +11,20 @@ import tile.Tile;
 import token.Firefighter;
 import token.Vehicle;
 
+/**
+ * 
+ * @author zaidyahya
+ * For Mat - assume that obtainTravellers() will put only those Firefighters that have said YES to travelling in the 'travellers' attribute
+ * So, just look at the code for moving these travellers and confirm if it works (I did not want to touch it since it is your logic)
+ * For both cases; when in-turn player has called and when in-turn player is riding 
+ */
+
 public class Drive extends Action {
 	
 	private static final long serialVersionUID = 1L;
 	protected int direction; // 1 clockwise -1 anti-clockwise
 	protected boolean moveWith;
-	protected Set<Firefighter> moveWithWho;
+	protected Set<Firefighter> travellers;
 	protected ParkingSpot parking;
 	protected ActionList title = ActionList.Drive;
 	
@@ -62,23 +72,22 @@ public class Drive extends Action {
     	        	}
     	        }
             }
-
-        	/*
-        	 * Once gotten list of Firefighters to travel with -- TO DO
-        	 */
-//        	if (!moveWithWho.isEmpty()) {  
-//        		for (Firefighter f : moveWithWho) {
-//        			int whichOne;
-//        			if (parking.getTiles()[0].equals(f.getCurrentPosition())){
-//        	        	whichOne = 0;
-//        	        }
-//        	        else {
-//        	        	whichOne = 1;
-//        	        }
-//        			f.getCurrentPosition().getFirefighterList().remove(f);
-//        			f.setCurrentLocation(nextAmbulance.getTiles()[whichOne]);
-//        		}
-//        	}
+        	
+        	obtainTravellers(gs);
+        	
+        	if (!travellers.isEmpty()) {  
+        		for (Firefighter f : travellers) {
+        			int whichOne;
+        			if (parking.getTiles()[0].equals(f.getCurrentPosition())){
+        	        	whichOne = 0;
+        	        }
+        	        else {
+        	        	whichOne = 1;
+        	        }
+        			f.getCurrentPosition().getFirefighterList().remove(f);
+        			f.setCurrentLocation(nextAmbulance.getTiles()[whichOne]);
+        		}
+        	}
         }
         else {             //normal driving
             int whichOne;
@@ -114,24 +123,25 @@ public class Drive extends Action {
             currentPosition.getFirefighterList().remove(playingFirefighter);
             playingFirefighter.setCurrentLocation(target);
             
+            obtainTravellers(gs);
             
-//            if (!moveWithWho.isEmpty()) {
-//            	for (Firefighter f : moveWithWho) {
-//            		if (f.getCurrentPosition().equals(currentPosition)){
-//            			f.getCurrentPosition().getFirefighterList().remove(f);
-//            			f.setCurrentPosition(target);
-//            		}
-//            		else {
-//            			f.getCurrentPosition().getFirefighterList().remove(f);
-//            			for (Tile tt : target.getParkingSpot().getTiles()) {
-//            				if (!tt.equals(target)) {
-//            					f.setCurrentLocation(tt);
-//            					break;
-//            				}
-//            			}
-//            		}
-//            	}
-//            }
+            if (!travellers.isEmpty()) {
+            	for (Firefighter f : travellers) {
+            		if (f.getCurrentPosition().equals(currentPosition)){
+            			f.getCurrentPosition().getFirefighterList().remove(f);
+            			f.setCurrentPosition(target);
+            		}
+            		else {
+            			f.getCurrentPosition().getFirefighterList().remove(f);
+            			for (Tile tt : target.getParkingSpot().getTiles()) {
+            				if (!tt.equals(target)) {
+            					f.setCurrentLocation(tt);
+            					break;
+            				}
+            			}
+            		}
+            	}
+            }
             
         }
         
@@ -171,15 +181,16 @@ public class Drive extends Action {
 		return flag;
 	}
 	
-	public void askFirefighters(GameState gs) {
-		for(Firefighter f: gs.getFireFighterList()) {
-			if(f != gs.getPlayingFirefighter()) {
-				//Send Request
-//				if(yes) {
-//					moveWithWho
-//				}
-			}
-		}
+	public void obtainTravellers(GameState gs) {
+		Map<Firefighter, Boolean> rideMap = gs.getRideMapper();
+	    Iterator it = rideMap.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<Firefighter, Boolean> pair = (Map.Entry)it.next();
+	        if(pair.getValue().booleanValue() == true) {
+	        	travellers.add(pair.getKey());
+	        }
+	        it.remove(); // avoids a ConcurrentModificationException, don't know if necessary?
+	    }
 	}
 
 	@Override
