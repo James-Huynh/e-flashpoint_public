@@ -1,6 +1,5 @@
 package test;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.EventQueue;
@@ -11,7 +10,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTextPane;
 
 import custom_panels.ChatBox;
 import custom_panels.LoadGamePanel;
@@ -28,6 +26,7 @@ public class JamesTest {
 	private LoadGamePanel loadGame;
 	private JPanel loadPanel;
 
+	// test
 
 
 	public static void main(String[] args) {
@@ -51,7 +50,7 @@ public class JamesTest {
 		contentPane = mainFrame.getContentPane();
 
 		/////////////
-		loadGame = new LoadGamePanel();
+		loadGame = new LoadGamePanel(null);
 		loadPanel = loadGame.getPnl_main();
 		loadPanel.setLocation(new Point(300, 150));
 		contentPane.add(loadPanel);

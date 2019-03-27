@@ -77,6 +77,10 @@ public class Launcher {
 	private LobbyPanel lobby;
 	private Table table;
 	private clientThread listenerThread;
+
+	// Saving and Loading stuff
+	private String folderPath;
+	
 	
 	//Used by Ben for in game testing. Not permanent.
 	private static GameManager current;
