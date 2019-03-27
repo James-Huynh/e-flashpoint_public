@@ -35,22 +35,15 @@ public class GameSaver {
 		saveObjectByObjectOutput(gs,createFile(filename));
 
 	}
-
-
-
- 
-
-
-
-
-
-    public static File createFile(String name) {
+    
+	public static File createFile(String name) {
         String separator= File.separator;
         String filename=name;
            
         File file=new File(directory,filename);
         if(file.exists()){
-        	 System.out.println("file aleardy exist");
+        	 
+        	System.out.println("file aleardy exist");
             System.out.println("name:"+file.getAbsolutePath());
             System.out.println("size£º"+file.length());
         }
