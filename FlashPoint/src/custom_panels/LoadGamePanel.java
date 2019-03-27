@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-
 public class LoadGamePanel extends JPanel {
 	private JPanel pnl_loadGame;
 	private JLabel lbl_loadGame;
@@ -23,9 +22,15 @@ public class LoadGamePanel extends JPanel {
 	private JLabel entryTest, entry_1, entry_2, entry_3, entry_4, entry_5;
 	private ArrayList<JLabel> listEntries;
 
+	private String[] fileExtensions = new String[]  {"smh"};
+	private File dir;
+	private ArrayList<File> listFiles;
 
 	public LoadGamePanel(final File folder) {
 		setLayout(null);
+
+		listFiles = new ArrayList<File>();
+		this.dir = folder;
 
 		initializePanels();
 		intializeEntries();
@@ -50,7 +55,7 @@ public class LoadGamePanel extends JPanel {
 
 	private void intializeEntries() {
 		textAreaW = pnl_main.getWidth() - 2*textAreaX;
-		
+
 		listEntries = new ArrayList<JLabel>();
 		listEntries.add(entry_1);
 		listEntries.add(entry_2);
@@ -73,7 +78,7 @@ public class LoadGamePanel extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getClickCount() == 2) {
-					entryClicked((JLabel) e.getComponent());
+						entryClicked((JLabel) e.getComponent());
 					}
 				}
 			});
@@ -104,6 +109,17 @@ public class LoadGamePanel extends JPanel {
 		System.out.println(entry.getText());
 
 		// @Eric call loadMethod
+	}
+
+	private void getGameFiles() {
+		String currFileExtension;
+
+		// need to iterate over directory
+//		int i = currFile.lastIndexOf('.');
+//		if (i > 0) {
+//			currFileExtension = currFile.substring(i+1);
+//		}
+		
 	}
 
 	public JPanel getPnl_main() {
