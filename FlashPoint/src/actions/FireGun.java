@@ -111,15 +111,28 @@ public class FireGun extends Action {
 	public boolean validate(GameState gs) {
 		boolean flag = false;
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
+		if(playingFirefighter.getSpeciality() == Speciality.DRIVER ) {
+			driver = true;
+			APcost = 2;
+		}
 		Tile currentPosition = playingFirefighter.getCurrentPosition();
 		if (currentPosition.getParkingSpot() == this.veh && currentPosition.getParkingSpot().getParkingType() == (Vehicle.Engine) 
 				&& currentPosition.getParkingSpot().getCar() == true) {
-			if (playingFirefighter.getAP() >= APcost) {
+			if (playingFirefighter.getAP() >= APcost && noOne(gs)) {
 				flag = true;
 			}
 		}
 		
 		return flag;
+	}
+	
+	public boolean noOne(GameState gs) {
+		for (int i=0; i<quadrantIndices.length; i++) {
+			if(!gs.returnTile(quadrantIndices[i][0], quadrantIndices[i][1]).getFirefighterList().isEmpty()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	@Override
