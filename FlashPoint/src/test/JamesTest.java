@@ -26,9 +26,6 @@ public class JamesTest {
 	private LoadGamePanel loadGame;
 	private JPanel loadPanel;
 
-	// test
-
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

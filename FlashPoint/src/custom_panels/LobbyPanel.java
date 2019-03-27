@@ -293,6 +293,9 @@ public class LobbyPanel extends JPanel {
 		resetLabels();
 		createPlayers();
 		chatBox.refreshChatBox();
+		add(chatBox);
+		
+		
 		
 //		revalidate();
 //		for (int i = 0; i < currPlayerList.size(); i++) {

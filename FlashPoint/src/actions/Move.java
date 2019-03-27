@@ -36,15 +36,19 @@ public class Move extends Action {
     public boolean validate(GameState gs) {
         boolean flag = false;
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        int extraPoints = 0;
+        if (playingFirefighter.getSpeciality() == Speciality.RESCUE_SPECIALIST) {
+        	extraPoints = playingFirefighter.getSP();
+        }
+        
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Edge edge = currentPosition.getEdge(direction);
-        
         Tile neighbour = gs.getNeighbour(currentPosition, direction);
         if(neighbour == null) { //If exterior, this direction isn't valid
         	return false;
         }
         int fire = neighbour.getFire();
-        int aP = playingFirefighter.getAP();
+        int aP = playingFirefighter.getAP() + extraPoints;
         
         if ( edge.isDoor() ) {
         	boolean status = edge.getStatus();
@@ -102,6 +106,24 @@ public class Move extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
+        
+        if (playingFirefighter.getSpeciality() == Speciality.RESCUE_SPECIALIST) {
+        	if (playingFirefighter.getSP() >= APcost) {
+        		playingFirefighter.setSP(playingFirefighter.getSP() - APcost);
+        	}
+        	else if (playingFirefighter.getSP() > 0) {
+        		int difference = APcost - playingFirefighter.getSP();
+        		playingFirefighter.setSP(0);
+        		playingFirefighter.setAP(playingFirefighter.getAP() - difference);
+        	}
+        	else {
+        		playingFirefighter.setAP(aP - this.APcost);
+        	}
+        }
+        else {
+        	playingFirefighter.setAP(aP - this.APcost);
+        }
+        
         playingFirefighter.setAP(aP - this.APcost);
 
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
