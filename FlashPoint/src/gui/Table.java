@@ -861,7 +861,9 @@ public class Table {
 									}
 								} 
 								else {
-									showPopUpMenuWaiting(e.getComponent(), e.getX(), e.getY(), currentBoard);
+									if(clientManager.getUsersGameState().getActiveFireFighterIndex() == -1 && clientManager.getUsersGameState().isExperienced()) {
+										showPopUpMenuVehicle(e.getComponent(), e.getX(), e.getY(), currentBoard);
+									}
 								}
 							}
 						} else if(SwingUtilities.isLeftMouseButton(e)) {
@@ -1789,7 +1791,7 @@ public class Table {
 			}
 			
 			//generates the popUp menu for tiles that don't contain current FF
-			public void showPopUpMenuWaiting(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
+			public void showPopUpMenuVehicle(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 				JPopupMenu popupMenu = new JPopupMenu();
 		        
 		        JMenu placeAmbulance = new JMenu("Place Ambulance");
