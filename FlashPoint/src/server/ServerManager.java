@@ -48,49 +48,11 @@ public class ServerManager {
 	}
 	
 	public void createGame() {
-	/**	if(gameState == null) {
-			System.out.println("ServerManager :- GameState was null and is now set up");
-			gameState = GameState.getInstance();
-			gameState.updateGameStateFromLobby(activeLobby);
-			initializeGameManager();
-			gameState.setListOfPlayers(activeLobby.getPlayers());
-			
-			if(activeLobby.getBoard().equals("Board 1")) {
-				if(activeLobby.getMode().equals("Family")) {
-				gameState.initializeEdges(activeLobby.getTemplate().getEdgeLocations());
-				// we are setting outer doors open!
-				//if exterior door then open the door not implemented!!
-				gameState.openExteriorDoors();
-				gameState.initializePOI(activeLobby.getTemplate().getPOILocations());
-				gameState.initializeFire(activeLobby.getTemplate().getFireLocations());
-				}
-				if(activeLobby.getMode().equals("Experienced")) {
-					if(activeLobby.getDifficulty().equals("Recruit")) initExperiencedGame(3,3);
-					if(activeLobby.getDifficulty().equals("Veteran")) initExperiencedGame(3,4);
-					if(activeLobby.getDifficulty().equals("Heroic")) initExperiencedGame(4,5);
-				}
-				
-				}
-				gameState.setFirefighters();
-			
-			
-			
-			gameState.setActiveFireFighterIndex(-1);
-			System.out.println("active FF index is (3) :- " + gameState.getActiveFireFighterIndex());
-		}
-		testGS.placeFireFighter(onlinePlayers.get(Integer.valueOf(12345)).getFirefighter(), testGS.returnTile(3,0));
-		generateActions();**/
-		
-		/**New Initialization**/
 		if(gameState == null) {
 			initializeGameManager();
 			gameManager.setup();
 			gameState = gameManager.getGameState();
 			gameState.setActiveFireFighterIndex(-1);
-			if(!gameState.isExperienced()) {
-				gameState.setActiveFireFighterIndex(0);
-				generateActions();
-			}
 		}
 		
 	}
@@ -117,10 +79,10 @@ public class ServerManager {
 		gameState.placeFireFighter(onlinePlayers.get(userId).getFirefighter(), gameState.returnTile(coords[0],coords[1]));
 		placedFF++;
 		if(placedFF == gameState.getFireFighterList().size()) {
-			//set the index to the initial player. This trigger the player to be able to view their actions.
-			//testGS.setActiveFireFighterIndex(0);
-//			gameState.setActiveFireFighterIndex(0);
-//			generateActions();
+			if(!gameState.isExperienced()) {
+				gameState.setActiveFireFighterIndex(0);
+				generateActions();
+			}
 		}
 	}
 	
@@ -187,11 +149,6 @@ public class ServerManager {
 	}
 
 	public ArrayList<Lobby> getLobbyList() {
-//		this.activeLobby = new Lobby();
-//		this.activeLobby.setName("FUNTIMES");
-//		Player temp = new Player("hello", "goodbye");
-//		addPlayerToLobby(temp);
-//		this.currentLobbies.add(activeLobby);
 		System.out.println(this.currentLobbies.size());
 		return this.currentLobbies;
 	}

@@ -36,6 +36,7 @@ import javax.swing.border.Border;
 
 import actions.ActionList;
 import client.ClientManager;
+import custom_panels.ChatBox;
 import game.GameState;
 import tile.Tile;
 import token.Colour;
@@ -200,15 +201,18 @@ public class Table {
 			GameState currentBoard;
 			InformationPanel infoPanel;
 			JTextArea chatArea;
+			ChatBox chatBox = new ChatBox(200, 300, clientManager);
+			JPanel chatPanel = chatBox.getPanel_main();
 			RightPanel(GameState updatedBoard){
 				super(new GridLayout(2,1));
 				setPreferredSize(RIGHT_PANEL_DIMENSION);
 				currentBoard = updatedBoard;
-				chatArea = new JTextArea();
-				chatArea.setLineWrap(true);
+				//chatArea = new JTextArea();
+				//chatArea.setLineWrap(true);
 				infoPanel = new InformationPanel(currentBoard);
 				add(infoPanel);
-				add(chatArea);
+				//add(chatArea);
+				add(chatPanel);
 				validate();
 			}
 			public void drawPanel(GameState currentBoard2) {
@@ -307,7 +311,7 @@ public class Table {
 			GameState currentBoard;
 			LostPoiPanel(GameState updatedBoard){
 				super(new BorderLayout());
-				setLayout(new GridLayout(2,2));
+				setLayout(new GridLayout(3,2));
 				this.currentBoard = updatedBoard;
 				setPreferredSize(NORTH_LEFT_PANEL_DIMENSION);
 				getLost();
@@ -333,6 +337,15 @@ public class Table {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
+					}
+				}
+				if(this.currentBoard.getLostHazmat().size() > 0) {
+					int numHZ = this.currentBoard.getLostHazmat().size();
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT"/*_" + numHZ */ + ".gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
 			}
@@ -368,6 +381,15 @@ public class Table {
 						}
 					}
 				}
+				if(this.currentBoard.getDisposedHazmat().size() > 0) {
+					int numHZ = this.currentBoard.getDisposedHazmat().size();
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT"/*_" + numHZ */ + ".gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		
@@ -375,6 +397,7 @@ public class Table {
 			GameState currentBoard;
 			RevealPoiPanel(GameState updatedBoard){
 				super(new BorderLayout());
+				setLayout(new GridLayout(1,2));
 				currentBoard = updatedBoard;
 				setPreferredSize(CENTER_LEFT_PANEL_DIMENSION);
 				getRevealed();
@@ -396,6 +419,15 @@ public class Table {
 					add(new JLabel(new ImageIcon(POIimage)));	
 				} catch (IOException e) {
 					e.printStackTrace();
+				}
+				if(currentBoard.isExperienced()) {
+					int numHS = currentBoard.getHotSpot();
+					try {
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HOTSPOT"/*_"+ num*/ + ".gif"));
+						add(new JLabel(new ImageIcon(POIimage)));	
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
