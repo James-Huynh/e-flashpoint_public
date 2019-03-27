@@ -82,6 +82,10 @@ public class ServerManager {
 			gameManager.setup();
 			gameState = gameManager.getGameState();
 			gameState.setActiveFireFighterIndex(-1);
+			if(!gameState.isExperienced()) {
+				gameState.setActiveFireFighterIndex(0);
+				generateActions();
+			}
 		}
 		
 	}
@@ -121,8 +125,17 @@ public class ServerManager {
 		}
 		else if(type.equals(Vehicle.Engine)) {
 			gameState.getEngines()[direction].setCar(true);
-			gameState.setActiveFireFighterIndex(0);
-			generateActions();
+		}
+		
+		for(int i = 0; i < 4; i++) {
+			if(gameState.getAmbulances()[i].getCar()) {
+				for(int j = 0; j<4; j++) {
+					if(gameState.getEngines()[j].getCar()) {
+						gameState.setActiveFireFighterIndex(0);
+						generateActions();
+					}
+				}
+			}
 		}
 	}
 	

@@ -70,7 +70,7 @@ public class GameManager {
     	gs=ngs;
     	Lobby lobby = new Lobby(); //dumb lobby for now
         
-    	lobby.setCapacity(gs.getnumPlayer());
+    	lobby.setCapacity(gs.getListOfPlayers().size());
     	gs.updateGameStateFromLobby(lobby);
     	setup();
     	doTurns();
