@@ -40,6 +40,7 @@ public class ServerManager {
 		accounts = new HashMap<String,String>();
 		currentLobbies = new ArrayList<Lobby>();
 		accounts.put("Zaid", "apple");
+		accounts.put("me", "aa");
 	}
 	
 	public void createPlayer(String name, String password, Integer ID) {

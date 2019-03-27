@@ -813,28 +813,8 @@ public class GameState implements Serializable {
 			return tile;
 		}
 	}
-
+	
 	/*
-	 * SAVING
-	 */
-
-	@Override
-	public String toString() {
-		return "GameState [remainingVictims=" + remainingVictims + ", remainingFalseAlarms=" + remainingFalseAlarms
-				+ ", wallsDamaged=" + wallsDamaged + ", lostVictims=" + lostVictims + ", savedVictims=" + savedVictims
-				+ ", remainingPoi=" /* + currentPoi */ + ", gameTerminated=" + gameTerminated + ", gameWon=" + gameWon
-				+ ", activeFireFighterIndex=" + activeFireFighterIndex + ", isActiveGame=" + isActiveGame
-				+ ", matEdges=" + Arrays.toString(matEdges) + ", matTiles=" + Arrays.toString(matTiles)
-				+ ", currentTile=" + currentTile + ", availableActions="
-				+ availableActions.stream().map(Object::toString).collect(Collectors.joining(", "))
-				+ ", listOfFireFighter="
-				+ listOfFirefighters.stream().map(Object::toString).collect(Collectors.joining(", "))
-				+ ", MAX_WALL_DMGD=" + MAX_WALL_DMGD + ", poiList="
-				+ poiList.stream().map(Object::toString).collect(Collectors.joining(", ")) + "]";
-	}
-
-	// @James
-	/**
 	 * 
 	 * @param template
 	 */
@@ -911,6 +891,26 @@ public class GameState implements Serializable {
 	
 	public boolean isExperienced() {
 		return this.experiencedMode;
+	}
+	
+	
+	/*
+	 * SAVING
+	 */
+	@Override
+	public String toString() {
+		return "GameState [remainingVictims=" + remainingVictims + ", remainingFalseAlarms=" + remainingFalseAlarms
+				+ ", wallsDamaged=" + wallsDamaged + ", lostVictims=" + lostVictims + ", savedVictims=" + savedVictims
+				+ ", gameTerminated=" + gameTerminated + ", gameWon=" + gameWon + ", activeFireFighterIndex="
+				+ activeFireFighterIndex + ", isActiveGame=" + isActiveGame + ", matEdges=" + Arrays.toString(matEdges)
+				+ ", matTiles=" + Arrays.toString(matTiles) + ", engines=" + Arrays.toString(engines) + ", ambulances="
+				+ Arrays.toString(ambulances) + ", advFireString=" + advFireString + ", currentTile=" + currentTile
+				+ ", availableActions=" + availableActions + ", listOfPlayers=" + listOfPlayers
+				+ ", listOfFirefighters=" + listOfFirefighters + ", MAX_WALL_DMGD=" + MAX_WALL_DMGD + ", poiList="
+				+ poiList + ", lostVictimsList=" + lostVictimsList + ", savedVictimsList=" + savedVictimsList
+				+ ", revealedFalseAlarmsList=" + revealedFalseAlarmsList + ", freeSpecialities=" + freeSpecialities
+				+ ", lostHazmat=" + lostHazmat + ", disposedHazmat=" + disposedHazmat + ", remainingHotSpots="
+				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + "]";
 	}
 	
 }
