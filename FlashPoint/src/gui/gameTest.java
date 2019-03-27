@@ -133,7 +133,7 @@ public static void main(String[] args) {
 		}else {
 			temp.setAP(AP + 4);
 		}
-		current.advanceFire();
+		current.advanceFire(false);
 		table.showAdvanceFireString(current.getAdvFireMessage());
 		if(tester.isGameWon()) {
 			table.showGameTermination();
