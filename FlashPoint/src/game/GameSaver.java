@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.io.InputStreamReader;
-
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 
 import game.GameState;
@@ -27,17 +27,55 @@ public class GameSaver {
 	 * 
 	 * @throws IOException
 	 */
-	private static String path = "D:/";
-	private static String filenameTemp;
 
+	private static String filename="save01";
+	private static String directory="D:\\save";
 	public  void start(GameState gs) throws IOException {
-		GameSaver.creatTxtFile("save01");
-		GameSaver.writeTxtFile("save01", gs);
+		
+		saveObjectByObjectOutput(gs,createFile(filename));
 
 	}
 
 
 
+ 
+
+
+
+
+
+    public static File createFile(String name) {
+        String separator= File.separator;
+        String filename=name;
+           
+        File file=new File(directory,filename);
+        if(file.exists()){
+        	 System.out.println("file aleardy exist");
+            System.out.println("name:"+file.getAbsolutePath());
+            System.out.println("size£º"+file.length());
+        }
+        else {
+   
+        	file.getParentFile().mkdirs();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+   return file;
+    }
+
+
+	public static void saveObjectByObjectOutput(Object o, File file) {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
+            objectOutputStream.writeObject(o);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 	/**
@@ -46,18 +84,7 @@ public class GameSaver {
 	 * @throws IOException
 	 */
 
-	public static boolean creatTxtFile(String name) throws IOException {
-		boolean flag = false;
-		
-		filenameTemp = path + name + ".txt";
-		File filename = new File(filenameTemp);
-		if (!filename.exists()) {
-			filename.createNewFile();
-			flag = true;
-		}
-		return flag;
-
-	}
+	
 
 
 
@@ -75,107 +102,6 @@ public class GameSaver {
 
 	 */
 
-	public static boolean writeTxtFile(String newStr, GameState gs) throws IOException {
-
-
-
-		boolean flag = false;
-
-
-
-		String temp = "";
-
-
-
-		FileInputStream fis = null;
-
-		InputStreamReader isr = null;
-
-		BufferedReader br = null;
-
-
-
-		FileOutputStream fos = null;
-
-		PrintWriter pw = null;
-
-		try {
-
-
-
-			File file = new File(filenameTemp);
-			//
-			//			
-			//
-			//				fis = new FileInputStream(file);
-			//
-			//				isr = new InputStreamReader(fis);
-			//
-			//				br = new BufferedReader(isr);
-			//
-			//				StringBuffer buf = new StringBuffer();
-			//
-			//	 
-			//
-			//			
-			//
-			//				for (int j = 1; (temp = br.readLine()) != null; j++) {
-			//
-			//					buf = buf.append(temp);
-			//
-			//				
-			//
-			//					buf = buf.append(System.getProperty("line.separator"));
-			//
-			//				}
-			//
-			//				buf.append(filein);
-
-
-
-
-			fos = new FileOutputStream(file);
-
-			pw = new PrintWriter(fos);
-
-			pw.write(gs.toString().toCharArray());
-
-			pw.flush();
-
-			flag = true;
-
-		} catch (IOException e1) {
-
-
-
-			throw e1;
-
-		} finally {
-
-			if (pw != null) {
-
-				pw.close();
-
-			}
-
-			if (fos != null) {
-
-				fos.close();
-
-			}
-
-			if (br != null) {
-				br.close();
-			}
-			if (isr != null) {
-				isr.close();
-			}
-			if (fis != null) {
-				fis.close();
-			}
-		}
-		return flag;
-	}
 
 
 
