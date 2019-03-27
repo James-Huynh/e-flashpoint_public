@@ -861,7 +861,7 @@ public class Table {
 									}
 								} 
 								else {
-									if(clientManager.getUsersGameState().getActiveFireFighterIndex() == -1 && clientManager.getUsersGameState().isExperienced()) {
+									if(clientManager.getUsersGameState().getActiveFireFighterIndex() == -1 && clientManager.getUsersGameState().isExperienced() && getMyIndex() == 0) {
 										showPopUpMenuVehicle(e.getComponent(), e.getX(), e.getY(), currentBoard);
 									}
 								}
