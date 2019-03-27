@@ -174,6 +174,16 @@ public class Launcher {
 		final JMenu fileMenu = new JMenu("File");
 
 		final JMenuItem saveMenuItem = new JMenuItem("Save");
+		saveMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(sendSaveGameRequest()) {
+					System.out.println("this is the print that board is refreshing");
+				}
+			}
+		});
+		
+		
 		fileMenu.add(saveMenuItem);
 
 		final JMenuItem exitMenuItem = new JMenuItem("Exit");
@@ -454,6 +464,10 @@ public class Launcher {
 	
 	public void updateGameState(GameState updated) {
 		this.tester = updated;
+	}
+	
+	public boolean sendSaveGameRequest() {
+		return clientManager.saveGameRequest();
 	}
 	
 	public static Client getClient() {

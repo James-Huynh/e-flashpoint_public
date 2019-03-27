@@ -255,6 +255,16 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameStateEnd);
 				}
 				break;
+			case SAVEGAME:
+				System.out.println("save game");
+				returnObject = new TranObject<User>(TranObjectType.ENDTURNSUCCESS);
+				requestObject = (User) read_tranObject.getObject();
+				//@CAO this is where you would save the game state
+				serverManager.saveGame();
+				
+				returnObject.setObject(requestObject);
+				out.setMessage(returnObject);
+				break;
 			case MESSAGE:
 				
 				

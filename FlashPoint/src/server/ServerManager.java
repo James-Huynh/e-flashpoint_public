@@ -222,4 +222,8 @@ public class ServerManager {
 		gameState.setAdvFireString(gameManager.getAdvFireMessage());
 	}
 	
+	public void saveGame() {
+		//@eric take the current game state and save it here
+	}
+	
 }

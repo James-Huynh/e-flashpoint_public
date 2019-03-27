@@ -443,6 +443,13 @@ public class ClientManager {
 //		}
 		return true;
 	}
+	
+	public boolean saveGameRequest() {
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SAVEGAME);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
+	}
 
 	public boolean getEndTurnTrigger() {
 		return endTurnTrigger;
