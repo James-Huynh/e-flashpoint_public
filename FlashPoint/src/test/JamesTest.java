@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.EventQueue;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -24,6 +25,8 @@ public class JamesTest {
 	private int popMenuY = 200;
 	private int panelX = 500;
 	private int panelY = 200;
+	private LoadGamePanel loadGame;
+	private JPanel loadPanel;
 
 
 
@@ -38,7 +41,7 @@ public class JamesTest {
 			}
 		});
 	}
-	
+
 	public JamesTest() {
 		mainFrame = new JFrame();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,25 +49,14 @@ public class JamesTest {
 		mainFrame.getContentPane().setLayout(null);
 		mainFrame.setVisible(true);
 		contentPane = mainFrame.getContentPane();
-		
+
 		/////////////
-		LoadGamePanel loadPanel = new LoadGamePanel();
-		mainFrame.getContentPane().add(loadPanel);
-		loadPanel.setVisible(true);
-		loadPanel.setLayout(null);
-		//////////////
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setForeground(Color.YELLOW);
-		panel_1.setBounds(233, 222, 270, 331);
-		mainFrame.getContentPane().add(panel_1);
-		panel_1.setLayout(null);
-		
-		JTextPane txtpnAlpha = new JTextPane();
-		txtpnAlpha.setText("Alpha");
-		txtpnAlpha.setBounds(0, 159, 270, 26);
-		panel_1.add(txtpnAlpha);
-		
+		loadGame = new LoadGamePanel();
+		loadPanel = loadGame.getPnl_main();
+		loadPanel.setLocation(new Point(300, 150));
+		contentPane.add(loadPanel);
+
+
 		//testChat = new ChatBox(0, 0, null);
 		//chatBoxPanel = testChat.getPanel_main();
 		//chatBoxPanel.setLocation(100, 100);
