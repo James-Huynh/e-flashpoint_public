@@ -13,6 +13,7 @@ import edge.Edge;
 import tile.ParkingSpot;
 import tile.Tile;
 import token.Firefighter;
+import token.Hazmat;
 import token.Speciality;
 import token.POI;
 import token.Vehicle;
@@ -57,6 +58,8 @@ public class GameState implements Serializable {
 	protected ArrayList<POI> savedVictimsList;
 	protected ArrayList<POI> revealedFalseAlarmsList;
 	protected ArrayList<Speciality> freeSpecialities;
+	protected ArrayList<Hazmat> lostHazmat;
+	protected ArrayList<Hazmat> disposedHazmat;
 
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
 	protected boolean experiencedMode;
@@ -147,6 +150,8 @@ public class GameState implements Serializable {
 		this.savedVictimsList = new ArrayList<POI>();
 		this.freeSpecialities = new ArrayList<Speciality>();
 		this.remainingHotSpots = 0;
+		this.lostHazmat = new ArrayList<Hazmat>();
+		this.disposedHazmat = new ArrayList<Hazmat>();
 		if(lobby.getMode().equals("Experienced")) {
 			this.experiencedMode = true;
 		} else this.experiencedMode = false;
@@ -345,7 +350,23 @@ public class GameState implements Serializable {
 		// TODO Auto-generated method stub
 		this.revealedFalseAlarmsList.add(inputPOI);
 	}
+	
+	public void addDisposedHazmat(Hazmat h){
+		this.disposedHazmat.add(h);
+	}
+	
+	public void addLostHazmat(Hazmat h){
+		this.lostHazmat.add(h);
+	}
 
+	public ArrayList<Hazmat> getDisposedHazmat(){
+		return this.disposedHazmat;
+	}
+	
+	public ArrayList<Hazmat> getLostHazmat(){
+		return this.lostHazmat;
+	}
+	
 	public void setIsActiveGame(boolean isActiveGame) {
 		this.isActiveGame = isActiveGame;
 	}
