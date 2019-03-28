@@ -2495,7 +2495,7 @@ public class Table {
 				for(Firefighter f : clientManager.getUsersGameState().getFireFighterList()) {
 					if(f.getSpeciality() == null) flag = false;
 				}
-				if(flag) {
+				if(flag || myIndex == 0) {
 					JMenuItem start = new JMenuItem("End Selection");
 					
 					start.addActionListener(new ActionListener() {
