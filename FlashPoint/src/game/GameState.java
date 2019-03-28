@@ -157,6 +157,17 @@ public class GameState implements Serializable {
 		if(lobby.getMode().equals("Experienced")) {
 			this.experiencedMode = true;
 			rideMapper = new HashMap<Firefighter, Boolean>();
+			this.freeSpecialities.add(Speciality.CAFS);
+			this.freeSpecialities.add(Speciality.CAPTAIN);
+			this.freeSpecialities.add(Speciality.DOG);
+			this.freeSpecialities.add(Speciality.DRIVER);
+			this.freeSpecialities.add(Speciality.GENERALIST);
+			this.freeSpecialities.add(Speciality.HAZMAT_TECHNICIAN);
+			this.freeSpecialities.add(Speciality.IMAGING_TECHNICIAN);
+			this.freeSpecialities.add(Speciality.PARAMEDIC);
+			this.freeSpecialities.add(Speciality.RESCUE_SPECIALIST);
+			this.freeSpecialities.add(Speciality.VETERAN);
+			
 		} 
 		else {
 			this.experiencedMode = false;

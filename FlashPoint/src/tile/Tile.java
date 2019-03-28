@@ -40,6 +40,7 @@ public class Tile implements Serializable{
         poiList = new ArrayList<POI>();
         hazmatList = new ArrayList<Hazmat>();
         listOfFirefighters = new ArrayList<Firefighter>();
+        this.pointerParkingSpot = null;
     }
 
     /*
