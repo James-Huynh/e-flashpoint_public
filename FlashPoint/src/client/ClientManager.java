@@ -12,6 +12,8 @@ import game.BoardOne;
 import game.GameState;
 import gui.Launcher;
 import lobby.Lobby;
+import token.Firefighter;
+import token.Speciality;
 import token.Vehicle;
 import chat.ChatMsgEntity;
 import java.util.ArrayList;
@@ -134,7 +136,14 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				mDataArrays=(requestObject.getChatArray());
 				Collections.reverse(mDataArrays);
+				break;
 				//launcher.refreshLobby();		// James
+			
+			case SPECIALITYSELECTED:
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				startGameFlag = 1;
+				flag = true;
+				break;
 			}
 			
 		
@@ -545,5 +554,15 @@ public class ClientManager {
 //		}
 		
 		return flag;
+	}
+
+	public boolean sendSpecialitySelectionRequest(Speciality s) {
+		// TODO Auto-generated method stub
+		requestObject.setDesiredSpeciality(s);
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SPECIALITYSELECTREQUEST);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
 	} 
 }
