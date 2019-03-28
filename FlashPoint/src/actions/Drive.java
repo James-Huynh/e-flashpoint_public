@@ -3,6 +3,7 @@ package actions;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import game.GameState;
@@ -181,15 +182,16 @@ public class Drive extends Action {
 		return flag;
 	}
 	
+	//Mat: all good! but where/how do you set the value for gs.rideMap?
 	public void obtainTravellers(GameState gs) {
 		Map<Firefighter, Boolean> rideMap = gs.getRideMapper();
-	    Iterator it = rideMap.entrySet().iterator();
+	    Iterator<Entry<Firefighter, Boolean>> it = rideMap.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry<Firefighter, Boolean> pair = (Map.Entry)it.next();
+	        Map.Entry<Firefighter, Boolean> pair = it.next();
 	        if(pair.getValue().booleanValue() == true) {
 	        	travellers.add(pair.getKey());
 	        }
-	        it.remove(); // avoids a ConcurrentModificationException, don't know if necessary?
+	        it.remove(); // avoids a ConcurrentModificationException, don't know if necessary? -Mat: garbage collector, don't worry
 	    }
 	}
 

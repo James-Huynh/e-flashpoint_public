@@ -905,6 +905,7 @@ public class GameState implements Serializable {
 		return this.experiencedMode;
 	}
 	
+	//so this method put all relevant FF to the map right? when we change if they don't want to ride?
 	public void createFFToAsk(Vehicle type) {
 		
 		if(type == Vehicle.Ambulance) {
