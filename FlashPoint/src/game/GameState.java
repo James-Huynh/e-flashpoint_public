@@ -949,6 +949,18 @@ public class GameState implements Serializable {
 		}
 	}
 	
+	public void removeSelectedSpeciality(Speciality desiredSpeciality) {
+		this.freeSpecialities.remove(desiredSpeciality);
+		
+	}
+	
+	public void addFreedSpeciality(Speciality freedSpeciality) {
+		if(!this.freeSpecialities.contains(freedSpeciality)) {
+			this.freeSpecialities.add(freedSpeciality);
+		}
+	}
+	
+	
 	public boolean toDisplayRidePopUp(int myIndex) {
 		return rideMapper.get(listOfFirefighters.get(myIndex)); //Index passed from Table 
 	}
@@ -979,6 +991,8 @@ public class GameState implements Serializable {
 				+ ", lostHazmat=" + lostHazmat + ", disposedHazmat=" + disposedHazmat + ", remainingHotSpots="
 				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + "]";
 	}
+
+	
 	
 }
 

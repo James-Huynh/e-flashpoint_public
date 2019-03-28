@@ -21,6 +21,7 @@ import lobby.Lobby;
 import managers.GameManager;
 import tile.Tile;
 import token.Firefighter;
+import token.Speciality;
 import token.Vehicle;
 
 public class ServerManager {
@@ -235,6 +236,27 @@ public class ServerManager {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void setSpeciality(String name, Speciality desiredSpeciality) {
+		int count = 0;
+		if(gameState.getFreeSpecialities().contains(desiredSpeciality)) {
+			for(Player p: gameState.getListOfPlayers()) {
+				if(p.getUserName().equals(name)) {
+					if(gameState.getFireFighterList().get(count).getSpeciality()!=null) {
+						gameState.addFreedSpeciality(gameState.getFireFighterList().get(count).getSpeciality());
+						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
+						gameState.removeSelectedSpeciality(desiredSpeciality);
+					}else {
+						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
+						gameState.removeSelectedSpeciality(desiredSpeciality);
+					}
+					
+					count++;
+				}
+			}
+		}
+		
 	}
 	
 }

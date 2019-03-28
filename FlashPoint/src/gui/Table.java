@@ -77,7 +77,7 @@ public class Table {
 		private Popup gameTermination;
 		private static boolean placing = true;
 		private static boolean playing = true;
-		private static boolean selectingSpeciality = false;
+		private static boolean selectingSpeciality = true;
 		private ClientManager clientManager;
 		private Launcher launcher;
 		private int myIndex = 7;
@@ -249,8 +249,12 @@ public class Table {
 				for(int i = 0; i<this.currentBoard.getFireFighterList().size(); i++) {
 					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
 					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() /*+ "  Saved Ap: " + currentFF.getSavedAP()*/);
-					if(1 == 2 /*currentBoard.mode == advanced*/) {
-						//playerInfo = playerInfo + "Specialty: "+ currentFF.getSpeciality.toString();
+					if(clientManager.getUsersGameState().isExperienced()) {
+						if(currentFF.getSpeciality() == null) {
+							playerInfo = playerInfo + " Specialty: unselcted";
+						}else {
+							playerInfo = playerInfo + " Specialty: "+ currentFF.getSpeciality();
+						}
 					}
 					
 					String inputString;
@@ -2646,7 +2650,6 @@ public class Table {
 		}
 		
 		private boolean sendSpecialitySelectionRequest(Speciality s) {
-			return true;
-			//return clientManager.sendSpecialitySelectionRequest(s);
+			return clientManager.sendSpecialitySelectionRequest(s);
 		}
 }

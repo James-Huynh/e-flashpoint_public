@@ -8,6 +8,7 @@ import chat.ChatMsgEntity;
 import game.GameState;
 import lobby.Lobby;
 import tile.Tile;
+import token.Speciality;
 import token.Vehicle;
 
 
@@ -38,6 +39,7 @@ public class User implements Serializable {
     private int vehicleIndex;
     private Vehicle vehicleType;
     private Vehicle ridingObject;
+    private Speciality desiredSpeciality;
     
     private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public Integer getId() {
@@ -215,6 +217,16 @@ public class User implements Serializable {
 
 	public void setRidingObject(Vehicle ridingObject) {
 		this.ridingObject = ridingObject;
+	}
+
+	public void setDesiredSpeciality(Speciality s) {
+		// TODO Auto-generated method stub
+		this.desiredSpeciality = s;
+		
+	}
+	
+	public Speciality getDesiredSpeciality() {
+		return this.desiredSpeciality;
 	}
 
 //	public int getImg() {

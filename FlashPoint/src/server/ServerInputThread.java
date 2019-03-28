@@ -291,6 +291,16 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameState);
 				}
 				break;
+			case SPECIALITYSELECTREQUEST:
+				System.out.println("Vehicle placement request");
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.setSpeciality(requestObject.getName(), requestObject.getDesiredSpeciality() );
+				returnGameState = new TranObject<GameState>(TranObjectType.SPECIALITYSELECTED);
+				returnGameState.setObject(serverManager.getGameState());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
+				break;
 			case LOGOUT:
 				User logoutUser = (User) read_tranObject.getObject();
 				int offId = logoutUser.getId();
