@@ -49,6 +49,11 @@ public class Change extends Action {
 	}
 	
 	@Override
+	public Speciality getToSpecialty() {
+		return this.toSpeciality;
+	}
+	
+	@Override
 	public String toString() {
 		return "Change [toSpeciality=" + toSpeciality + ", title=" + title + ", APcost=" + APcost + ", direction="
 				+ direction + "]";

@@ -3,6 +3,7 @@ package actions;
 import java.io.Serializable;
 
 import game.GameState;
+import token.Speciality;
 
 /**
  * Action class definition.
@@ -56,5 +57,9 @@ public abstract class Action implements Serializable {
     	a.getAvailableActions().add(this);
         return true;
     }
+	public Speciality getToSpecialty() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
