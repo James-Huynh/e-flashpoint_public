@@ -159,6 +159,35 @@ public class Firefighter extends Token {
 	
 	public void setSpeciality (Speciality speciality) {
 		this.speciality = speciality;
+		if (speciality == Speciality.CAPTAIN) {
+			this.AP = 4;
+			this.SP = 2;
+			
+		}
+		else if (speciality == Speciality.CAFS) {
+			this.AP = 3;
+			this.SP = 3;
+		}
+		else if (speciality == Speciality.GENERALIST) {
+			this.AP = 5;
+			this.SP = 0;
+		}
+		else if (speciality == Speciality.RESCUE_SPECIALIST) {
+			this.AP = 4;
+			this.SP = 3;
+		}
+		else if (speciality == Speciality.DOG) {
+			this.AP = 12;
+			this.SP = 0;
+		}
+		else if (speciality == Speciality.VETERAN) {
+			this.AP = 4; //?
+			this.SP = 0; //?
+		}
+		else {
+			this.AP = 4;
+			this.SP = 0;
+		}
 	}
 	
 	public void setSP(int SP) {
