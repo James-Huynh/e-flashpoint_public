@@ -292,10 +292,20 @@ public class ServerInputThread extends Thread {
 				}
 				break;
 			case SPECIALITYSELECTREQUEST:
-				System.out.println("Vehicle placement request");
+				System.out.println("Speciality selection request");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setSpeciality(requestObject.getName(), requestObject.getDesiredSpeciality() );
 				returnGameState = new TranObject<GameState>(TranObjectType.SPECIALITYSELECTED);
+				returnGameState.setObject(serverManager.getGameState());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
+				break;
+			case SELECTENDREQUEST:
+				System.out.println("Speciality end request");
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.setSpecialitySelecting(false);
+				returnGameState = new TranObject<GameState>(TranObjectType.SPECIALITYENDSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnGameState);

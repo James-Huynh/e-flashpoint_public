@@ -65,6 +65,7 @@ public class GameState implements Serializable {
 
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
 	protected boolean experiencedMode;
+	protected boolean specialitySelecting;
 	
 	
 	private static final long serialVersionUID = 1L; // serialization
@@ -167,10 +168,12 @@ public class GameState implements Serializable {
 			this.freeSpecialities.add(Speciality.PARAMEDIC);
 			this.freeSpecialities.add(Speciality.RESCUE_SPECIALIST);
 			this.freeSpecialities.add(Speciality.VETERAN);
+			this.specialitySelecting = true;
 			
 		} 
 		else {
 			this.experiencedMode = false;
+			this.specialitySelecting = false;
 		}
 		
 		createAmbulances();
@@ -484,7 +487,10 @@ public class GameState implements Serializable {
 				tempFirefighter.setPlayer(this.listOfPlayers.get(i));
 				this.listOfPlayers.get(i).setFirefighter(tempFirefighter);
 				this.listOfFirefighters.add(tempFirefighter);
-				this.rideMapper.put(tempFirefighter, false);
+				if(this.isExperienced()) {
+					this.rideMapper.put(tempFirefighter, false);
+				}
+				
 			}
 		}
 	}
@@ -990,6 +996,16 @@ public class GameState implements Serializable {
 				+ ", revealedFalseAlarmsList=" + revealedFalseAlarmsList + ", freeSpecialities=" + freeSpecialities
 				+ ", lostHazmat=" + lostHazmat + ", disposedHazmat=" + disposedHazmat + ", remainingHotSpots="
 				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + "]";
+	}
+
+	public void setSpecialitySelecting(boolean b) {
+		this.specialitySelecting = b;
+		
+	}
+	
+	public boolean getSpecialitySelecting() {
+		return this.specialitySelecting;
+		
 	}
 
 	

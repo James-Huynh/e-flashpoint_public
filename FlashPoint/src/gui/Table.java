@@ -77,7 +77,7 @@ public class Table {
 		private Popup gameTermination;
 		private static boolean placing = true;
 		private static boolean playing = true;
-		private static boolean selectingSpeciality = true;
+		private static boolean selectingSpeciality;
 		private ClientManager clientManager;
 		private Launcher launcher;
 		private int myIndex = 7;
@@ -107,6 +107,7 @@ public class Table {
 			this.clientManager = updatedClientManager;
 			this.launcher = launcher;
 			this.listenerThread = myThread;
+			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
 				if(updatedClientManager.getUserName().equals(f.getOwner().getUserName())) {
@@ -152,6 +153,7 @@ public class Table {
 //			this.playing = playingchange;
 //			this.placing = placingchange;
 			this.gameTiles = newBoard.getMatTiles();
+			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
 //			boardPanel.drawBoard(newBoard);
 //			rightPanel.drawPanel(newBoard);
 //			leftPanel.drawPanel(newBoard);
@@ -2489,6 +2491,25 @@ public class Table {
 					specialityMenu.add(info);
 				}
 				
+				boolean flag = true;
+				for(Firefighter f : clientManager.getUsersGameState().getFireFighterList()) {
+					if(f.getSpeciality() == null) flag = false;
+				}
+				if(flag) {
+					JMenuItem start = new JMenuItem("End Selection");
+					
+					start.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendSelectionEndRequest()) {
+							}
+						}
+
+						
+					});
+					specialityMenu.add(start);
+				}
+				
 				popupMenu.add(specialityMenu);
 				popupMenu.show(component, x, y);
 			}
@@ -2651,5 +2672,9 @@ public class Table {
 		
 		private boolean sendSpecialitySelectionRequest(Speciality s) {
 			return clientManager.sendSpecialitySelectionRequest(s);
+		}
+		
+		private boolean sendSelectionEndRequest() {
+			return clientManager.sendSelectionEndRequest();
 		}
 }

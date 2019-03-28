@@ -258,5 +258,10 @@ public class ServerManager {
 		}
 		
 	}
+
+	public void setSpecialitySelecting(Boolean b) {
+		gameState.setSpecialitySelecting(b);
+		
+	}
 	
 }

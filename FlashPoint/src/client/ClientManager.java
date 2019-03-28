@@ -144,6 +144,11 @@ public class ClientManager {
 				startGameFlag = 1;
 				flag = true;
 				break;
+			case SPECIALITYENDSUCCESS:
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				startGameFlag = 1;
+				flag = true;
+				break;
 			}
 			
 		
@@ -561,6 +566,13 @@ public class ClientManager {
 		requestObject.setDesiredSpeciality(s);
 		
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SPECIALITYSELECTREQUEST);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
+	}
+
+	public boolean sendSelectionEndRequest() {
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SELECTENDREQUEST);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;
