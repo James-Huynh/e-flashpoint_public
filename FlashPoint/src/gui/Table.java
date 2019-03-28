@@ -42,6 +42,7 @@ import tile.Tile;
 import token.Colour;
 import token.Firefighter;
 import token.POI;
+import token.Speciality;
 import token.Vehicle;
 
 public class Table {
@@ -76,6 +77,7 @@ public class Table {
 		private Popup gameTermination;
 		private static boolean placing = true;
 		private static boolean playing = true;
+		private static boolean selectingSpeciality = false;
 		private ClientManager clientManager;
 		private Launcher launcher;
 		private int myIndex = 7;
@@ -201,7 +203,7 @@ public class Table {
 			GameState currentBoard;
 			InformationPanel infoPanel;
 			JTextArea chatArea;
-			ChatBox chatBox = new ChatBox(200, 300, clientManager);
+			ChatBox chatBox = new ChatBox(300, 350, clientManager);
 			JPanel chatPanel = chatBox.getPanel_main();
 			RightPanel(GameState updatedBoard){
 				super(new GridLayout(2,1));
@@ -879,7 +881,12 @@ public class Table {
 						if(SwingUtilities.isRightMouseButton(e)) {
 							//brings up menu
 							int[] check;
-							if(placing) {
+							if(selectingSpeciality) {
+								if(connectedTile.getCoords()[0] == 0 || connectedTile.getCoords()[1] == 0 || connectedTile.getCoords()[0] == 7 || connectedTile.getCoords()[1] == 9) {
+									showPopUpMenuSpeciality(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
+								}
+							}
+							else if(placing) {
 								if(connectedTile.getCoords()[0] == 0 || connectedTile.getCoords()[1] == 0 || connectedTile.getCoords()[0] == 7 || connectedTile.getCoords()[1] == 9) {
 									showPopUpMenuPlace(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
 								}
@@ -1052,7 +1059,7 @@ public class Table {
 				JPopupMenu popupMenu = new JPopupMenu();
 				Set<actions.Action> currentActions = currentBoard.getAvailableActions();
 				
-				boolean moveCheck = false, moveWVCheck = false, completeCheck = false, toSmokeCheck = false, oneChopCheck = false, twoChopCheck = false, doorCheck = false;
+				boolean moveCheck = false, moveWVCheck = false, completeCheck = false, toSmokeCheck = false, oneChopCheck = false, twoChopCheck = false, doorCheck = false; 
 				
 				JMenu moveMenu = new JMenu("Move");
 			    JMenu extinguishMenu = new JMenu("Extinguish"); 
@@ -1064,6 +1071,20 @@ public class Table {
 			    JMenu handleMenu = new JMenu("Toggle Door");
 			    JMenu finishMenu = new JMenu("finish");
 			    JMenu moveWithVictimMenu = new JMenu("Move With Victim");
+			    
+			  //advanced
+			    boolean changeCheck = false, driveCheck = false, commandCheck = false, firedeckCheck = false, flipPOICheck = false, moveWithHazmatCheck = false, pickCheck =false, dropCheck = false, disposeCheck = false, healCheck = false;
+			    
+			    JMenu changeMenu = new JMenu("Crew Change");
+			    JMenu commandMenu = new JMenu("Command");
+			    JMenu fireDeckGunMenu = new JMenu("Fire deck gun");
+			    JMenu driveMenu = new JMenu("Drive");
+			    JMenu flipPOIMenu = new JMenu("Identify");
+			    JMenu moveWithHazmatMenu = new JMenu("Move With Hazmat");
+			    JMenu pickMenu = new JMenu("Pick Up");
+			    JMenu dropMenu = new JMenu("Drop");
+			    JMenu disposeMenu = new JMenu("Crew Change");
+			    JMenu healMenu = new JMenu("Crew Change");
 		        
 			    for(actions.Action a: currentActions) {
 			    	ActionList actionTitle = a.getTitle();
@@ -1071,357 +1092,528 @@ public class Table {
 			    	JMenuItem newAction;
 			    	int APCost = a.getCost();
 			    	if(actionTitle == ActionList.Chop) {
-			    		if(APCost == 2) {
-			    			if(a.getDirection() == 0) {
-				    			builder = "Left, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-											
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    					
-				    				}
-				    			});
-				    	        onceMenu.add(newAction);
-				    	        oneChopCheck = true;
-				    			
-				    		} else if(a.getDirection() == 1) {
-				    			builder = "Up, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        onceMenu.add(newAction);
-				    	        oneChopCheck = true;
-				    			
-				    		} else if(a.getDirection() == 2) {
-				    			builder = "Right, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        onceMenu.add(newAction);
-				    	        oneChopCheck = true;
-				    			
-				    		} else if(a.getDirection() == 3) {
-				    			builder = "Down, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        onceMenu.add(newAction);
-				    	        oneChopCheck = true;
-				    			
-				    		} 
-			    		} else if(APCost == 4) {
-			    			if(a.getDirection() == 0) {
-				    			builder = "Left, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        twiceMenu.add(newAction);
-				    	        twoChopCheck = true;
-				    			
-				    		} else if(a.getDirection() == 1) {
-				    			builder = "Up, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        twiceMenu.add(newAction);
-				    	        twoChopCheck = true;
-				    			
-				    		} else if(a.getDirection() == 2) {
-				    			builder = "Right, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        twiceMenu.add(newAction);
-				    	        twoChopCheck = true;
-				    			
-				    		} else if(a.getDirection() == 3) {
-				    			builder = "Down, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        twiceMenu.add(newAction);
-				    	        twoChopCheck = true;
-				    			
-				    		} 
+			    		if(clientManager.getUsersGameState().getPlayingFirefighter().getSpeciality() == Speciality.RESCUE_SPECIALIST) {
+			    			if(APCost == 1) {
+				    			if(a.getDirection() == 0) {
+					    			builder = "Left, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+					    					}
+					    					
+					    				}
+					    			});
+					    	        onceMenu.add(newAction);
+					    	        oneChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 1) {
+					    			builder = "Up, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        onceMenu.add(newAction);
+					    	        oneChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 2) {
+					    			builder = "Right, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        onceMenu.add(newAction);
+					    	        oneChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 3) {
+					    			builder = "Down, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        onceMenu.add(newAction);
+					    	        oneChopCheck = true;
+					    			
+					    		} 
+				    		} else if(APCost == 2) {
+				    			if(a.getDirection() == 0) {
+					    			builder = "Left, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        twiceMenu.add(newAction);
+					    	        twoChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 1) {
+					    			builder = "Up, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        twiceMenu.add(newAction);
+					    	        twoChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 2) {
+					    			builder = "Right, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        twiceMenu.add(newAction);
+					    	        twoChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 3) {
+					    			builder = "Down, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        twiceMenu.add(newAction);
+					    	        twoChopCheck = true;
+					    			
+					    		} 
+				    		}
+			    		}else {
+			    			if(APCost == 2) {
+				    			if(a.getDirection() == 0) {
+					    			builder = "Left, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+					    					}
+					    					
+					    				}
+					    			});
+					    	        onceMenu.add(newAction);
+					    	        oneChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 1) {
+					    			builder = "Up, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        onceMenu.add(newAction);
+					    	        oneChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 2) {
+					    			builder = "Right, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        onceMenu.add(newAction);
+					    	        oneChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 3) {
+					    			builder = "Down, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        onceMenu.add(newAction);
+					    	        oneChopCheck = true;
+					    			
+					    		} 
+				    		} else if(APCost == 4) {
+				    			if(a.getDirection() == 0) {
+					    			builder = "Left, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        twiceMenu.add(newAction);
+					    	        twoChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 1) {
+					    			builder = "Up, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        twiceMenu.add(newAction);
+					    	        twoChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 2) {
+					    			builder = "Right, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        twiceMenu.add(newAction);
+					    	        twoChopCheck = true;
+					    			
+					    		} else if(a.getDirection() == 3) {
+					    			builder = "Down, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        twiceMenu.add(newAction);
+					    	        twoChopCheck = true;
+					    			
+					    		} 
+				    		}
 			    		}
 			    		
+			    		
 			    	} else if(actionTitle == ActionList.Extinguish) {
-			    		if(APCost == 1) {
-			    			if(a.getDirection() == 0) {
-			    				builder = "Left, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        toSmokeMenu.add(newAction);
-				    	        toSmokeCheck = true;
-				    		} else if(a.getDirection() == 1) {
-				    			builder = "Up, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        toSmokeMenu.add(newAction);
-				    	        toSmokeCheck = true;
-				    			
-				    		} else if(a.getDirection() == 2) {
-				    			builder = "Right, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        toSmokeMenu.add(newAction);
-				    	        toSmokeCheck = true;
-				    		} else if(a.getDirection() == 3) {
-				    			builder = "Down, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        toSmokeMenu.add(newAction);
-				    	        toSmokeCheck = true;
-				    		} else if(a.getDirection() == -1) {
-				    			builder = "Current Location, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        toSmokeMenu.add(newAction);
-				    	        toSmokeCheck = true;
+			    		if(clientManager.getUsersGameState().getPlayingFirefighter().getSpeciality() == Speciality.PARAMEDIC ||
+			    				clientManager.getUsersGameState().getPlayingFirefighter().getSpeciality() == Speciality.RESCUE_SPECIALIST) {
+			    			if(APCost == 2) {
+				    			if(a.getDirection() == 0) {
+				    				builder = "Left, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    		} else if(a.getDirection() == 1) {
+					    			builder = "Up, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    			
+					    		} else if(a.getDirection() == 2) {
+					    			builder = "Right, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    		} else if(a.getDirection() == 3) {
+					    			builder = "Down, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    		} else if(a.getDirection() == -1) {
+					    			builder = "Current Location, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    		}
+				    		} else if(APCost == 4) {
+				    			if(a.getDirection() == 0) {
+				    				builder = "Left, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    		} else if(a.getDirection() == 1) {
+					    			builder = "Up, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    			
+					    		} else if(a.getDirection() == 2) {
+					    			builder = "Right, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    		} else if(a.getDirection() == 3) {
+					    			builder = "Down, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    		} else if(a.getDirection() == -1) {
+					    			builder = "Current Location, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    		}
 				    		}
-			    		} else if(APCost == 2) {
-			    			if(a.getDirection() == 0) {
-			    				builder = "Left, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        completelyMenu.add(newAction);
-				    	        completeCheck = true;
-				    		} else if(a.getDirection() == 1) {
-				    			builder = "Up, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        completelyMenu.add(newAction);
-				    	        completeCheck = true;
-				    			
-				    		} else if(a.getDirection() == 2) {
-				    			builder = "Right, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        completelyMenu.add(newAction);
-				    	        completeCheck = true;
-				    		} else if(a.getDirection() == 3) {
-				    			builder = "Down, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        completelyMenu.add(newAction);
-				    	        completeCheck = true;
-				    		} else if(a.getDirection() == -1) {
-				    			builder = "Current Location, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-//				    					a.perform(currentBoard);
-//				    					gameTest.repainter();
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-//											clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//											refresh(clientManager.getUsersGameState());
-//											launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-										}
-				    				}
-				    			});
-				    	        completelyMenu.add(newAction);
-				    	        completeCheck = true;
+			    		} else {
+			    			if(APCost == 1) {
+				    			if(a.getDirection() == 0) {
+				    				builder = "Left, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    		} else if(a.getDirection() == 1) {
+					    			builder = "Up, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    			
+					    		} else if(a.getDirection() == 2) {
+					    			builder = "Right, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    		} else if(a.getDirection() == 3) {
+					    			builder = "Down, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    		} else if(a.getDirection() == -1) {
+					    			builder = "Current Location, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        toSmokeMenu.add(newAction);
+					    	        toSmokeCheck = true;
+					    		}
+				    		} else if(APCost == 2) {
+				    			if(a.getDirection() == 0) {
+				    				builder = "Left, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    		} else if(a.getDirection() == 1) {
+					    			builder = "Up, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    			
+					    		} else if(a.getDirection() == 2) {
+					    			builder = "Right, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    		} else if(a.getDirection() == 3) {
+					    			builder = "Down, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    		} else if(a.getDirection() == -1) {
+					    			builder = "Current Location, APC: " + APCost;
+					    			newAction = new JMenuItem(builder);
+					    	        newAction.addActionListener(new ActionListener() {
+					    				@Override
+					    				public void actionPerformed(ActionEvent e) {
+					    					if(sendActionRequest(a)) {
+												System.out.println("this is the print that board is refreshing");
+											}
+					    				}
+					    			});
+					    	        completelyMenu.add(newAction);
+					    	        completeCheck = true;
+					    		}
 				    		}
 			    		}
-			    	} else if(actionTitle == ActionList.Drive) {
-			    		System.out.println(a.getClass().toString());
-			    	} else if(actionTitle == ActionList.Finish) {
+			    		
+			    	}  else if(actionTitle == ActionList.Finish) {
 			    		builder = "End Turn";
 		    			newAction = new JMenuItem(builder);
 		    	        newAction.addActionListener(new ActionListener() {
@@ -1431,13 +1623,13 @@ public class Table {
 		    						System.out.println("this is the print that board is refreshing");
 //		    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
 		    						if(clientManager.getUsersGameState().isGameTerminated()) {
-		    							launcher.showGameTermination();
-		    							//refresh(clientManager.getUsersGameState());
-		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//		    							launcher.showGameTermination();
+//		    							//refresh(clientManager.getUsersGameState());
+//		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						} else if(clientManager.getUsersGameState().isGameWon()) {
-		    							launcher.showGameTermination();
-		    							//refresh(clientManager.getUsersGameState());
-		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//		    							launcher.showGameTermination();
+//		    							//refresh(clientManager.getUsersGameState());
+//		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		    						} else {
 //		    							refresh(clientManager.getUsersGameState());
 //		    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
@@ -1446,23 +1638,16 @@ public class Table {
 		    				}
 		    			});
 		    	        finishMenu.add(newAction);
-			    	} else if(actionTitle == ActionList.FireGun) {
-			    		System.out.println(a.getClass().toString());
-			    	} else if(actionTitle == ActionList.Handle) {
+			    	}  else if(actionTitle == ActionList.Handle) {
 			    		if(a.getDirection() == 0) {
 			    			builder = "Left, APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -1473,14 +1658,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -1491,14 +1671,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -1509,14 +1684,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        handleMenu.add(newAction);
@@ -1529,15 +1699,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-
-									}
+			    					}
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -1549,15 +1713,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-
-									}
+			    					}
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -1569,14 +1727,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -1588,14 +1741,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        moveMenu.add(newAction);
@@ -1609,14 +1757,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1628,14 +1771,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1647,14 +1785,9 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
@@ -1666,20 +1799,343 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-//			    					a.perform(currentBoard);
-//			    					gameTest.repainter();
 			    					if(sendActionRequest(a)) {
 										System.out.println("this is the print that board is refreshing");
-//										clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//										refresh(clientManager.getUsersGameState());
-//										launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-									}
+			    					}
 			    				}
 			    			});
 			    	        moveWithVictimMenu.add(newAction);
 			    	        moveWVCheck = true;
 			    			
 			    		} 
+			    	} 
+			    	
+			    	//advanced actions
+			    	
+			    	else if (clientManager.getUsersGameState().isExperienced()) {
+			    		
+		    	        if(actionTitle == ActionList.Change) {
+			    			if(a.getToSpecialty() == Speciality.CAFS) {
+			    				builder = "To CAFS. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.CAPTAIN) {
+			    				builder = "To Captain. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.DOG) {
+			    				builder = "To Dog. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.DRIVER) {
+			    				builder = "To Driver. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.GENERALIST) {
+			    				builder = "To Generalist. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.HAZMAT_TECHNICIAN) {
+			    				builder = "To Hazmat Technician. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.IMAGING_TECHNICIAN) {
+			    				builder = "To Imaging technician. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.PARAMEDIC) {
+			    				builder = "To Paramedic. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.RESCUE_SPECIALIST) {
+			    				builder = "To Rescue Specialist. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.VETERAN) {
+			    				builder = "To Veteran. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} 
+			    		} else if(actionTitle == ActionList.Command) {
+			    			builder = "APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+
+									}
+			    					
+			    				}
+			    			});
+			    	        commandMenu.add(newAction);
+			    	        commandCheck = true;
+			    		} else if(actionTitle == ActionList.Drive) {
+			    			if(a.getDirection() == -1) {
+			    				builder = "Counter ClockWise ";
+			    			}else {
+			    				builder = "ClockWise ";
+			    			}
+			    			builder = builder + "APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+									}
+			    				}
+			    			});
+			    	        driveMenu.add(newAction);
+			    	        driveCheck = true;
+			    		} else if(actionTitle == ActionList.FireGun) {
+			    			builder = "APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+
+									}
+			    					
+			    				}
+			    			});
+			    	        fireDeckGunMenu.add(newAction);
+			    	        firedeckCheck = true;
+			    			
+			    		} else if(actionTitle == ActionList.Flip) {
+			    			
+			    		} else if(actionTitle == ActionList.MoveWithHazmat) {
+			    			if(a.getDirection() == 0) {
+				    			builder = "Left, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+										}
+				    				}
+				    			});
+				    	        moveWithHazmatMenu.add(newAction);
+				    	        moveWithHazmatCheck = true;
+				    			
+				    		} else if(a.getDirection() == 1) {
+				    			builder = "Up, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+										}
+				    				}
+				    			});
+				    	        moveWithHazmatMenu.add(newAction);
+				    	        moveWithHazmatCheck = true;
+				    			
+				    		} else if(a.getDirection() == 2) {
+				    			builder = "Right, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+				    					}
+				    				}
+				    			});
+				    	        moveWithHazmatMenu.add(newAction);
+				    	        moveWithHazmatCheck = true;
+				    			
+				    		} else if(a.getDirection() == 3) {
+				    			builder = "Down, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+				    					}
+				    				}
+				    			});
+				    	        moveWithHazmatMenu.add(newAction);
+				    	        moveWithHazmatCheck = true;
+				    			
+				    		} 
+			    		} else if(actionTitle == ActionList.Pick) {
+			    			builder = "APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+
+									}
+			    					
+			    				}
+			    			});
+			    	        pickMenu.add(newAction);
+			    	        pickCheck = true;
+			    		} else if(actionTitle == ActionList.Drop){
+			    			builder = "APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+
+									}
+			    					
+			    				}
+			    			});
+			    	        dropMenu.add(newAction);
+			    	        dropCheck = true;
+			    		} else if(actionTitle == ActionList.RemoveHazmat) {
+			    			builder = "APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+
+									}
+			    					
+			    				}
+			    			});
+			    	        disposeMenu.add(newAction);
+			    	        disposeCheck = true;
+			    		} else if(actionTitle == ActionList.Resuscitate) {
+			    			builder = "APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+
+									}
+			    					
+			    				}
+			    			});
+			    	        healMenu.add(newAction);
+			    	        healCheck = true;
+			    		}
 			    	}
 					
 				}
@@ -1729,6 +2185,58 @@ public class Table {
 		        if(moveWVCheck) {
 		        	popupMenu.add(moveWithVictimMenu);
 			        popupMenu.addSeparator();
+		        } 
+		        
+		        //Experienced
+		        
+		        if(changeCheck) {
+		        	popupMenu.add(changeMenu);
+			        popupMenu.addSeparator();
+		        } 
+		        
+		        if(commandCheck) {
+		        	popupMenu.add(commandMenu);
+			        popupMenu.addSeparator();
+		        } 
+		       
+		        if(disposeCheck) {
+		        	popupMenu.add(disposeMenu);
+			        popupMenu.addSeparator();
+		        } 
+		        
+		        if(moveWithHazmatCheck) {
+		        	popupMenu.add(moveWithHazmatMenu);
+			        popupMenu.addSeparator();
+		        } 
+		        
+		        if(pickCheck) {
+		        	popupMenu.add(pickMenu);
+			        popupMenu.addSeparator();
+		        } 
+		        
+		        if(dropCheck) {
+		        	popupMenu.add(dropMenu);
+			        popupMenu.addSeparator();
+		        } 
+		        
+		        if(flipPOICheck) {
+		        	popupMenu.add(flipPOIMenu);
+			        popupMenu.addSeparator();
+		        } 
+		        
+		        if(firedeckCheck) {
+		        	popupMenu.add(fireDeckGunMenu);
+			        popupMenu.addSeparator();
+		        } 
+		        
+		        if(healCheck) {
+		        	popupMenu.add(healMenu);
+			        popupMenu.addSeparator();
+		        } 
+		        
+		        if(driveCheck) {
+		        	popupMenu.add(driveMenu);
+		        	popupMenu.addSeparator();
 		        }
 		        
 		        popupMenu.add(finishMenu);
@@ -1790,13 +2298,13 @@ public class Table {
     						System.out.println("this is the print that board is refreshing");
 //    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
     						if(clientManager.getUsersGameState().isGameTerminated()) {
-    							launcher.showGameTermination();
-    							refresh(clientManager.getUsersGameState());
-    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//    							launcher.showGameTermination();
+//    							refresh(clientManager.getUsersGameState());
+//    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
     						} else if(clientManager.getUsersGameState().isGameWon()) {
-    							launcher.showGameTermination();
-    							refresh(clientManager.getUsersGameState());
-    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//    							launcher.showGameTermination();
+//    							refresh(clientManager.getUsersGameState());
+//    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
     						} else {
 //    							refresh(clientManager.getUsersGameState());
 //    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
@@ -1835,8 +2343,8 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						
 						if(sendPlaceVehicleRequest(0, Vehicle.Ambulance)) {
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 						
 						}
 					}
@@ -1848,8 +2356,8 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						
 						if(sendPlaceVehicleRequest(1, Vehicle.Ambulance)) {
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 						
 						}
 					}
@@ -1860,8 +2368,8 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						
 						if(sendPlaceVehicleRequest(2, Vehicle.Ambulance)) {
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 						
 						}
 					}
@@ -1872,8 +2380,8 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						
 						if(sendPlaceVehicleRequest(3, Vehicle.Ambulance)) {
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 						
 						}
 					}
@@ -1885,8 +2393,8 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						
 						if(sendPlaceVehicleRequest(0, Vehicle.Engine)) {
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 						
 						}
 					}
@@ -1898,8 +2406,8 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						
 						if(sendPlaceVehicleRequest(1, Vehicle.Engine)) {
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 						
 						}
 					}
@@ -1910,8 +2418,8 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						
 						if(sendPlaceVehicleRequest(2, Vehicle.Engine)) {
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 						
 						}
 					}
@@ -1923,8 +2431,8 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						
 						if(sendPlaceVehicleRequest(3, Vehicle.Engine)) {
-							refresh(clientManager.getUsersGameState());
-							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//							refresh(clientManager.getUsersGameState());
+//							launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
 						
 						}
 					}
@@ -1955,6 +2463,30 @@ public class Table {
 		        popupMenu.add(fileMenu);
 		        
 		        popupMenu.show(component, x, y);		// very important
+			}
+			
+			public void showPopUpMenuSpeciality(Component component, int x, int y, GameState currentBoard, int[] coords) {
+				JPopupMenu popupMenu = new JPopupMenu();
+				JMenu specialityMenu = new JMenu("Select Speciality");
+				String builder = "";
+				JMenuItem info;
+				for(Speciality s : clientManager.getUsersGameState().getFreeSpecialities()) {
+					builder = s.toString();
+					info = new JMenuItem(builder);
+					
+					info.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendSpecialitySelectionRequest(s)) {
+								System.out.println("Speciality selected is " + s.toString());
+							}
+						}
+					});
+					specialityMenu.add(info);
+				}
+				
+				popupMenu.add(specialityMenu);
+				popupMenu.show(component, x, y);
 			}
 			
 			//generates the popUp menu for tiles that don't contain current FF
@@ -1990,23 +2522,6 @@ public class Table {
 			        popupMenu.add(poiMenu);
 			        popupMenu.addSeparator();
 			        popupMenu.add(firefighterMenu);
-			        if(myIndex != clientManager.getUsersGameState().getActiveFireFighterIndex()) {
-			        	JMenuItem waiting = new JMenuItem("waiting");
-				        waiting.addActionListener(new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								
-								if(listening() == 1) {
-									refresh(clientManager.getUsersGameState());
-									launcher.repaint(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition() == null,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-								}
-								
-								
-							}
-						});
-				        popupMenu.addSeparator();
-				        popupMenu.add(waiting);
-			        }
 			        
 			        popupMenu.show(component, x, y);		// very important
 				}
@@ -2128,5 +2643,10 @@ public class Table {
 		
 		public boolean sendRideRequests(Vehicle type) {
 			return clientManager.sendRideRequests(type);
+		}
+		
+		private boolean sendSpecialitySelectionRequest(Speciality s) {
+			return true;
+			//return clientManager.sendSpecialitySelectionRequest(s);
 		}
 }

@@ -34,7 +34,7 @@ public class GameManager {
 	//changes by ben
 	//private final GameState gs = GameState.getInstance();
 	private GameState gs;
-	private Set<Action> possibleActions = generateAllPossibleActions();
+	private Set<Action> possibleActions;// = generateAllPossibleActions();
 	private String recentAdvFire;
 	private Lobby representsLobby;
 	

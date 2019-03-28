@@ -67,7 +67,7 @@ public class Drive extends Action {
         	if (this.parking.getParkingType() == Vehicle.Ambulance) { //always (assure)
     	        for (int i=0; i<4; i++) {
     	        	if (gs.getAmbulances()[i].equals(parking)) {
-    	        		nextAmbulance = gs.getAmbulances()[ (i+direction)%4 ];
+    	        		nextAmbulance = gs.getAmbulances()[ (i+direction+4)%4 ];
     	        		nextAmbulance.setCar(true);
     	        		parking.setCar(false);
     	        	}
@@ -103,7 +103,7 @@ public class Drive extends Action {
             if (this.parking.getParkingType() == Vehicle.Ambulance) { 
     	        for (int i=0; i<4; i++) {
     	        	if (gs.getAmbulances()[i].equals(parking)) {
-    	        		ParkingSpot nextAmbulance = gs.getAmbulances()[ (i+direction)%4 ];
+    	        		ParkingSpot nextAmbulance = gs.getAmbulances()[ (i+direction+4)%4 ];
     	        		nextAmbulance.setCar(true);
     	        		parking.setCar(false);
     	        		target = nextAmbulance.getTiles()[whichOne];
@@ -113,7 +113,7 @@ public class Drive extends Action {
             else {
             	for (int i=0; i<4; i++) {
     	        	if (gs.getEngines()[i].equals(parking)) {
-    	        		ParkingSpot nextEngine = gs.getEngines()[ (i+direction)%4 ];
+    	        		ParkingSpot nextEngine = gs.getEngines()[ (i+direction+4)%4 ];
     	        		target = nextEngine.getTiles()[whichOne];
     	        		nextEngine.setCar(true);
     	        		parking.setCar(false);
@@ -158,7 +158,8 @@ public class Drive extends Action {
 			ParkingSpot nextAmbulance = null;
 			for (int i=0; i<4; i++) {
 	        	if (gs.getAmbulances()[i].equals(parking)) {
-	        		nextAmbulance = gs.getAmbulances()[ (i+direction)%4 ];
+	        		
+	        		nextAmbulance = gs.getAmbulances()[(i+direction+4) % 4];
 	        	}
 			}
 			if(aP >= APcost && !nextAmbulance.getCar()) {
@@ -171,7 +172,7 @@ public class Drive extends Action {
 			ParkingSpot nextEngine = null;
 			for (int i=0; i<4; i++) {
 	        	if (gs.getAmbulances()[i].equals(parking)) {
-	        		nextEngine = gs.getEngines()[ (i+direction)%4 ];
+	        		nextEngine = gs.getEngines()[ (i+direction+4)%4 ];
 	        	}
 			}
 			if(currentPosition.getParkingSpot().equals(parking) && aP >= APcost && !nextEngine.getCar()) { //One more check than above, why?
