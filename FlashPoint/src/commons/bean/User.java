@@ -40,12 +40,20 @@ public class User implements Serializable {
     private Vehicle vehicleType;
     private Vehicle ridingObject;
     private Speciality desiredSpeciality;
+    private int loadNum;
     
     private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public Integer getId() {
 		return id;
 	}
 
+	public void setNum(Integer id) {
+		this.loadNum = loadNum;
+	}
+	
+	public int getNum() {
+		return loadNum;
+	}
 	public void setId(Integer id) {
 		this.id = id;
 	}

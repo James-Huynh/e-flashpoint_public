@@ -478,7 +478,13 @@ public class ClientManager {
 		this.endTurnTrigger = endTurnTrigger;
 	}
 	
-	
+	public boolean loadGameRequest(int num) {
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOADSAVE);
+		requestObject.setNum(num);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
+	}
 	
 	public boolean sendMsgRequest(TextMessage message) {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CHATMESSAGE);

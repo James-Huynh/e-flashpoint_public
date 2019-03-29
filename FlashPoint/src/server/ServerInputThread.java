@@ -152,7 +152,13 @@ public class ServerInputThread extends Thread {
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnObject);
 				}
+			case LOADSAVE:
+				System.out.println("load request received");
+				requestObject = (User) read_tranObject.getObject();
 				
+				serverManager.loadGame(requestObject.getNum());
+				
+			
 			case STARTGAMESTATE:
 				//System.out.println("In game state update request");
 //				returnObject = new TranObject<User>(TranObjectType.STARTGAMESTATESUCCESS);
