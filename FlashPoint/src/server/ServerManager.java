@@ -16,6 +16,7 @@ import chat.ChatMsgEntity;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
+import game.GameSaver;
 import game.GameState;
 import lobby.Lobby;
 import managers.GameManager;
@@ -190,27 +191,29 @@ public class ServerManager {
 		gameState.createFFToAsk(type);
 	}
 	
-	public void saveGame() {
+	public void saveGame() throws IOException {
 		//@eric take the current game state and save it here
-		
-		try {
-			int savedGameNumber = new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\src\\savedGame").listFiles().length; //check how many games are already saved
-			FileOutputStream f = new FileOutputStream(new File("savedGame" + (savedGameNumber++) + ".txt")); //save it as "savedGame#.txt"
-			
-			ObjectOutputStream o = new ObjectOutputStream(f);
-	
-			o.writeObject(gameState);
-			
-			o.close();
-			f.close();
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//@junha, I move part of ur code into the Class GameSaver
+		GameSaver g=new GameSaver();
+		g.start(gameState);
+//		try {
+//			int savedGameNumber = new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\src\\savedGame").listFiles().length; //check how many games are already saved
+//			FileOutputStream f = new FileOutputStream(new File("savedGame" + (savedGameNumber++) + ".txt")); //save it as "savedGame#.txt"
+//			
+//			ObjectOutputStream o = new ObjectOutputStream(f);
+//	
+//			o.writeObject(gameState);
+//			
+//			o.close();
+//			f.close();
+//			
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		
 	}

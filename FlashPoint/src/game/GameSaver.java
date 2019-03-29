@@ -32,8 +32,9 @@ public class GameSaver {
 	private static String directory="D:\\save";
 	public  void start(GameState gs) throws IOException {
 		
+		
 		saveObjectByObjectOutput(gs,createFile(filename));
-
+    
 	}
     
 	public static File createFile(String name) {
@@ -62,9 +63,14 @@ public class GameSaver {
 
 	public static void saveObjectByObjectOutput(Object o, File file) {
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
-            objectOutputStream.writeObject(o);
-            objectOutputStream.close();
+        	int savedGameNumber = new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\src\\savedGame").listFiles().length; //check how many games are already saved
+        	FileOutputStream f = new FileOutputStream(new File("savedGame" + (savedGameNumber++) + ".txt")); //save it as "savedGame#.txt"
+        	ObjectOutputStream ob = new ObjectOutputStream(f);
+            ob.writeObject(o);
+       
+			
+			ob.close();
+			f.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
