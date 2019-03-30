@@ -219,7 +219,7 @@ public class ServerManager {
 	}
 	//JUNHA : theoretically this should read our savedGame#.txt file and read our object 
 	public void loadGame(int gameNumber) {
-		
+		//when loading a game, change the myowner and my firefighter also change the firefighter name;
 		try {
 			FileInputStream fi = new FileInputStream(new File("savedGame" + gameNumber + ".txt"));
 			ObjectInputStream oi = new ObjectInputStream(fi);
