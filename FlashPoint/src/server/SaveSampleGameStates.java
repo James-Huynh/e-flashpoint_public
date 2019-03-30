@@ -59,7 +59,7 @@ public class SaveSampleGameStates {
 		GameManager gm = server.getGameManager();
 		//1. the very beginning of the game - family version.
 		gm.setup();
-		server.saveGameMat(gm.getGameState(), "family");
+		server.saveGameMat(gm.getGameState(), "familyA");
 		
 		//2. the very beginning of the game - advanced version.
 		Lobby lobby2 = new Lobby();
@@ -75,7 +75,22 @@ public class SaveSampleGameStates {
 		server.setLobby(lobby2);
 		GameManager gm2 = server.getGameManager();
 		gm2.setup();
-		server.saveGameMat(gm2.getGameState(), "advancedHeroic");
+		server.saveGameMat(gm2.getGameState(), "advancedHeroicA");
+		
+		Lobby lobby3 = new Lobby();
+		ArrayList<Player> alll = new ArrayList<Player>(server.getPlayers().values());
+		lobby3.setPlayers(alll);
+		lobby3.setClickable(true);
+		lobby3.assignColours();
+		lobby3.setMode("Experienced");
+		lobby3.setName("myLobby2");
+		lobby3.setDifficulty("Heroic");
+		lobby3.setBoard("Board 2");
+		lobby3.createTemplate();
+		server.setLobby(lobby3);
+		GameManager gm3 = server.getGameManager();
+		gm3.loadGameState(server.loadGameMat("advancedHeroicA"));
+		System.out.println(gm3.getGameState().getFreeSpecialities());
 	}
 
 }

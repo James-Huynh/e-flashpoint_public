@@ -212,9 +212,11 @@ public class Tile implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Tile [fire=" + fire + ", coords=" + Arrays.toString(coords) + ", interior=" +  ", adjacentEdges=" + Arrays.toString(adjacentEdges) + ", listOfFirefighters=" + listOfFirefighters
-				+ ", x=" + x + ", y=" + y + ", poiList=" + poiList + ", isInterior=" + isInterior
-				+ ", pointerParkingSpot=" + pointerParkingSpot + "]";
+		return "Tile [fire=" + fire + ", coords=" + Arrays.toString(coords) + ", hotspot=" + hotspot
+				+ ", adjacentEdges=" + Arrays.toString(adjacentEdges) + ", listOfFirefighters=" + listOfFirefighters
+				+ ", x=" + x + ", y=" + y + ", poiList=" + poiList + ", hazmatList=" + hazmatList + ", isInterior="
+				+ isInterior + ", pointerParkingSpot=" + pointerParkingSpot + ", nearestAmbulance=" + nearestAmbulance
+				+ ", ParkingType=" + ParkingType + "]";
 	}
 	
 	public void setHazmat(Hazmat hazmat) {
