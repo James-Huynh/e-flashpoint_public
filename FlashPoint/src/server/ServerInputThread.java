@@ -278,6 +278,16 @@ public class ServerInputThread extends Thread {
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;
+				
+			case REQUESTSAVEDLIST:
+				System.out.println("request saved game state objects");
+				returnObject = new TranObject<User>(TranObjectType.REQUESTSAVEDLISTSUCCESS);
+				requestObject = (User) read_tranObject.getObject();
+				requestObject.setSavedGameStates(serverManager.getSavedGames());
+				returnObject.setObject(requestObject);
+				out.setMessage(returnObject);
+				break;
+				
 			case MESSAGE:
 				
 				
