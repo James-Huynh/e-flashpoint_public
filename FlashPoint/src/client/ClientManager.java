@@ -481,6 +481,10 @@ public class ClientManager {
 	public boolean loadGameRequest(int num) {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOADSAVE);
 		requestObject.setNum(num);
+		
+		//create new Lobby 
+		//set it to User
+		
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;

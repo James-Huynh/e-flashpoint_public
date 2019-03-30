@@ -1,7 +1,10 @@
 package custom_panels;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -10,6 +13,11 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.event.EventListenerList;
+
+import client.ClientManager;
+import personalizedlisteners.loadGameListeners.LoadGameSetUpListener;
+import personalizedlisteners.createLobbyListeners.CreateListener;
 
 public class LoadGamePanel extends JPanel {
 	private JPanel pnl_loadGame;
@@ -18,28 +26,37 @@ public class LoadGamePanel extends JPanel {
 	private JLabel lblNewLabel;
 	private double lblX, lblY = 10, lblW = 248, lblH = 60;
 	private int textAreaX = 10, textAreaW, textAreaH = 36;
-	private int textAreaY = 100;
+	private int textAreaY = 60;
 	private JLabel entryTest, entry_1, entry_2, entry_3, entry_4, entry_5;
 	private ArrayList<JLabel> listEntries;
+	
+	private final EventListenerList REGISTERED_OBJECTS;
+	
+	private ClientManager clientManager;
 
-	private String[] fileExtensions = new String[]  {"smh"};
-	private File dir;
-	private ArrayList<File> listFiles;
+//	private String[] fileExtensions = new String[]  {"smh"};
+//	private File dir;
+//	private ArrayList<File> listFiles;
 
-	public LoadGamePanel(final File folder) {
+	public LoadGamePanel(ClientManager clientmanager) {
+		
+		REGISTERED_OBJECTS = new EventListenerList();
+		this.clientManager = clientmanager;
+		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
 
-		listFiles = new ArrayList<File>();
-		this.dir = folder;
+//		listFiles = new ArrayList<File>();
+//		this.dir = folder;
 
-		initializePanels();
-		intializeEntries();
+		initializePanels(); // create LoadGamePanel/Load Game Label
+		
+		intializeEntries(); 
 	}
 
 	private void initializePanels() {
 		pnl_main = new JPanel();
 		pnl_main.setBackground(Color.LIGHT_GRAY);
-		pnl_main.setBounds(308, 10, 455, 450);
+		pnl_main.setBounds(308, 10, 455, 624);
 		this.add(pnl_main);
 		pnl_main.setLayout(null);
 
@@ -73,12 +90,21 @@ public class LoadGamePanel extends JPanel {
 			currEntry.setOpaque(true);
 			currEntry.setText("GameSave: " + i);
 			pnl_main.add(currEntry);
-
+			
+//			currEntry.addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent e) {
+//					if(loadGameRequest()) {
+//						System.out.println("create successful");
+//						raiseEventLoadGameBtn();
+//					}
+//				}
+//			});
 			currEntry.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if (e.getClickCount() == 2) {
+					if (e.getClickCount() == 1) {
 						entryClicked((JLabel) e.getComponent());
+						raiseEventLoadGameBtn();
 					}
 				}
 			});
@@ -87,26 +113,30 @@ public class LoadGamePanel extends JPanel {
 
 
 
-		// Testing
-		entryTest = new JLabel();
-		entryTest.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
-		entryTest.setBackground(Color.PINK);
-		entryTest.setText("TEST");
-		entryTest.setBackground(Color.white);
-		entryTest.setOpaque(true);
-		entryTest.setBounds(textAreaX, 94, textAreaW, textAreaH);
-		pnl_main.add(entryTest);
-		// Testing
+//		// Testing
+//		entryTest = new JLabel();
+//		entryTest.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//			}
+//		});
+//		entryTest.setBackground(Color.PINK);
+//		entryTest.setText("TEST");
+//		entryTest.setBackground(Color.white);
+//		entryTest.setOpaque(true);
+//		entryTest.setBounds(textAreaX, textAreaY + 0 * (textAreaH + 10) , textAreaW, textAreaH);
+//		pnl_main.add(entryTest);
+//		// Testing
 
 	}
-
+	
+//	private boolean loadGameRequest() {
+//		return true;
+//	}
 
 	private void entryClicked(JLabel entry) {
 		System.out.println(entry.getText());
+		clientManager.loadGameRequest(Integer.parseInt(entry.getText().replaceAll("\\D+",""))); //extract int from the entry
 
 		// @Eric call loadMethod
 	}
@@ -129,5 +159,20 @@ public class LoadGamePanel extends JPanel {
 	public void setPnl_main(JPanel pnl_main) {
 		this.pnl_main = pnl_main;
 	}
+
+	public void addSelectionPiecesListenerListener(LoadGameSetUpListener obj) {
+		
+		REGISTERED_OBJECTS.add(LoadGameSetUpListener.class, obj);
+	}
+	
+	/**
+	 * Raise an event: the create button has been clicked
+	 */
+	private void raiseEventLoadGameBtn() {
+		for (LoadGameSetUpListener listener: REGISTERED_OBJECTS.getListeners(LoadGameSetUpListener.class)) {
+			listener.loadGameSetUp();
+		}
+	}
+
 
 }
