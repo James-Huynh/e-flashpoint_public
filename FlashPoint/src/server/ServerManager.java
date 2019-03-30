@@ -47,6 +47,7 @@ public class ServerManager {
 		currentLobbies = new ArrayList<Lobby>();
 		accounts.put("Zaid", "apple");
 		accounts.put("me", "aa");
+		savedGames = new ArrayList<GameState>();
 		setSavedGames();
 	}
 	
@@ -250,13 +251,14 @@ public class ServerManager {
 	//@matekrk
 	public void saveGameMat(GameState gs, String name) {
     	try {
-			FileOutputStream fo = new FileOutputStream(new File(getSavedGamesNumber() + name + ".txt"));
+			FileOutputStream fo = new FileOutputStream(new File(defaulGamesPath + name + ".txt"));
 			ObjectOutputStream oo = new ObjectOutputStream(fo);
 
 			// Write object to file
 			oo.writeObject(gs);
 
 			oo.close();
+			System.out.println(oo.toString());
 			fo.close();
 
 
@@ -268,7 +270,7 @@ public class ServerManager {
     }
     public GameState loadGameMat(String name) {
     	try {
-    		FileInputStream fi = new FileInputStream(new File(getSavedGamesNumber() + name + ".txt"));
+    		FileInputStream fi = new FileInputStream(new File(defaulGamesPath + name + ".txt"));
 			ObjectInputStream oi = new ObjectInputStream(fi);
 			// Read objects
 			GameState gs1 = (GameState) oi.readObject();

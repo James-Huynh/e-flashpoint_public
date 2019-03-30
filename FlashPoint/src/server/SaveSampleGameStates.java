@@ -45,24 +45,37 @@ public class SaveSampleGameStates {
 		server.createPlayer("Eric", "eric", 4);
 		server.createPlayer("Junha", "starcraft", 5);
 		Lobby lobby = new Lobby();
-		//in lobby set up fields properly
-		lobby.setPlayers((ArrayList<Player>) server.getPlayers().values());
+		lobby.setClickable(true);
+		ArrayList<Player> al = new ArrayList<Player>(server.getPlayers().values());
+		lobby.setPlayers(al);
+		lobby.assignColours();
+		lobby.setMode("Family");
+		lobby.setName("myLobby1");
+		lobby.setDifficulty("Heroic");
+		lobby.setBoard("Board 1");
 		lobby.createTemplate();
-		server.getLobbyList().add(lobby);
+		server.setLobby(lobby);
 		server.initializeGameManager();
 		GameManager gm = server.getGameManager();
 		//1. the very beginning of the game - family version.
 		gm.setup();
 		server.saveGameMat(gm.getGameState(), "family");
+		
 		//2. the very beginning of the game - advanced version.
 		Lobby lobby2 = new Lobby();
-		lobby2.setPlayers((ArrayList<Player>) server.getPlayers().values());
+		ArrayList<Player> all = new ArrayList<Player>(server.getPlayers().values());
+		lobby2.setPlayers(all);
+		lobby2.setClickable(true);
+		lobby2.assignColours();
+		lobby2.setMode("Experienced");
+		lobby2.setName("myLobby2");
+		lobby2.setDifficulty("Heroic");
+		lobby2.setBoard("Board 2");
 		lobby2.createTemplate();
-		server.getLobbyList().add(lobby);
-		server.initializeGameManager();
+		server.setLobby(lobby2);
 		GameManager gm2 = server.getGameManager();
 		gm2.setup();
-		server.saveGameMat(gm2.getGameState(), "advanced");
+		server.saveGameMat(gm2.getGameState(), "advancedHeroic");
 	}
 
 }
