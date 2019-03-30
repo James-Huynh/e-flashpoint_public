@@ -157,6 +157,11 @@ public class ServerInputThread extends Thread {
 				requestObject = (User) read_tranObject.getObject();
 				
 				serverManager.loadGame(requestObject.getNum());
+				serverManager.setLobby(requestObject.getCurrentLobby());
+				serverManager.getLobby().setCapacity(serverManager.getGameState().getListOfPlayers().size());
+				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
+				serverManager.getLobby().setDifficulty("serverManager.getGameState().getDifficulty()");
+				serverManager.getLobby().setMode("mode");
 				
 			
 			case STARTGAMESTATE:
