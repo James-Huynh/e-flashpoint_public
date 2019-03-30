@@ -25,6 +25,7 @@ import client.ClientManager;
 import commons.bean.User;
 import custom_panels.CreateLobbyPanel;
 import custom_panels.FindLobbyPanel;
+import custom_panels.LoadGamePanel;
 import custom_panels.LobbyPanel;
 import custom_panels.LoginPanel;
 import custom_panels.MainMenuPanel;
@@ -34,6 +35,7 @@ import gui.Table.LeftPanel;
 import gui.Table.RightPanel;
 import managers.GameManager;
 import personalizedlisteners.createLobbyListeners.BackListener;
+import personalizedlisteners.loadGameListeners.LoadGameSetUpListener;
 import personalizedlisteners.lobbyListeners.LeaveListener;
 import personalizedlisteners.lobbyListeners.SearchEntrySetUpListener;
 import personalizedlisteners.lobbyListeners.StartListener;
@@ -74,6 +76,7 @@ public class Launcher {
 	private MainMenuPanel mainMenu;
 	private CreateLobbyPanel createLobby;
 	private FindLobbyPanel findLobby;
+	private LoadGamePanel loadGame;
 	private LobbyPanel lobby;
 	private Table table;
 	private clientThread listenerThread;
@@ -260,20 +263,18 @@ public class Launcher {
 			// James
 			@Override
 			public void clickLoad() {
-				generatePopupMenu();
+				mainMenu.setVisible(false);
+				motherFrame.remove(mainMenu);
+				setUpLoadPage();
 				
 			}
 
-			private void generatePopupMenu() {
-				
-				
-			}
 
 		});
 	}
 	//------------------------------- MAIN MENU
 	
-
+	
 	//  CREATE LOBBY -------------------------------  
 	private void setupCreateLobbyPage() {
 		createLobby = new CreateLobbyPanel(CENTER_PANEL_DIMENSION, clientManager);
@@ -320,7 +321,23 @@ public class Launcher {
 	}
 	
 	//------------------------------- FIND LOBBY
-	
+	//  LOAD GAME -------------------------------
+	private void setUpLoadPage() {
+		loadGame = new LoadGamePanel(this.clientManager);
+		
+		loadGame.addSelectionPiecesListenerListener(new LoadGameSetUpListener() {
+			@Override
+			public void clickLoadGame() {
+				findLobby.setVisible(false);
+				motherFrame.remove(loadGame);
+				setupLobbyPage();
+			}
+		});
+		
+		contentPane.add(loadGame);	
+		
+	}
+	//------------------------------- LOAD GAME
 	
 	//	LOBBY ------------------------------- 
 	private void setupLobbyPage() {

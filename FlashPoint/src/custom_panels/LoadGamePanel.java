@@ -170,7 +170,7 @@ public class LoadGamePanel extends JPanel {
 	 */
 	private void raiseEventLoadGameBtn() {
 		for (LoadGameSetUpListener listener: REGISTERED_OBJECTS.getListeners(LoadGameSetUpListener.class)) {
-			listener.loadGameSetUp();
+			listener.clickLoadGame();
 		}
 	}
 
