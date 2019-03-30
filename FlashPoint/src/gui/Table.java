@@ -224,7 +224,9 @@ public class Table {
 				removeAll();
 				infoPanel.drawInfo(currentBoard);
 				add(infoPanel);
-				add(chatArea);
+				chatBox.refreshChatBox();
+				chatPanel = chatBox.getPanel_main();
+				add(chatPanel);
 				revalidate();
 				repaint();
 			}
@@ -252,6 +254,7 @@ public class Table {
 					Firefighter currentFF = this.currentBoard.getFireFighterList().get(i);
 					String playerInfo = (currentFF.getOwner().getUserName() + "  AP: " + currentFF.getAP() /*+ "  Saved Ap: " + currentFF.getSavedAP()*/);
 					if(clientManager.getUsersGameState().isExperienced()) {
+						playerInfo = playerInfo + " SAP: " + currentFF.getSP();
 						if(currentFF.getSpeciality() == null) {
 							playerInfo = playerInfo + " Specialty: unselcted";
 						}else {

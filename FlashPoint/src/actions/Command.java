@@ -8,6 +8,7 @@ public class Command extends Action {
 
 	protected Firefighter toObey;
 	protected Action action; //only: Move with victim, hazmat, normal move, move with threated victim, handle
+	protected ActionList title = ActionList.Command;
 	
 	private static final long serialVersionUID = 1L;
 

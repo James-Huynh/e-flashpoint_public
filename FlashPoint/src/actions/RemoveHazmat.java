@@ -9,6 +9,7 @@ public class RemoveHazmat extends Action {
 
 	private static final long serialVersionUID = 1L;
 	protected Hazmat hazmat;
+	protected ActionList title = ActionList.RemoveHazmat;
 	
 	public RemoveHazmat() {
 		this.APcost = 2;
