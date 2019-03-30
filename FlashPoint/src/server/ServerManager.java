@@ -30,10 +30,14 @@ public class ServerManager {
 	private HashMap<String,String> accounts;
 	private HashMap<Integer, Player> onlinePlayers;
 	private ArrayList<Lobby> currentLobbies;
+	private ArrayList<GameState> savedGames;
+	private static String defaulGamesPath = "savedGames/";
+	private static String currentPath = System.getProperty("user.dir");
 	
 	private Lobby activeLobby;
 	private GameState gameState;
 	private GameManager gameManager;
+	
 	
 	private int placedFF = 0;
 	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
@@ -43,6 +47,7 @@ public class ServerManager {
 		currentLobbies = new ArrayList<Lobby>();
 		accounts.put("Zaid", "apple");
 		accounts.put("me", "aa");
+		setSavedGames();
 	}
 	
 	public void createPlayer(String name, String password, Integer ID) {
@@ -240,6 +245,78 @@ public class ServerManager {
 		}
 
 	}
+	
+
+	//@matekrk
+	public void saveGameMat(GameState gs, String name) {
+    	try {
+			FileOutputStream fo = new FileOutputStream(new File(getSavedGamesNumber() + name + ".txt"));
+			ObjectOutputStream oo = new ObjectOutputStream(fo);
+
+			// Write object to file
+			oo.writeObject(gs);
+
+			oo.close();
+			fo.close();
+
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+		} catch (IOException e) {
+			System.out.println("Error initializing stream");
+		}
+    }
+    public GameState loadGameMat(String name) {
+    	try {
+    		FileInputStream fi = new FileInputStream(new File(getSavedGamesNumber() + name + ".txt"));
+			ObjectInputStream oi = new ObjectInputStream(fi);
+			// Read objects
+			GameState gs1 = (GameState) oi.readObject();
+			GameState gs = GameState.getInstance();
+			System.out.println(gs1.toString());
+
+			oi.close();
+			fi.close();
+			
+			gs.updateGameStateFromObject(gs1);
+			this.savedGames.add(gs);
+			return gs1; //if not void
+			
+			} catch (FileNotFoundException e) {
+				System.out.println("File not found");
+			} catch (IOException e) {
+				System.out.println("Error initializing stream");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	return null;
+    }
+    
+    public void setSavedGames() {
+    	String folderPath = defaulGamesPath;
+    	File folder = new File(folderPath);
+    	File[] listOfFiles = folder.listFiles();
+    	for (File f : listOfFiles) {
+    		GameState gs = GameState.getInstance();
+    		gs = loadGameMat(f.getAbsolutePath());
+    		this.savedGames.add(gs);
+    	}
+    }
+    
+    public ArrayList<GameState> getSavedGames(){
+    	return this.savedGames;
+    }
+	
+    public int getSavedGamesNumber() {
+    	return this.savedGames.size();
+    }
+    
+    public void removeSavedGame(String name) {
+    	GameState gs = GameState.getInstance();
+    	gs.updateGameStateFromObject(loadGameMat(name + getSavedGamesNumber() + ".txt"));
+    	this.savedGames.remove(gs);
+    }
 
 	public void setSpeciality(String name, Speciality desiredSpeciality) {
 		int count = 0;
@@ -266,5 +343,10 @@ public class ServerManager {
 		gameState.setSpecialitySelecting(b);
 		
 	}
+	
+	//for @matekrk
+		public GameManager getGameManager() {
+			return this.gameManager;
+		}
 	
 }
