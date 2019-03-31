@@ -168,7 +168,13 @@ public class Move extends Action {
         
         if (playingFirefighter.getCarriedPOI() != null) {
         	playingFirefighter.getCarriedPOI().setCurrentPosition(neighbour);
-        	currentPosition.getPoiList().remove(playingFirefighter.getCarriedPOI());
+//        	currentPosition.getPoiList().remove(playingFirefighter.getCarriedPOI());
+        	for(int i=0; i<currentPosition.getPoiList().size();i++) {
+        		POI p = currentPosition.getPoiList().get(i);
+        		if(p.getLeader() == playingFirefighter) {
+        			currentPosition.getPoiList().remove(i);
+        		}
+        	}
         	neighbour.getPoiList().add(playingFirefighter.getCarriedPOI());
         }
     }

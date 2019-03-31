@@ -28,6 +28,7 @@ public class Resuscitate extends Action{
 	public Resuscitate(int i) {
 		this.APcost = 1;
 		this.index = i;
+		this.title = ActionList.Resuscitate;
 	}
 	
 	public ActionList getTitle() {

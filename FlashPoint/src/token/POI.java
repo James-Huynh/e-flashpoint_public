@@ -48,7 +48,7 @@ public class POI extends Token implements Serializable {
     	return !(leader == null);
     }
     
-    public Firefighter follower() {
+    public Firefighter getLeader() {
     	return leader;
     }
     
