@@ -206,7 +206,7 @@ public class ServerInputThread extends Thread {
 
 				break;
 			case ACTIONREQUEST:
-				//System.out.println("In action request");
+				System.out.println("In action request");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.performAction(requestObject.getAction());
 				returnGameState = new TranObject<GameState>(TranObjectType.ACTIONSUCCESS);

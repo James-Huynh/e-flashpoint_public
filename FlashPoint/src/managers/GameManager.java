@@ -354,20 +354,20 @@ public class GameManager {
 //    	//OK methods as default & with existing Action logic :- Chop, Move, Extinguish, Handle, MoveWithHazmat
 //    	
 //    	//Drive
-    	for (int dir : new int[]{-1,1} ) {  
-			for(ParkingSpot p:gs.getAmbulances()) {
-				allPossibleActions.add(new Drive(p, dir, false));
-				allPossibleActions.add(new Drive(p, dir, true)); 
-			}
-			for(ParkingSpot p:gs.getEngines()) {
-				allPossibleActions.add(new Drive(p, dir, true)); 
-			}
-    	}
+//    	for (int dir : new int[]{-1,1} ) {  
+//			for(ParkingSpot p:gs.getAmbulances()) {
+//				allPossibleActions.add(new Drive(p, dir, false));
+//				allPossibleActions.add(new Drive(p, dir, true)); 
+//			}
+//			for(ParkingSpot p:gs.getEngines()) {
+//				allPossibleActions.add(new Drive(p, dir, true)); 
+//			}
+//    	}
     	
 //    	//FireGun
-    	for(ParkingSpot p:gs.getEngines()) {
-    		allPossibleActions.add(new FireGun(p)); 
-    	}
+//    	for(ParkingSpot p:gs.getEngines()) {
+//    		allPossibleActions.add(new FireGun(p)); 
+//    	}
 
 //		
 		Tile currentLocation = inTurn.getCurrentPosition();
@@ -385,17 +385,26 @@ public class GameManager {
 //		 */
 //    	
 //		//Imaging Technician - FlipPOI 
-		for(POI p: gs.retrievePOI()) {
-			allPossibleActions.add(new FlipPOI(p));
+//		for(POI p: gs.retrievePOI()) {
+//			allPossibleActions.add(new FlipPOI(p));
+//		}
+		
+		for(int i=0;i<gs.getMatTiles().length;i++) {
+			for(int j=0;j<gs.getMatTiles()[i].length;j++) {
+				Tile t = gs.getMatTiles()[i][j];
+				if(t.containsPOI()) {
+					allPossibleActions.add(new FlipPOI(t.getPoiList().get(0), t.getCoords()));
+				}
+			}
 		}
 		
 //		//HazmatTechnician - RemoveHazmat
 		allPossibleActions.add(new RemoveHazmat()); 
 		
 //		//Crew Change - Change  
-		for(Speciality s: Speciality.values()) {
-			allPossibleActions.add(new Change(s)); //Need to make this only on first turn -- ask Ben
-    	}
+//		for(Speciality s: Speciality.values()) {
+//			allPossibleActions.add(new Change(s)); //Need to make this only on first turn -- ask Ben
+//    	}
 		
     	//finish
     	allPossibleActions.add(new Finish());

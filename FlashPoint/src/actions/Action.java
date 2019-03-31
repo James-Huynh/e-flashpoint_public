@@ -61,5 +61,9 @@ public abstract class Action implements Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public int[] getTileLocation() {
+		return null;
+	}
 
 }
