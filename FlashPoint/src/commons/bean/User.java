@@ -41,6 +41,7 @@ public class User implements Serializable {
     private Vehicle ridingObject;
     private Speciality desiredSpeciality;
     private int loadNum;
+    private ArrayList<GameState> savedGameStates;
     
     private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public Integer getId() {
@@ -235,6 +236,14 @@ public class User implements Serializable {
 	
 	public Speciality getDesiredSpeciality() {
 		return this.desiredSpeciality;
+	}
+	
+	public void setSavedGameStates(ArrayList<GameState> savedGameStates) {
+		this.savedGameStates = savedGameStates;
+	}
+	
+	public ArrayList<GameState> getsavedGameStates(){
+		return this.savedGameStates;
 	}
 
 //	public int getImg() {

@@ -104,26 +104,40 @@ public class GameState implements Serializable {
 	/*
 	 * UPDATE/LOADING
 	 */
-
+	
 	// copy constructor
-	public void updateGameStateFromObject(GameState gs1) {
-		remainingVictims = gs1.remainingVictims;
-		remainingFalseAlarms = gs1.remainingFalseAlarms;
-		wallsDamaged = gs1.wallsDamaged;
-		lostVictims = gs1.wallsDamaged;
-		savedVictims = gs1.savedVictims;
-		// currentPoi = gs1.currentPoi;
-		gameTerminated = gs1.gameTerminated;
-		gameWon = gs1.gameWon;
-		activeFireFighterIndex = gs1.activeFireFighterIndex;
-		isActiveGame = gs1.isActiveGame;
-		matEdges = gs1.matEdges;
-		matTiles = gs1.matTiles;
-		currentTile = gs1.currentTile;
-		availableActions = gs1.availableActions;
-		listOfFirefighters = gs1.listOfFirefighters;
-		MAX_WALL_DMGD = gs1.MAX_WALL_DMGD;
-		poiList = gs1.poiList;
+
+	public void updateGameStateFromObject(GameState copy) {
+		this.remainingVictims = copy.remainingVictims;
+		this.remainingFalseAlarms = copy.remainingFalseAlarms;
+		this.wallsDamaged = copy.wallsDamaged;
+		this.lostVictims = copy.lostVictims;
+		this.savedVictims = copy.savedVictims;
+		this.gameTerminated = copy.gameTerminated;
+		this.gameWon = copy.gameWon;
+		this.activeFireFighterIndex = copy.activeFireFighterIndex;
+		this.isActiveGame = copy.isActiveGame;
+		this.matEdges = copy.matEdges;
+		this.matTiles = copy.matTiles;
+		this.engines = copy.engines;
+		this.ambulances = copy.ambulances;
+		this.advFireString = copy.advFireString;
+		this.currentTile = copy.currentTile;
+		this.availableActions = copy.availableActions;
+		this.listOfPlayers = copy.listOfPlayers;
+		this.listOfFirefighters = copy.listOfFirefighters;
+		MAX_WALL_DMGD = copy.MAX_WALL_DMGD;
+		this.poiList = copy.poiList;
+		this.lostVictimsList = copy.lostVictimsList;
+		this.savedVictimsList = copy.savedVictimsList;
+		this.revealedFalseAlarmsList = copy.revealedFalseAlarmsList;
+		this.freeSpecialities = copy.freeSpecialities;
+		this.lostHazmat = copy.lostHazmat;
+		this.disposedHazmat = copy.disposedHazmat;
+		this.rideMapper = copy.rideMapper;
+		this.remainingHotSpots = copy.remainingHotSpots;
+		this.experiencedMode = copy.experiencedMode;
+		this.specialitySelecting = copy.specialitySelecting;
 	}
 
 	/*

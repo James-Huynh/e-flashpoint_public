@@ -12,6 +12,7 @@ import server.Player;
 public class Lobby implements Serializable  {
 
 	private boolean isClickable;
+	private boolean isLoadGame;
 	private ArrayList<Player> players;
 	private ArrayList<token.Colour> assignableColours;
 
@@ -155,6 +156,14 @@ public class Lobby implements Serializable  {
 			//Random Board
 			System.out.println("this is in createTemplate last else");
 		}
+	}
+
+	public boolean getIsLoadGame() {
+		return isLoadGame;
+	}
+
+	public void setIsLoadGame(boolean isLoadGame) {
+		this.isLoadGame = isLoadGame;
 	}
 
 }
