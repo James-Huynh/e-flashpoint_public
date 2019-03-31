@@ -64,6 +64,7 @@ public class POI extends Token implements Serializable {
 
 	@Override
 	public String toString() {
-		return "POI [revealed=" + revealed + ", isVictim=" + isVictim + ", isRescued=" + isRescued + "]";
+		return "POI [revealed=" + revealed + ", isVictim=" + isVictim + ", isRescued=" + isRescued + ", follow="
+				+ follow.toString() + ", x=" + x + ", y=" + y + ", tileOn=" + tileOn.toString() + "]";
 	}
 }

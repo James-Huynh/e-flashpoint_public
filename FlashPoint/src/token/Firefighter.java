@@ -240,8 +240,9 @@ public class Firefighter extends Token {
 	@Override
 	public String toString() {
 		return "Firefighter [AP=" + AP + ", savedAP=" + savedAP + ", carryingVictim=" + carryingVictim + ", victim="
-				+ victim + ", myColour=" + myColour + ", myPlayer=" + myPlayer + ", speciality=" + speciality + ", SP="
-				+ SP + ", x=" + x + ", y=" + y + ", tileOn=" + tileOn + "]";
+				+ victim.toString() + ", myColour=" + myColour.toString() + ", myPlayer=" + myPlayer.toString() + ", speciality=" + speciality.toString() + ", SP="
+				+ SP + ", follow=" + follow.toString() + ", ifCommandCAPSthisTurn=" + ifCommandCAPSthisTurn + ", x=" + x + ", y="
+				+ y + ", tileOn=" + tileOn.toString() + "]";
 	}
 
 }

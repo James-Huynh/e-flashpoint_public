@@ -19,9 +19,9 @@ public class Blank extends Edge{
     }
     
     @Override
-    public String toString() {
-    	return "BlankEdge[]";
-    }
+	public String toString() {
+		return "Blank []";
+	}
 
 	@Override
 	public boolean getStatus() {
