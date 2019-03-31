@@ -147,7 +147,7 @@ public class LoadGamePanel extends JPanel {
 
 	private void entryClicked(JLabel entry) {
 		System.out.println(entry.getText());
-		clientManager.loadGameRequest(Integer.parseInt(entry.getText().replaceAll("\\D+",""))); //extract int from the entry
+		clientManager.loadGameLobbyRequest(Integer.parseInt(entry.getText().replaceAll("\\D+",""))); //extract int from the entry
 
 		// @Eric call loadMethod
 	}

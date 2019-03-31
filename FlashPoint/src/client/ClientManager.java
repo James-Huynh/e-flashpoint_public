@@ -513,7 +513,7 @@ public class ClientManager {
 		this.endTurnTrigger = endTurnTrigger;
 	}
 	
-	public boolean loadGameRequest(int savedGameNum) {
+	public boolean loadGameLobbyRequest(int savedGameNum) {
 		boolean flag = false;
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOADSAVE);
 		requestObject.setNum(savedGameNum); //which # savedGame the player selected
