@@ -36,7 +36,8 @@ public class POI extends Token implements Serializable {
     }
     
     public boolean isResuscitated() {
-    	return !follow.equals(null);
+//    	return !follow.equals(null);
+    	return !(follow == null);
     }
     
     public Firefighter follower() {
@@ -53,6 +54,7 @@ public class POI extends Token implements Serializable {
     
     public void reveal() {
         //Invoke placing POI
+    	System.out.println("REVEALING");
     	revealed = true;
     }
     

@@ -383,7 +383,7 @@ public class GameManager {
 //		 * So loop over allPlayingFF's and all legal Actions
 //		 * and see if they validate? -- Correct, just implement!
 //		 */
-//    	
+
 //		//Imaging Technician - FlipPOI 
 //		for(POI p: gs.retrievePOI()) {
 //			allPossibleActions.add(new FlipPOI(p));

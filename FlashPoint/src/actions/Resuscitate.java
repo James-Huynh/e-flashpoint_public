@@ -10,7 +10,7 @@ public class Resuscitate extends Action{
 
 	private static final long serialVersionUID = 1L;
 	protected POI victim;
-	protected ActionList title = ActionList.Resuscitate;
+	protected ActionList title;
 	
 	public Resuscitate() {
 		this.APcost = 1;
@@ -18,6 +18,8 @@ public class Resuscitate extends Action{
 	
 	public Resuscitate(POI victim) {
 		this.victim = victim;
+		this.title = ActionList.Resuscitate;
+		this.APcost = 1;
 	}
 	
 	@Override
@@ -36,8 +38,10 @@ public class Resuscitate extends Action{
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         if (playingFirefighter.speciality == (Speciality.PARAMEDIC)) {
         	if (currentPosition.getPoiList().contains(victim)){
+        		System.out.println("Returning right POI");
         		if (aP >= APcost) {
         			if (!victim.isResuscitated()) {
+        				System.out.println("Returning true");
         				return true;
         			}
         		}
