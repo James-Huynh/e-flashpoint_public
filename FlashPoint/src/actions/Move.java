@@ -136,6 +136,24 @@ public class Move extends Action {
         currentPosition.removeFromFirefighterList(playingFirefighter);
         neighbour.addToFirefighterList(playingFirefighter);
         
+        
+        if (playingFirefighter.getCarriedPOI() != null) {
+        	playingFirefighter.getCarriedPOI().setCurrentPosition(neighbour);
+//        	currentPosition.getPoiList().remove(playingFirefighter.getCarriedPOI());
+        	for(int i=0; i<currentPosition.getPoiList().size();i++) {
+        		POI p = currentPosition.getPoiList().get(i);
+//        		System.out.println(p.getLeader());
+        		if(p.getLeader().getColour() == playingFirefighter.getColour()) {
+//        			currentPosition.getPoiList().remove(i);
+        			neighbour.getPoiList().add(currentPosition.getPoiList().remove(i));
+//        			if(!neighbour.checkInterior()) {
+//        				gs.removePOI(neighbour.getPoiList().get(0));
+//        				gs.updateSavedCount((neighbour.getPoiList().get(0));
+//        			}
+        		}
+        	}
+        }
+        
         //@matekrk - logic POI move/poiFlip
         if(neighbour.containsPOI() == true) {
         	ArrayList<POI> Pois = neighbour.getPoiList(); //where we going
@@ -166,19 +184,8 @@ public class Move extends Action {
 //        	neighbour.getPoiList().add(playingFirefighter.getFollow());
 //        }
         
-        if (playingFirefighter.getCarriedPOI() != null) {
-        	playingFirefighter.getCarriedPOI().setCurrentPosition(neighbour);
-//        	currentPosition.getPoiList().remove(playingFirefighter.getCarriedPOI());
-        	for(int i=0; i<currentPosition.getPoiList().size();i++) {
-        		POI p = currentPosition.getPoiList().get(i);
-//        		System.out.println(p.getLeader());
-        		if(p.getLeader().getColour() == playingFirefighter.getColour()) {
-//        			currentPosition.getPoiList().remove(i);
-        			neighbour.getPoiList().add(currentPosition.getPoiList().remove(i));
-        		}
-        	}
-//        	neighbour.getPoiList().add(playingFirefighter.getCarriedPOI());
-        }
+
+//        	neighbour.getPoiList().add(playingFirefighter.getCarriedPOI());s
     }
     
     @Override
