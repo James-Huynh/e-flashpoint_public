@@ -117,6 +117,7 @@ public class ServerManager {
 	
 	public void performAction(Action a) {
 		a.perform(gameState);
+		gameManager.setFirstAction(false);
 		generateActions();
 	}
 	
@@ -178,6 +179,8 @@ public class ServerManager {
 			setFFNextTurn();
 			generateActions();
 		}
+		
+		gameManager.setFirstAction(true);
 		
 		
 		

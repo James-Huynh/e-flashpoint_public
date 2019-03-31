@@ -37,6 +37,7 @@ public class GameManager {
 	private Set<Action> possibleActions;// = generateAllPossibleActions();
 	private String recentAdvFire;
 	private Lobby representsLobby;
+	private boolean firstAction;
 	
 	// MAIN
     public void runFlashpoint() {
@@ -410,9 +411,11 @@ public class GameManager {
 		allPossibleActions.add(new RemoveHazmat()); 
 		
 //		//Crew Change - Change  
-		for(Speciality s: Speciality.values()) {
-			allPossibleActions.add(new Change(s)); //Need to make this only on first turn -- ask Ben
-    	}
+		if(this.firstAction == true) {
+			for(Speciality s: Speciality.values()) {
+				allPossibleActions.add(new Change(s)); 
+	    	}
+		}
 		
     	//finish
     	allPossibleActions.add(new Finish());
@@ -1043,6 +1046,14 @@ public class GameManager {
 	public GameState getGameState() {
 		System.out.println("Returning Game State");
 		return gs;
+	}
+
+	public boolean isFirstAction() {
+		return firstAction;
+	}
+
+	public void setFirstAction(boolean firstAction) {
+		this.firstAction = firstAction;
 	}
     
 //    public static void main(String[] args) {
