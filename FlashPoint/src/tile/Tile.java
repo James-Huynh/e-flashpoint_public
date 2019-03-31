@@ -237,8 +237,10 @@ public class Tile implements Serializable{
 	}
 	
 	public Hazmat obtainHazmat() {
-		assert !hazmatList.isEmpty();
-		return hazmatList.get(hazmatList.size()-1);
+		if(!hazmatList.isEmpty()) {
+			return hazmatList.get(hazmatList.size()-1);
+		}
+		return null;
 	}
 
 	public Hazmat popHazmat() {

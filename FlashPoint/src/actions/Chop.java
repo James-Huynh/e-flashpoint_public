@@ -27,9 +27,7 @@ public class Chop extends Action {
     @Override
     public void adjustAction(GameState gs) {
     	Firefighter current = gs.getPlayingFirefighter();
-    	if (current.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
-			this.APcost = this.APcost/2;
-		}
+
     }
     
     /*
@@ -73,6 +71,11 @@ public class Chop extends Action {
     public boolean validate(GameState gs) {
         boolean flag = false;
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        
+    	if (playingFirefighter.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
+			this.APcost = this.APcost/2;
+		}
+        
         Tile currPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
         Edge edge = currPosition.getEdge(this.direction);

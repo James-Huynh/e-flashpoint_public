@@ -24,6 +24,7 @@ public class RemoveHazmat extends Action {
 		gs.getPlayingFirefighter().setAP( gs.getPlayingFirefighter().getAP() - APcost);
 		Hazmat hazmat = gs.getPlayingFirefighter().getCurrentPosition().popHazmat();
 		hazmat.setDisposed();
+		gs.addDisposedHazmat(hazmat);
 		//place in rescued spot! ask Ben
 	}
 
