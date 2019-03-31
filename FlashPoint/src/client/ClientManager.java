@@ -59,6 +59,12 @@ public class ClientManager {
 				flag = true;
 				startGameFlag = 2;
 				break;
+			case STARTSAVEDGAMESTATESUCCESS:
+				System.out.println("Succesuful 'saved' gameStateRetrieval");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				flag = true;
+				startGameFlag = 2;
+				break;
 			case SUCCESS:
 				System.out.println("Succesuful connection");
 				System.out.println(read_tranObject.getType());
