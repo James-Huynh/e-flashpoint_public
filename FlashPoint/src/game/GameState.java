@@ -527,21 +527,21 @@ public class GameState implements Serializable {
 				if (i == 0 && (j == 5 || j == 6)) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
-					matTiles[i][j].setParkingSpot(ambulances[0]);
+					matTiles[i][j].setParkingSpot(ambulances[1]);
 					ambulances[1].setTile(matTiles[i][j]);
 				}
 
 				else if ((i == 3 || i == 4) && j == 0) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
-					matTiles[i][j].setParkingSpot(ambulances[3]);
+					matTiles[i][j].setParkingSpot(ambulances[0]);
 					ambulances[0].setTile(matTiles[i][j]);
 				}
 
 				else if (i == 7 && (j == 3 || j == 4)) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
-					matTiles[i][j].setParkingSpot(ambulances[1]);
+					matTiles[i][j].setParkingSpot(ambulances[3]);
 					ambulances[3].setTile(matTiles[i][j]);
 				}
 
@@ -557,21 +557,21 @@ public class GameState implements Serializable {
 				else if (i == 0 && (j == 7 || j == 8)) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Engine);
-					matTiles[i][j].setParkingSpot(engines[0]);
+					matTiles[i][j].setParkingSpot(engines[1]);
 					engines[1].setTile(matTiles[i][j]);
 				}
 
 				else if ((i == 1 || i == 2) && j == 0) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Engine);
-					matTiles[i][j].setParkingSpot(engines[3]);
+					matTiles[i][j].setParkingSpot(engines[0]);
 					engines[0].setTile(matTiles[i][j]);
 				}
 
 				else if (i == 7 && (j == 1 || j == 2)) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Engine);
-					matTiles[i][j].setParkingSpot(engines[1]);
+					matTiles[i][j].setParkingSpot(engines[3]);
 					engines[3].setTile(matTiles[i][j]);
 				}
 

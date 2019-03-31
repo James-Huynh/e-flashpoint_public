@@ -38,6 +38,14 @@ public abstract class Action implements Serializable {
     	return direction;
     }
     
+    public boolean isAmbulance(){
+    	return false;
+    }
+    
+    public boolean canMove() {
+    	return false;
+    }
+    
     /*
      * INTERACTION WITH GAMESTATE
      */

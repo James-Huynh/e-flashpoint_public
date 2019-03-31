@@ -62,6 +62,7 @@ public class ServerManager {
 			gameManager.setup();
 			gameState = gameManager.getGameState();
 			gameState.setActiveFireFighterIndex(-1);
+			gameManager.setFirstAction(true);
 		}
 		
 	}
@@ -180,13 +181,14 @@ public class ServerManager {
 			generateActions();
 		}
 		
-		gameManager.setFirstAction(true);
+		
 		
 		
 		
 	}
 	
 	public void setFFNextTurn() {
+		gameManager.setFirstAction(true);
 		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
 		
 	}

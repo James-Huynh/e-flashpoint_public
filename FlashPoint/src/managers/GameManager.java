@@ -355,15 +355,16 @@ public class GameManager {
 //    	//OK methods as default & with existing Action logic :- Chop, Move, Extinguish, Handle, MoveWithHazmat
 //    	
 //    	//Drive
-//    	for (int dir : new int[]{-1,1} ) {  
-//			for(ParkingSpot p:gs.getAmbulances()) {
-//				allPossibleActions.add(new Drive(p, dir, false));
-//				allPossibleActions.add(new Drive(p, dir, true)); 
-//			}
-//			for(ParkingSpot p:gs.getEngines()) {
-//				allPossibleActions.add(new Drive(p, dir, true)); 
-//			}
-//    	}
+    	for (int dir : new int[]{-1,1} ) {  
+    		for(int i=0;i<gs.getAmbulances().length;i++) {
+    			allPossibleActions.add(new Drive(i, dir, false, true)); //index, direction, moveWith, isAmbulance
+    			allPossibleActions.add(new Drive(i, dir, true, true));
+    		}
+    		
+    		for(int i=0;i<gs.getAmbulances().length;i++) {
+    			allPossibleActions.add(new Drive(i, dir, true, false));
+    		}
+    	}
     	
 //    	//FireGun
 //    	for(ParkingSpot p:gs.getEngines()) {
