@@ -12,16 +12,22 @@ public class Resuscitate extends Action{
 	protected POI victim;
 	protected ActionList title;
 	protected int[] tileLocation;
+	protected int index;
 	
 	public Resuscitate() {
 		this.APcost = 1;
 	}
 	
 	public Resuscitate(POI victim, int[] loc) {
-//		this.victim = victim;
+		this.victim = victim;
 		this.title = ActionList.Resuscitate;
 		this.APcost = 1;
 		this.tileLocation = loc;
+	}
+	
+	public Resuscitate(int i) {
+		this.APcost = 1;
+		this.index = i;
 	}
 	
 	public ActionList getTitle() {
@@ -32,32 +38,37 @@ public class Resuscitate extends Action{
 	public void perform(GameState gs) {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
-		victim.setResuscitate(playingFirefighter);
+//		victim.setResuscitate(playingFirefighter);
 		playingFirefighter.setAP(aP - APcost);
-		playingFirefighter.setFollow(victim);
+//		playingFirefighter.setFollow(victim);
+		playingFirefighter.getCurrentPosition().getPoiList().get(index).heal();
 	}
 
 	@Override
 	public boolean validate(GameState gs) {
 		//victim = gs.returnTile(tileLocation[0], tileLocation[1]).getPoiList().get(0);
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
-		if(playingFirefighter.getCurrentPosition().getPoiList().size() > 0) {
-			victim = playingFirefighter.getCurrentPosition().getPoiList().get(0);
-		}
-		else {
-			return false;
-		}
         int aP = playingFirefighter.getAP();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
+//        if (playingFirefighter.speciality == (Speciality.PARAMEDIC)) {
+//        	if (currentPosition.getPoiList().contains(victim)){
+//        		if (aP >= APcost) {
+//        			if (!victim.isResuscitated()) {
+//        				System.out.println("Returning true in Resuscitate");
+//        				return true;
+//        			}
+//        		}
+//        	}
+//        }
+        
+        //New one
         if (playingFirefighter.speciality == (Speciality.PARAMEDIC)) {
-        	if (currentPosition.getPoiList().contains(victim)){
         		if (aP >= APcost) {
-        			if (!victim.isResuscitated()) {
+        			if (!currentPosition.getPoiList().get(index).isHealed()) {
         				System.out.println("Returning true in Resuscitate");
         				return true;
         			}
         		}
-        	}
         }
 		return false;
 	}

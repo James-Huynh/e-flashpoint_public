@@ -10,9 +10,11 @@ public class PickOrDrop extends Action {
 	private static final long serialVersionUID = 1L;
 	protected ActionList title;
 	protected POI healedVictim;
+	protected int index;
 
-	public PickOrDrop() {
+	public PickOrDrop(int i) {
 		APcost = 0;
+		this.index = i;
 	}
 	
 	public PickOrDrop(POI healedVictim) {
@@ -24,34 +26,44 @@ public class PickOrDrop extends Action {
 	public void perform(GameState gs) {
 		Firefighter f = gs.getPlayingFirefighter();
 		if (title == ActionList.Drop){
-			f.setFollow(null);
-			healedVictim.setResuscitate(null);
+			f.setCarriedPOI(null);
+			healedVictim.setLeader(null);
+//			healedVictim.setResuscitate(null);
 		}
 		else {
-			f.setFollow(healedVictim);
-			healedVictim.setResuscitate(f);
+			f.setCarriedPOI(healedVictim);
+			healedVictim.setLeader(f);
+//			healedVictim.setResuscitate(f);
 		}
 	}
 
 	@Override
 	public boolean validate(GameState gs) {
 		Firefighter f = gs.getPlayingFirefighter();
-		if(f.getCurrentPosition().getPoiList().size() > 0) {
-			healedVictim = f.getCurrentPosition().getPoiList().get(0);
+		healedVictim = f.getCurrentPosition().getPoiList().get(index);
+		
+//		if (f.getSpeciality() == Speciality.PARAMEDIC) {
+//			if (f.getFollow() != null) { //to drop
+//				title = ActionList.Drop;
+//				return true;
+//			}
+//			else if (f.getFollow() == null && healedVictim.isResuscitated()) { //to pick
+//				title = ActionList.Pick;
+//				return true;
+//			}
+//		}
+		
+		 
+
+		if (f.getCarriedPOI() != null) { //to drop
+			title = ActionList.Drop;
+			healedVictim  = f.getCarriedPOI();
+			return true;
 		}
-		else {
-			return false;
-		}
-		if (f.getSpeciality() == Speciality.PARAMEDIC) {
-			if (f.getFollow() != null) { //to drop
-				title = ActionList.Drop;
-				return true;
+		else if (f.getCarriedPOI() == null && healedVictim.isHealed() && !healedVictim.hasLeader()) { //to pick
+			title = ActionList.Pick;
+			return true;
 			}
-			else if (f.getFollow() == null && healedVictim.isResuscitated()) { //to pick
-				title = ActionList.Pick;
-				return true;
-			}
-		}
 		return false;
 	}
 

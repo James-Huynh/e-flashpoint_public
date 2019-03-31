@@ -22,7 +22,7 @@ public class Firefighter extends Token {
 	public Speciality speciality;
 	protected int SP;
 	private static final long serialVersionUID = 1L;
-	protected POI follow;
+	protected POI carrying;
 	protected boolean ifCommandCAPSthisTurn;
 	
 	
@@ -36,7 +36,7 @@ public class Firefighter extends Token {
 		this.myColour = setColour;
 		this.speciality = null;
 		this.SP = 0;
-		this.follow = null;
+		this.carrying = null;
 		this.ifCommandCAPSthisTurn = false;
 		//Colour = Player.getColour();
 	}
@@ -76,7 +76,7 @@ public class Firefighter extends Token {
 			this.SP = 0;
 		}
 		
-		this.follow = null;
+		this.carrying = null;
 		this.ifCommandCAPSthisTurn = false;
 		
 	}
@@ -114,8 +114,8 @@ public class Firefighter extends Token {
 		return this.SP;
 	}
 	
-	public POI getFollow() {
-		return this.follow;
+	public POI getCarriedPOI() {
+		return this.carrying;
 	}
 	
 	public boolean getIfCommandCAPSthisTurn() {
@@ -194,8 +194,8 @@ public class Firefighter extends Token {
 		this.SP = SP;
 	}
 	
-	public void setFollow(POI victim) {
-		follow = victim;
+	public void setCarriedPOI(POI victim) {
+		carrying = victim;
 	}
 	
 	public void setIfCommandCAPSthisTurn(boolean value) {
@@ -241,7 +241,7 @@ public class Firefighter extends Token {
 	public String toString() {
 		return "Firefighter [AP=" + AP + ", savedAP=" + savedAP + ", carryingVictim=" + carryingVictim + ", victim="
 				+ victim.toString() + ", myColour=" + myColour.toString() + ", myPlayer=" + myPlayer.toString() + ", speciality=" + speciality.toString() + ", SP="
-				+ SP + ", follow=" + follow.toString() + ", ifCommandCAPSthisTurn=" + ifCommandCAPSthisTurn + ", x=" + x + ", y="
+				+ SP + ", follow=" + carrying.toString() + ", ifCommandCAPSthisTurn=" + ifCommandCAPSthisTurn + ", x=" + x + ", y="
 				+ y + ", tileOn=" + tileOn.toString() + "]";
 	}
 

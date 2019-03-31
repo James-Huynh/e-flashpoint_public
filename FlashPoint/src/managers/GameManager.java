@@ -377,11 +377,13 @@ public class GameManager {
 //			allPossibleActions.add(new PickOrDrop(p)); 
 //			allPossibleActions.add(new Resuscitate(p));
 		}
-//		if(currentLocation.getPoiList().size() > 0) {
-//			allPossibleActions.add(new Resuscitate(currentLocation.getPoiList().get(0), currentLocation.getCoords()));
-//		}
-		allPossibleActions.add(new PickOrDrop());
-		allPossibleActions.add(new Resuscitate());
+		
+		for(int i=0; i<currentLocation.getPoiList().size();i++) {
+			allPossibleActions.add(new Resuscitate(i));
+			allPossibleActions.add(new PickOrDrop(i));
+		}
+//		allPossibleActions.add(new PickOrDrop());
+//		allPossibleActions.add(new Resuscitate());
 		
 		
 //		//FireCaptain - Command

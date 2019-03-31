@@ -94,9 +94,14 @@ public class Move extends Action {
         }
         
         //speciality paramedic
-        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null && neighbour.getFire() == 2) {
+//        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null && neighbour.getFire() == 2) {
+//        	flag = false;
+//        }
+        
+        if (playingFirefighter.getCarriedPOI() != null && neighbour.getFire() == 2) {
         	flag = false;
         }
+        
         
         return flag;
     }
@@ -155,10 +160,16 @@ public class Move extends Action {
         }
         
       //speciality paramedic
-        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null) {
-        	playingFirefighter.getFollow().setCurrentPosition(neighbour);
-        	currentPosition.getPoiList().remove(playingFirefighter.getFollow());
-        	neighbour.getPoiList().add(playingFirefighter.getFollow());
+//        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null) {
+//        	playingFirefighter.getFollow().setCurrentPosition(neighbour);
+//        	currentPosition.getPoiList().remove(playingFirefighter.getFollow());
+//        	neighbour.getPoiList().add(playingFirefighter.getFollow());
+//        }
+        
+        if (playingFirefighter.getCarriedPOI() != null) {
+        	playingFirefighter.getCarriedPOI().setCurrentPosition(neighbour);
+        	currentPosition.getPoiList().remove(playingFirefighter.getCarriedPOI());
+        	neighbour.getPoiList().add(playingFirefighter.getCarriedPOI());
         }
     }
     
