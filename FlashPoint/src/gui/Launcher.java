@@ -56,7 +56,7 @@ public class Launcher {
 	private String MatIP = "142.157.63.60";
 	
 	private static Client client;
-	private String ServerIP = MatIP;
+	private String ServerIP = "142.157.24.187";
 
 	int port = 8888;
 	User userOne = new User();
@@ -325,12 +325,13 @@ public class Launcher {
 	private void setUpLoadPage() {
 		loadGame = new LoadGamePanel(this.clientManager);
 		
-		loadGame.addSelectionPiecesListenerListener(new LoadGameSetUpListener() {
+		loadGame.addSelectionPiecesListenerListener(new personalizedlisteners.loadGameListeners.LoadGameSetUpListener() {
 			@Override
 			public void clickLoadGame() {
-				findLobby.setVisible(false);
+				loadGame.setVisible(false);
 				motherFrame.remove(loadGame);
 				setupLobbyPage();
+				System.out.println("finshed load Game");
 			}
 		});
 		
@@ -341,9 +342,12 @@ public class Launcher {
 	
 	//	LOBBY ------------------------------- 
 	private void setupLobbyPage() {
+		System.out.println("setting up lobby page" + clientManager.getLobby().getDifficulty());
 		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION,this.clientManager);
 		contentPane.add(lobby);
 		listenerThread.begin();
+		
+		System.out.println("lobby?"+clientManager.getLobby().getMode());
 		if(clientManager.getLobby().getPlayers().get(0).getUserName().equals(clientManager.getUserName())) {
 			lobby.addSelectionPiecesListenerListener(new StartListener() {
 				public void clickStart(boolean flag) {

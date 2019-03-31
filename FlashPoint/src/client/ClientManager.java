@@ -111,8 +111,10 @@ public class ClientManager {
 				System.out.println("Successful saved game lobby request");
 				requestObject = (User) read_tranObject.getObject();
 				currentLobby = requestObject.getCurrentLobby();
+
+				System.out.println("setting up lobby page" + currentLobby.getDifficulty());
 				flag = true;
-				startGameFlag = 2;
+				//startGameFlag = 2;
 				break;
 			case REQUESTSAVEDLISTSUCCESS:
 				System.out.println("Successful list of savedGames request");
@@ -355,11 +357,24 @@ public class ClientManager {
 
 	}
 	
-	public boolean savedGameListRequest(){
+	public void savedGameListRequest(){
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REQUESTSAVEDLIST);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
-		return true;
+		
+		try {
+			while(readMessage() != true) {
+				
+			}
+			
+		}
+		
+		catch(Exception E) {
+			System.out.println("Exception occured during sacedGameListRequest.");
+		}
+		
+		
+		
 	}
 	public ArrayList<GameState> getSavedGameStates(){
 		return requestObject.getsavedGameStates();

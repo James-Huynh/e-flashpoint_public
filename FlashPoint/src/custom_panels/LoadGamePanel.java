@@ -47,6 +47,7 @@ public class LoadGamePanel extends JPanel {
 		this.clientManager = clientmanager;
 		clientmanager.savedGameListRequest();
 		savedGames = clientmanager.getSavedGameStates();
+		System.out.println("list length is: " + savedGames.size() );
 		
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
@@ -86,7 +87,7 @@ public class LoadGamePanel extends JPanel {
 //		listEntries.add(entry_4);
 //		listEntries.add(entry_5);
 
-		for (int i = 0; i < savedGames.size(); i++) {
+		for (int i = 1; i <= savedGames.size(); i++) {
 //			JLabel currEntry = listEntries.get(i);
 //
 //			currEntry = new JLabel();
@@ -96,8 +97,6 @@ public class LoadGamePanel extends JPanel {
 			currEntry.setBackground(Color.white);
 			currEntry.setOpaque(true);
 			currEntry.setText("GameSave: " + i); // we can give it a more distinct name to be more uniquely idetified
-			
-			listEntries.add(currEntry);
 			
 			
 			
@@ -118,6 +117,7 @@ public class LoadGamePanel extends JPanel {
 					}
 				}
 			});
+			listEntries.add(currEntry);
 			pnl_main.add(currEntry);
 
 		}

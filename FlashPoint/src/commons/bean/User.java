@@ -243,7 +243,7 @@ public class User implements Serializable {
 	}
 	
 	public ArrayList<GameState> getsavedGameStates(){
-		return this.getsavedGameStates();
+		return this.savedGameStates;
 	}
 
 //	public int getImg() {

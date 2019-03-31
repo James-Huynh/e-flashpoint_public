@@ -161,10 +161,10 @@ public class ServerInputThread extends Thread {
 				//serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));  //
 				//serverManager.getLobby().setDifficulty("serverManager.getGameState().getDifficulty()");
 				//serverManager.getLobby().setMode("mode");
-				returnGameState = new TranObject<GameState>(TranObjectType.LOADSAVESUCCESS);
-				returnGameState.setObject(serverManager.getGameState());
+				returnObject = new TranObject<User>(TranObjectType.LOADSAVESUCCESS);
+				returnObject.setObject(requestObject);
 				for (OutputThread onOut : map.getAll()) {
-					onOut.setMessage(returnGameState);
+					onOut.setMessage(returnObject);
 				}
 				break;
 			
@@ -297,6 +297,8 @@ public class ServerInputThread extends Thread {
 				returnObject = new TranObject<User>(TranObjectType.REQUESTSAVEDLISTSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				requestObject.setSavedGameStates(serverManager.getSavedGames());
+
+				System.out.println("list length is: " + requestObject.getsavedGameStates().size() );
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;

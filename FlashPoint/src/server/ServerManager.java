@@ -201,7 +201,8 @@ public class ServerManager {
 		//@eric take the current game state and save it here
 		//@junha, I move part of ur code into the Class GameSaver
 		GameSaver g=new GameSaver();
-		g.start(gameState);
+		//g.start(gameState);
+		g.saveObjectByObjectOutput(gameState);
 //		try {
 //			int savedGameNumber = new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\src\\savedGame").listFiles().length; //check how many games are already saved
 //			FileOutputStream f = new FileOutputStream(new File("savedGame" + (savedGameNumber++) + ".txt")); //save it as "savedGame#.txt"

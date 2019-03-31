@@ -33,7 +33,7 @@ public class GameSaver {
 	public  void start(GameState gs) throws IOException {
 		
 		
-		saveObjectByObjectOutput(gs,createFile(filename));
+	//	saveObjectByObjectOutput(gs,createFile(filename));
     
 	}
     
@@ -61,10 +61,10 @@ public class GameSaver {
     }
 
 
-	public static void saveObjectByObjectOutput(Object o, File file) {
+	public static void saveObjectByObjectOutput(Object o/*, File file*/) {
         try {
-        	int savedGameNumber = new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\src\\savedGame").listFiles().length; //check how many games are already saved
-        	FileOutputStream f = new FileOutputStream(new File("savedGame" + (savedGameNumber++) + ".txt")); //save it as "savedGame#.txt"
+        	int savedGameNumber = new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\savedGames").listFiles().length; //check how many games are already saved
+        	FileOutputStream f = new FileOutputStream(new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\savedGames\\savedGame" + (savedGameNumber++) + ".txt")); //save it as "savedGame#.txt"
         	ObjectOutputStream ob = new ObjectOutputStream(f);
             ob.writeObject(o);
        
