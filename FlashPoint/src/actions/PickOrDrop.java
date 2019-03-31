@@ -9,7 +9,6 @@ public class PickOrDrop extends Action {
 
 	private static final long serialVersionUID = 1L;
 	protected ActionList title;
-	protected POI healedVictim;
 	protected int index;
 
 	public PickOrDrop(int i) {
@@ -19,28 +18,26 @@ public class PickOrDrop extends Action {
 	
 	public PickOrDrop(POI healedVictim) {
 		APcost = 0;
-		this.healedVictim = healedVictim;
 	}
 
 	@Override
 	public void perform(GameState gs) {
 		Firefighter f = gs.getPlayingFirefighter();
+		POI healedVictim = f.getCurrentPosition().getPoiList().get(index);
 		if (title == ActionList.Drop){
 			f.setCarriedPOI(null);
-			healedVictim.setLeader(null);
-//			healedVictim.setResuscitate(null);
+			f.getCurrentPosition().getPoiList().get(index).setLeader(null);
 		}
 		else {
 			f.setCarriedPOI(healedVictim);
-			healedVictim.setLeader(f);
-//			healedVictim.setResuscitate(f);
+			f.getCurrentPosition().getPoiList().get(index).setLeader(f);
 		}
 	}
 
 	@Override
 	public boolean validate(GameState gs) {
 		Firefighter f = gs.getPlayingFirefighter();
-		healedVictim = f.getCurrentPosition().getPoiList().get(index);
+		POI healedVictim = f.getCurrentPosition().getPoiList().get(index);
 		
 //		if (f.getSpeciality() == Speciality.PARAMEDIC) {
 //			if (f.getFollow() != null) { //to drop

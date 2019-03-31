@@ -12,11 +12,11 @@ public class FlipPOI extends Action {
 
 	private static final long serialVersionUID = 1L;
 	protected ActionList title = ActionList.Flip;
-	protected POI victim;
+//	protected POI victim;
 	protected int[] tileLocation;
 	
-	public FlipPOI(POI victim, int[] loc) {
-		this.victim = victim;
+	public FlipPOI(int[] loc) {
+//		this.victim = victim;
 		this.APcost = 1;
 		this.tileLocation = loc;
 	}
@@ -28,11 +28,10 @@ public class FlipPOI extends Action {
 	@Override
 	public void perform(GameState gs) {
 		gs.getPlayingFirefighter().setAP(gs.getPlayingFirefighter().getAP() - APcost);
-		victim = gs.returnTile(tileLocation[0], tileLocation[1]).getPoiList().get(0);
+		POI victim = gs.returnTile(tileLocation[0], tileLocation[1]).getPoiList().get(0);
 		if (victim.isVictim()) {
 			System.out.println("Revealing victim");
 			victim.reveal();
-			System.out.println(gs.returnTile(tileLocation[0], tileLocation[1]).getPoiList().get(0)==victim);
 		}
 		else {
 			gs.returnTile(tileLocation[0], tileLocation[1]).removeFirstPoi();
@@ -44,6 +43,7 @@ public class FlipPOI extends Action {
 	@Override
 	public boolean validate(GameState gs) {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
+		POI victim = gs.returnTile(tileLocation[0], tileLocation[1]).getPoiList().get(0);
 		int aP = playingFirefighter.getAP();
 		if (playingFirefighter.getSpeciality() == (Speciality.IMAGING_TECHNICIAN)) {
 			if (!victim.isRevealed()) {

@@ -9,7 +9,7 @@ import token.Speciality;
 public class Resuscitate extends Action{
 
 	private static final long serialVersionUID = 1L;
-	protected POI victim;
+//	protected POI victim;
 	protected ActionList title;
 	protected int[] tileLocation;
 	protected int index;
@@ -19,7 +19,7 @@ public class Resuscitate extends Action{
 	}
 	
 	public Resuscitate(POI victim, int[] loc) {
-		this.victim = victim;
+//		this.victim = victim;
 		this.title = ActionList.Resuscitate;
 		this.APcost = 1;
 		this.tileLocation = loc;
@@ -63,9 +63,10 @@ public class Resuscitate extends Action{
 //        }
         
         //New one
+        POI victim = currentPosition.getPoiList().get(index);
         if (playingFirefighter.speciality == (Speciality.PARAMEDIC)) {
         		if (aP >= APcost) {
-        			if (!currentPosition.getPoiList().get(index).isHealed()) {
+        			if (!victim.isHealed()) {
         				System.out.println("Returning true in Resuscitate");
         				return true;
         			}
@@ -81,8 +82,10 @@ public class Resuscitate extends Action{
 
 	@Override
 	public String toString() {
-		return "Resuscitate [victim=" + victim + ", title=" + title + ", APcost=" + APcost + ", direction=" + direction
+		return ", title=" + title + ", APcost=" + APcost + ", direction=" + direction
 				+ "]";
+//		return "Resuscitate [victim=" + victim + ", title=" + title + ", APcost=" + APcost + ", direction=" + direction
+//				+ "]";
 	}
 
 	

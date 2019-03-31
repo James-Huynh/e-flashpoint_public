@@ -401,7 +401,7 @@ public class GameManager {
 			for(int j=0;j<gs.getMatTiles()[i].length;j++) {
 				Tile t = gs.getMatTiles()[i][j];
 				if(t.containsPOI()) {
-					allPossibleActions.add(new FlipPOI(t.getPoiList().get(0), t.getCoords()));
+					allPossibleActions.add(new FlipPOI(t.getCoords()));
 				}
 			}
 		}

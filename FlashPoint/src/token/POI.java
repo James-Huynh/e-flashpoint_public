@@ -62,7 +62,6 @@ public class POI extends Token implements Serializable {
     
     public void reveal() {
         //Invoke placing POI
-    	System.out.println("REVEALING");
     	revealed = true;
     }
     

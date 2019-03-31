@@ -171,11 +171,13 @@ public class Move extends Action {
 //        	currentPosition.getPoiList().remove(playingFirefighter.getCarriedPOI());
         	for(int i=0; i<currentPosition.getPoiList().size();i++) {
         		POI p = currentPosition.getPoiList().get(i);
-        		if(p.getLeader() == playingFirefighter) {
-        			currentPosition.getPoiList().remove(i);
+//        		System.out.println(p.getLeader());
+        		if(p.getLeader().getColour() == playingFirefighter.getColour()) {
+//        			currentPosition.getPoiList().remove(i);
+        			neighbour.getPoiList().add(currentPosition.getPoiList().remove(i));
         		}
         	}
-        	neighbour.getPoiList().add(playingFirefighter.getCarriedPOI());
+//        	neighbour.getPoiList().add(playingFirefighter.getCarriedPOI());
         }
     }
     
