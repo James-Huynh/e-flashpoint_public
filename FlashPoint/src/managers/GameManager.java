@@ -374,10 +374,15 @@ public class GameManager {
 //		
 //		//Helper for Paramedic - PickOrDrop
 		for(POI p: currentLocation.getPoiList()) {
-			allPossibleActions.add(new PickOrDrop(p)); 
+//			allPossibleActions.add(new PickOrDrop(p)); 
 //			allPossibleActions.add(new Resuscitate(p));
 		}
-		allPossibleActions.add(new Resuscitate(currentLocation.getPoiList().get(0), currentLocation.getCoords()));
+//		if(currentLocation.getPoiList().size() > 0) {
+//			allPossibleActions.add(new Resuscitate(currentLocation.getPoiList().get(0), currentLocation.getCoords()));
+//		}
+		allPossibleActions.add(new PickOrDrop());
+		allPossibleActions.add(new Resuscitate());
+		
 		
 //		//FireCaptain - Command
 //		/*Constructor needs FF and Action

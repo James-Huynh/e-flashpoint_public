@@ -39,8 +39,9 @@ public class Resuscitate extends Action{
 
 	@Override
 	public boolean validate(GameState gs) {
-		victim = gs.returnTile(tileLocation[0], tileLocation[1]).getPoiList().get(0);
+		//victim = gs.returnTile(tileLocation[0], tileLocation[1]).getPoiList().get(0);
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
+		victim = playingFirefighter.getCurrentPosition().getPoiList().get(0);
         int aP = playingFirefighter.getAP();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         if (playingFirefighter.speciality == (Speciality.PARAMEDIC)) {
