@@ -22,6 +22,10 @@ public class Resuscitate extends Action{
 		this.APcost = 1;
 	}
 	
+	public ActionList getTitle() {
+		return title;
+	}
+	
 	@Override
 	public void perform(GameState gs) {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
