@@ -3,7 +3,8 @@ package token;
 import tile.Tile;
 
 public class Hazmat extends Token {
-	
+
+	private static final long serialVersionUID = 1L;
 	private boolean disposed;
 	
 	public Hazmat() {
@@ -24,4 +25,10 @@ public class Hazmat extends Token {
 	public void setDisposed() {
 		this.disposed = !disposed;
 	}
+
+	@Override
+	public String toString() {
+		return "Hazmat [disposed=" + disposed + ", x=" + x + ", y=" + y + ", tileOn=" + tileOn.toString() + "]";
+	}
+	
 }

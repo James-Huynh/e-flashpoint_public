@@ -58,4 +58,12 @@ public class Player implements Serializable {
     public Integer getID() {
     	return this.ID;
     }
+
+	@Override
+	public String toString() {
+		return "Player [userName=" + userName + ", password=" + password + ", myColour=" + myColour.toString() + ", myFireFighter="
+				+ myFireFighter.toString() + ", ID=" + ID + "]";
+	}
+    
+    
 }

@@ -1,6 +1,7 @@
 package edge;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import tile.Tile;
 // End of user code
@@ -48,5 +49,12 @@ public abstract class Edge  implements Serializable{
     public abstract void destroyDoor();
     public abstract void destroyWall();
     public abstract void change();
+
+	@Override
+	public String toString() {
+		return "Edge [tiles=" + Arrays.toString(tiles) + "]";
+	}
+    
+    
     
 }

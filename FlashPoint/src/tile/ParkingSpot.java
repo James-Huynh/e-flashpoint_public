@@ -70,7 +70,7 @@ public class ParkingSpot implements Serializable{
 
 	@Override
 	public String toString() {
-		return "ParkingSpot [parkingType=" + parkingType + ", tiles=" + Arrays.toString(tiles) + ", isCar=" + isCar
+		return "ParkingSpot [parkingType=" + parkingType.toString() + ", tiles=" + Arrays.toString(tiles) + ", isCar=" + isCar
 				+ "]";
 	}
     
