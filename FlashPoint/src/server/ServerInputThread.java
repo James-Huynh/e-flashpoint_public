@@ -300,7 +300,7 @@ public class ServerInputThread extends Thread {
 			case SPECIALITYSELECTREQUEST:
 				System.out.println("Speciality selection request");
 				requestObject = (User) read_tranObject.getObject();
-				serverManager.setSpeciality(requestObject.getName(), requestObject.getDesiredSpeciality() );
+				serverManager.setSpeciality(requestObject, requestObject.getDesiredSpeciality() );
 				returnGameState = new TranObject<GameState>(TranObjectType.SPECIALITYSELECTED);
 				returnGameState.setObject(serverManager.getGameState());
 				for (OutputThread onOut : map.getAll()) {

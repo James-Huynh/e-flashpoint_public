@@ -241,23 +241,33 @@ public class ServerManager {
 
 	}
 
-	public void setSpeciality(String name, Speciality desiredSpeciality) {
+	public void setSpeciality(User person, Speciality desiredSpeciality) {
 		int count = 0;
 		if(gameState.getFreeSpecialities().contains(desiredSpeciality)) {
-			for(Player p: gameState.getListOfPlayers()) {
-				if(p.getUserName().equals(name)) {
-					if(gameState.getFireFighterList().get(count).getSpeciality()!=null) {
-						gameState.addFreedSpeciality(gameState.getFireFighterList().get(count).getSpeciality());
-						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
-						gameState.removeSelectedSpeciality(desiredSpeciality);
-					}else {
-						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
-						gameState.removeSelectedSpeciality(desiredSpeciality);
-					}
-					
-					count++;
-				}
+			Player player = onlinePlayers.get(person.getId());
+			if(player.getFirefighter().getSpeciality()!=null) {
+				gameState.addFreedSpeciality(player.getFirefighter().getSpeciality());
+				player.getFirefighter().setSpeciality(desiredSpeciality);
+				gameState.removeSelectedSpeciality(desiredSpeciality);
+			}else {
+				player.getFirefighter().setSpeciality(desiredSpeciality);
+				gameState.removeSelectedSpeciality(desiredSpeciality);
 			}
+			
+//			for(Player p: gameState.getListOfPlayers()) {
+//				if(p.getUserName().equals(person.getName())) {
+//					if(gameState.getFireFighterList().get(count).getSpeciality()!=null) {
+//						gameState.addFreedSpeciality(gameState.getFireFighterList().get(count).getSpeciality());
+//						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
+//						gameState.removeSelectedSpeciality(desiredSpeciality);
+//					}else {
+//						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
+//						gameState.removeSelectedSpeciality(desiredSpeciality);
+//					}
+//					
+//					count++;
+//				}
+//			}
 		}
 		
 	}
