@@ -1822,7 +1822,7 @@ public class Table {
 			    	//advanced actions
 			    	
 			    	else if (clientManager.getUsersGameState().isExperienced()) {
-			    		
+			    		System.out.println("experienced Aciton");
 		    	        if(actionTitle == ActionList.Change) {
 			    			if(a.getToSpecialty() == Speciality.CAFS) {
 			    				builder = "To CAFS. APC: " + APCost;
@@ -2498,7 +2498,7 @@ public class Table {
 				for(Firefighter f : clientManager.getUsersGameState().getFireFighterList()) {
 					if(f.getSpeciality() == null) flag = false;
 				}
-				if(flag || myIndex == 0) {
+				if(flag && myIndex == 0) {
 					JMenuItem start = new JMenuItem("End Selection");
 					
 					start.addActionListener(new ActionListener() {
