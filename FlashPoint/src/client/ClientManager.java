@@ -101,6 +101,19 @@ public class ClientManager {
 				flag = true;
 				System.out.println(requestObject.getCurrentLobby().getPlayers().get(0).getUserName()); //this is tester
 				break;
+			case LOADSAVESUCCESS:
+				System.out.println("Successful saved game lobby request");
+				requestObject = (User) read_tranObject.getObject();
+				currentLobby = requestObject.getCurrentLobby();
+				flag = true;
+				startGameFlag = 2;
+				break;
+			case REQUESTSAVEDLISTSUCCESS:
+				System.out.println("Successful list of savedGames request");
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
+				break;
+				
 			case FINDLOBBYSUCCESS:
 				System.out.println("Successful findlobby request");
 				requestObject = (User) read_tranObject.getObject();
@@ -254,6 +267,7 @@ public class ClientManager {
 		lobby.setCapacity(capacity);
 		lobby.setDifficulty(difficulty);
 		lobby.setBoard(board);
+		lobby.setIsLoadGame(false);
 		
 		lobby.createTemplate();
 		
@@ -281,10 +295,15 @@ public class ClientManager {
 	
 	public boolean gameStateRequest(User userOne) {
 		boolean flag = false;
+		if(requestObject.getCurrentLobby().getIsLoadGame() == false) {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.STARTGAMESTATE);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
-
+		}else {
+			TranObject<User> objectToSend = new TranObject<User>(TranObjectType.STARTSAVEDGAMESTATE);
+			objectToSend.setObject(requestObject);
+			outputThread.setMsg(objectToSend);
+		}
 //		try {
 //			while(readMessage() != true) {
 //				
@@ -328,6 +347,16 @@ public class ClientManager {
 //		return requestObject.getCurrentState();
 		return true;
 
+	}
+	
+	public boolean savedGameListRequest(){
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REQUESTSAVEDLIST);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
+	}
+	public ArrayList<GameState> getSavedGameStates(){
+		return requestObject.getsavedGameStates();
 	}
 	
 	public GameState getUsersGameState() {
@@ -478,16 +507,34 @@ public class ClientManager {
 		this.endTurnTrigger = endTurnTrigger;
 	}
 	
-	public boolean loadGameRequest(int num) {
+	public boolean loadGameRequest(int savedGameNum) {
+		boolean flag = false;
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOADSAVE);
-		requestObject.setNum(num);
+		requestObject.setNum(savedGameNum); //which # savedGame the player selected
 		
-		//create new Lobby 
-		//set it to User
+		Lobby lobby = new Lobby();
+		lobby.setIsLoadGame(true);
+		//lobby.setCapacity(capacity)
+		
+		
+		requestObject.setCurrentLobby(lobby);
 		
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
-		return true;
+		
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		
+		catch(Exception E) {
+			System.out.println("Exception occured during createLobbyRequest.");
+		}
+		
+		
+		return flag;
 	}
 	
 	public boolean sendMsgRequest(TextMessage message) {

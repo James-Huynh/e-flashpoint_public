@@ -152,17 +152,21 @@ public class ServerInputThread extends Thread {
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnObject);
 				}
+				break;
 			case LOADSAVE:
 				System.out.println("load request received");
 				requestObject = (User) read_tranObject.getObject();
-				
-				serverManager.loadGame(requestObject.getNum());
 				serverManager.setLobby(requestObject.getCurrentLobby());
-				serverManager.getLobby().setCapacity(serverManager.getGameState().getListOfPlayers().size());
-				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
-				serverManager.getLobby().setDifficulty("serverManager.getGameState().getDifficulty()");
-				serverManager.getLobby().setMode("mode");
-				
+				//serverManager.getLobby().setCapacity(serverManager.getGameState().getListOfPlayers().size());
+				//serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));  //
+				//serverManager.getLobby().setDifficulty("serverManager.getGameState().getDifficulty()");
+				//serverManager.getLobby().setMode("mode");
+				returnGameState = new TranObject<GameState>(TranObjectType.LOADSAVESUCCESS);
+				returnGameState.setObject(serverManager.getGameState());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
+				break;
 			
 			case STARTGAMESTATE:
 				//System.out.println("In game state update request");
@@ -174,6 +178,15 @@ public class ServerInputThread extends Thread {
 //				returnObject.setObject(requestObject);
 				returnGameState.setObject(serverManager.getGameState());
 //				out.setMessage(returnGameState);
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
+				break;
+			case STARTSAVEDGAMESTATE:
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.loadGame(requestObject.getNum());
+				returnGameState = new TranObject<GameState>(TranObjectType.STARTSAVEDGAMESTATESUCCESS);
+				returnGameState.setObject(serverManager.getGameState()); // this was already done earlier
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnGameState);
 				}
