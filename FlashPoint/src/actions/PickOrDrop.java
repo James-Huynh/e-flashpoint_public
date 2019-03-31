@@ -49,5 +49,10 @@ public class PickOrDrop extends Action {
 	public void adjustAction(GameState gs) {
 
 	}
+	
+	public ActionList getTitle() {
+		System.out.println(this.title);
+    	return this.title;
+    }
 
 }

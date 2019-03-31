@@ -42,10 +42,9 @@ public class Resuscitate extends Action{
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         if (playingFirefighter.speciality == (Speciality.PARAMEDIC)) {
         	if (currentPosition.getPoiList().contains(victim)){
-        		System.out.println("Returning right POI");
         		if (aP >= APcost) {
         			if (!victim.isResuscitated()) {
-        				System.out.println("Returning true");
+        				System.out.println("Returning true in Resuscitate");
         				return true;
         			}
         		}

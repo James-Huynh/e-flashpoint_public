@@ -15,6 +15,10 @@ public class RemoveHazmat extends Action {
 		this.APcost = 2;
 	}
 	
+	public ActionList getTitle() {
+    	return this.title;
+    }
+	
 	@Override
 	public void perform(GameState gs) {
 		gs.getPlayingFirefighter().setAP( gs.getPlayingFirefighter().getAP() - APcost);
