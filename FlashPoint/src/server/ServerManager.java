@@ -228,7 +228,7 @@ public class ServerManager {
 	public void loadGame(int gameNumber) {
 		//when loading a game, change the myowner and my firefighter also change the firefighter name;
 		try {
-			FileInputStream fi = new FileInputStream(new File("savedGame" + gameNumber + ".txt"));
+			FileInputStream fi = new FileInputStream(new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\savedGames\\savedGame" + gameNumber + ".txt"));
 			ObjectInputStream oi = new ObjectInputStream(fi);
 			
 			this.gameState = (GameState) oi.readObject();

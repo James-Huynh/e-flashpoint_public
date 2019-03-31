@@ -303,7 +303,7 @@ public class ClientManager {
 	
 	public boolean gameStateRequest(User userOne) {
 		boolean flag = false;
-		if(requestObject.getCurrentLobby().getIsLoadGame() == false) {
+		if(!requestObject.getCurrentLobby().getIsLoadGame()) {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.STARTGAMESTATE);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
