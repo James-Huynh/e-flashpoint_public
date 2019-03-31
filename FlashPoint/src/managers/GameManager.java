@@ -375,12 +375,13 @@ public class GameManager {
 //		//Helper for Paramedic - PickOrDrop
 		for(POI p: currentLocation.getPoiList()) {
 			allPossibleActions.add(new PickOrDrop(p)); 
-			allPossibleActions.add(new Resuscitate(p));
+//			allPossibleActions.add(new Resuscitate(p));
 		}
+		allPossibleActions.add(new Resuscitate(currentLocation.getPoiList().get(0), currentLocation.getCoords()));
 		
 //		//FireCaptain - Command
 //		/*Constructor needs FF and Action
-//		 * So loop over allPlayingFF's and all legal Actions
+//		 * So loop over allPlayingFF's and all legal Actionss
 //		 * and see if they validate? -- Correct, just implement!
 //		 */
 

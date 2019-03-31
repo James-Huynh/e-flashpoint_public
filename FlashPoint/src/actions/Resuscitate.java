@@ -11,15 +11,17 @@ public class Resuscitate extends Action{
 	private static final long serialVersionUID = 1L;
 	protected POI victim;
 	protected ActionList title;
+	protected int[] tileLocation;
 	
 	public Resuscitate() {
 		this.APcost = 1;
 	}
 	
-	public Resuscitate(POI victim) {
-		this.victim = victim;
+	public Resuscitate(POI victim, int[] loc) {
+//		this.victim = victim;
 		this.title = ActionList.Resuscitate;
 		this.APcost = 1;
+		this.tileLocation = loc;
 	}
 	
 	public ActionList getTitle() {
@@ -37,6 +39,7 @@ public class Resuscitate extends Action{
 
 	@Override
 	public boolean validate(GameState gs) {
+		victim = gs.returnTile(tileLocation[0], tileLocation[1]).getPoiList().get(0);
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
