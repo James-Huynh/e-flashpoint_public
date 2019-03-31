@@ -1,6 +1,7 @@
 package actions;
 
 import game.GameState;
+import tile.ParkingSpot;
 import token.Firefighter;
 import token.Speciality;
 import token.Vehicle;
@@ -21,6 +22,10 @@ public class Change extends Action {
 		this.toSpeciality = toSpeciality;
 	}
 	
+    public ActionList getTitle() {
+    	return title;
+    }
+	
 	@Override
 	public void perform(GameState gs) {
 		Firefighter current = gs.getPlayingFirefighter();
@@ -34,12 +39,29 @@ public class Change extends Action {
 	public boolean validate(GameState gs) {
 		Firefighter current = gs.getPlayingFirefighter();
 		boolean flag = false;
-
-		if (current.getAP() >= APcost && current.getCurrentPosition().getParkingSpot().getParkingType() == Vehicle.Engine && current.getCurrentPosition().getParkingSpot().getCar() == true) {
-			if (gs.getFreeSpecialities().contains(toSpeciality) || toSpeciality == (null)) {
-				flag = true;
+//
+//		if (current.getAP() >= APcost && current.getCurrentPosition().getParkingSpot().getParkingType() == Vehicle.Engine && current.getCurrentPosition().getParkingSpot().getCar() == true) {
+//			if (gs.getFreeSpecialities().contains(toSpeciality) || toSpeciality == (null)) {
+//				flag = true;
+//			}
+//		}
+		//New one
+		if(current.getCurrentPosition().getParkingSpot() != null) {
+			System.out.println("Got i");
+			ParkingSpot p = current.getCurrentPosition().getParkingSpot();
+			if(p.getParkingType() == Vehicle.Engine && p.getCar() == true) {
+				System.out.println("Got in");
+				if(current.getAP() >= APcost) {
+					System.out.println("Got inner");
+					if (gs.getFreeSpecialities().contains(toSpeciality) || toSpeciality == (null)) {
+						System.out.println("Got innest");
+						flag = true;
+					}
+				}
 			}
 		}
+		System.out.print("The flag is");
+		System.out.println(flag);
 		return flag;
 	}
 	

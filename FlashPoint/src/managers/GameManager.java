@@ -410,9 +410,9 @@ public class GameManager {
 		allPossibleActions.add(new RemoveHazmat()); 
 		
 //		//Crew Change - Change  
-//		for(Speciality s: Speciality.values()) {
-//			allPossibleActions.add(new Change(s)); //Need to make this only on first turn -- ask Ben
-//    	}
+		for(Speciality s: Speciality.values()) {
+			allPossibleActions.add(new Change(s)); //Need to make this only on first turn -- ask Ben
+    	}
 		
     	//finish
     	allPossibleActions.add(new Finish());
