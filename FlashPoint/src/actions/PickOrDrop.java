@@ -36,7 +36,12 @@ public class PickOrDrop extends Action {
 	@Override
 	public boolean validate(GameState gs) {
 		Firefighter f = gs.getPlayingFirefighter();
-		healedVictim = f.getCurrentPosition().getPoiList().get(0);
+		if(f.getCurrentPosition().getPoiList().size() > 0) {
+			healedVictim = f.getCurrentPosition().getPoiList().get(0);
+		}
+		else {
+			return false;
+		}
 		if (f.getSpeciality() == Speciality.PARAMEDIC) {
 			if (f.getFollow() != null) { //to drop
 				title = ActionList.Drop;
