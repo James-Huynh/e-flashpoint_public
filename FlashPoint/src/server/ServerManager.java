@@ -201,7 +201,8 @@ public class ServerManager {
 		//@eric take the current game state and save it here
 		//@junha, I move part of ur code into the Class GameSaver
 		GameSaver g=new GameSaver();
-		g.start(gameState);
+		//g.start(gameState);
+		g.saveObjectByObjectOutput(gameState);
 //		try {
 //			int savedGameNumber = new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\src\\savedGame").listFiles().length; //check how many games are already saved
 //			FileOutputStream f = new FileOutputStream(new File("savedGame" + (savedGameNumber++) + ".txt")); //save it as "savedGame#.txt"
@@ -320,23 +321,33 @@ public class ServerManager {
     	this.savedGames.remove(gs);
     }
 
-	public void setSpeciality(String name, Speciality desiredSpeciality) {
+	public void setSpeciality(User person, Speciality desiredSpeciality) {
 		int count = 0;
 		if(gameState.getFreeSpecialities().contains(desiredSpeciality)) {
-			for(Player p: gameState.getListOfPlayers()) {
-				if(p.getUserName().equals(name)) {
-					if(gameState.getFireFighterList().get(count).getSpeciality()!=null) {
-						gameState.addFreedSpeciality(gameState.getFireFighterList().get(count).getSpeciality());
-						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
-						gameState.removeSelectedSpeciality(desiredSpeciality);
-					}else {
-						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
-						gameState.removeSelectedSpeciality(desiredSpeciality);
-					}
-					
-					count++;
-				}
+			Player player = onlinePlayers.get(person.getId());
+			if(player.getFirefighter().getSpeciality()!=null) {
+				gameState.addFreedSpeciality(player.getFirefighter().getSpeciality());
+				player.getFirefighter().setSpeciality(desiredSpeciality);
+				gameState.removeSelectedSpeciality(desiredSpeciality);
+			}else {
+				player.getFirefighter().setSpeciality(desiredSpeciality);
+				gameState.removeSelectedSpeciality(desiredSpeciality);
 			}
+			
+//			for(Player p: gameState.getListOfPlayers()) {
+//				if(p.getUserName().equals(person.getName())) {
+//					if(gameState.getFireFighterList().get(count).getSpeciality()!=null) {
+//						gameState.addFreedSpeciality(gameState.getFireFighterList().get(count).getSpeciality());
+//						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
+//						gameState.removeSelectedSpeciality(desiredSpeciality);
+//					}else {
+//						gameState.getFireFighterList().get(count).setSpeciality(desiredSpeciality);
+//						gameState.removeSelectedSpeciality(desiredSpeciality);
+//					}
+//					
+//					count++;
+//				}
+//			}
 		}
 		
 	}

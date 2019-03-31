@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
 import client.ClientManager;
+import game.GameState;
 import personalizedlisteners.loadGameListeners.LoadGameSetUpListener;
 import personalizedlisteners.createLobbyListeners.CreateListener;
 
@@ -30,6 +31,8 @@ public class LoadGamePanel extends JPanel {
 	private JLabel entryTest, entry_1, entry_2, entry_3, entry_4, entry_5;
 	private ArrayList<JLabel> listEntries;
 	
+	private ArrayList<GameState> savedGames;
+	
 	private final EventListenerList REGISTERED_OBJECTS;
 	
 	private ClientManager clientManager;
@@ -42,6 +45,10 @@ public class LoadGamePanel extends JPanel {
 		
 		REGISTERED_OBJECTS = new EventListenerList();
 		this.clientManager = clientmanager;
+		clientmanager.savedGameListRequest();
+		savedGames = clientmanager.getSavedGameStates();
+		System.out.println("list length is: " + savedGames.size() );
+		
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
 
@@ -74,22 +81,24 @@ public class LoadGamePanel extends JPanel {
 		textAreaW = pnl_main.getWidth() - 2*textAreaX;
 
 		listEntries = new ArrayList<JLabel>();
-		listEntries.add(entry_1);
-		listEntries.add(entry_2);
-		listEntries.add(entry_3);
-		listEntries.add(entry_4);
-		listEntries.add(entry_5);
+//		listEntries.add(entry_1);
+//		listEntries.add(entry_2);
+//		listEntries.add(entry_3);
+//		listEntries.add(entry_4);
+//		listEntries.add(entry_5);
 
-		for (int i = 0; i < listEntries.size(); i++) {
-			JLabel currEntry = listEntries.get(i);
-
-			currEntry = new JLabel();
+		for (int i = 1; i <= savedGames.size(); i++) {
+//			JLabel currEntry = listEntries.get(i);
+//
+//			currEntry = new JLabel();
+			JLabel currEntry = new JLabel();
 			currEntry.setBounds(textAreaX, textAreaY + i * (textAreaH + 10), textAreaW, textAreaH);
 			currEntry.setFont(new Font("Open Sans", Font.PLAIN, 14));
 			currEntry.setBackground(Color.white);
 			currEntry.setOpaque(true);
-			currEntry.setText("GameSave: " + i);
-			pnl_main.add(currEntry);
+			currEntry.setText("GameSave: " + i); // we can give it a more distinct name to be more uniquely idetified
+			
+			
 			
 //			currEntry.addActionListener(new ActionListener() {
 //				public void actionPerformed(ActionEvent e) {
@@ -108,6 +117,8 @@ public class LoadGamePanel extends JPanel {
 					}
 				}
 			});
+			listEntries.add(currEntry);
+			pnl_main.add(currEntry);
 
 		}
 
@@ -136,21 +147,21 @@ public class LoadGamePanel extends JPanel {
 
 	private void entryClicked(JLabel entry) {
 		System.out.println(entry.getText());
-		clientManager.loadGameRequest(Integer.parseInt(entry.getText().replaceAll("\\D+",""))); //extract int from the entry
+		clientManager.loadGameLobbyRequest(Integer.parseInt(entry.getText().replaceAll("\\D+",""))); //extract int from the entry
 
 		// @Eric call loadMethod
 	}
 
-	private void getGameFiles() {
-		String currFileExtension;
-
-		// need to iterate over directory
+//	private void getGameFiles() {
+//		String currFileExtension;
+//
+//		// need to iterate over directory
 //		int i = currFile.lastIndexOf('.');
 //		if (i > 0) {
 //			currFileExtension = currFile.substring(i+1);
 //		}
-		
-	}
+//		
+//	}
 
 	public JPanel getPnl_main() {
 		return pnl_main;
@@ -170,7 +181,7 @@ public class LoadGamePanel extends JPanel {
 	 */
 	private void raiseEventLoadGameBtn() {
 		for (LoadGameSetUpListener listener: REGISTERED_OBJECTS.getListeners(LoadGameSetUpListener.class)) {
-			listener.loadGameSetUp();
+			listener.clickLoadGame();
 		}
 	}
 
