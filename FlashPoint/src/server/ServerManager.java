@@ -165,24 +165,17 @@ public class ServerManager {
 	}
 
 	public void endTurn() {
-		Firefighter temp = gameState.getPlayingFirefighter();
-		int AP = temp.getAP();
-		if(AP + 4 > 8) {
-			temp.setAP(8);
-		} else {
-			temp.setAP(AP + 4);
-		}
+		Firefighter currentOne = gameState.getPlayingFirefighter();
+		currentOne.endOfTurn();
 		advanceFire();
 		if(gameState.isGameTerminated() || gameState.isGameWon()) {
 			setFFNextTurn();
 			generateActions();
-		} else {
+		} 
+		else {
 			setFFNextTurn();
 			generateActions();
 		}
-		
-		
-		
 		
 		
 	}

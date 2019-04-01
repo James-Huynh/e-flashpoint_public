@@ -129,7 +129,6 @@ public class Move extends Action {
         	playingFirefighter.setAP(aP - this.APcost);
         }
         
-        playingFirefighter.setAP(aP - this.APcost);
 
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
         playingFirefighter.setCurrentPosition(neighbour);
