@@ -43,7 +43,7 @@ public class ChatBox extends JPanel{
 	private Rectangle rect_button;
 	private JTextPane textPane;
 
-	private DefaultStyledDocument document;
+	private DefaultStyledDocument document = new DefaultStyledDocument();;
 	private StyleContext context = new StyleContext();
 	private Style style = context.addStyle("James", null);
 
@@ -120,7 +120,7 @@ public class ChatBox extends JPanel{
 
 	public void refreshChatBox() {
 		final StringBuilder finalText = new StringBuilder();
-		document = new DefaultStyledDocument();
+		//document = new DefaultStyledDocument();
 		
 		mDataArrays = clientManager.getChatArray();
 		
@@ -130,7 +130,6 @@ public class ChatBox extends JPanel{
 			finalText.append(entity.getMessage());
 			
 			updateChatGUI(finalText.toString());
-			System.out.println(finalText.toString());
 		}
 		
 		
