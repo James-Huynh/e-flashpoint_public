@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import chat.ChatMsgEntity;
 import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
@@ -146,6 +147,9 @@ public class ServerInputThread extends Thread {
 				requestObject = (User) read_tranObject.getObject();
 				
 				serverManager.getChatArray().add(requestObject.getChat());
+				for(ChatMsgEntity m : serverManager.getChatArray()) {
+					System.out.println(m.getName() + ":" + m.getMessage());
+				}
 				requestObject.setChatArray(serverManager.getChatArray());
 				
 				returnObject.setObject(requestObject);

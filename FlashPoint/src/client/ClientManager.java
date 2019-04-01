@@ -159,6 +159,8 @@ public class ClientManager {
 					System.out.println(m.getMessage());
 				}
 				Collections.reverse(mDataArrays);
+				startGameFlag = 1;
+				flag = true;
 				break;
 				//launcher.refreshLobby();		// James
 			

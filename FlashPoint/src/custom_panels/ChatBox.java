@@ -130,6 +130,7 @@ public class ChatBox extends JPanel{
 			finalText.append(entity.getMessage());
 			
 			updateChatGUI(finalText.toString());
+			System.out.println(finalText.toString());
 		}
 		
 		

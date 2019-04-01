@@ -27,6 +27,7 @@ public class clientThread implements Runnable{
 				int flag = myClientManager.listenForResponses();
 				if(flag == 1) {
 					myLauncher.refreshLobby();
+					System.out.println("were here");
 				} else if(flag == 2) {
 					myLauncher.startGame();
 					this.inLobby = false;
