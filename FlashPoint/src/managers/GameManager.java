@@ -68,7 +68,7 @@ public class GameManager {
     }
 	
     public void loadGameState(GameState ngs) {
-    	gs=ngs;
+    	gs.updateGameStateFromObject(ngs);
     	Lobby lobby = new Lobby(); //dumb lobby for now
         
     	lobby.setCapacity(gs.getListOfPlayers().size());

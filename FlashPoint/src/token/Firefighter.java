@@ -221,7 +221,7 @@ public class Firefighter extends Token implements Serializable {
 			this.SP = 0;
 		}
 		else if (speciality == Speciality.RESCUE_SPECIALIST) {
-			Math.min(8, this.AP + 4);
+			this.AP = Math.min(8, this.AP + 4);
 			this.SP = 3;
 		}
 		else if (speciality == Speciality.DOG) {
@@ -233,7 +233,7 @@ public class Firefighter extends Token implements Serializable {
 			this.SP = 0; //?
 		}
 		else {
-			Math.min(8, this.AP + 4);
+			this.AP = Math.min(8, this.AP + 4);
 			this.SP = 0;
 		}
 	}
