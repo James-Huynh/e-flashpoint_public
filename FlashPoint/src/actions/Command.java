@@ -84,4 +84,8 @@ public class Command extends Action {
 		return this.action;
 	}
 	
+	public ActionList getTitle() {
+    	return this.title;
+    }
+	
 }
