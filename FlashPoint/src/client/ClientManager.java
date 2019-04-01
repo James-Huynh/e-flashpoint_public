@@ -8,6 +8,7 @@ import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
+import commons.util.MyDate;
 import game.BoardOne;
 import game.GameState;
 import gui.Launcher;
@@ -567,6 +568,7 @@ public class ClientManager {
 		ChatMsgEntity entity = new ChatMsgEntity();
 		entity.setMessage(message.getMessage());
 		entity.setName(requestObject.getName());
+		entity.setDate(MyDate.getDateCN());
 		User a= new User();
 		a.setChat(entity);
 		objectToSend.setObject(a);
