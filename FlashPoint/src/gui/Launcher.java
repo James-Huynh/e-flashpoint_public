@@ -56,7 +56,7 @@ public class Launcher {
 	private String MatIP = "142.157.63.60";
 	
 	private static Client client;
-	private String ServerIP = "142.157.24.187";
+	private String ServerIP = "142.157.65.237";
 
 	int port = 8888;
 	User userOne = new User();
@@ -347,7 +347,9 @@ public class Launcher {
 		contentPane.add(lobby);
 		listenerThread.begin();
 		
-		System.out.println("lobby?"+clientManager.getLobby().getMode());
+		System.out.println("lobby?"+clientManager.getLobby().getIsLoadGame());
+		System.out.println(clientManager.getLobby().getPlayers().get(0).getUserName());
+		System.out.println(clientManager.getUserName());
 		if(clientManager.getLobby().getPlayers().get(0).getUserName().equals(clientManager.getUserName())) {
 			lobby.addSelectionPiecesListenerListener(new StartListener() {
 				public void clickStart(boolean flag) {

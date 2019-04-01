@@ -1,8 +1,10 @@
 package token;
 
+import java.io.Serializable;
+
 import tile.Tile;
 
-public class Hazmat extends Token {
+public class Hazmat extends Token implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private boolean disposed;

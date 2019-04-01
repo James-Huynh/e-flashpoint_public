@@ -1,5 +1,7 @@
 package token;
 
+import java.io.Serializable;
+
 import server.Player;
 import tile.ParkingSpot;
 import tile.Tile;
@@ -10,7 +12,7 @@ import tile.Tile;
  * modified by @matekrk
  */
 //removed abstraction to allow a firefighter to be initialized elsewhere - ben
-public class Firefighter extends Token {
+public class Firefighter extends Token implements Serializable {
 
 	protected int AP;
 	protected int savedAP;
