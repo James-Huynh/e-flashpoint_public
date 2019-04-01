@@ -236,8 +236,11 @@ public class ServerManager {
 			FileInputStream fi = new FileInputStream(new File(this.defaulGamesPath + gameNumber + ".txt"));
 			ObjectInputStream oi = new ObjectInputStream(fi);
 			
+			initializeGameManager();
 			this.gameState = (GameState) oi.readObject();
-					
+			
+			this.gameManager.getGameState().updateGameStateFromObject(gameState);
+			
 			oi.close();
 			fi.close();
 		} catch (FileNotFoundException e) {
@@ -288,6 +291,7 @@ public class ServerManager {
 			
 			gs.updateGameStateFromObject(gs1);
 			this.savedGames.add(gs);
+			
 			return gs1; //if not void
 			
 			} catch (FileNotFoundException e) {
