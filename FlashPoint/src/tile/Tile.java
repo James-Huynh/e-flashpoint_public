@@ -215,7 +215,10 @@ public class Tile implements Serializable{
 		return "Tile [fire=" + fire + ", coords=" + Arrays.toString(coords) + ", hotspot=" + hotspot
 				+ ", adjacentEdges=" + Arrays.toString(adjacentEdges) + ", listOfFirefighters=" + listOfFirefighters
 				+ ", x=" + x + ", y=" + y + ", poiList=" + poiList + ", hazmatList=" + hazmatList + ", isInterior="
-				+ isInterior + ", pointerParkingSpot=" + pointerParkingSpot.toString() + ", nearestAmbulance=" + nearestAmbulance.toString()
+				+ isInterior + ", pointerParkingSpot=" 
+				+ pointerParkingSpot.toString() 
+				+ ", nearestAmbulance=" 
+				+ nearestAmbulance.toString()
 				+ ", ParkingType=" + ParkingType.toString() + "]";
 	}
 	
