@@ -143,7 +143,7 @@ public class Drive extends Action {
             playingFirefighter.setCurrentLocation(target);
             
 //            obtainTravellers(gs);
-            
+//            
 //            if (!travellers.isEmpty()) {
 //            	for (Firefighter f : travellers) {
 //            		if (f.getCurrentPosition().equals(currentPosition)){
@@ -193,7 +193,7 @@ public class Drive extends Action {
 				Tile currentPosition = playingFirefighter.getCurrentPosition();
 				if(currentPosition.getParkingSpot() != null) {
 					if(currentPosition.getParkingSpot().equals(parking)) {
-						if(aP >= APcost && !nextAmbulance.getCar()) {
+						if(aP >= APcost && !nextAmbulance.getCar() && parking.getCar()) {
 							flag = true;
 						}
 					}
