@@ -79,7 +79,8 @@ public class Drive extends Action {
         }
         
         //calling ambulance
-        if (currentPosition.getParkingSpot() != null && !currentPosition.getParkingSpot().equals(parking)) {
+//        if(currentPosition.getPa)
+        if (!currentPosition.getParkingSpot().equals(parking)) {
         	ParkingSpot nextAmbulance = null;
         	if (parking.getParkingType() == Vehicle.Ambulance) { //always (assure)
     	        for (int i=0; i<4; i++) {
@@ -196,7 +197,7 @@ public class Drive extends Action {
 			Tile currentPosition = playingFirefighter.getCurrentPosition();
 			ParkingSpot nextEngine = null;
 			for (int i=0; i<4; i++) {
-	        	if (gs.getAmbulances()[i].equals(parking)) {
+	        	if (gs.getEngines()[i].equals(parking)) {
 	        		nextEngine = gs.getEngines()[ (i+direction+4)%4 ];
 	        	}
 			}
@@ -204,8 +205,10 @@ public class Drive extends Action {
 //					flag = true;
 //			}
 			if(currentPosition.getParkingSpot() != null) {
-				if(aP >= APcost && !nextEngine.getCar()) {
-					flag = true;
+				if(currentPosition.getParkingSpot().equals(parking)) {
+					if(aP >= APcost && !nextEngine.getCar()) {
+						flag = true;
+					}
 				}
 			}
 		}
@@ -239,6 +242,11 @@ public class Drive extends Action {
 	@Override
 	public boolean canMove() {
 		return this.moveWith;
+	}
+	
+	@Override 
+	public int getDirection() {
+		return this.direction;
 	}
 
 	@Override

@@ -361,7 +361,7 @@ public class GameManager {
     			allPossibleActions.add(new Drive(i, dir, true, true));
     		}
     		
-    		for(int i=0;i<gs.getAmbulances().length;i++) {
+    		for(int i=0;i<gs.getEngines().length;i++) {
     			allPossibleActions.add(new Drive(i, dir, true, false));
     		}
     	}
