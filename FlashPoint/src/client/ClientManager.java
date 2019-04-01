@@ -154,8 +154,7 @@ public class ClientManager {
 				flag = true;
 				break;
 			case CHATMESSAGE:
-				requestObject = (User) read_tranObject.getObject();
-				mDataArrays=(requestObject.getChatArray());
+				mDataArrays=(((User) read_tranObject.getObject()).getChatArray());
 				for(ChatMsgEntity m: mDataArrays) {
 					System.out.println(m.getMessage());
 				}
@@ -565,6 +564,7 @@ public class ClientManager {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CHATMESSAGE);
 		ChatMsgEntity entity = new ChatMsgEntity();
 		entity.setMessage(message.getMessage());
+		entity.setName(requestObject.getName());
 		User a= new User();
 		a.setChat(entity);
 		objectToSend.setObject(a);
