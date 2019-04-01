@@ -188,9 +188,26 @@ public class Drive extends Action {
 	        		nextAmbulance = gs.getAmbulances()[(i+direction+4) % 4];
 	        	}
 			}
-			if(aP >= APcost && !nextAmbulance.getCar()) {
-				flag = true;
+			
+			if(moveWith) {
+				Tile currentPosition = playingFirefighter.getCurrentPosition();
+				if(currentPosition.getParkingSpot() != null) {
+					if(currentPosition.getParkingSpot().equals(parking)) {
+						if(aP >= APcost && !nextAmbulance.getCar()) {
+							flag = true;
+						}
+					}
+				}
 			}
+			else {
+				if(aP >= APcost && nextAmbulance.getCar()) {
+					flag = true;
+				}
+			}
+			
+//			if(aP >= APcost && !nextAmbulance.getCar()) {
+//				flag = true;
+//			}
 		}
 		
 		else {

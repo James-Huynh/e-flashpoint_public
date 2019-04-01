@@ -1997,9 +1997,12 @@ public class Table {
 			    		} else if(actionTitle == ActionList.Drive) {
 			    			
 			    			if(a.isAmbulance()) {
-			    				builder = "Ambulance ";
+			    				builder = "Ambulance";
 			    				if(!a.canMove()) {
-			    					builder += "and stay. ";
+			    					builder = "Call " + builder;
+			    				}
+			    				else {
+			    					builder = "Ride " + builder;
 			    				}
 			    			} else {
 			    				builder = "Engine ";
