@@ -236,8 +236,11 @@ public class ServerManager {
 			FileInputStream fi = new FileInputStream(new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\savedGames\\savedGame" + gameNumber + ".txt"));
 			ObjectInputStream oi = new ObjectInputStream(fi);
 			
+			initializeGameManager();
 			this.gameState = (GameState) oi.readObject();
-					
+			
+			this.gameManager.getGameState().updateGameStateFromObject(gameState);
+			
 			oi.close();
 			fi.close();
 		} catch (FileNotFoundException e) {
@@ -288,6 +291,7 @@ public class ServerManager {
 			
 			gs.updateGameStateFromObject(gs1);
 			this.savedGames.add(gs);
+			
 			return gs1; //if not void
 			
 			} catch (FileNotFoundException e) {
