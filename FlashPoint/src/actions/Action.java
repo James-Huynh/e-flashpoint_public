@@ -73,5 +73,13 @@ public abstract class Action implements Serializable {
 	public int[] getTileLocation() {
 		return null;
 	}
+	
+	public int getFirefighterIndex() {
+		return -1;
+	}
+	
+	public Action getAction() {
+		return null;
+	}
 
 }

@@ -393,6 +393,15 @@ public class GameManager {
 //		 * So loop over allPlayingFF's and all legal Actionss
 //		 * and see if they validate? -- Correct, just implement!
 //		 */
+		
+		for(int i=0;i<gs.getFireFighterList().size();i++) {
+			for (int dir : new int[]{0,1,2,3} ) {
+				allPossibleActions.add(new Command(i, new Move(dir)));
+				allPossibleActions.add(new Command(i, new MoveWithVictim(dir)));
+				allPossibleActions.add(new Command(i, new MoveWithHazmat(dir)));
+				allPossibleActions.add(new Command(i, new Handle(dir)));
+			}
+		}
 
 //		//Imaging Technician - FlipPOI 
 //		for(POI p: gs.retrievePOI()) {

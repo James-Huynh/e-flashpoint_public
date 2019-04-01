@@ -6,14 +6,21 @@ import token.Speciality;
 
 public class Command extends Action {
 
-	protected Firefighter toObey;
+//	protected Firefighter toObey;
 	protected Action action; //only: Move with victim, hazmat, normal move, move with threated victim, handle
 	protected ActionList title = ActionList.Command;
+	protected int index;
 	
 	private static final long serialVersionUID = 1L;
 
 	public Command(Firefighter toObey, Action action) {
-		this.toObey = toObey;
+//		this.toObey = toObey;
+		this.APcost = action.APcost;
+		this.action = action;
+	}
+	
+	public Command(int i, Action action) {
+		this.index = i;
 		this.APcost = action.APcost;
 		this.action = action;
 	}
@@ -21,6 +28,7 @@ public class Command extends Action {
 	@Override
 	public void perform(GameState gs) {
 		Firefighter me = gs.getPlayingFirefighter();
+		Firefighter toObey = gs.getFireFighterList().get(this.index);
 		gs.setPlayingFirefighter(toObey); // if it is fucked up then overloaded perform/validate with extra parameter
 		action.perform(gs);
 		gs.getPlayingFirefighter().setAP(gs.getPlayingFirefighter().getAP() + action.APcost);
@@ -47,6 +55,7 @@ public class Command extends Action {
 	public boolean validate(GameState gs) {
 		boolean flag = false;
 		Firefighter captain = gs.getPlayingFirefighter();
+		Firefighter toObey = gs.getFireFighterList().get(this.index);
 		if (action.title == (ActionList.Handle) || action.title ==(ActionList.Move) || 
 				action.title == (ActionList.MoveWithHazmat) || action.title == (ActionList.MoveWithVictim)) {
 			if (captain.getSP() + captain.getAP() >= action.APcost) {
@@ -66,5 +75,17 @@ public class Command extends Action {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	public int getFirefighterIndex() {
+		return this.index;
+	}
+	
+	public Action getAction() {
+		return this.action;
+	}
+	
+	public ActionList getTitle() {
+    	return this.title;
+    }
+	
 }
