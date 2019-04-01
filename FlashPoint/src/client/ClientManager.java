@@ -156,6 +156,9 @@ public class ClientManager {
 			case CHATMESSAGE:
 				requestObject = (User) read_tranObject.getObject();
 				mDataArrays=(requestObject.getChatArray());
+				for(ChatMsgEntity m: mDataArrays) {
+					System.out.println(m.getMessage());
+				}
 				Collections.reverse(mDataArrays);
 				break;
 				//launcher.refreshLobby();		// James
