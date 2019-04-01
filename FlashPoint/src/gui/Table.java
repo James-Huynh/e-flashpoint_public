@@ -1995,11 +1995,24 @@ public class Table {
 			    	        commandMenu.add(newAction);
 			    	        commandCheck = true;
 			    		} else if(actionTitle == ActionList.Drive) {
-			    			if(a.getDirection() == -1) {
-			    				builder = "Counter ClockWise ";
-			    			}else {
-			    				builder = "ClockWise ";
+			    			
+			    			if(a.isAmbulance()) {
+			    				builder = "Ambulance ";
+			    				if(!a.canMove()) {
+			    					builder += "and stay. ";
+			    				}
+			    			} else {
+			    				builder = "Engine ";
 			    			}
+			    			
+			    			if(a.getDirection() == -1) {
+			    				builder += "Counter ClockWise ";
+			    			}else {
+			    				builder += "ClockWise ";
+			    			}
+			    			
+			    			
+			    			
 			    			builder = builder + "APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
 			    	        newAction.addActionListener(new ActionListener() {
