@@ -27,9 +27,7 @@ public class Chop extends Action {
     @Override
     public void adjustAction(GameState gs) {
     	Firefighter current = gs.getPlayingFirefighter();
-    	if (current.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
-			this.APcost = this.APcost/2;
-		}
+
     }
     
     /*
@@ -55,16 +53,17 @@ public class Chop extends Action {
         int aP = playingFirefighter.getAP();
         Edge edge = currPosition.getEdge(this.direction);
         
-        if (this.APcost == 2 || (this.APcost == 1 && playingFirefighter.speciality == (Speciality.RESCUE_SPECIALIST))) {
-        	edge.chop();
-        	gs.updateDamageCounter();
-        }
-        else if(this.APcost == 4 || (this.APcost == 2 && playingFirefighter.speciality == (Speciality.RESCUE_SPECIALIST))) { // == 4 or (rescue and ==2)
+        if(this.APcost == 4 || (this.APcost == 2 && playingFirefighter.speciality == (Speciality.RESCUE_SPECIALIST))) { // == 4 or (rescue and ==2)
         	edge.chop();
         	edge.chop();
         	gs.updateDamageCounter();
         	gs.updateDamageCounter();
         }
+        else if (this.APcost == 2 || (this.APcost == 1 && playingFirefighter.speciality == (Speciality.RESCUE_SPECIALIST))) {
+        	edge.chop();
+        	gs.updateDamageCounter();
+        }
+
         
         playingFirefighter.setAP(aP - this.APcost);
     }
@@ -73,6 +72,11 @@ public class Chop extends Action {
     public boolean validate(GameState gs) {
         boolean flag = false;
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        
+    	if (playingFirefighter.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
+			this.APcost = this.APcost/2;
+		}
+        
         Tile currPosition = playingFirefighter.getCurrentPosition();
         int aP = playingFirefighter.getAP();
         Edge edge = currPosition.getEdge(this.direction);
@@ -87,6 +91,7 @@ public class Chop extends Action {
         				if(dmgCounter + 2 < gs.MAX_WALL_DMGD) {
         					flag = true;
         				}
+        				break;
         			case 2:
         				if (playingFirefighter.speciality == (Speciality.RESCUE_SPECIALIST)) {
         					if(dmgCounter + 2 < gs.MAX_WALL_DMGD) {
@@ -98,11 +103,13 @@ public class Chop extends Action {
         						flag = true;
         					}
         				}
+        				break;
         			case 1:
         				assert playingFirefighter.speciality == (Speciality.RESCUE_SPECIALIST);
         				if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
     						flag = true;
     					}
+        				break;
         			}
         		}
         	}
@@ -120,11 +127,14 @@ public class Chop extends Action {
         						flag = true;
         					}
         				}
+        				break;
         			case 1:
-        				assert playingFirefighter.speciality == (Speciality.RESCUE_SPECIALIST);
-        				if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
-    						flag = true;
-    					}
+        				if(playingFirefighter.speciality == Speciality.RESCUE_SPECIALIST){
+            				if(dmgCounter + 1 < gs.MAX_WALL_DMGD) {
+        						flag = true;
+        					}
+        				}
+        				break;
         			}
         		}
         	}

@@ -6,9 +6,9 @@ public class POI extends Token implements Serializable {
     
     protected boolean revealed;
     protected boolean isVictim;
-    protected boolean isRescued;
+    protected boolean healed;
     private static final long serialVersionUID = 1L;
-    protected Firefighter follow;
+    protected Firefighter leader;
     
     /**
      * Constructor for Poi
@@ -16,7 +16,7 @@ public class POI extends Token implements Serializable {
      */
     public POI(boolean isVictim) {
        this.isVictim  = isVictim;
-       this.follow = null;
+       this.leader = null;
     }
 
     /*
@@ -35,12 +35,21 @@ public class POI extends Token implements Serializable {
     	return revealed;
     }
     
-    public boolean isResuscitated() {
-    	return !follow.equals(null);
+	public boolean isHealed() {
+    	return this.healed;
+    }
+	
+	public void heal() {
+		this.healed = !this.healed;
+	}
+    
+    public boolean hasLeader() {
+//    	return !follow.equals(null);
+    	return !(leader == null);
     }
     
-    public Firefighter follower() {
-    	return follow;
+    public Firefighter getLeader() {
+    	return leader;
     }
     
     public boolean checkStatus() {
@@ -56,15 +65,15 @@ public class POI extends Token implements Serializable {
     	revealed = true;
     }
     
-    public void setResuscitate(Firefighter f) {
+    public void setLeader(Firefighter f) {
     	assert isVictim == true;
-    	follow = f;
+    	leader = f;
     	//f.setVictim(this);
     }
 
 	@Override
 	public String toString() {
-		return "POI [revealed=" + revealed + ", isVictim=" + isVictim + ", isRescued=" + isRescued + ", follow="
-				+ follow.toString() + ", x=" + x + ", y=" + y + ", tileOn=" + tileOn.toString() + "]";
+		return "POI [revealed=" + revealed + ", isVictim=" + isVictim + ", isHealed=" + healed + ", follow="
+				+ leader.toString() + ", x=" + x + ", y=" + y + ", tileOn=" + tileOn.toString() + "]";
 	}
 }

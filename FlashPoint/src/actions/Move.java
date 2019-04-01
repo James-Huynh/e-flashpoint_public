@@ -94,9 +94,14 @@ public class Move extends Action {
         }
         
         //speciality paramedic
-        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null && neighbour.getFire() == 2) {
+//        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null && neighbour.getFire() == 2) {
+//        	flag = false;
+//        }
+        
+        if (playingFirefighter.getCarriedPOI() != null && neighbour.getFire() == 2) {
         	flag = false;
         }
+        
         
         return flag;
     }
@@ -155,11 +160,32 @@ public class Move extends Action {
         }
         
       //speciality paramedic
-        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null) {
-        	playingFirefighter.getFollow().setCurrentPosition(neighbour);
-        	currentPosition.getPoiList().remove(playingFirefighter.getFollow());
-        	neighbour.getPoiList().add(playingFirefighter.getFollow());
+//        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null) {
+//        	playingFirefighter.getFollow().setCurrentPosition(neighbour);
+//        	currentPosition.getPoiList().remove(playingFirefighter.getFollow());
+//        	neighbour.getPoiList().add(playingFirefighter.getFollow());
+//        }
+        
+        
+        if (playingFirefighter.getCarriedPOI() != null) {
+        	playingFirefighter.getCarriedPOI().setCurrentPosition(neighbour);
+//        	currentPosition.getPoiList().remove(playingFirefighter.getCarriedPOI());
+        	for(int i=0; i<currentPosition.getPoiList().size();i++) {
+        		POI p = currentPosition.getPoiList().get(i);
+//        		System.out.println(p.getLeader());
+        		if(p.getLeader().getColour() == playingFirefighter.getColour()) {
+//        			currentPosition.getPoiList().remove(i);
+        			neighbour.getPoiList().add(currentPosition.getPoiList().remove(i));
+        			if(!neighbour.checkInterior()) {
+        				gs.removePOI(neighbour.getPoiList().get(0));
+        				gs.updateSavedCount(neighbour.getPoiList().get(0));
+        				neighbour.getPoiList().remove(0);
+        			}
+        		}
+        	}
         }
+
+//        	neighbour.getPoiList().add(playingFirefighter.getCarriedPOI());s
     }
     
     @Override

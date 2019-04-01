@@ -48,12 +48,12 @@ public class User implements Serializable {
 		return id;
 	}
 
-	public void setNum(Integer id) {
+	public void setNum(int loadNum) {
 		this.loadNum = loadNum;
 	}
 	
 	public int getNum() {
-		return loadNum;
+		return this.loadNum;
 	}
 	public void setId(Integer id) {
 		this.id = id;

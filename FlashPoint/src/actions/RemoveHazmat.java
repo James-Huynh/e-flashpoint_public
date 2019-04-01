@@ -8,18 +8,23 @@ import token.Speciality;
 public class RemoveHazmat extends Action {
 
 	private static final long serialVersionUID = 1L;
-	protected Hazmat hazmat;
+//	protected Hazmat hazmat;
 	protected ActionList title = ActionList.RemoveHazmat;
 	
 	public RemoveHazmat() {
 		this.APcost = 2;
 	}
 	
+	public ActionList getTitle() {
+    	return this.title;
+    }
+	
 	@Override
 	public void perform(GameState gs) {
 		gs.getPlayingFirefighter().setAP( gs.getPlayingFirefighter().getAP() - APcost);
-		hazmat = gs.getPlayingFirefighter().getCurrentPosition().popHazmat();
+		Hazmat hazmat = gs.getPlayingFirefighter().getCurrentPosition().popHazmat();
 		hazmat.setDisposed();
+		gs.addDisposedHazmat(hazmat);
 		//place in rescued spot! ask Ben
 	}
 

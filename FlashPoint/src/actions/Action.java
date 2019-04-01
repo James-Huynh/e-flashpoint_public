@@ -38,6 +38,14 @@ public abstract class Action implements Serializable {
     	return direction;
     }
     
+    public boolean isAmbulance(){
+    	return false;
+    }
+    
+    public boolean canMove() {
+    	return false;
+    }
+    
     /*
      * INTERACTION WITH GAMESTATE
      */
@@ -59,6 +67,10 @@ public abstract class Action implements Serializable {
     }
 	public Speciality getToSpecialty() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public int[] getTileLocation() {
 		return null;
 	}
 

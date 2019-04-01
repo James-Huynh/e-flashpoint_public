@@ -157,6 +157,7 @@ public class ServerInputThread extends Thread {
 				System.out.println("load request received");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setLobby(requestObject.getCurrentLobby());
+				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
 				//serverManager.getLobby().setCapacity(serverManager.getGameState().getListOfPlayers().size());
 				//serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));  //
 				//serverManager.getLobby().setDifficulty("serverManager.getGameState().getDifficulty()");
@@ -184,6 +185,7 @@ public class ServerInputThread extends Thread {
 				break;
 			case STARTSAVEDGAMESTATE:
 				requestObject = (User) read_tranObject.getObject();
+				System.out.println(requestObject.getNum());
 				serverManager.loadGame(requestObject.getNum());
 				returnGameState = new TranObject<GameState>(TranObjectType.STARTSAVEDGAMESTATESUCCESS);
 				returnGameState.setObject(serverManager.getGameState()); // this was already done earlier
@@ -206,7 +208,7 @@ public class ServerInputThread extends Thread {
 
 				break;
 			case ACTIONREQUEST:
-				//System.out.println("In action request");
+				System.out.println("In action request");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.performAction(requestObject.getAction());
 				returnGameState = new TranObject<GameState>(TranObjectType.ACTIONSUCCESS);

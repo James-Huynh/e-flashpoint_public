@@ -266,10 +266,10 @@ public class Table {
 					//needs fixing
 					String ffColour = currentFF.getColour().toString(currentFF.getColour());
 					if(this.currentBoard.getActiveFireFighterIndex() == i) {
-						inputString = "<html> <font size=\"8\", color='"+ffColour+"'><b>" + playerInfo + "</b></font></html>";
+						inputString = "<html> <font size=\"5\", color='"+ffColour+"'><b>" + playerInfo + "</b></font></html>";
 					} 
 					else {
-						inputString = "<html> <font size =\"5\", color='"+ ffColour + "'>" + playerInfo + "</font></html>";
+						inputString = "<html> <font size =\"3\", color='"+ ffColour + "'>" + playerInfo + "</font></html>";
 					}
 					
 					add(new JLabel(inputString));
@@ -1067,6 +1067,10 @@ public class Table {
 			public void showPopUpMenuCurrent(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard) {
 				JPopupMenu popupMenu = new JPopupMenu();
 				Set<actions.Action> currentActions = currentBoard.getAvailableActions();
+				for(actions.Action act: currentActions) {
+					System.out.println(act.getTitle());
+					System.out.println(act.getClass());
+				}
 				
 				boolean moveCheck = false, moveWVCheck = false, completeCheck = false, toSmokeCheck = false, oneChopCheck = false, twoChopCheck = false, doorCheck = false; 
 				
@@ -1092,8 +1096,8 @@ public class Table {
 			    JMenu moveWithHazmatMenu = new JMenu("Move With Hazmat");
 			    JMenu pickMenu = new JMenu("Pick Up");
 			    JMenu dropMenu = new JMenu("Drop");
-			    JMenu disposeMenu = new JMenu("Crew Change");
-			    JMenu healMenu = new JMenu("Crew Change");
+			    JMenu disposeMenu = new JMenu("Dispose");
+			    JMenu healMenu = new JMenu("Heal");
 		        
 			    for(actions.Action a: currentActions) {
 			    	ActionList actionTitle = a.getTitle();
@@ -1991,11 +1995,27 @@ public class Table {
 			    	        commandMenu.add(newAction);
 			    	        commandCheck = true;
 			    		} else if(actionTitle == ActionList.Drive) {
-			    			if(a.getDirection() == -1) {
-			    				builder = "Counter ClockWise ";
-			    			}else {
-			    				builder = "ClockWise ";
+			    			
+			    			if(a.isAmbulance()) {
+			    				builder = "Ambulance";
+			    				if(!a.canMove()) {
+			    					builder = "Call " + builder;
+			    				}
+			    				else {
+			    					builder = "Ride " + builder;
+			    				}
+			    			} else {
+			    				builder = "Engine ";
 			    			}
+			    			
+			    			if(a.getDirection() == -1) {
+			    				builder += "Counter ClockWise ";
+			    			}else {
+			    				builder += "ClockWise ";
+			    			}
+			    			
+			    			
+			    			
 			    			builder = builder + "APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
 			    	        newAction.addActionListener(new ActionListener() {
@@ -2023,8 +2043,21 @@ public class Table {
 			    			});
 			    	        fireDeckGunMenu.add(newAction);
 			    	        firedeckCheck = true;
-			    			
+			    		
 			    		} else if(actionTitle == ActionList.Flip) {
+			    			int[] poiCoords = a.getTileLocation();
+			    			builder = "Tile " +poiCoords[0] + "," + poiCoords[1]+ " APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+									}
+			    				}
+			    			});
+			    	        flipPOIMenu.add(newAction);
+			    	        flipPOICheck = true;
 			    			
 			    		} else if(actionTitle == ActionList.MoveWithHazmat) {
 			    			if(a.getDirection() == 0) {
@@ -2130,6 +2163,7 @@ public class Table {
 			    	        disposeMenu.add(newAction);
 			    	        disposeCheck = true;
 			    		} else if(actionTitle == ActionList.Resuscitate) {
+			    			System.out.println("weve reached this stage");
 			    			builder = "APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
 			    	        newAction.addActionListener(new ActionListener() {
@@ -2241,6 +2275,7 @@ public class Table {
 		        if(healCheck) {
 		        	popupMenu.add(healMenu);
 			        popupMenu.addSeparator();
+			        System.out.println("weve reached this stage1");
 		        } 
 		        
 		        if(driveCheck) {

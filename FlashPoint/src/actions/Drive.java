@@ -26,25 +26,34 @@ public class Drive extends Action {
 	protected int direction; // 1 clockwise -1 anti-clockwise
 	protected boolean moveWith;
 	protected Set<Firefighter> travellers;
-	protected ParkingSpot parking;
+	protected boolean isAmbulance;
 	protected ActionList title = ActionList.Drive;
+	protected int index;
 	
 	public Drive() {
 		APcost = 2;
 	}
 	
-	public Drive(ParkingSpot parking, int direction) {
-		APcost = 2;
-		this.parking = parking;
-		this.direction = direction;
-	}	
+//	public Drive(ParkingSpot parking, int direction) {
+//		APcost = 2;
+//		this.parking = parking;
+//		this.direction = direction;
+//	}	
 	
-	public Drive(ParkingSpot parking, int direction, boolean moveWith) {
+//	public Drive(ParkingSpot parking, int direction, boolean moveWith) {
+//		APcost = 2;
+//		this.parking = parking;
+//		this.direction = direction;
+//		this.moveWith = moveWith;
+//		//this.moveWithWho = moveWithWho;
+//	}	
+	
+	public Drive(int i, int direction, boolean moveWith, boolean typeFlag) {
 		APcost = 2;
-		this.parking = parking;
+		this.index = i;
 		this.direction = direction;
 		this.moveWith = moveWith;
-		//this.moveWithWho = moveWithWho;
+		this.isAmbulance = typeFlag;
 	}	
 	
 	
@@ -61,10 +70,19 @@ public class Drive extends Action {
         
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         
+        ParkingSpot parking;
+        if(isAmbulance) {
+        	parking = gs.getAmbulances()[this.index];
+        }
+        else {
+        	parking = gs.getEngines()[this.index];
+        }
+        
         //calling ambulance
+//        if(currentPosition.getPa)
         if (!currentPosition.getParkingSpot().equals(parking)) {
         	ParkingSpot nextAmbulance = null;
-        	if (this.parking.getParkingType() == Vehicle.Ambulance) { //always (assure)
+        	if (parking.getParkingType() == Vehicle.Ambulance) { //always (assure)
     	        for (int i=0; i<4; i++) {
     	        	if (gs.getAmbulances()[i].equals(parking)) {
     	        		nextAmbulance = gs.getAmbulances()[ (i+direction+4)%4 ];
@@ -100,7 +118,7 @@ public class Drive extends Action {
             }
             
             Tile target = null;
-            if (this.parking.getParkingType() == Vehicle.Ambulance) { 
+            if (parking.getParkingType() == Vehicle.Ambulance) { 
     	        for (int i=0; i<4; i++) {
     	        	if (gs.getAmbulances()[i].equals(parking)) {
     	        		ParkingSpot nextAmbulance = gs.getAmbulances()[ (i+direction+4)%4 ];
@@ -154,6 +172,14 @@ public class Drive extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
         
+        ParkingSpot parking;
+        if(isAmbulance) {
+        	parking = gs.getAmbulances()[this.index];
+        }
+        else {
+        	parking = gs.getEngines()[this.index];
+        }
+        
 		if(parking.getParkingType() == Vehicle.Ambulance) {
 			ParkingSpot nextAmbulance = null;
 			for (int i=0; i<4; i++) {
@@ -162,21 +188,45 @@ public class Drive extends Action {
 	        		nextAmbulance = gs.getAmbulances()[(i+direction+4) % 4];
 	        	}
 			}
-			if(aP >= APcost && !nextAmbulance.getCar()) {
-				flag = true;
+			
+			if(moveWith) {
+				Tile currentPosition = playingFirefighter.getCurrentPosition();
+				if(currentPosition.getParkingSpot() != null) {
+					if(currentPosition.getParkingSpot().equals(parking)) {
+						if(aP >= APcost && !nextAmbulance.getCar()) {
+							flag = true;
+						}
+					}
+				}
 			}
+			else {
+				if(aP >= APcost && nextAmbulance.getCar()) {
+					flag = true;
+				}
+			}
+			
+//			if(aP >= APcost && !nextAmbulance.getCar()) {
+//				flag = true;
+//			}
 		}
 		
 		else {
 			Tile currentPosition = playingFirefighter.getCurrentPosition();
 			ParkingSpot nextEngine = null;
 			for (int i=0; i<4; i++) {
-	        	if (gs.getAmbulances()[i].equals(parking)) {
+	        	if (gs.getEngines()[i].equals(parking)) {
 	        		nextEngine = gs.getEngines()[ (i+direction+4)%4 ];
 	        	}
 			}
-			if(currentPosition.getParkingSpot().equals(parking) && aP >= APcost && !nextEngine.getCar()) { //One more check than above, why?
-					flag = true;
+//			if(currentPosition.getParkingSpot().equals(parking) && aP >= APcost && !nextEngine.getCar()) { //One more check than above, why?
+//					flag = true;
+//			}
+			if(currentPosition.getParkingSpot() != null) {
+				if(currentPosition.getParkingSpot().equals(parking)) {
+					if(aP >= APcost && !nextEngine.getCar()) {
+						flag = true;
+					}
+				}
 			}
 		}
 		
@@ -200,10 +250,25 @@ public class Drive extends Action {
 	public void adjustAction(GameState gs) {
 		
 	}
+	
+	@Override
+	public boolean isAmbulance() {
+		return this.isAmbulance;
+	}
+	
+	@Override
+	public boolean canMove() {
+		return this.moveWith;
+	}
+	
+	@Override 
+	public int getDirection() {
+		return this.direction;
+	}
 
 	@Override
 	public String toString() {
-		return "Drive [direction=" + direction + ", moveWith=" + moveWith + ", parking=" + parking + ", title=" + title
+		return "Drive [direction=" + direction + ", moveWith=" + moveWith + ", title=" + title
 				+ ", APcost=" + APcost + "]";
 	}
 	

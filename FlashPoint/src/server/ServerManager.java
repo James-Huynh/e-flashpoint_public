@@ -62,6 +62,7 @@ public class ServerManager {
 			gameManager.setup();
 			gameState = gameManager.getGameState();
 			gameState.setActiveFireFighterIndex(-1);
+			gameManager.setFirstAction(true);
 		}
 		
 	}
@@ -117,6 +118,7 @@ public class ServerManager {
 	
 	public void performAction(Action a) {
 		a.perform(gameState);
+		gameManager.setFirstAction(false);
 		generateActions();
 	}
 	
@@ -181,9 +183,12 @@ public class ServerManager {
 		
 		
 		
+		
+		
 	}
 	
 	public void setFFNextTurn() {
+		gameManager.setFirstAction(true);
 		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
 		
 	}
@@ -228,7 +233,7 @@ public class ServerManager {
 	public void loadGame(int gameNumber) {
 		//when loading a game, change the myowner and my firefighter also change the firefighter name;
 		try {
-			FileInputStream fi = new FileInputStream(new File("savedGame" + gameNumber + ".txt"));
+			FileInputStream fi = new FileInputStream(new File("C:\\Users\\junha\\git\\f2018-group11\\FlashPoint\\savedGames\\savedGame" + gameNumber + ".txt"));
 			ObjectInputStream oi = new ObjectInputStream(fi);
 			
 			this.gameState = (GameState) oi.readObject();

@@ -37,6 +37,7 @@ public class GameManager {
 	private Set<Action> possibleActions;// = generateAllPossibleActions();
 	private String recentAdvFire;
 	private Lobby representsLobby;
+	private boolean firstAction;
 	
 	// MAIN
     public void runFlashpoint() {
@@ -339,7 +340,7 @@ public class GameManager {
     		allPossibleActions.add(new Chop(dir, 2));
     		allPossibleActions.add(new Chop(dir, 4));
     		allPossibleActions.add(new Handle(dir));
-    		//allPossibleActions.add(new MoveWithHazmat(dir));
+    		allPossibleActions.add(new MoveWithHazmat(dir));
     	}
     	
     	//extinguish
@@ -355,47 +356,67 @@ public class GameManager {
 //    	
 //    	//Drive
     	for (int dir : new int[]{-1,1} ) {  
-			for(ParkingSpot p:gs.getAmbulances()) {
-				allPossibleActions.add(new Drive(p, dir, false));
-				allPossibleActions.add(new Drive(p, dir, true)); 
-			}
-			for(ParkingSpot p:gs.getEngines()) {
-				allPossibleActions.add(new Drive(p, dir, true)); 
-			}
+    		for(int i=0;i<gs.getAmbulances().length;i++) {
+    			allPossibleActions.add(new Drive(i, dir, false, true)); //index, direction, moveWith, isAmbulance
+    			allPossibleActions.add(new Drive(i, dir, true, true));
+    		}
+    		
+    		for(int i=0;i<gs.getEngines().length;i++) {
+    			allPossibleActions.add(new Drive(i, dir, true, false));
+    		}
     	}
     	
 //    	//FireGun
-    	for(ParkingSpot p:gs.getEngines()) {
-    		allPossibleActions.add(new FireGun(p)); 
-    	}
+//    	for(ParkingSpot p:gs.getEngines()) {
+//    		allPossibleActions.add(new FireGun(p)); 
+//    	}
 
 //		
 		Tile currentLocation = inTurn.getCurrentPosition();
 //		
 //		//Helper for Paramedic - PickOrDrop
 		for(POI p: currentLocation.getPoiList()) {
-			allPossibleActions.add(new PickOrDrop(p)); 
-			allPossibleActions.add(new Resuscitate(p));
+//			allPossibleActions.add(new PickOrDrop(p)); 
+//			allPossibleActions.add(new Resuscitate(p));
 		}
+		
+		for(int i=0; i<currentLocation.getPoiList().size();i++) {
+			allPossibleActions.add(new Resuscitate(i));
+			allPossibleActions.add(new PickOrDrop(i));
+		}
+//		allPossibleActions.add(new PickOrDrop());
+//		allPossibleActions.add(new Resuscitate());
+		
 		
 //		//FireCaptain - Command
 //		/*Constructor needs FF and Action
-//		 * So loop over allPlayingFF's and all legal Actions
+//		 * So loop over allPlayingFF's and all legal Actionss
 //		 * and see if they validate? -- Correct, just implement!
 //		 */
-//    	
+
 //		//Imaging Technician - FlipPOI 
-		for(POI p: gs.retrievePOI()) {
-			allPossibleActions.add(new FlipPOI(p));
+//		for(POI p: gs.retrievePOI()) {
+//			allPossibleActions.add(new FlipPOI(p));
+//		}
+		
+		for(int i=0;i<gs.getMatTiles().length;i++) {
+			for(int j=0;j<gs.getMatTiles()[i].length;j++) {
+				Tile t = gs.getMatTiles()[i][j];
+				if(t.containsPOI()) {
+					allPossibleActions.add(new FlipPOI(t.getCoords()));
+				}
+			}
 		}
 		
 //		//HazmatTechnician - RemoveHazmat
 		allPossibleActions.add(new RemoveHazmat()); 
 		
 //		//Crew Change - Change  
-		for(Speciality s: Speciality.values()) {
-			allPossibleActions.add(new Change(s)); //Need to make this only on first turn -- ask Ben
-    	}
+		if(this.firstAction == true) {
+			for(Speciality s: Speciality.values()) {
+				allPossibleActions.add(new Change(s)); 
+	    	}
+		}
 		
     	//finish
     	allPossibleActions.add(new Finish());
@@ -1026,6 +1047,14 @@ public class GameManager {
 	public GameState getGameState() {
 		System.out.println("Returning Game State");
 		return gs;
+	}
+
+	public boolean isFirstAction() {
+		return firstAction;
+	}
+
+	public void setFirstAction(boolean firstAction) {
+		this.firstAction = firstAction;
 	}
     
 //    public static void main(String[] args) {

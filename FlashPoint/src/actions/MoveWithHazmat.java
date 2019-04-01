@@ -38,7 +38,7 @@ public class MoveWithHazmat extends Move {
 		neighbour.setHazmat(hazmat); //includes setting position of hazmat
 		if (!neighbour.checkInterior()) {
 			hazmat.setDisposed();
-			neighbour.popHazmat();
+			gs.addDisposedHazmat(neighbour.popHazmat());
 			//place in rescued spot!
 		}
 		
@@ -51,8 +51,8 @@ public class MoveWithHazmat extends Move {
 			Firefighter playingFirefighter = gs.getPlayingFirefighter();
 			int aP = playingFirefighter.getAP();
 			Tile currentPosition = playingFirefighter.getCurrentPosition();
+			System.out.println(currentPosition.containsHazmat());
 			Hazmat hazmat = currentPosition.obtainHazmat();
-			
 	        Edge edge = currentPosition.getEdge(direction);
 	        Tile neighbour = gs.getNeighbour(currentPosition, direction);
 	        int fire = neighbour.getFire();			
