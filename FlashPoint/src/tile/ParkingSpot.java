@@ -63,6 +63,10 @@ public class ParkingSpot implements Serializable{
     	}
     }
     
+    public void setTile(Tile tile, int index) {
+    	tiles[index] = tile;
+    }
+    
     public void setCar(boolean car) {
     	this.isCar = car;
     }

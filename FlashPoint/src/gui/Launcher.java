@@ -59,7 +59,7 @@ public class Launcher {
 	
 	private static Client client;
 	
-	private String ServerIP = BenIP;
+	private String ServerIP = MatIP;
 
 	int port = 8888;
 	User userOne = new User();

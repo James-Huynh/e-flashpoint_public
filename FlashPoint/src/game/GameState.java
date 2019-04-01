@@ -529,7 +529,10 @@ public class GameState implements Serializable {
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
 					matTiles[i][j].setParkingSpot(ambulances[1]);
 					if (j==5) {
-						ambulances[1].setTile(matTiles[i][j]);
+						ambulances[1].setTile(matTiles[i][j], 0);
+					}
+					else {
+						ambulances[1].setTile(matTiles[i][j], 1);
 					}
 				}
 
@@ -538,7 +541,10 @@ public class GameState implements Serializable {
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
 					matTiles[i][j].setParkingSpot(ambulances[0]);
 					if (i==4) {
-						ambulances[0].setTile(matTiles[i][j]);
+						ambulances[0].setTile(matTiles[i][j], 0);
+					}
+					else {
+						ambulances[0].setTile(matTiles[i][j], 1);
 					}
 				}
 
@@ -547,7 +553,10 @@ public class GameState implements Serializable {
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
 					matTiles[i][j].setParkingSpot(ambulances[3]);
 					if (j==4) {
-						ambulances[3].setTile(matTiles[i][j]);
+						ambulances[3].setTile(matTiles[i][j], 0);
+					}
+					else {
+						ambulances[3].setTile(matTiles[i][j], 1);
 					}
 				}
 
@@ -556,7 +565,10 @@ public class GameState implements Serializable {
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
 					matTiles[i][j].setParkingSpot(ambulances[2]);
 					if (i==3) {
-						ambulances[2].setTile(matTiles[i][j]);
+						ambulances[2].setTile(matTiles[i][j], 0);
+					}
+					else {
+						ambulances[2].setTile(matTiles[i][j], 1);
 					}
 				}
 
@@ -567,7 +579,10 @@ public class GameState implements Serializable {
 					matTiles[i][j].setParkingType(Vehicle.Engine);
 					matTiles[i][j].setParkingSpot(engines[1]);
 					if (j==7) {
-						engines[1].setTile(matTiles[i][j]);
+						engines[1].setTile(matTiles[i][j], 0);
+					}
+					else {
+						engines[1].setTile(matTiles[i][j], 1);
 					}
 				}
 
@@ -576,7 +591,10 @@ public class GameState implements Serializable {
 					matTiles[i][j].setParkingType(Vehicle.Engine);
 					matTiles[i][j].setParkingSpot(engines[0]);
 					if (i==2) {
-						engines[0].setTile(matTiles[i][j]);
+						engines[0].setTile(matTiles[i][j], 0);
+					}
+					else {
+						engines[0].setTile(matTiles[i][j], 1);
 					}
 				}
 
@@ -585,7 +603,10 @@ public class GameState implements Serializable {
 					matTiles[i][j].setParkingType(Vehicle.Engine);
 					matTiles[i][j].setParkingSpot(engines[3]);
 					if (j==2) {
-						engines[3].setTile(matTiles[i][j]);
+						engines[3].setTile(matTiles[i][j], 0);
+					}
+					else {
+						engines[3].setTile(matTiles[i][j], 1);
 					}
 				}
 
@@ -594,7 +615,10 @@ public class GameState implements Serializable {
 					matTiles[i][j].setParkingType(Vehicle.Engine);
 					matTiles[i][j].setParkingSpot(engines[2]);
 					if(i==5) {
-						engines[2].setTile(matTiles[i][j]);
+						engines[2].setTile(matTiles[i][j], 0);
+					}
+					else {
+						engines[2].setTile(matTiles[i][j], 1);
 					}
 				}
 
