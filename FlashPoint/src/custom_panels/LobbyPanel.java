@@ -79,11 +79,15 @@ public class LobbyPanel extends JPanel {
 	
 	
 	private void createChatBox() {
-		chatBox = new ChatBox(300, 300, clientManager);
+		chatBox = new ChatBox(400, 750, clientManager);
 		chatPanel = chatBox.getPanel_main();
-		chatPanel.setLocation(new Point(500, 50));
+		chatPanel.setLocation(new Point(850, 0));
 		this.add(chatPanel);
 	}
+	
+//	public JPanel getChatBox() {
+//		return this.chatPanel;
+//	}
 	
 	
 	private void createHeaderPanel() {

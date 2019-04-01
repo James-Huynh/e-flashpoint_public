@@ -6,6 +6,8 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -57,7 +59,7 @@ public class Launcher {
 	
 	private static Client client;
 	
-	private String ServerIP = MatIP;
+	private String ServerIP = BenIP;
 
 	int port = 8888;
 	User userOne = new User();
@@ -345,7 +347,8 @@ public class Launcher {
 	private void setupLobbyPage() {
 		System.out.println("setting up lobby page" + clientManager.getLobby().getDifficulty());
 		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION,this.clientManager);
-		contentPane.add(lobby);
+		contentPane.add(lobby, BorderLayout.CENTER);
+		contentPane.remove(dummyRightPanel);
 		listenerThread.begin();
 		
 		System.out.println("lobby?"+clientManager.getLobby().getIsLoadGame());
@@ -390,7 +393,8 @@ public class Launcher {
 		lobby.setVisible(false);
 		motherFrame.remove(lobby);
 		lobby.refreshDisplay();
-		contentPane.add(lobby);
+		contentPane.add(lobby, BorderLayout.CENTER);
+		contentPane.remove(dummyRightPanel);
 		lobby.setVisible(true);
 		motherFrame.revalidate();
 		
