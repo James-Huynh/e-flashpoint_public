@@ -528,58 +528,74 @@ public class GameState implements Serializable {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
 					matTiles[i][j].setParkingSpot(ambulances[1]);
-					ambulances[1].setTile(matTiles[i][j]);
+					if (j==5) {
+						ambulances[1].setTile(matTiles[i][j]);
+					}
 				}
 
 				else if ((i == 3 || i == 4) && j == 0) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
 					matTiles[i][j].setParkingSpot(ambulances[0]);
-					ambulances[0].setTile(matTiles[i][j]);
+					if (i==4) {
+						ambulances[0].setTile(matTiles[i][j]);
+					}
 				}
 
 				else if (i == 7 && (j == 3 || j == 4)) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
 					matTiles[i][j].setParkingSpot(ambulances[3]);
-					ambulances[3].setTile(matTiles[i][j]);
+					if (j==4) {
+						ambulances[3].setTile(matTiles[i][j]);
+					}
 				}
 
 				else if ((i == 3 || i == 4) && j == 9) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Ambulance);
 					matTiles[i][j].setParkingSpot(ambulances[2]);
-					ambulances[2].setTile(matTiles[i][j]);
+					if (i==3) {
+						ambulances[2].setTile(matTiles[i][j]);
+					}
 				}
 
-				///////// ENGINES
+				///////// ENGINES -- 0 = left, 1 = up, 2 = right, 3 = bottom
 
 				else if (i == 0 && (j == 7 || j == 8)) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Engine);
 					matTiles[i][j].setParkingSpot(engines[1]);
-					engines[1].setTile(matTiles[i][j]);
+					if (j==7) {
+						engines[1].setTile(matTiles[i][j]);
+					}
 				}
 
 				else if ((i == 1 || i == 2) && j == 0) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Engine);
 					matTiles[i][j].setParkingSpot(engines[0]);
-					engines[0].setTile(matTiles[i][j]);
+					if (i==2) {
+						engines[0].setTile(matTiles[i][j]);
+					}
 				}
 
 				else if (i == 7 && (j == 1 || j == 2)) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Engine);
 					matTiles[i][j].setParkingSpot(engines[3]);
-					engines[3].setTile(matTiles[i][j]);
+					if (j==2) {
+						engines[3].setTile(matTiles[i][j]);
+					}
 				}
 
 				else if ((i == 6 || i == 5) && j == 9) {
 					matTiles[i][j] = new Tile(false, new int[] { i, j });
 					matTiles[i][j].setParkingType(Vehicle.Engine);
 					matTiles[i][j].setParkingSpot(engines[2]);
-					engines[2].setTile(matTiles[i][j]);
+					if(i==5) {
+						engines[2].setTile(matTiles[i][j]);
+					}
 				}
 
 				else if (i == 0 || i == 7 || j == 0 || j == 9) {

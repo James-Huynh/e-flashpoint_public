@@ -141,6 +141,7 @@ public class Drive extends Action {
             }
             currentPosition.getFirefighterList().remove(playingFirefighter);
             playingFirefighter.setCurrentLocation(target);
+            target.addToFirefighterList(playingFirefighter);
             
 //            obtainTravellers(gs);
 //            
