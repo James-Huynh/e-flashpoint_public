@@ -292,7 +292,7 @@ public class LobbyPanel extends JPanel {
 		updateLobby(clientManager.getLobby());
 		resetLabels();
 		createPlayers();
-		chatBox.refreshChatBox();
+		chatBox.refreshChatBox(false);
 		add(chatBox);
 		
 		

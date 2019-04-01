@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -43,7 +44,7 @@ public class ChatBox extends JPanel{
 	private Rectangle rect_button;
 	private JTextPane textPane;
 
-	private DefaultStyledDocument document = new DefaultStyledDocument();;
+	private DefaultStyledDocument document = new DefaultStyledDocument();
 	private StyleContext context = new StyleContext();
 	private Style style = context.addStyle("James", null);
 
@@ -118,25 +119,46 @@ public class ChatBox extends JPanel{
 	}
 
 
-	public void refreshChatBox() {
+	public void refreshChatBox(boolean b) {
 		final StringBuilder finalText = new StringBuilder();
 		//document = new DefaultStyledDocument();
 		
 		mDataArrays = clientManager.getChatArray();
 		
-		for (ChatMsgEntity entity : mDataArrays) {
-			finalText.append("[" + entity.getDate() + "] ");
-			finalText.append(entity.getName() + ": ");
-			finalText.append(entity.getMessage());
-			
-			updateChatGUI(finalText.toString());
+		if(b) {
+//			try {
+//				document.remove(0, document.getLength());
+//			} catch (BadLocationException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			for (ChatMsgEntity entity : mDataArrays) {
+				finalText.delete(0, finalText.length());
+				finalText.append("[" + entity.getDate() + "] ");
+				finalText.append(entity.getName() + ": ");
+				finalText.append(entity.getMessage() + "\n");
+				
+				updateChatGUI(finalText.toString());
+			}
+		} else {
+			if(!mDataArrays.isEmpty()) {
+				ChatMsgEntity entity  = mDataArrays.get(0);
+				finalText.append("[" + entity.getDate() + "] ");
+				finalText.append(entity.getName() + ": ");
+				finalText.append(entity.getMessage() + "\n");
+				
+				
+				updateChatGUI(finalText.toString());
+			}
 		}
+		
 		
 		
 	}
 
 	private void updateChatGUI(String text) {
 		try {
+			System.out.println("this is in UCG" + text);
 			document.insertString(document.getLength(), text, style);
 		} catch(BadLocationException exc) {
 			exc.printStackTrace();

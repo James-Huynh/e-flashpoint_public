@@ -34,9 +34,10 @@ public class clientThread implements Runnable{
 				}
 			}else {
 				if(myClientManager.listenForResponses() == 1) {
-					System.out.println("I heard a resposne");
 					myLauncher.refreshBoard();
-				} 
+				} else {
+					System.out.println("we are not meant to be here");
+				}
 			}
 			try {
 				Thread.sleep(1000);

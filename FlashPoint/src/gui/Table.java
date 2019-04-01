@@ -160,6 +160,8 @@ public class Table {
 			this.boardPanel = new BoardPanel();
 			this.rightPanel = new RightPanel(this.currentBoard);
 			this.leftPanel = new LeftPanel(this.currentBoard);
+			rightPanel.refreshChat();
+			
 //			gameFrame.add(boardPanel, BorderLayout.CENTER);
 //			gameFrame.add(rightPanel, BorderLayout.EAST);
 //			gameFrame.add(leftPanel,BorderLayout.WEST);
@@ -224,11 +226,16 @@ public class Table {
 				removeAll();
 				infoPanel.drawInfo(currentBoard);
 				add(infoPanel);
-				chatBox.refreshChatBox();
+				chatBox.refreshChatBox(true);
 				chatPanel = chatBox.getPanel_main();
 				add(chatPanel);
 				revalidate();
 				repaint();
+			}
+			public void refreshChat() {
+				chatBox.refreshChatBox(true);
+				chatPanel = chatBox.getPanel_main();
+				add(chatPanel);
 			}
 		}
 		
