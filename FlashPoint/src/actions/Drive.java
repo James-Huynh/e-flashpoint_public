@@ -242,7 +242,7 @@ public class Drive extends Action {
 	        }
 	        it.remove(); // avoids a ConcurrentModificationException, don't know if necessary? -Mat: garbage collector, don't worry
 	    }
-	    
+	    System.out.println(gs.getRideMapper().size());
 	    System.out.println("this is the size of travelers" + travellers.size());
 	}
 
