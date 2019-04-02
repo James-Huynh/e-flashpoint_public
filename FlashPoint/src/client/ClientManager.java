@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import actions.Action;
+import actions.ActionList;
 import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
@@ -663,6 +664,18 @@ public class ClientManager {
 //		catch(IOException k) {
 //			
 //		}
+		
+		return flag;
+	}
+	
+	public boolean sendRideResponse(boolean val, int index) {
+		boolean flag = false;
+		
+		requestObject.setRideResponse(val);
+		requestObject.setMyFFIndex(index);
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SENDRIDERESPONSE);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
 		
 		return flag;
 	}

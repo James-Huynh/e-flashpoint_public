@@ -195,6 +195,21 @@ public class ServerManager {
 		gameState.createFFToAsk(type);
 	}
 	
+	public boolean hasEveryonerResponded() {
+		if(gameState.hasEveryoneResponded()) {
+			gameState.resetHashMap();
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void updateResponse(boolean b, int i) {
+		gameState.setRideOption(b, i);
+	}
+	
+	
 	public void saveGame() throws IOException {
 		//@eric take the current game state and save it here
 		//@junha, I move part of ur code into the Class GameSaver

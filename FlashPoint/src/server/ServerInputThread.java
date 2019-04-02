@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import actions.ActionList;
 import chat.ChatMsgEntity;
 import commons.bean.TextMessage;
 import commons.bean.User;
@@ -214,6 +215,23 @@ public class ServerInputThread extends Thread {
 			case ACTIONREQUEST:
 				System.out.println("In action request");
 				requestObject = (User) read_tranObject.getObject();
+				
+				if(requestObject.getAction().getTitle() == ActionList.Drive) {
+					serverManager.askRelevantFirefighters(requestObject.getCurrentState().getPlayingFirefighter().getCurrentPosition().getParkingType());
+					
+					returnGameState = new TranObject<GameState>(TranObjectType.SENDRIDERECEIVED);
+					returnGameState.setObject(serverManager.getGameState());
+					for (OutputThread onOut : map.getAll()) {
+						onOut.setMessage(returnGameState); 
+					}
+					while(!serverManager.hasEveryonerResponded()) {
+						readMessage();	
+					}
+				}
+				
+				
+				
+				
 				serverManager.performAction(requestObject.getAction());
 				returnGameState = new TranObject<GameState>(TranObjectType.ACTIONSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
@@ -230,6 +248,16 @@ public class ServerInputThread extends Thread {
 				for (OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnGameState); 
 				}
+				break;
+			case SENDRIDERESPONSE:
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.updateResponse(requestObject.getRideResponse(), requestObject.getMyFFIndex());
+				
+//				returnGameState = new TranObject<GameState>(TranObjectType.RIDERESPONSEACK);
+//				returnGameState.setObject(serverManager.getGameState());
+//				for (OutputThread onOut : map.getAll()) {
+//					onOut.setMessage(returnGameState); 
+//				}
 				break;
 			case LOBBYCREATION:
 				//System.out.println("In lobby creation");

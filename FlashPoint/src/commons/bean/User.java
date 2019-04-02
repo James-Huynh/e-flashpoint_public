@@ -33,11 +33,13 @@ public class User implements Serializable {
     private boolean isRegistered;
     private int[] coords;
     private boolean placed;
+    private boolean rideResponse;
     private actions.Action action;
     private Lobby currentLobby;
     private ArrayList<Lobby> currentLobbies;
     private TextMessage message;
     private int vehicleIndex;
+    private int myFFIndex;
     private Vehicle vehicleType;
     private Vehicle ridingObject;
     private Speciality desiredSpeciality;
@@ -264,6 +266,22 @@ public class User implements Serializable {
 	
 	public int[] getDices() {
 		return this.dices;
+	}
+
+	public boolean getRideResponse() {
+		return rideResponse;
+	}
+
+	public void setRideResponse(boolean rideResponse) {
+		this.rideResponse = rideResponse;
+	}
+
+	public int getMyFFIndex() {
+		return myFFIndex;
+	}
+
+	public void setMyFFIndex(int myFFIndex) {
+		this.myFFIndex = myFFIndex;
 	}
 
 //	public int getImg() {

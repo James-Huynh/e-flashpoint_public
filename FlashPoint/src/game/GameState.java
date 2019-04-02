@@ -3,8 +3,11 @@ package game;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.io.Serializable;
 
@@ -62,7 +65,7 @@ public class GameState implements Serializable {
 	protected ArrayList<Firefighter> freeFirefighters;
 	protected ArrayList<Hazmat> lostHazmat;
 	protected ArrayList<Hazmat> disposedHazmat;
-	protected HashMap<Firefighter, Boolean> rideMapper; //For Ride in Experienced Mode
+	protected HashMap<Firefighter, Boolean[]> rideMapper; //For Ride in Experienced Mode, [0] = should be asked, [1] = responded
 
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
 	protected boolean experiencedMode;
@@ -188,7 +191,7 @@ public class GameState implements Serializable {
 		this.proposedDices=new int[] {-1,-1};
 		if(lobby.getMode().equals("Experienced")) {
 			this.experiencedMode = true;
-			rideMapper = new HashMap<Firefighter, Boolean>();
+			rideMapper = new HashMap<Firefighter, Boolean[]>();
 			this.freeSpecialities.add(Speciality.CAFS);
 			this.freeSpecialities.add(Speciality.CAPTAIN);
 			this.freeSpecialities.add(Speciality.DOG);
@@ -286,7 +289,7 @@ public class GameState implements Serializable {
 		return engines;
 	}
 	
-	public HashMap<Firefighter, Boolean> getRideMapper(){
+	public HashMap<Firefighter, Boolean[]> getRideMapper(){
 		return this.rideMapper;
 	}
 
@@ -519,7 +522,10 @@ public class GameState implements Serializable {
 				this.listOfPlayers.get(i).setFirefighter(tempFirefighter);
 				this.listOfFirefighters.add(tempFirefighter);
 				if(this.isExperienced()) {
-					this.rideMapper.put(tempFirefighter, false);
+//					this.rideMapper.put(tempFirefighter, false);
+					this.rideMapper.put(tempFirefighter, new Boolean[2]);
+					this.rideMapper.get(tempFirefighter)[0] = false;
+					this.rideMapper.get(tempFirefighter)[1] = false;
 				}
 				
 			}
@@ -1048,7 +1054,8 @@ public class GameState implements Serializable {
 					if(placedOn[i].containsFirefighter()) {
 						for(Firefighter f: placedOn[i].getFirefighterList()) {
 							if( f != this.getPlayingFirefighter()) {
-								rideMapper.put(f, true);
+//								rideMapper.put(f, true);
+								rideMapper.get(f)[0] = true;
 							}
 						}
 					}
@@ -1062,13 +1069,35 @@ public class GameState implements Serializable {
 					if(placedOn[i].containsFirefighter()) {
 						for(Firefighter f: placedOn[i].getFirefighterList()) {
 							if( f != this.getPlayingFirefighter()) {
-								rideMapper.put(f, true);
+//								rideMapper.put(f, true);
+								rideMapper.get(f)[0] = true;
 							}
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	public boolean hasEveryoneResponded() {
+	    Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
+	        if(pair.getValue()[1].booleanValue() == false) {
+	        	return false;
+	        }
+	        it.remove();
+	    }
+	    return true;
+	}
+	
+	public void resetHashMap() {
+		Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
+	        pair.getValue()[0] = false;
+	        it.remove();
+	    }
 	}
 	
 	public void removeSelectedSpeciality(Speciality desiredSpeciality) {
@@ -1084,14 +1113,17 @@ public class GameState implements Serializable {
 	
 	
 	public boolean toDisplayRidePopUp(int myIndex) {
-		return rideMapper.get(listOfFirefighters.get(myIndex)); //Index passed from Table 
+//		return rideMapper.get(listOfFirefighters.get(myIndex)); //Index passed from Table 
+		return rideMapper.get(listOfFirefighters.get(myIndex))[0];
 	}
 	
 	//Gets called when pop-up option is selected
 	//A server request needs to happen which will call this method, the output will get sent to all
 	//It needs to happens server side so everyone is updated, and not locally
 	public void setRideOption(boolean val, int myIndex) { //Index passed from Table 
-		rideMapper.put(listOfFirefighters.get(myIndex), val); 
+//		rideMapper.put(listOfFirefighters.get(myIndex), val); 
+		rideMapper.get(listOfFirefighters.get(myIndex))[0] = true;
+		rideMapper.get(listOfFirefighters.get(myIndex))[1] = val;
 	}
 	
 	public void setProposedDices() {
