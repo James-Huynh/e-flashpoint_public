@@ -53,18 +53,30 @@ public class Command extends Action {
 
 	@Override
 	public boolean validate(GameState gs) {
+		System.out.println("here0");
+		System.out.println(action.APcost);
+		System.out.println(action.getTitle().toString());
 		boolean flag = false;
 		Firefighter captain = gs.getPlayingFirefighter();
+		int captain_i = gs.getActiveFireFighterIndex();
 		Firefighter toObey = gs.getFireFighterList().get(this.index);
-		if (action.title == (ActionList.Handle) || action.title ==(ActionList.Move) || 
-				action.title == (ActionList.MoveWithHazmat) || action.title == (ActionList.MoveWithVictim)) {
-			if (captain.getSP() + captain.getAP() >= action.APcost) {
-				gs.setPlayingFirefighter(toObey);
-				if (action.validate(gs) && !captain.getIfCommandCAPSthisTurn() && !(toObey.getSpeciality()==Speciality.CAFS && action.APcost>1)) {
-					//request and permission from toObey.
-					flag = true;
+		if (captain.getSpeciality() == Speciality.CAPTAIN) {
+			if (action.getTitle().equals((ActionList.Handle)) || action.getTitle().equals((ActionList.Move)) || 
+					action.getTitle().equals(ActionList.MoveWithHazmat) || action.getTitle().equals(ActionList.MoveWithVictim)) {
+				System.out.println("here1");
+				if (captain.getSP() + captain.getAP() >= action.APcost) {
+					System.out.println("here2");
+					gs.setPlayingFirefighter(toObey);
+					if (action.validate(gs)) {
+						//request and permission from toObey.
+						System.out.println("here3");
+						if (!captain.getIfCommandCAPSthisTurn() && !(toObey.getSpeciality()==Speciality.CAFS && action.APcost>1)) {
+							flag = true;
+						}
+					}
 				}
 			}
+			gs.setPlayingFirefighter(captain);
 		}
 		
 		return flag;

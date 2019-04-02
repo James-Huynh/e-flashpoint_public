@@ -400,11 +400,14 @@ public class GameManager {
 //		 */
 		
 		for(int i=0;i<gs.getFireFighterList().size();i++) {
-			for (int dir : new int[]{0,1,2,3} ) {
-				allPossibleActions.add(new Command(i, new Move(dir)));
-				allPossibleActions.add(new Command(i, new MoveWithVictim(dir)));
-				allPossibleActions.add(new Command(i, new MoveWithHazmat(dir)));
-				allPossibleActions.add(new Command(i, new Handle(dir)));
+			if (i != gs.getActiveFireFighterIndex()) {
+				for (int dir : new int[]{0,1,2,3} ) {
+					System.out.println("in the loop");
+					allPossibleActions.add(new Command(i, new Move(dir)));
+					allPossibleActions.add(new Command(i, new MoveWithVictim(dir)));
+					allPossibleActions.add(new Command(i, new MoveWithHazmat(dir)));
+					allPossibleActions.add(new Command(i, new Handle(dir)));
+				}
 			}
 		}
 
