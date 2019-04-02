@@ -10,6 +10,7 @@ import game.GameState;
 import tile.ParkingSpot;
 import tile.Tile;
 import token.Firefighter;
+import token.Speciality;
 import token.Vehicle;
 
 /**
@@ -187,6 +188,9 @@ public class Drive extends Action {
 	public boolean validate(GameState gs) {
 		boolean flag = false;
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        if (playingFirefighter.getSpeciality() == Speciality.DOG) {
+			return false;
+		}
         int aP = playingFirefighter.getAP();
         
         ParkingSpot parking;

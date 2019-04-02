@@ -39,18 +39,9 @@ public class PickOrDrop extends Action {
 		Firefighter f = gs.getPlayingFirefighter();
 		POI healedVictim = f.getCurrentPosition().getPoiList().get(index);
 		
-//		if (f.getSpeciality() == Speciality.PARAMEDIC) {
-//			if (f.getFollow() != null) { //to drop
-//				title = ActionList.Drop;
-//				return true;
-//			}
-//			else if (f.getFollow() == null && healedVictim.isResuscitated()) { //to pick
-//				title = ActionList.Pick;
-//				return true;
-//			}
-//		}
-		
-		 
+		if (f.getSpeciality() == Speciality.DOG) {
+			return false;
+		}
 
 		if (f.getCarriedPOI() != null) { //to drop
 			title = ActionList.Drop;

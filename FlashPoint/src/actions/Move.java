@@ -60,7 +60,7 @@ public class Move extends Action {
         			}
         		}
         		
-        	   else if (fire == 2 && aP > 2) {
+        	   else if (fire == 2 && aP > 2 && playingFirefighter.getSpeciality() != Speciality.DOG) {
         		   flag = true;
         		   this.APcost = 2;
         	   }
@@ -73,7 +73,7 @@ public class Move extends Action {
         		flag = true;
         	}
         	
-        	else if( fire == 2 && aP > 2) {
+        	else if( fire == 2 && aP > 2 && playingFirefighter.getSpeciality() != Speciality.DOG) {
         		flag = true;
         		this.APcost = 2;
         	}
@@ -86,11 +86,17 @@ public class Move extends Action {
         			flag = true;
         		}
         		
-        		else if( fire == 2 && aP > 2) {
+        		else if( fire == 2 && aP > 2 && playingFirefighter.getSpeciality() != Speciality.DOG) {
         				flag = true;
         				this.APcost = 2;
         			}
+        	}
+        	else if (damage == 1) {
+        		if (playingFirefighter.getSpeciality() == Speciality.DOG && fire < 2) {
+        			this.APcost = 2;
+        			flag = true;
         		}
+        	}
         }
         
         //speciality paramedic
@@ -157,6 +163,33 @@ public class Move extends Action {
         		gs.getRevealedFalseAlarmsList().add(poi);
         	}
         }
+        
+        if (playingFirefighter.getSpeciality() == Speciality.DOG) {
+			for (int inn=0; inn<4; inn++) {
+				Tile NeighbourNeighbour = gs.getNeighbour(neighbour, inn);
+				if(NeighbourNeighbour.containsPOI()) {
+					ArrayList<POI> Pois = neighbour.getPoiList(); //where we going
+		        	ArrayList<POI> POIStoRemove = new ArrayList<POI>(); //exploration
+		        	
+		        	for(POI poi:Pois) {
+		        		if(!poi.isRevealed()){
+		        			if(poi.isVictim()){
+		        				poi.reveal();
+		        			} 
+		        			else {
+		        				POIStoRemove.add(poi);
+		        			}
+		        		}
+		        	}
+		        	
+		        	for(POI poi:POIStoRemove) {
+		        		gs.removePOI(poi);
+		        		Pois.remove(poi);
+		        		gs.getRevealedFalseAlarmsList().add(poi);
+		        	}
+				}
+			}
+		}
         
       //speciality paramedic
 //        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null) {

@@ -7,6 +7,7 @@ import game.GameState;
 import tile.Tile;
 import token.Firefighter;
 import token.Hazmat;
+import token.Speciality;
 
 public class MoveWithHazmat extends Move {
 
@@ -49,6 +50,9 @@ public class MoveWithHazmat extends Move {
 		boolean normalMove = super.validate(gs);
 		if (normalMove) {
 			Firefighter playingFirefighter = gs.getPlayingFirefighter();
+			if (playingFirefighter.getSpeciality() == Speciality.DOG) {
+				return false;
+			}
 			int aP = playingFirefighter.getAP();
 			Tile currentPosition = playingFirefighter.getCurrentPosition();
 			System.out.println(currentPosition.containsHazmat());

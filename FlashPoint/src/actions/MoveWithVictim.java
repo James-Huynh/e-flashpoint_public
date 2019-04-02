@@ -7,6 +7,7 @@ import game.GameState;
 import tile.Tile;
 import token.Firefighter;
 import token.POI;
+import token.Speciality;
 
 public class MoveWithVictim extends Move{
 	
@@ -32,14 +33,22 @@ public class MoveWithVictim extends Move{
 			Tile currentPosition = playingFirefighter.getCurrentPosition();
 	        Edge edge = currentPosition.getEdge(direction);
 	        Tile neighbour = gs.getNeighbour(currentPosition, direction);
-	        int fire = neighbour.getFire();			
+	        int fire = neighbour.getFire();		
+	        
+	        if (playingFirefighter.getSpeciality() == Speciality.DOG) {
+				this.APcost = 4;
+				if (edge.isWall() && edge.getDamage() == 1) { //dog cannot combine sqeeze and drag.
+					return false;
+				}
+			}
+	        
 			if(currentPosition.containsPOI()) {
 				ArrayList<POI> pois = currentPosition.getPoiList();
 				if(fire < 2) {
 					if(edge.isDoor()) {
 						if(edge.getStatus() == true || edge.isDestroyed()) {
 							for(POI p: pois) {
-								if(p.isVictim() && p.isRevealed() && aP >=2) {
+								if(p.isVictim() && p.isRevealed() && aP >= APcost) {
 									return true;
 								}
 							}
@@ -48,7 +57,7 @@ public class MoveWithVictim extends Move{
 					else if(edge.isWall()) {
 						if(edge.getDamage() == 0) {
 							for(POI p: pois) {
-								if(p.isVictim() && p.isRevealed() && aP >=2) {
+								if(p.isVictim() && p.isRevealed() && aP >= APcost) {
 									return true;
 								}
 							}
@@ -56,7 +65,7 @@ public class MoveWithVictim extends Move{
 					}
 					else if(edge.isBlank()) {
 						for(POI p:pois) {
-							if(p.isVictim() && p.isRevealed() && aP >=2) {
+							if(p.isVictim() && p.isRevealed() && aP >= APcost) {
 								return true;
 							}
 						}
@@ -92,7 +101,10 @@ public class MoveWithVictim extends Move{
 
 	@Override
 	public void adjustAction(GameState gs) {
-		
+		Firefighter playingFirefighter = gs.getPlayingFirefighter();
+		if (playingFirefighter.getSpeciality() == Speciality.DOG) {
+			this.APcost = 4;
+		}
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import edge.Edge;
 import game.GameState;
 import tile.Tile;
 import token.Firefighter;
+import token.Speciality;
 
 
 public class Handle extends Action{
@@ -30,6 +31,9 @@ public class Handle extends Action{
 	public boolean validate(GameState gs) {
 		boolean flag = false;
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        if (playingFirefighter.getSpeciality() == Speciality.DOG) {
+			return false;
+		}
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Edge edge = currentPosition.getEdge(direction);
         int cost = super.getCost();

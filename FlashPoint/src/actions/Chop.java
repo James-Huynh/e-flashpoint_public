@@ -72,6 +72,9 @@ public class Chop extends Action {
     public boolean validate(GameState gs) {
         boolean flag = false;
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
+        if (playingFirefighter.getSpeciality() == Speciality.DOG) {
+			return false;
+		}
         
     	if (playingFirefighter.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
 			this.APcost = this.APcost/2;
