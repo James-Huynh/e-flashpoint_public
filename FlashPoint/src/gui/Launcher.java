@@ -458,6 +458,7 @@ public class Launcher {
 			showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
 			clientManager.setEndTurnTrigger(false);
 		}
+		table.hideRidePanel();
 		table.refresh(clientManager.getUsersGameState());
 		if(table.getMyIndex() > 5) {
 			repaint(false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
