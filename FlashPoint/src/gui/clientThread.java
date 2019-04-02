@@ -33,7 +33,7 @@ public class clientThread implements Runnable{
 					this.inLobby = false;
 				}
 			}else {
-				if(!myClientManager.getUsersGameState().hasEveryoneResponded()) {
+				if(myClientManager.getUsersGameState().getInRideMode()) {
 					myLauncher.showRideRequest();
 				}
 				else if(myClientManager.listenForResponses() == 1) {
