@@ -119,7 +119,11 @@ public class Table {
 					this.myIndex = i;
 				}
 			}
+			
+			System.out.println("hello this is the free ff check " + clientManager.getUsersGameState().getFreeFirefighters().size());
+			
 			if(clientManager.getUsersGameState().getFreeFirefighters().size() != 0) {
+				
 				this.myIndex = 7;
 				this.selectingFireFighter = true;
 				this.selectingSpeciality = false;
@@ -1020,7 +1024,13 @@ public class Table {
 				if(this.connectedTile.containsFirefighter()) {
 					String builder = defaultImagesPath;
 					//Firefighter currentFF = currentBoard.getPlayingFirefighter();
-					Firefighter currentFF = clientManager.getUsersGameState().getFireFighterList().get(myIndex);
+					Firefighter currentFF;
+					if(myIndex > 5) {
+						currentFF = this.connectedTile.getFirefighterList().get(0);
+					}else {
+						currentFF = clientManager.getUsersGameState().getFireFighterList().get(myIndex);
+					}
+					
 					Tile currentPos = currentFF.getCurrentPosition();
 					Firefighter check;
 					if(this.connectedTile == currentPos) {
