@@ -41,7 +41,7 @@ public class User implements Serializable {
     private Vehicle vehicleType;
     private Vehicle ridingObject;
     private Speciality desiredSpeciality;
-    private Firefighter desiredFirefighter;
+    private int desiredFirefighter;
     private int loadNum;
     private ArrayList<GameState> savedGameStates;
     private int[] dices;
@@ -249,12 +249,12 @@ public class User implements Serializable {
 		return this.savedGameStates;
 	}
 
-	public void setDesiredFirefighter(Firefighter f) {
-		this.desiredFirefighter = f;
+	public void setDesiredFirefighter(int i) {
+		this.desiredFirefighter = i;
 		
 	}
 	
-	public Firefighter getDesiredFirefighter() {
+	public int getDesiredFirefighter() {
 		return this.desiredFirefighter;
 	}
 	

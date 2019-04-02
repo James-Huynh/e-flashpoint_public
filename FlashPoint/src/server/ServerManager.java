@@ -233,6 +233,7 @@ public class ServerManager {
 			this.gameState = (GameState) oi.readObject();
 			
 			this.gameManager.getGameState().updateGameStateFromObject(gameState);
+			this.gameState = gameManager.getGameState();
 			
 			oi.close();
 			fi.close();
@@ -376,23 +377,29 @@ public class ServerManager {
 		}
 
 		public void setFirefighter(User person) {
-			Firefighter ff = person.getDesiredFirefighter();
-			if(gameState.getFreeFirefighters().contains(ff)) {
+			int ff = person.getDesiredFirefighter();
+			System.out.println("we are in hrerererer" + ff);
+			if(gameState.getFreeFirefighters().contains(gameState.getFireFighterList().get(ff))) {
 				Player player = onlinePlayers.get(person.getId());
 				if(player.getFirefighter()!=null) {
 					if(gameState.getListOfPlayers().size() == gameState.getFireFighterList().size()) {
 						gameState.getFreeFirefighters().add(player.getFirefighter());
-						player.setFirefighter(ff);
+						player.setFirefighter(gameState.getFreeFirefighters().get(ff));
+						gameState.getFreeFirefighters().get(ff).setPlayer(player);
 						gameState.getFreeFirefighters().remove(ff);
-						ff.setPlayer(player);
 					}
 				} else {
-					player.setFirefighter(ff);
+					System.out.println("were here");
+					player.setFirefighter(gameState.getFreeFirefighters().get(ff));
+					System.out.println(player.getFirefighter().getOwner().getUserName());
+					gameState.getFreeFirefighters().get(ff).setPlayer(player);
+					System.out.println(gameState.getFreeFirefighters().get(ff).getOwner().getUserName());
 					gameState.getFreeFirefighters().remove(ff);
-					ff.setPlayer(player);
+					System.out.println(gameState.getFreeFirefighters().size());
+					
 					
 				}
-			}
+			} else System.out.println("we should not be here");
 		}
 	
 }

@@ -109,6 +109,10 @@ public class GameState implements Serializable {
 	// copy constructor
 
 	public void updateGameStateFromObject(GameState copy) {
+		System.out.println("hello we are testing variables");
+		System.out.println(copy.MAX_WALL_DMGD);
+		System.out.println(copy.activeFireFighterIndex);
+		System.out.println(copy.listOfFirefighters.size());
 		this.remainingVictims = copy.remainingVictims;
 		this.remainingFalseAlarms = copy.remainingFalseAlarms;
 		this.wallsDamaged = copy.wallsDamaged;
@@ -142,7 +146,13 @@ public class GameState implements Serializable {
 		this.proposedDices = copy.proposedDices;
 		
 		//for loading and selecting, may need to change
-				this.freeFirefighters = copy.listOfFirefighters;
+		System.out.println(this.listOfFirefighters.size());
+		this.freeFirefighters = new ArrayList<Firefighter>();
+		for(int i = 0; i<this.listOfFirefighters.size(); i++) {
+			System.out.println("weve made it inside");
+			this.freeFirefighters.add(this.listOfFirefighters.get(i));
+			System.out.println(this.freeFirefighters.size());
+		}
 	}
 
 	/*
@@ -634,7 +644,8 @@ public class GameState implements Serializable {
 				} else {
 					matTiles[i][j] = new Tile(true, new int[] { i, j }); // create interior tiles
 				}
-				
+			}
+		}
 				//@matekrk assign Tiles to Engine spots (quadrants):
 				for (ParkingSpot e : engines) {
 					int[][] quadrantIndices = new int[12][2];
@@ -683,8 +694,6 @@ public class GameState implements Serializable {
 					}
 					e.setQuadrants(quadrantIndices);
 				}
-			}
-		}
 
 	}
 

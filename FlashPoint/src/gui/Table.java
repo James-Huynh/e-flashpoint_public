@@ -85,6 +85,8 @@ public class Table {
 		private int myIndex = 7;
 		private clientThread listenerThread;
 		
+		private int desiredFFindex;
+		
 		private HashMap<Firefighter, Integer> firefighterOrder = new HashMap<Firefighter, Integer>();
 		
 //		public Table(GameState inputBoard) {
@@ -112,6 +114,7 @@ public class Table {
 			this.launcher = launcher;
 			this.listenerThread = myThread;
 			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
+			this.desiredFFindex = 0;
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
 				firefighterOrder.put(f,i);
@@ -122,7 +125,7 @@ public class Table {
 			
 			System.out.println("hello this is the free ff check " + clientManager.getUsersGameState().getFreeFirefighters().size());
 			
-			if(clientManager.getUsersGameState().getFreeFirefighters().size() != 0) {
+			if(clientManager.getUsersGameState().getFreeFirefighters().size() > 0) {
 				
 				this.myIndex = 7;
 				this.selectingFireFighter = true;
@@ -4555,20 +4558,99 @@ public class Table {
 				JMenu firefighterMenu = new JMenu("Select FireFighter");
 				String builder = "";
 				JMenuItem info;
-				for(Firefighter f : clientManager.getUsersGameState().getFreeFirefighters()) {
-					builder = f.getOwner().getUserName();
+				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 0) {
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(0).getOwner().getUserName();
 					info = new JMenuItem(builder);
 					
 					info.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendFireFighterSelectionRequest(f)) {
-								System.out.println("Speciality selected is " + f.getOwner().toString());
+							desiredFFindex = 0;
+							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+								
 							}
 						}
 					});
 					firefighterMenu.add(info);
 				}
+				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 1) {
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(1).getOwner().getUserName();
+					info = new JMenuItem(builder);
+					
+					info.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							desiredFFindex = 1;
+							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+								
+							}
+						}
+					});
+					firefighterMenu.add(info);
+				}
+				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 2) {
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(2).getOwner().getUserName();
+					info = new JMenuItem(builder);
+					
+					info.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							desiredFFindex = 2;
+							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+								
+							}
+						}
+					});
+					firefighterMenu.add(info);
+				}
+				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 3) {
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(3).getOwner().getUserName();
+					info = new JMenuItem(builder);
+					
+					info.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							desiredFFindex = 3;
+							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+								
+							}
+						}
+					});
+					firefighterMenu.add(info);
+				}
+				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 4) {
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(4).getOwner().getUserName();
+					info = new JMenuItem(builder);
+					
+					info.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							desiredFFindex = 4;
+							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+								
+							}
+						}
+					});
+					firefighterMenu.add(info);
+				}
+				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 5) {
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(5).getOwner().getUserName();
+					info = new JMenuItem(builder);
+					
+					info.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							desiredFFindex = 5;
+							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+								
+							}
+						}
+					});
+					firefighterMenu.add(info);
+				}
+				
+				
+				
 				
 				boolean flag = clientManager.getUsersGameState().getFreeFirefighters().size() == 0;
 				
@@ -4751,7 +4833,7 @@ public class Table {
 			return clientManager.sendSelectionEndRequest();
 		}
 		
-		private boolean sendFireFighterSelectionRequest(Firefighter f) {
-			return clientManager.fireFighterSelectionRequest(f);
+		private boolean sendFireFighterSelectionRequest(int i) {
+			return clientManager.fireFighterSelectionRequest(i);
 		}
 }

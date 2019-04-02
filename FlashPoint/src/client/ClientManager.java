@@ -684,8 +684,8 @@ public class ClientManager {
 		return true;
 	}
 
-	public boolean fireFighterSelectionRequest(Firefighter f) {
-		requestObject.setDesiredFirefighter(f);
+	public boolean fireFighterSelectionRequest(int i) {
+		requestObject.setDesiredFirefighter(i);
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FIREFIGHTERSELECTREQUEST);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
