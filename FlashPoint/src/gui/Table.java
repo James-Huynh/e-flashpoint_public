@@ -934,25 +934,25 @@ public class Table {
 
 					@Override
 					public void mousePressed(final MouseEvent e) {
-						// TODO Auto-generated method stub
+					
 						
 					}
 
 					@Override
 					public void mouseReleased(final MouseEvent e) {
-						// TODO Auto-generated method stub
+						
 						
 					}
 
 					@Override
 					public void mouseEntered(final MouseEvent e) {
-						// TODO Auto-generated method stub
+					
 						
 					}
 
 					@Override
 					public void mouseExited(final MouseEvent e) {
-						// TODO Auto-generated method stub
+					
 						
 					}
 					
@@ -962,7 +962,6 @@ public class Table {
 			}
 			
 			public void drawTile(GameState currentBoard) {
-				// TODO Auto-generated method stub
 				
 				removeAll();
 				assignFires();
@@ -2066,7 +2065,7 @@ public class Table {
 			    				case 0:
 			    					if(toPreform.getTitle() == ActionList.Move) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2084,7 +2083,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2102,7 +2101,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2120,7 +2119,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2140,7 +2139,7 @@ public class Table {
 			    						}
 			    					} else if (toPreform.getTitle() == ActionList.MoveWithHazmat) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2158,7 +2157,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2176,7 +2175,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2194,7 +2193,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2214,7 +2213,7 @@ public class Table {
 			    						}
 			    					} else if (toPreform.getTitle() == ActionList.MoveWithVictim) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2232,7 +2231,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2250,7 +2249,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2268,7 +2267,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2288,7 +2287,7 @@ public class Table {
 			    						}
 			    					} else if (toPreform.getTitle() == ActionList.Handle) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2306,7 +2305,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2324,7 +2323,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2342,7 +2341,7 @@ public class Table {
 			    							player1Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2365,7 +2364,7 @@ public class Table {
 			    				case 1:
 			    					if(toPreform.getTitle() == ActionList.Move) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2383,7 +2382,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2401,7 +2400,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2419,7 +2418,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2439,7 +2438,7 @@ public class Table {
 			    						}
 			    					} else if (toPreform.getTitle() == ActionList.MoveWithHazmat) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2457,7 +2456,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2475,7 +2474,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2493,7 +2492,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2513,7 +2512,7 @@ public class Table {
 			    						}
 			    					} else if (toPreform.getTitle() == ActionList.MoveWithVictim) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2531,7 +2530,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2549,7 +2548,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2567,7 +2566,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2587,7 +2586,7 @@ public class Table {
 			    						}
 			    					} else if (toPreform.getTitle() == ActionList.Handle) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2605,7 +2604,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2623,7 +2622,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2641,7 +2640,7 @@ public class Table {
 			    							player2Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2664,7 +2663,7 @@ public class Table {
 			    				case 2:
 			    					if(toPreform.getTitle() == ActionList.Move) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2682,7 +2681,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2700,7 +2699,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2718,7 +2717,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2738,7 +2737,7 @@ public class Table {
 			    						}
 			    					} else if (toPreform.getTitle() == ActionList.MoveWithHazmat) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2756,7 +2755,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2774,7 +2773,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2792,7 +2791,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2812,7 +2811,7 @@ public class Table {
 			    						}
 			    					} else if (toPreform.getTitle() == ActionList.MoveWithVictim) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2830,7 +2829,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2848,7 +2847,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2866,7 +2865,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2886,7 +2885,7 @@ public class Table {
 			    						}
 			    					} else if (toPreform.getTitle() == ActionList.Handle) {
 			    						if(toPreform.getDirection() == 0) {
-			    							commandBuilder = "left APC: ";
+			    							commandBuilder = "Left APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2904,7 +2903,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 1) {
-			    							commandBuilder = "up APC: ";
+			    							commandBuilder = "Up APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2922,7 +2921,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 2) {
-			    							commandBuilder = "right APC: ";
+			    							commandBuilder = "Right APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2940,7 +2939,7 @@ public class Table {
 			    							player3Check = true;
 			    							commandCheck = true;
 			    						} else if(toPreform.getDirection() == 3) {
-			    							commandBuilder = "down APC: ";
+			    							commandBuilder = "Down APC: ";
 			    							commandBuilder = commandBuilder + toPreform.getCost();
 			    							newCommandAction = new JMenuItem(commandBuilder);
 			    							newCommandAction.addActionListener(new ActionListener() {
@@ -2961,10 +2960,901 @@ public class Table {
 			    					}
 			    					break;
 			    				case 3:
+			    					if(toPreform.getTitle() == ActionList.Move) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveMenu.add(newCommandAction);
+			    							p4move = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveMenu.add(newCommandAction);
+			    							p4move = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveMenu.add(newCommandAction);
+			    							p4move = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveMenu.add(newCommandAction);
+			    							p4move = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						}
+			    					} else if (toPreform.getTitle() == ActionList.MoveWithHazmat) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveWithHazmatMenu.add(newCommandAction);
+			    							p4moveH = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveWithHazmatMenu.add(newCommandAction);
+			    							p4moveH = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveWithHazmatMenu.add(newCommandAction);
+			    							p4moveH = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveWithHazmatMenu.add(newCommandAction);
+			    							p4moveH = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						}
+			    					} else if (toPreform.getTitle() == ActionList.MoveWithVictim) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveWithVictimMenu.add(newCommandAction);
+			    							p4moveV = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveWithVictimMenu.add(newCommandAction);
+			    							p4moveV = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveWithVictimMenu.add(newCommandAction);
+			    							p4moveV = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4MoveWithVictimMenu.add(newCommandAction);
+			    							p4moveV = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						}
+			    					} else if (toPreform.getTitle() == ActionList.Handle) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4HandleMenu.add(newCommandAction);
+			    							p4door = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4HandleMenu.add(newCommandAction);
+			    							p4door = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4HandleMenu.add(newCommandAction);
+			    							p4door = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p4HandleMenu.add(newCommandAction);
+			    							p4door = true;
+			    							player4Check = true;
+			    							commandCheck = true;
+			    						}
+			    					}
 			    					break;
 			    				case 4:
+			    					if(toPreform.getTitle() == ActionList.Move) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveMenu.add(newCommandAction);
+			    							p5move = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveMenu.add(newCommandAction);
+			    							p5move = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveMenu.add(newCommandAction);
+			    							p5move = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveMenu.add(newCommandAction);
+			    							p5move = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						}
+			    					} else if (toPreform.getTitle() == ActionList.MoveWithHazmat) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveWithHazmatMenu.add(newCommandAction);
+			    							p5moveH = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveWithHazmatMenu.add(newCommandAction);
+			    							p5moveH = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveWithHazmatMenu.add(newCommandAction);
+			    							p5moveH = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveWithHazmatMenu.add(newCommandAction);
+			    							p5moveH = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						}
+			    					} else if (toPreform.getTitle() == ActionList.MoveWithVictim) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveWithVictimMenu.add(newCommandAction);
+			    							p5moveV = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveWithVictimMenu.add(newCommandAction);
+			    							p5moveV = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveWithVictimMenu.add(newCommandAction);
+			    							p5moveV = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5MoveWithVictimMenu.add(newCommandAction);
+			    							p5moveV = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						}
+			    					} else if (toPreform.getTitle() == ActionList.Handle) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5HandleMenu.add(newCommandAction);
+			    							p5door = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5HandleMenu.add(newCommandAction);
+			    							p5door = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5HandleMenu.add(newCommandAction);
+			    							p5door = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p5HandleMenu.add(newCommandAction);
+			    							p5door = true;
+			    							player5Check = true;
+			    							commandCheck = true;
+			    						}
+			    					}
 			    					break;
 			    				case 5:
+			    					if(toPreform.getTitle() == ActionList.Move) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveMenu.add(newCommandAction);
+			    							p6move = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveMenu.add(newCommandAction);
+			    							p6move = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveMenu.add(newCommandAction);
+			    							p6move = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveMenu.add(newCommandAction);
+			    							p6move = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						}
+			    					} else if (toPreform.getTitle() == ActionList.MoveWithHazmat) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveWithHazmatMenu.add(newCommandAction);
+			    							p6moveH = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveWithHazmatMenu.add(newCommandAction);
+			    							p6moveH = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveWithHazmatMenu.add(newCommandAction);
+			    							p6moveH = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveWithHazmatMenu.add(newCommandAction);
+			    							p6moveH = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						}
+			    					} else if (toPreform.getTitle() == ActionList.MoveWithVictim) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveWithVictimMenu.add(newCommandAction);
+			    							p6moveV = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveWithVictimMenu.add(newCommandAction);
+			    							p6moveV = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveWithVictimMenu.add(newCommandAction);
+			    							p6moveV = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6MoveWithVictimMenu.add(newCommandAction);
+			    							p6moveV = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						}
+			    					} else if (toPreform.getTitle() == ActionList.Handle) {
+			    						if(toPreform.getDirection() == 0) {
+			    							commandBuilder = "Left APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6HandleMenu.add(newCommandAction);
+			    							p6door = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 1) {
+			    							commandBuilder = "Up APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6HandleMenu.add(newCommandAction);
+			    							p6door = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 2) {
+			    							commandBuilder = "Right APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6HandleMenu.add(newCommandAction);
+			    							p6door = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						} else if(toPreform.getDirection() == 3) {
+			    							commandBuilder = "Down APC: ";
+			    							commandBuilder = commandBuilder + toPreform.getCost();
+			    							newCommandAction = new JMenuItem(commandBuilder);
+			    							newCommandAction.addActionListener(new ActionListener() {
+							    				@Override
+							    				public void actionPerformed(ActionEvent e) {
+							    					if(sendActionRequest(a)) {
+														System.out.println("this is the print that board is refreshing");
+
+													}
+							    					
+							    				}
+							    			});
+			    							p6HandleMenu.add(newCommandAction);
+			    							p6door = true;
+			    							player6Check = true;
+			    							commandCheck = true;
+			    						}
+			    					}
 			    					break;
 			    			}
 			    			
@@ -3161,8 +4051,7 @@ public class Table {
 		        exitMenu.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						
-//						System.exit(0);
+				
 					}
 				});
 		        
@@ -3252,10 +4141,86 @@ public class Table {
 		        		commandMenu.add(commandP2Menu);
 		        		commandMenu.addSeparator();
 		        	}
-		        	
-		        	
-		        	
-		        	
+		        	if(player3Check) {
+		        		if(p3move) {
+		        			commandP3Menu.add(p3MoveMenu);
+		        			commandP3Menu.addSeparator();
+		        		}
+		        		if(p3moveH) {
+		        			commandP3Menu.add(p3MoveWithHazmatMenu);
+		        			commandP3Menu.addSeparator();
+		        		}
+		        		if(p3moveV) {
+		        			commandP3Menu.add(p3MoveWithVictimMenu);
+		        			commandP3Menu.addSeparator();
+		        		}
+		        		if(p3door) {
+		        			commandP3Menu.add(p3HandleMenu);
+		        			commandP3Menu.addSeparator();
+		        		}
+		        		commandMenu.add(commandP3Menu);
+		        		commandMenu.addSeparator();
+		        	}
+		        	if(player4Check) {
+		        		if(p4move) {
+		        			commandP4Menu.add(p4MoveMenu);
+		        			commandP4Menu.addSeparator();
+		        		}
+		        		if(p4moveH) {
+		        			commandP4Menu.add(p4MoveWithHazmatMenu);
+		        			commandP4Menu.addSeparator();
+		        		}
+		        		if(p4moveV) {
+		        			commandP4Menu.add(p4MoveWithVictimMenu);
+		        			commandP4Menu.addSeparator();
+		        		}
+		        		if(p4door) {
+		        			commandP4Menu.add(p4HandleMenu);
+		        			commandP4Menu.addSeparator();
+		        		}
+		        		commandMenu.add(commandP4Menu);
+		        		commandMenu.addSeparator();
+		        	}
+		        	if(player5Check) {
+		        		if(p5move) {
+		        			commandP5Menu.add(p5MoveMenu);
+		        			commandP5Menu.addSeparator();
+		        		}
+		        		if(p5moveH) {
+		        			commandP5Menu.add(p5MoveWithHazmatMenu);
+		        			commandP5Menu.addSeparator();
+		        		}
+		        		if(p5moveV) {
+		        			commandP5Menu.add(p5MoveWithVictimMenu);
+		        			commandP5Menu.addSeparator();
+		        		}
+		        		if(p5door) {
+		        			commandP5Menu.add(p5HandleMenu);
+		        			commandP5Menu.addSeparator();
+		        		}
+		        		commandMenu.add(commandP5Menu);
+		        		commandMenu.addSeparator();
+		        	}
+		        	if(player6Check) {
+		        		if(p6move) {
+		        			commandP6Menu.add(p6MoveMenu);
+		        			commandP6Menu.addSeparator();
+		        		}
+		        		if(p6moveH) {
+		        			commandP6Menu.add(p6MoveWithHazmatMenu);
+		        			commandP6Menu.addSeparator();
+		        		}
+		        		if(p6moveV) {
+		        			commandP6Menu.add(p6MoveWithVictimMenu);
+		        			commandP6Menu.addSeparator();
+		        		}
+		        		if(p6door) {
+		        			commandP6Menu.add(p6HandleMenu);
+		        			commandP6Menu.addSeparator();
+		        		}
+		        		commandMenu.add(commandP6Menu);
+		        		commandMenu.addSeparator();
+		        	}
 		        	popupMenu.add(commandMenu);
 			        popupMenu.addSeparator();
 		        } 
@@ -3293,7 +4258,6 @@ public class Table {
 		        if(healCheck) {
 		        	popupMenu.add(healMenu);
 			        popupMenu.addSeparator();
-			        System.out.println("weve reached this stage1");
 		        } 
 		        
 		        if(driveCheck) {
@@ -3317,19 +4281,9 @@ public class Table {
 		        endTurn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-//						gameTest.placeFF(currentBoard.returnTile(coords[0],coords[1]));
 						if(sendPlaceFFRequest(coords)) {
-							System.out.println("this is the print that board is refreshing");
-//							clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-							System.out.println("helo!      " + clientManager.getUsersGameState().returnTile(0, 0).getFirefighterList().size());
-//							refresh(clientManager.getUsersGameState());
-//							launcher.repaint(false, myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
-//							listenerThread.begin();
-							System.out.println("finished repainting");
+							
 						}
-//						clientManager.getUsersGameState().placeFireFighter(clientManager.getUsersGameState().getPlayingFirefighter(), clientManager.getUsersGameState().returnTile(3,0));
-//						refresh(clientManager.getUsersGameState());
-//						launcher.repaint();
 					}
 				});
 		         
@@ -3358,18 +4312,12 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
     					if(sendEndTurnRequest()){
     						System.out.println("this is the print that board is refreshing");
-//    						launcher.showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
     						if(clientManager.getUsersGameState().isGameTerminated()) {
-//    							launcher.showGameTermination();
-//    							refresh(clientManager.getUsersGameState());
-//    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//    							
     						} else if(clientManager.getUsersGameState().isGameWon()) {
-//    							launcher.showGameTermination();
-//    							refresh(clientManager.getUsersGameState());
-//    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//    							
     						} else {
-//    							refresh(clientManager.getUsersGameState());
-//    							launcher.repaint(false,myIndex == clientManager.getUsersGameState().getActiveFireFighterIndex());
+//    							
     						}
     					}
     					
@@ -3570,46 +4518,46 @@ public class Table {
 				popupMenu.show(component, x, y);
 			}
 			
-//			public void showPopUpMenuFFSelector(Component component, int x, int y, GameState currentBoard, int[] coords) {
-//				JPopupMenu popupMenu = new JPopupMenu();
-//				JMenu firefighterMenu = new JMenu("Select FireFighter");
-//				String builder = "";
-//				JMenuItem info;
-//				for(Firefighter f : clientManager.getUsersGameState().getFreeFireFighters()) {
-//					builder = f.getOwner().getUserName();
-//					info = new JMenuItem(builder);
-//					
-//					info.addActionListener(new ActionListener() {
-//						@Override
-//						public void actionPerformed(ActionEvent e) {
-//							if(sendFireFighterSelectionRequest(f)) {
-//								System.out.println("Speciality selected is " + f.getOwner().toString());
-//							}
-//						}
-//					});
-//					firefighterMenu.add(info);
-//				}
-//				
-//				boolean flag = clientManager.getUsersGameState().getFreeFireFighters().size() == 0;
-//				
-//				if(flag) {
-//					JMenuItem start = new JMenuItem("End Selection");
-//					
-//					start.addActionListener(new ActionListener() {
-//						@Override
-//						public void actionPerformed(ActionEvent e) {
-//							if(sendSelectionEndRequest()) {
-//							}
-//						}
-//
-//						
-//					});
-//					firefighterMenu.add(start);
-//				}
-//				
-//				popupMenu.add(firefighterMenu);
-//				popupMenu.show(component, x, y);
-//			}
+			public void showPopUpMenuFFSelector(Component component, int x, int y, GameState currentBoard, int[] coords) {
+				JPopupMenu popupMenu = new JPopupMenu();
+				JMenu firefighterMenu = new JMenu("Select FireFighter");
+				String builder = "";
+				JMenuItem info;
+				for(Firefighter f : clientManager.getUsersGameState().getFreeFirefighters()) {
+					builder = f.getOwner().getUserName();
+					info = new JMenuItem(builder);
+					
+					info.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendFireFighterSelectionRequest(f)) {
+								System.out.println("Speciality selected is " + f.getOwner().toString());
+							}
+						}
+					});
+					firefighterMenu.add(info);
+				}
+				
+				boolean flag = clientManager.getUsersGameState().getFreeFirefighters().size() == 0;
+				
+				if(flag) {
+					JMenuItem start = new JMenuItem("End Selection");
+					
+					start.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendSelectionEndRequest()) {
+							}
+						}
+
+						
+					});
+					firefighterMenu.add(start);
+				}
+				
+				popupMenu.add(firefighterMenu);
+				popupMenu.show(component, x, y);
+			}
 			
 			//generates the popUp menu for tiles that don't contain current FF
 				public void showPopUpMenuInfo(/*GameState currentBoard,*/ Component component, int x, int y, GameState currentBoard, int[] coords) {
@@ -3636,11 +4584,7 @@ public class Table {
 						builder = f.getOwner().getUserName() + ": " + f.getColour().toString() + " fireman.";
 						info = new JMenuItem(builder);
 						firefighterMenu.add(info);
-					}
-					
-					
-
-					
+					}					
 			        popupMenu.add(poiMenu);
 			        popupMenu.addSeparator();
 			        popupMenu.add(firefighterMenu);
@@ -3773,5 +4717,9 @@ public class Table {
 		
 		private boolean sendSelectionEndRequest() {
 			return clientManager.sendSelectionEndRequest();
+		}
+		
+		private boolean sendFireFighterSelectionRequest(Firefighter f) {
+			return clientManager.fireFighterSelectionRequest(f);
 		}
 }

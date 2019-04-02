@@ -59,6 +59,7 @@ public class GameState implements Serializable {
 	protected ArrayList<POI> savedVictimsList;
 	protected ArrayList<POI> revealedFalseAlarmsList;
 	protected ArrayList<Speciality> freeSpecialities;
+	protected ArrayList<Firefighter> freeFirefighters;
 	protected ArrayList<Hazmat> lostHazmat;
 	protected ArrayList<Hazmat> disposedHazmat;
 	protected HashMap<Firefighter, Boolean> rideMapper; //For Ride in Experienced Mode
@@ -166,6 +167,7 @@ public class GameState implements Serializable {
 		this.lostVictimsList = new ArrayList<POI>();
 		this.savedVictimsList = new ArrayList<POI>();
 		this.freeSpecialities = new ArrayList<Speciality>();
+		this.freeFirefighters = new ArrayList<Firefighter>();
 		this.remainingHotSpots = 0;
 		this.lostHazmat = new ArrayList<Hazmat>();
 		this.disposedHazmat = new ArrayList<Hazmat>();
@@ -1060,6 +1062,15 @@ public class GameState implements Serializable {
 	public boolean getSpecialitySelecting() {
 		return this.specialitySelecting;
 		
+	}
+
+	public ArrayList<Firefighter> getFreeFirefighters() {
+		// TODO Auto-generated method stub
+		return this.freeFirefighters;
+	}
+	
+	public void setFreeFirefighters(ArrayList<Firefighter> fList) {
+		this.freeFirefighters = fList;
 	}
 
 	

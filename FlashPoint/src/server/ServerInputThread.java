@@ -353,6 +353,16 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameState);
 				}
 				break;
+			case FIREFIGHTERSELECTREQUEST:
+				System.out.println("Firefighter selection request");
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.setFirefighter(requestObject);
+				returnGameState = new TranObject<GameState>(TranObjectType.FIREFIGHTERSELECTED);
+				returnGameState.setObject(serverManager.getGameState());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
+				break;
 			case LOGOUT:
 				User logoutUser = (User) read_tranObject.getObject();
 				int offId = logoutUser.getId();

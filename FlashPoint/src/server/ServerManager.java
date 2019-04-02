@@ -363,5 +363,20 @@ public class ServerManager {
 		public GameManager getGameManager() {
 			return this.gameManager;
 		}
+
+		public void setFirefighter(User person) {
+			Firefighter ff = person.getDesiredFirefighter();
+			if(gameState.getFreeFirefighters().contains(ff)) {
+				Player player = onlinePlayers.get(person.getId());
+				if(player.getFirefighter()!=null) {
+					
+				} else {
+					player.setFirefighter(ff);
+					gameState.getFreeFirefighters().remove(ff);
+					ff.setPlayer(player);
+					
+				}
+			}
+		}
 	
 }

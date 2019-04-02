@@ -175,7 +175,13 @@ public class ClientManager {
 				startGameFlag = 1;
 				flag = true;
 				break;
+			case FIREFIGHTERSELECTED:
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				startGameFlag = 1;
+				flag = true;
+				break;
 			}
+			
 			
 		
 		
@@ -658,6 +664,14 @@ public class ClientManager {
 
 	public boolean sendSelectionEndRequest() {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SELECTENDREQUEST);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
+	}
+
+	public boolean fireFighterSelectionRequest(Firefighter f) {
+		requestObject.setDesiredFirefighter(f);
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FIREFIGHTERSELECTREQUEST);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;

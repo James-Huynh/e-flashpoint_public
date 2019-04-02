@@ -8,6 +8,7 @@ import chat.ChatMsgEntity;
 import game.GameState;
 import lobby.Lobby;
 import tile.Tile;
+import token.Firefighter;
 import token.Speciality;
 import token.Vehicle;
 
@@ -40,6 +41,7 @@ public class User implements Serializable {
     private Vehicle vehicleType;
     private Vehicle ridingObject;
     private Speciality desiredSpeciality;
+    private Firefighter desiredFirefighter;
     private int loadNum;
     private ArrayList<GameState> savedGameStates;
     
@@ -244,6 +246,15 @@ public class User implements Serializable {
 	
 	public ArrayList<GameState> getsavedGameStates(){
 		return this.savedGameStates;
+	}
+
+	public void setDesiredFirefighter(Firefighter f) {
+		this.desiredFirefighter = f;
+		
+	}
+	
+	public Firefighter getDesiredFirefighter() {
+		return this.desiredFirefighter;
 	}
 
 //	public int getImg() {
