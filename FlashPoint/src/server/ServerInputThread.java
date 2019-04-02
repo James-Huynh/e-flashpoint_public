@@ -363,6 +363,37 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameState);
 				}
 				break;
+			case ROLLDICEFORME:
+				System.out.println("Rolling Dice for Driver request");
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.setDice();
+				returnGameState = new TranObject<GameState>(TranObjectType.FIREFIGHTERSELECTED);
+				returnGameState.setObject(serverManager.getGameState());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
+				break;
+			case ROLLREDDICEFORME:
+				System.out.println("Rolling Dice for Driver request");
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.setDice(0);
+				returnGameState = new TranObject<GameState>(TranObjectType.FIREFIGHTERSELECTED);
+				returnGameState.setObject(serverManager.getGameState());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
+				break;
+			case ROLLBLACKDICEFORME:
+				System.out.println("Rolling Dice for Driver request");
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.setDice(1);
+				returnGameState = new TranObject<GameState>(TranObjectType.FIREFIGHTERSELECTED);
+				returnGameState.setObject(serverManager.getGameState());
+				for (OutputThread onOut : map.getAll()) {
+					onOut.setMessage(returnGameState);
+				}
+				break;
+				
 			case LOGOUT:
 				User logoutUser = (User) read_tranObject.getObject();
 				int offId = logoutUser.getId();

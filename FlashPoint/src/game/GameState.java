@@ -67,7 +67,7 @@ public class GameState implements Serializable {
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
 	protected boolean experiencedMode;
 	protected boolean specialitySelecting;
-	
+	protected int[] proposedDices;
 	
 	private static final long serialVersionUID = 1L; // serialization
 
@@ -139,6 +139,7 @@ public class GameState implements Serializable {
 		this.remainingHotSpots = copy.remainingHotSpots;
 		this.experiencedMode = copy.experiencedMode;
 		this.specialitySelecting = copy.specialitySelecting;
+		this.proposedDices = copy.proposedDices;
 	}
 
 	/*
@@ -171,6 +172,7 @@ public class GameState implements Serializable {
 		this.remainingHotSpots = 0;
 		this.lostHazmat = new ArrayList<Hazmat>();
 		this.disposedHazmat = new ArrayList<Hazmat>();
+		this.proposedDices=new int[] {-1,-1};
 		if(lobby.getMode().equals("Experienced")) {
 			this.experiencedMode = true;
 			rideMapper = new HashMap<Firefighter, Boolean>();
@@ -629,6 +631,55 @@ public class GameState implements Serializable {
 				} else {
 					matTiles[i][j] = new Tile(true, new int[] { i, j }); // create interior tiles
 				}
+				
+				//@matekrk assign Tiles to Engine spots (quadrants):
+				for (ParkingSpot e : engines) {
+					int[][] quadrantIndices = new int[12][2];
+					if (e.getTiles()[0].getCoords()[0] == 0) {
+						int ii=0;
+						for (int kk=1; kk<=4; kk++) {
+							for (int jj=4; jj<=6; jj++) {
+								 quadrantIndices[ii][0] = kk;
+								quadrantIndices[ii][1] = jj;
+								ii++;
+							}
+						}
+					}
+					
+					else if ((e.getTiles()[0].getCoords()[0] == 9)) {
+						int ii=0;
+						for (int kk=5; kk<=8; kk++) {
+							for (int jj=1; jj<=3; jj++) {
+								quadrantIndices[ii][0] = kk;
+								quadrantIndices[ii][1] = jj;
+								ii++;
+							}
+						}
+					}
+					
+					else if ((e.getTiles()[0].getCoords()[1] == 0)) {
+						int ii=0;
+						for (int kk=1; kk<=4; kk++) {
+							for (int jj=1; jj<=3; jj++) {
+								quadrantIndices[ii][0] = kk;
+								quadrantIndices[ii][1] = jj;
+								ii++;
+							}
+						}
+					}
+					
+					else if ((e.getTiles()[0].getCoords()[1] == 7)) {
+						int ii=0;
+						for (int kk=5; kk<=8; kk++) {
+							for (int jj=4; jj<=6; jj++) {
+								quadrantIndices[ii][0] = kk;
+								quadrantIndices[ii][1] = jj;
+								ii++;
+							}
+						}
+					}
+					e.setQuadrants(quadrantIndices);
+				}
 			}
 		}
 
@@ -937,18 +988,15 @@ public class GameState implements Serializable {
 			 */
 
 	public void winGame() {
-		// TODO Auto-generated method stub
 		this.gameWon = true;
 	}
 
 	public void setTiles(Tile[][] matTiles2) {
-		// TODO Auto-generated method stub
 		this.matTiles = matTiles2;
 
 	}
 
 	public String getAdvFireString() {
-		// TODO Auto-generated method stub
 		return this.advFireString;
 	}
 
@@ -1034,6 +1082,29 @@ public class GameState implements Serializable {
 		rideMapper.put(listOfFirefighters.get(myIndex), val); 
 	}
 	
+	public void setProposedDices() {
+		Random rand = new Random();
+		int whichOne0 = rand.nextInt(3);
+		int whichOne1 = rand.nextInt(4);
+		proposedDices[0] = whichOne0;
+		proposedDices[1] = whichOne1;
+	}
+	
+	public void setProposedDicesKeepBlack() {
+		Random rand = new Random();
+		int whichOne0 = rand.nextInt(3);
+		proposedDices[0] = whichOne0;
+	}
+	
+	public void setProposedDicesKeepRed() {
+		Random rand = new Random();
+		int whichOne1 = rand.nextInt(4);
+		proposedDices[0] = whichOne1;
+	}
+	
+	public int[] getProposedDices() {
+		return this.proposedDices;
+	}
 	
 	/*
 	 * SAVING
@@ -1051,7 +1122,7 @@ public class GameState implements Serializable {
 				+ poiList + ", lostVictimsList=" + lostVictimsList + ", savedVictimsList=" + savedVictimsList
 				+ ", revealedFalseAlarmsList=" + revealedFalseAlarmsList + ", freeSpecialities=" + freeSpecialities
 				+ ", lostHazmat=" + lostHazmat + ", disposedHazmat=" + disposedHazmat + ", remainingHotSpots="
-				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + "]";
+				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + "proposedDices=" + Arrays.toString(proposedDices) + "]";
 	}
 
 	public void setSpecialitySelecting(boolean b) {

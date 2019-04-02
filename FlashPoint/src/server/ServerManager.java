@@ -226,7 +226,7 @@ public class ServerManager {
 	public void loadGame(int gameNumber) {
 		//when loading a game, change the myowner and my firefighter also change the firefighter name;
 		try {
-			FileInputStream fi = new FileInputStream(new File(this.defaulGamesPath + gameNumber + ".txt"));
+			FileInputStream fi = new FileInputStream(new File(defaulGamesPath + gameNumber + ".txt"));
 			ObjectInputStream oi = new ObjectInputStream(fi);
 			
 			initializeGameManager();
@@ -292,7 +292,6 @@ public class ServerManager {
 			} catch (IOException e) {
 				System.out.println("Error initializing stream");
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	return null;
@@ -356,7 +355,19 @@ public class ServerManager {
 
 	public void setSpecialitySelecting(Boolean b) {
 		gameState.setSpecialitySelecting(b);
-		
+	}
+	
+	public void setDice() {
+		gameState.setProposedDices();
+	}
+	
+	public void setDice(int i) {
+		if (i==0) {
+			gameState.setProposedDicesKeepRed();
+		}
+		else {
+			gameState.setProposedDicesKeepBlack();
+		}
 	}
 	
 	//for @matekrk

@@ -16,61 +16,21 @@ public class FireGun extends Action {
 	protected ActionList title = ActionList.FireGun;
 	protected boolean driver; //This works I think - we should overload constructors, one for everyone, other for Driver (his APcost is also different) and Action Factory responsible for intializing properly. 
 	protected int[] result;
-	protected ParkingSpot veh;
-	protected int[][] quadrantIndices = new int[12][2]; //hardcoded for advanced
+	protected int index;
 	
 	public FireGun() {							
 		APcost = 4;
 	}
 	
-	public FireGun(ParkingSpot veh) {
+	public FireGun(int index) {
 		APcost = 4;
-		this.veh = veh; //Same thing, won't be passed in
-		
-		if (veh.getTiles()[0].getCoords()[0] == 0) {
-			int i=0;
-			for (int k=1; k<=4; k++) {
-				for (int j=4; j<=6; j++) {
-					this.quadrantIndices[i][0] = k;
-					this.quadrantIndices[i][1] = j;
-					i++;
-				}
-			}
-		}
-		
-		else if ((veh.getTiles()[0].getCoords()[0] == 9)) {
-			int i=0;
-			for (int k=5; k<=8; k++) {
-				for (int j=1; j<=3; j++) {
-					this.quadrantIndices[i][0] = k;
-					this.quadrantIndices[i][1] = j;
-					i++;
-				}
-			}
-		}
-		
-		else if ((veh.getTiles()[0].getCoords()[1] == 0)) {
-			int i=0;
-			for (int k=1; k<=4; k++) {
-				for (int j=1; j<=3; j++) {
-					this.quadrantIndices[i][0] = k;
-					this.quadrantIndices[i][1] = j;
-					i++;
-				}
-			}
-		}
-		
-		else if ((veh.getTiles()[0].getCoords()[1] == 7)) {
-			int i=0;
-			for (int k=5; k<=8; k++) {
-				for (int j=4; j<=6; j++) {
-					this.quadrantIndices[i][0] = k;
-					this.quadrantIndices[i][1] = j;
-					i++;
-				}
-			}
-		}
-		
+		this.index = index;
+	}
+	
+	//overloaded for specialist Driver
+	public FireGun(int index, int[] coords) {
+		APcost = 2;
+		this.result = coords;
 	}
 	
 	public ActionList getTitle() {
@@ -87,9 +47,15 @@ public class FireGun extends Action {
         int aP = playingFirefighter.getAP();
         playingFirefighter.setAP(aP - this.APcost);
         
-        int[] coords = rollDice();
-        
-        Tile target = gs.returnTile(coords[0], coords[1]);
+        Tile target;
+        if (driver) {
+           target = gs.returnTile(result[0], result[1]);
+
+        }
+        else {
+	        int[] coords = rollDice(gs);
+	        target = gs.returnTile(coords[0], coords[1]);
+        }
         target.setFire(0);
         Edge adjacent;
         for(int i=0;i<4;i++) {
@@ -116,8 +82,10 @@ public class FireGun extends Action {
 			APcost = 2;
 		}
 		Tile currentPosition = playingFirefighter.getCurrentPosition();
-		if (currentPosition.getParkingSpot() == this.veh && currentPosition.getParkingSpot().getParkingType() == (Vehicle.Engine) 
-				&& currentPosition.getParkingSpot().getCar() == true) {
+		ParkingSpot ps = gs.getEngines()[index];
+		if (currentPosition.getParkingSpot() != null && currentPosition.getParkingSpot().equals(ps) && 
+				currentPosition.getParkingSpot().getParkingType() == (Vehicle.Engine) && //unnecessary but assertion
+				currentPosition.getParkingSpot().getCar() == true) {
 			if (playingFirefighter.getAP() >= APcost && noOne(gs)) {
 				flag = true;
 			}
@@ -127,6 +95,7 @@ public class FireGun extends Action {
 	}
 	
 	public boolean noOne(GameState gs) {
+		int[][] quadrantIndices = gs.getEngines()[index].getQuadrants();
 		for (int i=0; i<quadrantIndices.length; i++) {
 			if(!gs.returnTile(quadrantIndices[i][0], quadrantIndices[i][1]).getFirefighterList().isEmpty()) {
 				return false;
@@ -140,18 +109,18 @@ public class FireGun extends Action {
 		if (gs.getPlayingFirefighter().getSpeciality() == (Speciality.DRIVER)) {
 			driver = true;
 			APcost = 2;
-		}
+		}	
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "FireGun [title=" + title + ", quadrantIndices=" + Arrays.toString(quadrantIndices) + ", APcost="
-				+ APcost + ", direction=" + direction + "]";
+		return "FireGun [title=" + title + ", driver=" + driver + ", result=" + Arrays.toString(result) + ", index="
+				+ index + ", APcost=" + APcost + ", direction=" + direction + "]";
 	}
 
-	public int[] rollDice() {
-	
+	public int[] rollDice(GameState gs) {
+		int[][] quadrantIndices = gs.getEngines()[index].getQuadrants();
 		Random rand = new Random();
 		int whichOne = rand.nextInt(12);
 		int red = quadrantIndices[whichOne][0];
@@ -164,16 +133,10 @@ public class FireGun extends Action {
 	}
 	
 	//both public important for Driver!
-	public int[] rerollRedDice(int[] result) {
+	public int[] rerollRedDice(GameState gs, int[] result) {
+		int[][] quadrantIndices = gs.getEngines()[index].getQuadrants();
+		
 		Random rand = new Random();
-		/*
-		int red = rand.nextInt(5);
-		red += 1;
-		while(red < location[0]) {
-			red = rand.nextInt(5);
-			red += 1;
-		}
-		*/
 		int whichOne = rand.nextInt(12);
 		int red = quadrantIndices[whichOne][0];
 		
@@ -183,17 +146,11 @@ public class FireGun extends Action {
 		return targetSpace;
 	}
 	
-	public int[] rerollBlackDice(int[] result) {
+	public int[] rerollBlackDice(GameState gs, int[] result) {
+		
+		int[][] quadrantIndices = gs.getEngines()[index].getQuadrants();
 		
 		Random rand = new Random();
-		/*
-		int black = rand.nextInt(7);
-		black += 1;
-		while(black < location[1]) {
-			black = rand.nextInt(7);
-			black += 1;
-		}
-		*/
 		
 		int whichOne = rand.nextInt(12);
 		int black = quadrantIndices[whichOne][1];

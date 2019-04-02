@@ -15,6 +15,7 @@ public class ParkingSpot implements Serializable{
 	protected Vehicle parkingType;
     protected Tile[] tiles;
     boolean isCar;
+    protected int[][] quadrants;
     
     public ParkingSpot(Vehicle type, boolean b) {
     	this.parkingType  = type;
@@ -26,6 +27,13 @@ public class ParkingSpot implements Serializable{
     	this.tiles = position;
     	this.parkingType  = type;
     	this.isCar = b;
+    }
+    
+    public ParkingSpot(Tile[] position, Vehicle type, boolean b, int[][] quadrants) {
+    	this.tiles = position;
+    	this.parkingType  = type;
+    	this.isCar = b;
+    	this.quadrants = quadrants;
     }
 
     /*
@@ -41,6 +49,10 @@ public class ParkingSpot implements Serializable{
     
     public boolean getCar() {
     	return isCar;
+    }
+    
+    public int[][] getQuadrants(){
+    	return quadrants;
     }
     
     /*
@@ -70,11 +82,15 @@ public class ParkingSpot implements Serializable{
     public void setCar(boolean car) {
     	this.isCar = car;
     }
-
+    
+    public void setQuadrants(int[][] quadrants) {
+    	this.quadrants = quadrants;
+    }
+    
 	@Override
 	public String toString() {
 		return "ParkingSpot [parkingType=" + parkingType.toString() + ", tiles=" + Arrays.toString(tiles) + ", isCar=" + isCar
-				+ "]";
+				+ ", quadrants=" + Arrays.toString(quadrants) + "]";
 	}
     
     

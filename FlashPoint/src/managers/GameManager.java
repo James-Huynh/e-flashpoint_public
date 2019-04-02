@@ -354,7 +354,7 @@ public class GameManager {
     	Speciality speciality = inTurn.getSpeciality();
 //    	//OK methods as default & with existing Action logic :- Chop, Move, Extinguish, Handle, MoveWithHazmat
 //    	
-//    	//Drive
+//    	//Drive && fireGun!
     	for (int dir : new int[]{-1,1} ) {  
     		for(int i=0;i<gs.getAmbulances().length;i++) {
     			if (gs.getAmbulances()[i].getCar()) {
@@ -367,18 +367,17 @@ public class GameManager {
     		for(int i=0;i<gs.getEngines().length;i++) {
     			if (gs.getEngines()[i].getCar()) {
     				allPossibleActions.add(new Drive(i, dir, true, false));
+    				allPossibleActions.add(new FireGun(i));
     			}
     		}
     	}
     	
-//    	//FireGun
-//    	for(ParkingSpot p:gs.getEngines()) {
-//    		allPossibleActions.add(new FireGun(p)); 
-//    	}
+
 
 //		
 		Tile currentLocation = inTurn.getCurrentPosition();
 //		
+		// ?? USELESS?
 //		//Helper for Paramedic - PickOrDrop
 		for(POI p: currentLocation.getPoiList()) {
 //			allPossibleActions.add(new PickOrDrop(p)); 
@@ -389,8 +388,6 @@ public class GameManager {
 			allPossibleActions.add(new Resuscitate(i));
 			allPossibleActions.add(new PickOrDrop(i));
 		}
-//		allPossibleActions.add(new PickOrDrop());
-//		allPossibleActions.add(new Resuscitate());
 		
 		
 //		//FireCaptain - Command
@@ -410,12 +407,8 @@ public class GameManager {
 				}
 			}
 		}
-
-//		//Imaging Technician - FlipPOI 
-//		for(POI p: gs.retrievePOI()) {
-//			allPossibleActions.add(new FlipPOI(p));
-//		}
 		
+		//Mat question for efficiency - it is not easier to loop for gs.retrievePOI()
 		for(int i=0;i<gs.getMatTiles().length;i++) {
 			for(int j=0;j<gs.getMatTiles()[i].length;j++) {
 				Tile t = gs.getMatTiles()[i][j];
@@ -441,7 +434,7 @@ public class GameManager {
     	return allPossibleActions;
     }
     
-    //TODO: Zaid + Mat based on validations
+    //Zaid + Mat based on validations
     public Set<Action> getAllAvailableActions() {
     	Set<Action> allValidActions = new HashSet<Action>(30);
         for (Action a : possibleActions) {
