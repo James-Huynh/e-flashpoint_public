@@ -8,6 +8,7 @@ import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
+import commons.util.MyDate;
 import game.BoardOne;
 import game.GameState;
 import gui.Launcher;
@@ -154,9 +155,13 @@ public class ClientManager {
 				flag = true;
 				break;
 			case CHATMESSAGE:
-				requestObject = (User) read_tranObject.getObject();
-				mDataArrays=(requestObject.getChatArray());
+				mDataArrays=(((User) read_tranObject.getObject()).getChatArray());
+				for(ChatMsgEntity m: mDataArrays) {
+					System.out.println(m.getMessage());
+				}
 				Collections.reverse(mDataArrays);
+				startGameFlag = 1;
+				flag = true;
 				break;
 				//launcher.refreshLobby();		// James
 			
@@ -583,6 +588,8 @@ public class ClientManager {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CHATMESSAGE);
 		ChatMsgEntity entity = new ChatMsgEntity();
 		entity.setMessage(message.getMessage());
+		entity.setDate(MyDate.getDateCN());
+		entity.setName(requestObject.getName());
 		User a= new User();
 		a.setChat(entity);
 		objectToSend.setObject(a);
@@ -678,9 +685,7 @@ public class ClientManager {
 	}
 
 	public boolean fireFighterSelectionRequest(Firefighter f) {
-		// TODO Auto-generated method stub
 		requestObject.setDesiredFirefighter(f);
-		
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FIREFIGHTERSELECTREQUEST);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
