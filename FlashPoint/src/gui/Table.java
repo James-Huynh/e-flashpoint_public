@@ -4816,7 +4816,6 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						if(sendRideResponse(true, myIndex)) {
 							rideRequest.hide();
-							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 				});
@@ -4829,7 +4828,6 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						if(sendRideResponse(false, myIndex)) {
 							rideRequest.hide();
-							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 				});

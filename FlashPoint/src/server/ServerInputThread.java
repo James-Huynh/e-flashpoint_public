@@ -228,9 +228,9 @@ public class ServerInputThread extends Thread {
 					}
 					System.out.println("hello should be at the while" + serverManager.hasEveryonerResponded());
 					while(!serverManager.hasEveryonerResponded()) {
-						System.out.println("sent requests");
-						readMessage();	
+						
 					}
+					System.out.println("out");
 				}
 				
 				
@@ -256,7 +256,7 @@ public class ServerInputThread extends Thread {
 			case SENDRIDERESPONSE:
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.updateResponse(requestObject.getRideResponse(), requestObject.getMyFFIndex());
-				
+				System.out.println("hello we have updated riderResponse");
 //				returnGameState = new TranObject<GameState>(TranObjectType.RIDERESPONSEACK);
 //				returnGameState.setObject(serverManager.getGameState());
 //				for (OutputThread onOut : map.getAll()) {
