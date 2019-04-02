@@ -357,12 +357,17 @@ public class GameManager {
 //    	//Drive
     	for (int dir : new int[]{-1,1} ) {  
     		for(int i=0;i<gs.getAmbulances().length;i++) {
-    			allPossibleActions.add(new Drive(i, dir, false, true)); //index, direction, moveWith, isAmbulance
-    			allPossibleActions.add(new Drive(i, dir, true, true));
+    			if (gs.getAmbulances()[i].getCar()) {
+    			
+	    			allPossibleActions.add(new Drive(i, dir, false, true)); //index, direction, moveWith, isAmbulance
+	    			allPossibleActions.add(new Drive(i, dir, true, true));
+    			}
     		}
     		
     		for(int i=0;i<gs.getEngines().length;i++) {
-    			allPossibleActions.add(new Drive(i, dir, true, false));
+    			if (gs.getEngines()[i].getCar()) {
+    				allPossibleActions.add(new Drive(i, dir, true, false));
+    			}
     		}
     	}
     	

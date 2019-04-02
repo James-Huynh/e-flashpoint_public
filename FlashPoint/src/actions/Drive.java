@@ -198,13 +198,7 @@ public class Drive extends Action {
         }
         
 		if(parking.getParkingType() == Vehicle.Ambulance) {
-			ParkingSpot nextAmbulance = null;
-			for (int i=0; i<4; i++) {
-	        	if (gs.getAmbulances()[i].equals(parking)) {
-	        		
-	        		nextAmbulance = gs.getAmbulances()[(i+direction+4) % 4];
-	        	}
-			}
+			ParkingSpot nextAmbulance = gs.getAmbulances()[(index+direction+4) % 4];
 			
 			if(moveWith) {
 				Tile currentPosition = playingFirefighter.getCurrentPosition();
@@ -217,14 +211,10 @@ public class Drive extends Action {
 				}
 			}
 			else {
-				if(aP >= APcost && nextAmbulance.getCar()) {
+				if(aP >= APcost && !nextAmbulance.getCar()) {
 					flag = true;
 				}
 			}
-			
-//			if(aP >= APcost && !nextAmbulance.getCar()) {
-//				flag = true;
-//			}
 		}
 		
 		else {
