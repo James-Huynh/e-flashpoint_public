@@ -79,30 +79,15 @@ public class Drive extends Action {
         	parking = gs.getEngines()[this.index];
         }
         
-        System.out.println("dupka" + parking.getTiles()[0].getX() + parking.getTiles()[0].getY());
-        
         //calling ambulance
         if (!moveWith) {
-        	System.out.println("0000000000");
         	ParkingSpot nextAmbulance = null;
         	if (parking.getParkingType() == Vehicle.Ambulance) { //always (assure)
-        		System.out.println("11111111");
     	        for (int i=0; i<4; i++) {
-    	        	System.out.println("DUUUPA" + i + gs.getAmbulances()[i].getTiles()[0].getX() + gs.getAmbulances()[i].getTiles()[0].getY());
     	        	if (gs.getAmbulances()[i].equals(parking)) {
-    	        		System.out.println("222222222222");
     	        		nextAmbulance = gs.getAmbulances()[ (i+direction+4)%4 ];
     	        		nextAmbulance.setCar(true);
     	        		parking.setCar(false);
-    	        		System.out.println("dupa" + nextAmbulance.getCar());
-    	        		System.out.println("dupa2" + parking.getCar());
-    	        		int aaa = 0;
-    	            	for (ParkingSpot ps : gs.getAmbulances()) {
-    	            		if (ps.getCar()) {
-    	            			System.out.println(aaa);
-    	            		}
-    	            		aaa++;
-    	            	}
     	        	}
     	        }
             }

@@ -166,9 +166,9 @@ public class Move extends Action {
         
         if (playingFirefighter.getSpeciality() == Speciality.DOG) {
 			for (int inn=0; inn<4; inn++) {
-				Tile NeighbourNeighbour = gs.getNeighbour(neighbour, inn);
-				if(NeighbourNeighbour.containsPOI()) {
-					ArrayList<POI> Pois = neighbour.getPoiList(); //where we going
+				Tile neighbourNeighbour = gs.getNeighbour(neighbour, inn);
+				if(neighbourNeighbour != null && neighbourNeighbour.containsPOI()) {
+					ArrayList<POI> Pois = neighbourNeighbour.getPoiList(); //where we going
 		        	ArrayList<POI> POIStoRemove = new ArrayList<POI>(); //exploration
 		        	
 		        	for(POI poi:Pois) {

@@ -60,6 +60,9 @@ public class Extinguish extends Action {
 		if (s == (Speciality.PARAMEDIC) || s == (Speciality.RESCUE_SPECIALIST)) {
 			this.APcost = 2*this.APcost;
 		}
+		if (s == Speciality.DOG) {
+			return false;
+		}
         int cost = this.APcost; //help variable: all FFs now have the same measure of determining how much to estinguish, but different APcost
         if (playingFirefighter.getSpeciality() == (Speciality.PARAMEDIC) || 
         		playingFirefighter.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
