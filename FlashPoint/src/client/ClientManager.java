@@ -170,6 +170,11 @@ public class ClientManager {
 				startGameFlag = 1;
 				flag = true;
 				break;
+			case FIREFIGHTERSELECTED:
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				startGameFlag = 1;
+				flag = true;
+				break;
 			case ROLLDICEFORME:
 				System.out.println("Successful dices request");
 				requestObject = (User) read_tranObject.getObject();
@@ -670,5 +675,17 @@ public class ClientManager {
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;
+	}
+
+	public boolean fireFighterSelectionRequest(Firefighter f) {
+		// TODO Auto-generated method stub
+		requestObject.setDesiredFirefighter(f);
+		
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FIREFIGHTERSELECTREQUEST);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
 	} 
+	
+	
 }
