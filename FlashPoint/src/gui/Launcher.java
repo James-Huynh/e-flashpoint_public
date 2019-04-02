@@ -467,6 +467,10 @@ public class Launcher {
 		}
 	}
 	
+	public void showRideRequest() {
+		table.showRideRequest();
+	}
+	
 	public void showAdvanceFireString(String advFireString) {
 		table.showAdvanceFireString(advFireString);
 		
