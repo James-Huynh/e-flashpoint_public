@@ -95,21 +95,22 @@ public class Drive extends Action {
         	
         	
         	
-//        	obtainTravellers(gs);
-//        	
-//        	if (!travellers.isEmpty()) {  
-//        		for (Firefighter f : travellers) {
-//        			int whichOne;
-//        			if (parking.getTiles()[0].equals(f.getCurrentPosition())){
-//        	        	whichOne = 0;
-//        	        }
-//        	        else {
-//        	        	whichOne = 1;
-//        	        }
-//        			f.getCurrentPosition().getFirefighterList().remove(f);
-//        			f.setCurrentLocation(nextAmbulance.getTiles()[whichOne]);
-//        		}
-//        	}
+        	obtainTravellers(gs);
+        	
+        	if (!travellers.isEmpty()) {  
+        		for (Firefighter f : travellers) {
+        			int whichOne;
+        			if (parking.getTiles()[0].equals(f.getCurrentPosition())){
+        	        	whichOne = 0;
+        	        }
+        	        else {
+        	        	whichOne = 1;
+        	        }
+        			f.getCurrentPosition().getFirefighterList().remove(f);
+        			f.setCurrentLocation(nextAmbulance.getTiles()[whichOne]);
+        			nextAmbulance.getTiles()[whichOne].addToFirefighterList(f);
+        		}
+        	}
         }
         else {             //normal driving
             int whichOne;
@@ -153,12 +154,14 @@ public class Drive extends Action {
             		if (f.getCurrentPosition().equals(currentPosition)){
             			f.getCurrentPosition().getFirefighterList().remove(f);
             			f.setCurrentPosition(target);
+            			target.addToFirefighterList(f);
             		}
             		else {
             			f.getCurrentPosition().getFirefighterList().remove(f);
             			for (Tile tt : target.getParkingSpot().getTiles()) {
             				if (!tt.equals(target)) {
             					f.setCurrentLocation(tt);
+            					target.addToFirefighterList(f);
             					break;
             				}
             			}

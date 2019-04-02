@@ -1142,7 +1142,9 @@ public class GameState implements Serializable {
 	//It needs to happens server side so everyone is updated, and not locally
 	public void setRideOption(boolean val, int myIndex) { //Index passed from Table 
 //		rideMapper.put(listOfFirefighters.get(myIndex), val); 
-//		rideMapper.get(listOfFirefighters.get(myIndex))[0] = true;
+		if(!val) {
+			rideMapper.get(listOfFirefighters.get(myIndex))[0] = false;
+		}
 		rideMapper.get(listOfFirefighters.get(myIndex))[1] = val;
 	}
 	
