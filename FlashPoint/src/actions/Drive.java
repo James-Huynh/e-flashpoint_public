@@ -145,25 +145,25 @@ public class Drive extends Action {
             playingFirefighter.setCurrentLocation(target);
             target.addToFirefighterList(playingFirefighter);
             
-//            obtainTravellers(gs);
-//            
-//            if (!travellers.isEmpty()) {
-//            	for (Firefighter f : travellers) {
-//            		if (f.getCurrentPosition().equals(currentPosition)){
-//            			f.getCurrentPosition().getFirefighterList().remove(f);
-//            			f.setCurrentPosition(target);
-//            		}
-//            		else {
-//            			f.getCurrentPosition().getFirefighterList().remove(f);
-//            			for (Tile tt : target.getParkingSpot().getTiles()) {
-//            				if (!tt.equals(target)) {
-//            					f.setCurrentLocation(tt);
-//            					break;
-//            				}
-//            			}
-//            		}
-//            	}
-//            }
+            obtainTravellers(gs);
+            
+            if (!travellers.isEmpty()) {
+            	for (Firefighter f : travellers) {
+            		if (f.getCurrentPosition().equals(currentPosition)){
+            			f.getCurrentPosition().getFirefighterList().remove(f);
+            			f.setCurrentPosition(target);
+            		}
+            		else {
+            			f.getCurrentPosition().getFirefighterList().remove(f);
+            			for (Tile tt : target.getParkingSpot().getTiles()) {
+            				if (!tt.equals(target)) {
+            					f.setCurrentLocation(tt);
+            					break;
+            				}
+            			}
+            		}
+            	}
+            }
             
         }
         
