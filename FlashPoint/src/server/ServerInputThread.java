@@ -383,7 +383,7 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameState);
 				}
 				break;
-			case ROLLBLACKDICEFORME: //
+			case ROLLBLACKDICEFORME:
 				System.out.println("Rolling Dice for Driver request");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setDice(1);
