@@ -196,14 +196,8 @@ public class ServerManager {
 		gameState.createFFToAsk(type);
 	}
 	
-	public boolean hasEveryonerResponded() {
-		if(gameState.hasEveryoneResponded()) {
-			gameState.resetHashMap();
-			return true;
-		}
-		else {
-			return false;
-		}
+	public boolean hasEveryoneResponded() {
+		return gameState.hasEveryoneResponded();
 	}
 	
 	public void updateResponse(boolean b, int i) {
@@ -416,6 +410,11 @@ public class ServerManager {
 					
 				}
 			} else System.out.println("we should not be here");
+		}
+
+		public void resetHashMap() {
+			gameState.resetHashMap();
+			
 		}
 	
 }

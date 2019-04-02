@@ -237,7 +237,9 @@ public class Drive extends Action {
 	    while (it.hasNext()) {
 	    	System.out.println("Iterating over rideMapper");
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
-	        if(pair.getValue()[0].booleanValue() == true) {
+	        System.out.println(pair.getValue()[0]);
+	        System.out.println(pair.getValue()[1]);
+	        if(pair.getValue()[1] == true) {
 	        	travellers.add(pair.getKey());
 	        }
 //	        it.remove(); // avoids a ConcurrentModificationException, don't know if necessary? -Mat: garbage collector, don't worry

@@ -226,8 +226,8 @@ public class ServerInputThread extends Thread {
 						System.out.println("hello should be in the output thread");
 						onOut.setMessage(returnGameState); 
 					}
-					System.out.println("hello should be at the while" + serverManager.hasEveryonerResponded());
-					while(!serverManager.hasEveryonerResponded()) {
+					System.out.println("hello should be at the while" + serverManager.hasEveryoneResponded());
+					while(!serverManager.hasEveryoneResponded()) {
 						
 					}
 					System.out.println("out");
@@ -237,6 +237,7 @@ public class ServerInputThread extends Thread {
 				
 				
 				serverManager.performAction(requestObject.getAction());
+				serverManager.resetHashMap();
 				returnGameState = new TranObject<GameState>(TranObjectType.ACTIONSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
 				for (OutputThread onOut : map.getAll()) {
