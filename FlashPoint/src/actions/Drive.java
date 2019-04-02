@@ -232,9 +232,10 @@ public class Drive extends Action {
 	
 	//Mat: all good! but where/how do you set the value for gs.rideMap?
 	public void obtainTravellers(GameState gs) {
-		Map<Firefighter, Boolean[]> rideMap = gs.getRideMapper();
-	    Iterator<Entry<Firefighter, Boolean[]>> it = rideMap.entrySet().iterator();
+//		Map<Firefighter, Boolean[]> rideMap = gs.getRideMapper();
+	    Iterator<Entry<Firefighter, Boolean[]>> it = gs.getRideMapper().entrySet().iterator();
 	    while (it.hasNext()) {
+	    	System.out.println("Iterating over rideMapper");
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
 	        if(pair.getValue()[0].booleanValue() == true) {
 	        	travellers.add(pair.getKey());

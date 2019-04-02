@@ -532,6 +532,7 @@ public class GameState implements Serializable {
 				
 			}
 		}
+		System.out.println("this is in the setup of FF " + this.rideMapper.size());
 	}
 
 	/**
@@ -1131,6 +1132,8 @@ public class GameState implements Serializable {
 	public boolean toDisplayRidePopUp(int myIndex) {
 //		return rideMapper.get(listOfFirefighters.get(myIndex)); //Index passed from Table 
 		System.out.println("ride size" + rideMapper.size());
+		System.out.println("my index in ride size" + myIndex);
+		System.out.println(listOfFirefighters.size());
 		return rideMapper.get(listOfFirefighters.get(myIndex))[0];
 	}
 	
