@@ -1091,8 +1091,10 @@ public class GameState implements Serializable {
 	    Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
-	        if(pair.getValue()[1].booleanValue() == false) {
-	        	return false;
+	        if(pair.getValue()[0].booleanValue() == true) {
+	        	if(pair.getValue()[1].booleanValue() == false) {
+	        		return false;	
+	        	}
 	        }
 	        it.remove();
 	    }
