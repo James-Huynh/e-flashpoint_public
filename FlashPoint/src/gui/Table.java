@@ -76,6 +76,7 @@ public class Table {
 		private Color tileColorEngine = Color.decode("#FFFF05");
 		private Popup advFire;
 		private Popup gameTermination;
+		private Popup rideRequest;
 		private static boolean placing = true;
 		private static boolean playing = true;
 		private static boolean selectingFireFighter = false;
@@ -4796,6 +4797,86 @@ public class Table {
 			
 		}	
 		
+		public void showRideRequest() {
+			rideRequest = null;
+			PopupFactory gameT = new PopupFactory();
+			JPanel gameTPanel = new JPanel(new BorderLayout());
+			JTextArea text = new JTextArea();
+			String rideReq = "Would you like to ride?";
+			String rideInform = "We are waiting on the ride responses";
+			if(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex)) {
+				text.setText(rideInform);
+				
+				JButton yesButton = new JButton("Yes");
+				yesButton.setPreferredSize(new Dimension(40,40));
+				yesButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(sendRideResponse(true, myIndex)) {
+							rideRequest.hide();
+							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						}
+					}
+				});
+				
+
+				JButton noButton = new JButton("No");
+				noButton.setPreferredSize(new Dimension(40,40));
+				noButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(sendRideResponse(false, myIndex)) {
+							rideRequest.hide();
+							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						}
+					}
+				});
+				
+				JPanel responsePanel = new JPanel();
+				responsePanel.setLayout(new GridLayout(2,1));
+				responsePanel.add(yesButton);
+				responsePanel.add(noButton);
+				
+				
+				gameTPanel.setPreferredSize(new Dimension(700,700));
+				gameTPanel.setBackground(tileColorWhite);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
+				gameTPanel.setBorder(blackline);
+				gameTPanel.add(text, BorderLayout.NORTH);
+				gameTPanel.add(responsePanel, BorderLayout.SOUTH);
+			} else {
+				text.setText(rideInform);
+				
+				JButton okButton = new JButton("ok");
+				okButton.setPreferredSize(new Dimension(75,75));
+				okButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						rideRequest.hide();
+						rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+					}
+				});
+				gameTPanel.setPreferredSize(new Dimension(700,700));
+				gameTPanel.setBackground(tileColorWhite);
+				Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
+				gameTPanel.setBorder(blackline);
+				gameTPanel.add(text, BorderLayout.NORTH);
+				gameTPanel.add(okButton, BorderLayout.SOUTH);
+				
+			}
+			
+			rideRequest = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+			
+			rideRequest.show();
+		}
+		
+		public void hideRidePanel() {
+			if(rideRequest != null) {
+				rideRequest.hide();
+			}
+			
+		}	
+		
 		public int getMyIndex() {
 			return this.myIndex;
 		}
@@ -4836,4 +4917,10 @@ public class Table {
 		private boolean sendFireFighterSelectionRequest(int i) {
 			return clientManager.fireFighterSelectionRequest(i);
 		}
+		
+		private boolean sendRideResponse(boolean b, int i) {
+			return clientManager.sendRideResponse(b, i);
+		}
+		
+		
 }

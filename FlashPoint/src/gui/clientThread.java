@@ -33,7 +33,10 @@ public class clientThread implements Runnable{
 					this.inLobby = false;
 				}
 			}else {
-				if(myClientManager.listenForResponses() == 1) {
+				if(!myClientManager.getUsersGameState().hasEveryoneResponded()) {
+					myLauncher.showRideRequest();
+				}
+				else if(myClientManager.listenForResponses() == 1) {
 					myLauncher.refreshBoard();
 				} else {
 					System.out.println("we are not meant to be here");
