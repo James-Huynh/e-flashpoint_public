@@ -126,6 +126,9 @@ public class Drive extends Action {
     	        for (int i=0; i<4; i++) {
     	        	if (gs.getAmbulances()[i].equals(parking)) {
     	        		ParkingSpot nextAmbulance = gs.getAmbulances()[ (i+direction+4)%4 ];
+    	        		System.out.println("DUPA");
+    	        		System.out.println(nextAmbulance.getTiles()[0].getX());
+    	        		System.out.println(nextAmbulance.getTiles()[0].getY());
     	        		nextAmbulance.setCar(true);
     	        		parking.setCar(false);
     	        		target = nextAmbulance.getTiles()[whichOne];
@@ -161,7 +164,7 @@ public class Drive extends Action {
             			for (Tile tt : target.getParkingSpot().getTiles()) {
             				if (!tt.equals(target)) {
             					f.setCurrentLocation(tt);
-            					target.addToFirefighterList(f);
+            					tt.addToFirefighterList(f);
             					break;
             				}
             			}
