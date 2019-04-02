@@ -365,7 +365,7 @@ public class Table {
 				if(this.currentBoard.getLostHazmat().size() > 0) {
 					int numHZ = this.currentBoard.getLostHazmat().size();
 					try {
-						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT"/*_" + numHZ */ + ".gif"));
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT_" + numHZ  + ".gif"));
 						add(new JLabel(new ImageIcon(POIimage)));	
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -407,7 +407,7 @@ public class Table {
 				if(this.currentBoard.getDisposedHazmat().size() > 0) {
 					int numHZ = this.currentBoard.getDisposedHazmat().size();
 					try {
-						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT"/*_" + numHZ */ + ".gif"));
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HAZMAT_" + numHZ + ".gif"));
 						add(new JLabel(new ImageIcon(POIimage)));	
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -446,7 +446,7 @@ public class Table {
 				if(currentBoard.isExperienced()) {
 					int numHS = currentBoard.getHotSpot();
 					try {
-						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HOTSPOT"/*_"+ num*/ + ".gif"));
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HOTSPOT_"+ num + ".gif"));
 						add(new JLabel(new ImageIcon(POIimage)));	
 					} catch (IOException e) {
 						e.printStackTrace();
