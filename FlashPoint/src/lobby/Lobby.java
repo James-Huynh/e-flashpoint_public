@@ -3,8 +3,14 @@ package lobby;
 import java.io.Serializable;
 // Start of user code for imports
 import java.util.ArrayList;
+import java.util.Random;
 
 import game.BoardTwo;
+import game.RandomBoardFive;
+import game.RandomBoardFour;
+import game.RandomBoardOne;
+import game.RandomBoardThree;
+import game.RandomBoardTwo;
 import game.BoardOne;
 import game.TemplateGame;
 import server.Player;
@@ -153,8 +159,22 @@ public class Lobby implements Serializable  {
 		}
 		
 		else {
-			//Random Board
-			System.out.println("this is in createTemplate last else");
+			System.out.println("creating random Board");
+			Random rn = new Random();
+			int boardNumber = rn.nextInt(5) + 1;
+			if(this.mode.equals("Family")) {
+				if(boardNumber == 1) template = new RandomBoardOne("Family");
+				if(boardNumber == 2) template = new RandomBoardTwo("Family");
+				if(boardNumber == 3) template = new RandomBoardThree("Family");
+				if(boardNumber == 4) template = new RandomBoardFour("Family");
+				if(boardNumber == 5) template = new RandomBoardFive("Family");
+			}else if(this.mode.equals("Experienced")) {
+				if(boardNumber == 1) template = new RandomBoardOne("Experienced");
+				if(boardNumber == 2) template = new RandomBoardTwo("Experienced");
+				if(boardNumber == 3) template = new RandomBoardThree("Experienced");
+				if(boardNumber == 4) template = new RandomBoardFour("Experienced");
+				if(boardNumber == 5) template = new RandomBoardFive("Experienced");
+			}
 		}
 	}
 
