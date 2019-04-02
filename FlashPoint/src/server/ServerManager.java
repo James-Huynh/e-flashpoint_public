@@ -380,7 +380,12 @@ public class ServerManager {
 			if(gameState.getFreeFirefighters().contains(ff)) {
 				Player player = onlinePlayers.get(person.getId());
 				if(player.getFirefighter()!=null) {
-					
+					if(gameState.getListOfPlayers().size() == gameState.getFireFighterList().size()) {
+						gameState.getFreeFirefighters().add(player.getFirefighter());
+						player.setFirefighter(ff);
+						gameState.getFreeFirefighters().remove(ff);
+						ff.setPlayer(player);
+					}
 				} else {
 					player.setFirefighter(ff);
 					gameState.getFreeFirefighters().remove(ff);

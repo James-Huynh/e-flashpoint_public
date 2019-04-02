@@ -119,6 +119,12 @@ public class Table {
 					this.myIndex = i;
 				}
 			}
+			if(clientManager.getUsersGameState().getFreeFirefighters().size() != 0) {
+				this.myIndex = 7;
+				this.selectingFireFighter = true;
+				this.selectingSpeciality = false;
+				this.placing = false;
+			}
 //			this.listenerThread.restart();
 		}
 		
@@ -159,6 +165,18 @@ public class Table {
 //			this.placing = placingchange;
 			this.gameTiles = newBoard.getMatTiles();
 			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
+			if(clientManager.getUsersGameState().getFreeFirefighters().size() == 0) {
+				selectingFireFighter = false;
+				if(myIndex>6) {
+					for(int i = 0; i<clientManager.getUsersGameState().getFireFighterList().size(); i++) {
+						Firefighter f = clientManager.getUsersGameState().getFireFighterList().get(i);
+						firefighterOrder.put(f,i);
+						if(clientManager.getUserName().equals(f.getOwner().getUserName())) {
+							this.myIndex = i;
+						}
+					}
+				}
+			}
 //			boardPanel.drawBoard(newBoard);
 //			rightPanel.drawPanel(newBoard);
 //			leftPanel.drawPanel(newBoard);
@@ -910,6 +928,10 @@ public class Table {
 							else if(placing) {
 								if(connectedTile.getCoords()[0] == 0 || connectedTile.getCoords()[1] == 0 || connectedTile.getCoords()[0] == 7 || connectedTile.getCoords()[1] == 9) {
 									showPopUpMenuPlace(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
+								}
+							}else if(selectingFireFighter){
+								if(connectedTile.getCoords()[0] == 0 || connectedTile.getCoords()[1] == 0 || connectedTile.getCoords()[0] == 7 || connectedTile.getCoords()[1] == 9) {
+									showPopUpMenuFFSelector(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
 								}
 							}else {
 								if(playing) {

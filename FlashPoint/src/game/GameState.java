@@ -140,6 +140,9 @@ public class GameState implements Serializable {
 		this.experiencedMode = copy.experiencedMode;
 		this.specialitySelecting = copy.specialitySelecting;
 		this.proposedDices = copy.proposedDices;
+		
+		//for loading and selecting, may need to change
+				this.freeFirefighters = copy.listOfFirefighters;
 	}
 
 	/*
