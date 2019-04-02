@@ -44,6 +44,7 @@ public class User implements Serializable {
     private Firefighter desiredFirefighter;
     private int loadNum;
     private ArrayList<GameState> savedGameStates;
+    private int[] dices;
     
     private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public Integer getId() {
@@ -255,6 +256,14 @@ public class User implements Serializable {
 	
 	public Firefighter getDesiredFirefighter() {
 		return this.desiredFirefighter;
+	}
+	
+	public void setDices(int[] dices) {
+		this.dices = dices;
+	}
+	
+	public int[] getDices() {
+		return this.dices;
 	}
 
 //	public int getImg() {

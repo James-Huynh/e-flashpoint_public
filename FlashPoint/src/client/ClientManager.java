@@ -8,7 +8,6 @@ import commons.bean.TextMessage;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
 import commons.tran.bean.TranObjectType;
-import commons.util.MyDate;
 import game.BoardOne;
 import game.GameState;
 import gui.Launcher;
@@ -155,13 +154,9 @@ public class ClientManager {
 				flag = true;
 				break;
 			case CHATMESSAGE:
-				mDataArrays=(((User) read_tranObject.getObject()).getChatArray());
-				for(ChatMsgEntity m: mDataArrays) {
-					System.out.println(m.getMessage());
-				}
+				requestObject = (User) read_tranObject.getObject();
+				mDataArrays=(requestObject.getChatArray());
 				Collections.reverse(mDataArrays);
-				startGameFlag = 1;
-				flag = true;
 				break;
 				//launcher.refreshLobby();		// James
 			
@@ -175,13 +170,23 @@ public class ClientManager {
 				startGameFlag = 1;
 				flag = true;
 				break;
-			case FIREFIGHTERSELECTED:
-				requestObject.setCurrentState((GameState) read_tranObject.getObject());
-				startGameFlag = 1;
+			case ROLLDICEFORME:
+				System.out.println("Successful dices request");
+				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				break;
-			}
+			case ROLLREDDICEFORME:
+				System.out.println("Successful red dice request");
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
+				break;
+			case ROLLBLACKDICEFORME:
+				System.out.println("Successful black dice request");
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
+				break;
 			
+			}
 			
 		
 		
@@ -314,7 +319,7 @@ public class ClientManager {
 	
 	public boolean gameStateRequest(User userOne) {
 		boolean flag = false;
-		if(!requestObject.getCurrentLobby().getIsLoadGame()) {
+		if(requestObject.getCurrentLobby().getIsLoadGame() == false) {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.STARTGAMESTATE);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
@@ -573,8 +578,6 @@ public class ClientManager {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CHATMESSAGE);
 		ChatMsgEntity entity = new ChatMsgEntity();
 		entity.setMessage(message.getMessage());
-		entity.setName(requestObject.getName());
-		entity.setDate(MyDate.getDateCN());
 		User a= new User();
 		a.setChat(entity);
 		objectToSend.setObject(a);
@@ -664,14 +667,6 @@ public class ClientManager {
 
 	public boolean sendSelectionEndRequest() {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SELECTENDREQUEST);
-		objectToSend.setObject(requestObject);
-		outputThread.setMsg(objectToSend);
-		return true;
-	}
-
-	public boolean fireFighterSelectionRequest(Firefighter f) {
-		requestObject.setDesiredFirefighter(f);
-		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FIREFIGHTERSELECTREQUEST);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;

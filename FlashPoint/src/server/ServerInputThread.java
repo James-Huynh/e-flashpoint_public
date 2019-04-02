@@ -374,7 +374,7 @@ public class ServerInputThread extends Thread {
 				}
 				break;
 			case ROLLREDDICEFORME:
-				System.out.println("Rolling Dice for Driver request");
+				System.out.println("ReRolling Red Dice for Driver request");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setDice(0);
 				returnGameState = new TranObject<GameState>(TranObjectType.FIREFIGHTERSELECTED);
@@ -384,7 +384,7 @@ public class ServerInputThread extends Thread {
 				}
 				break;
 			case ROLLBLACKDICEFORME:
-				System.out.println("Rolling Dice for Driver request");
+				System.out.println("ReRolling Black Dice for Driver request");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setDice(1);
 				returnGameState = new TranObject<GameState>(TranObjectType.FIREFIGHTERSELECTED);
