@@ -8,11 +8,13 @@ public class clientThread implements Runnable{
 	ClientManager myClientManager;
 	boolean inLobby;
 	Thread t1;
+	boolean toggle;
 	
 	clientThread(Launcher mylauncher, ClientManager myManager, Boolean inLobby){
 		this.myLauncher = mylauncher;
 		this.myClientManager = myManager;
 		this.inLobby = inLobby;
+		this.toggle = true;
 		
 		
 	}
@@ -33,13 +35,16 @@ public class clientThread implements Runnable{
 					this.inLobby = false;
 				}
 			}else {
-				if(myClientManager.getUsersGameState().getInRideMode()) {
+				if(myClientManager.getUsersGameState().getInRideMode() && toggle) {
 					System.out.println("hello we are riding");
 					myLauncher.showRideRequest();
+					toggle = false;
+					
 				}
 				else if(myClientManager.listenForResponses() == 1) {
 					System.out.println("hello we are not riding");
 					myLauncher.refreshBoard();
+					toggle = true;
 				} else {
 					System.out.println("we are not meant to be here");
 				}

@@ -133,6 +133,7 @@ public class Table {
 				this.selectingSpeciality = false;
 				this.placing = false;
 			}
+			System.out.println("this is my index" + myIndex);
 //			this.listenerThread.restart();
 		}
 		

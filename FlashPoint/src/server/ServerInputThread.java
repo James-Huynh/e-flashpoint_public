@@ -226,7 +226,7 @@ public class ServerInputThread extends Thread {
 						System.out.println("hello should be in the output thread");
 						onOut.setMessage(returnGameState); 
 					}
-					System.out.println("hello should be at the while");
+					System.out.println("hello should be at the while" + serverManager.hasEveryonerResponded());
 					while(!serverManager.hasEveryonerResponded()) {
 						System.out.println("sent requests");
 						readMessage();	
