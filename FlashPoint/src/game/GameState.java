@@ -1052,11 +1052,13 @@ public class GameState implements Serializable {
 		if(type == Vehicle.Ambulance) {
 			for(int i=0;i<ambulances.length;i++) {
 				Tile[] placedOn = ambulances[i].getTiles();
-				for(int j=0;j<placedOn.length;i++) {
+				System.out.println(placedOn.length);
+				for(int j=0;j<placedOn.length;j++) {
 					if(placedOn[j].containsFirefighter()) {
 						for(Firefighter f: placedOn[i].getFirefighterList()) {
 							if( f != this.getPlayingFirefighter()) {
 //								rideMapper.put(f, true);
+								System.out.println("how many times are we doing this?" + i +"||"+ j);
 								rideMapper.get(f)[0] = true;
 							}
 						}
@@ -1067,7 +1069,7 @@ public class GameState implements Serializable {
 		else {
 			for(int i=0;i<engines.length;i++) {
 				Tile[] placedOn = engines[i].getTiles();
-				for(int j=0;j<placedOn.length;i++) {
+				for(int j=0;j<placedOn.length;j++) {
 					if(placedOn[j].containsFirefighter()) {
 						for(Firefighter f: placedOn[i].getFirefighterList()) {
 							if( f != this.getPlayingFirefighter()) {
@@ -1079,6 +1081,7 @@ public class GameState implements Serializable {
 				}
 			}
 		}
+		System.out.println("we have reached the end of the ask");
 	}
 	
 	public boolean hasEveryoneResponded() {

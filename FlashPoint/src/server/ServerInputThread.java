@@ -217,14 +217,18 @@ public class ServerInputThread extends Thread {
 				requestObject = (User) read_tranObject.getObject();
 				
 				if(requestObject.getAction().getTitle() == ActionList.Drive) {
+					System.out.println("hello we are riding");
 					serverManager.askRelevantFirefighters(requestObject.getCurrentState().getPlayingFirefighter().getCurrentPosition().getParkingType());
-					
+					System.out.println("we have asked");
 					returnGameState = new TranObject<GameState>(TranObjectType.SENDRIDERECEIVED);
 					returnGameState.setObject(serverManager.getGameState());
 					for (OutputThread onOut : map.getAll()) {
+						System.out.println("hello should be in the output thread");
 						onOut.setMessage(returnGameState); 
 					}
+					System.out.println("hello should be at the while");
 					while(!serverManager.hasEveryonerResponded()) {
+						System.out.println("sent requests");
 						readMessage();	
 					}
 				}

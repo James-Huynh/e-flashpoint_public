@@ -34,9 +34,11 @@ public class clientThread implements Runnable{
 				}
 			}else {
 				if(myClientManager.getUsersGameState().getInRideMode()) {
+					System.out.println("hello we are riding");
 					myLauncher.showRideRequest();
 				}
 				else if(myClientManager.listenForResponses() == 1) {
+					System.out.println("hello we are not riding");
 					myLauncher.refreshBoard();
 				} else {
 					System.out.println("we are not meant to be here");

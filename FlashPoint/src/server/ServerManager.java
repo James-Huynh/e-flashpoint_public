@@ -192,6 +192,7 @@ public class ServerManager {
 	}
 	
 	public void askRelevantFirefighters(Vehicle type) {
+		System.out.println("we are in the ask");
 		gameState.createFFToAsk(type);
 	}
 	

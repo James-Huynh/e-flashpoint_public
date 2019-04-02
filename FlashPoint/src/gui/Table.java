@@ -4805,7 +4805,8 @@ public class Table {
 			String rideReq = "Would you like to ride?";
 			String rideInform = "We are waiting on the ride responses";
 			if(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex)) {
-				text.setText(rideInform);
+				System.out.println(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex));
+				text.setText(rideReq);
 				
 				JButton yesButton = new JButton("Yes");
 				yesButton.setPreferredSize(new Dimension(40,40));
@@ -4845,6 +4846,7 @@ public class Table {
 				gameTPanel.add(text, BorderLayout.NORTH);
 				gameTPanel.add(responsePanel, BorderLayout.SOUTH);
 			} else {
+				System.out.println(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex));
 				text.setText(rideInform);
 				
 				JButton okButton = new JButton("ok");
@@ -4865,7 +4867,7 @@ public class Table {
 				
 			}
 			
-			rideRequest = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+			rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 			
 			rideRequest.show();
 		}
