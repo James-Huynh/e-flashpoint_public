@@ -1053,7 +1053,7 @@ public class GameState implements Serializable {
 			for(int i=0;i<ambulances.length;i++) {
 				Tile[] placedOn = ambulances[i].getTiles();
 				for(int j=0;j<placedOn.length;i++) {
-					if(placedOn[i].containsFirefighter()) {
+					if(placedOn[j].containsFirefighter()) {
 						for(Firefighter f: placedOn[i].getFirefighterList()) {
 							if( f != this.getPlayingFirefighter()) {
 //								rideMapper.put(f, true);
@@ -1068,7 +1068,7 @@ public class GameState implements Serializable {
 			for(int i=0;i<engines.length;i++) {
 				Tile[] placedOn = engines[i].getTiles();
 				for(int j=0;j<placedOn.length;i++) {
-					if(placedOn[i].containsFirefighter()) {
+					if(placedOn[j].containsFirefighter()) {
 						for(Firefighter f: placedOn[i].getFirefighterList()) {
 							if( f != this.getPlayingFirefighter()) {
 //								rideMapper.put(f, true);
