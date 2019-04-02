@@ -1091,14 +1091,13 @@ public class GameState implements Serializable {
 	public boolean hasEveryoneResponded() {
 	    Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
 	    while (it.hasNext()) {
-	    	System.out.println("Are you iterating here?");
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
 	        if(pair.getValue()[0].booleanValue() == true) {
 	        	if(pair.getValue()[1].booleanValue() == false) {
 	        		return false;	
 	        	}
 	        }
-	        it.remove();
+//	        it.remove();
 	    }
 	    return true;
 	}
@@ -1109,7 +1108,7 @@ public class GameState implements Serializable {
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
 	        pair.getValue()[0] = false;
 	        pair.getValue()[1] = false;
-	        it.remove();
+//	        it.remove();
 	    }
 	    this.inRideMode = false;
 	}
