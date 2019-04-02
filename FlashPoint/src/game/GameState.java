@@ -66,6 +66,7 @@ public class GameState implements Serializable {
 	protected ArrayList<Hazmat> lostHazmat;
 	protected ArrayList<Hazmat> disposedHazmat;
 	protected HashMap<Firefighter, Boolean[]> rideMapper; //For Ride in Experienced Mode, [0] = should be asked, [1] = responded
+	protected boolean inRideMode;
 
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
 	protected boolean experiencedMode;
@@ -192,6 +193,7 @@ public class GameState implements Serializable {
 		if(lobby.getMode().equals("Experienced")) {
 			this.experiencedMode = true;
 			rideMapper = new HashMap<Firefighter, Boolean[]>();
+			this.inRideMode = false;
 			this.freeSpecialities.add(Speciality.CAFS);
 			this.freeSpecialities.add(Speciality.CAPTAIN);
 			this.freeSpecialities.add(Speciality.DOG);
@@ -1046,7 +1048,7 @@ public class GameState implements Serializable {
 	
 	//so this method put all relevant FF to the map right? when we change if they don't want to ride?
 	public void createFFToAsk(Vehicle type) {
-		
+		this.inRideMode = true;
 		if(type == Vehicle.Ambulance) {
 			for(int i=0;i<ambulances.length;i++) {
 				Tile[] placedOn = ambulances[i].getTiles();
@@ -1080,6 +1082,9 @@ public class GameState implements Serializable {
 	}
 	
 	public boolean hasEveryoneResponded() {
+		if(this.listOfFirefighters.size() < 1) {
+			return true;
+		}
 	    Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
@@ -1096,8 +1101,14 @@ public class GameState implements Serializable {
 	    while (it.hasNext()) {
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
 	        pair.getValue()[0] = false;
+	        pair.getValue()[1] = false;
 	        it.remove();
 	    }
+	    this.inRideMode = false;
+	}
+	
+	public boolean getInRideMode() {
+		return this.inRideMode;
 	}
 	
 	public void removeSelectedSpeciality(Speciality desiredSpeciality) {
