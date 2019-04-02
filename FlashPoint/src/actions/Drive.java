@@ -55,6 +55,7 @@ public class Drive extends Action {
 		this.direction = direction;
 		this.moveWith = moveWith;
 		this.isAmbulance = typeFlag;
+		this.travellers = new HashSet<Firefighter>();
 	}	
 	
 	
@@ -240,6 +241,8 @@ public class Drive extends Action {
 	        }
 	        it.remove(); // avoids a ConcurrentModificationException, don't know if necessary? -Mat: garbage collector, don't worry
 	    }
+	    
+	    System.out.println("this is the size of travelers" + travellers.size());
 	}
 
 	@Override

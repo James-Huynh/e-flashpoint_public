@@ -4805,6 +4805,7 @@ public class Table {
 			JTextArea text = new JTextArea();
 			String rideReq = "Would you like to ride?";
 			String rideInform = "We are waiting on the ride responses";
+			System.out.println("myyyyyy index " + myIndex);
 			if(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex)) {
 				System.out.println(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex));
 				text.setText(rideReq);
@@ -4816,6 +4817,7 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						if(sendRideResponse(true, myIndex)) {
 							rideRequest.hide();
+							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 				});
@@ -4828,6 +4830,7 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						if(sendRideResponse(false, myIndex)) {
 							rideRequest.hide();
+							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 				});

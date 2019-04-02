@@ -1130,6 +1130,7 @@ public class GameState implements Serializable {
 	
 	public boolean toDisplayRidePopUp(int myIndex) {
 //		return rideMapper.get(listOfFirefighters.get(myIndex)); //Index passed from Table 
+		System.out.println("ride size" + rideMapper.size());
 		return rideMapper.get(listOfFirefighters.get(myIndex))[0];
 	}
 	

@@ -33,9 +33,9 @@ public static void main(String[] args) {
 		
 //		tester.updateGameStateFromLobby(tempLobby);
 		
-		current = new GameManager(tempLobby);
-		current.setup();
-		tester = current.getGameState();
+//		current = new GameManager(tempLobby);
+//		current.setup();
+//		tester = current.getGameState();
 		
 //		//Player placement
 //		tester.placeFireFighter(tester.getFireFighterList().get(0), tester.returnTile(5,0));
@@ -110,9 +110,12 @@ public static void main(String[] args) {
 //		current = new GameManager(tester);
 
 		
-		table = new LocalizedTable(tester);
+//		table = new LocalizedTable(tester);
 //		current.setAllAvailableActions(current.generateAllPossibleActions());
 //		tester.updateActionList(current.getAllAvailableActions());
+		
+		
+		System.out.println((-1+4) %  4);
 		
 	}
 	
