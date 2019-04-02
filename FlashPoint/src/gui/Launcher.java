@@ -59,7 +59,7 @@ public class Launcher {
 	
 	private static Client client;
 	
-	private String ServerIP = MatIP;
+	private String ServerIP = BenIP;
 
 	int port = 8888;
 	User userOne = new User();
@@ -459,7 +459,12 @@ public class Launcher {
 			clientManager.setEndTurnTrigger(false);
 		}
 		table.refresh(clientManager.getUsersGameState());
-		repaint(clientManager.getUsersGameState().getFireFighterList().get(table.getMyIndex()).getCurrentPosition()==null, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
+		if(table.getMyIndex() > 5) {
+			repaint(false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
+			
+		} else {
+			repaint(clientManager.getUsersGameState().getFireFighterList().get(table.getMyIndex()).getCurrentPosition()==null, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
+		}
 	}
 	
 	public void showAdvanceFireString(String advFireString) {
