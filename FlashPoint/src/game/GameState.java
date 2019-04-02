@@ -1085,9 +1085,6 @@ public class GameState implements Serializable {
 	}
 	
 	public boolean hasEveryoneResponded() {
-		if(this.listOfFirefighters.size() < 1) {
-			return true;
-		}
 	    Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
