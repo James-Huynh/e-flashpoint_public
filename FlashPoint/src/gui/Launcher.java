@@ -55,11 +55,11 @@ public class Launcher {
 	private String JunhazIP = "142.157.65.31";
 	private String ZaidIP = "142.157.145.244";
 	private String BenIP = "142.157.58.216";
-	private String MatIP = "24.203.163.21";
+	private String MatIP = "142.157.63.60";
 	
 	private static Client client;
 	
-	private String ServerIP = BenIP;
+	private String ServerIP = MatIP;
 
 	int port = 8888;
 	User userOne = new User();
@@ -484,7 +484,7 @@ public class Launcher {
 	}
 	
 	public void showDeckGun() {
-		table.showDeckGunRequest();
+		//table.showDeckGunRequest();
 	}
 	
 //	public void gameRepainter() {
