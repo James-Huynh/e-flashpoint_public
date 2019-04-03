@@ -35,20 +35,6 @@ public class Drive extends Action {
 		APcost = 2;
 	}
 	
-//	public Drive(ParkingSpot parking, int direction) {
-//		APcost = 2;
-//		this.parking = parking;
-//		this.direction = direction;
-//	}	
-	
-//	public Drive(ParkingSpot parking, int direction, boolean moveWith) {
-//		APcost = 2;
-//		this.parking = parking;
-//		this.direction = direction;
-//		this.moveWith = moveWith;
-//		//this.moveWithWho = moveWithWho;
-//	}	
-	
 	public Drive(int i, int direction, boolean moveWith, boolean typeFlag) {
 		APcost = 2;
 		this.index = i;
@@ -57,7 +43,6 @@ public class Drive extends Action {
 		this.isAmbulance = typeFlag;
 		this.travellers = new HashSet<Firefighter>();
 	}	
-	
 	
 	public ActionList getTitle() {
     	return this.title;
@@ -69,7 +54,6 @@ public class Drive extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
         playingFirefighter.setAP(aP - this.APcost);
-        
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         
         ParkingSpot parking;
@@ -93,11 +77,9 @@ public class Drive extends Action {
     	        }
             }
         	
-        	
-        	
         	obtainTravellers(gs);
         	
-        	if (!travellers.isEmpty()) {  
+        	if (!travellers.isEmpty()) {  // with people
         		for (Firefighter f : travellers) {
         			int whichOne;
         			if (parking.getTiles()[0].equals(f.getCurrentPosition())){
@@ -112,7 +94,9 @@ public class Drive extends Action {
         		}
         	}
         }
-        else {             //normal driving
+        
+      //normal driving
+        else {
             int whichOne;
             if (parking.getTiles()[0].equals(currentPosition)){
             	whichOne = 0;
@@ -126,9 +110,6 @@ public class Drive extends Action {
     	        for (int i=0; i<4; i++) {
     	        	if (gs.getAmbulances()[i].equals(parking)) {
     	        		ParkingSpot nextAmbulance = gs.getAmbulances()[ (i+direction+4)%4 ];
-    	        		System.out.println("DUPA");
-    	        		System.out.println(nextAmbulance.getTiles()[0].getX());
-    	        		System.out.println(nextAmbulance.getTiles()[0].getY());
     	        		nextAmbulance.setCar(true);
     	        		parking.setCar(false);
     	        		target = nextAmbulance.getTiles()[whichOne];
@@ -154,7 +135,7 @@ public class Drive extends Action {
             
             if (!travellers.isEmpty()) {
             	for (Firefighter f : travellers) {
-            		if (f.getCurrentPosition().equals(currentPosition)){
+            		if (f.getCurrentPosition().equals(currentPosition)){ //the same tile as FF who does the action
             			f.getCurrentPosition().getFirefighterList().remove(f);
             			f.setCurrentPosition(target);
             			target.addToFirefighterList(f);
@@ -162,9 +143,10 @@ public class Drive extends Action {
             		else {
             			f.getCurrentPosition().getFirefighterList().remove(f);
             			for (Tile tt : target.getParkingSpot().getTiles()) {
-            				if (!tt.equals(target)) {
+            				if (!tt.equals(target)) { //tt is second tile!
             					f.setCurrentLocation(tt);
             					tt.addToFirefighterList(f);
+            					f.getCurrentPosition().getFirefighterList().remove(f);
             					break;
             				}
             			}
@@ -221,9 +203,6 @@ public class Drive extends Action {
 	        		nextEngine = gs.getEngines()[ (i+direction+4)%4 ];
 	        	}
 			}
-//			if(currentPosition.getParkingSpot().equals(parking) && aP >= APcost && !nextEngine.getCar()) { //One more check than above, why?
-//					flag = true;
-//			}
 			if(currentPosition.getParkingSpot() != null) {
 				if(currentPosition.getParkingSpot().equals(parking)) {
 					if(aP >= APcost && !nextEngine.getCar()) {
