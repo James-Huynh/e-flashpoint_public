@@ -144,15 +144,16 @@ public class Drive extends Action {
             			f.getCurrentPosition().getFirefighterList().remove(f);
             			for (Tile tt : target.getParkingSpot().getTiles()) {
             				if (!tt.equals(target)) { //tt is second tile!
+            					f.getCurrentPosition().getFirefighterList().remove(f);
             					f.setCurrentLocation(tt);
             					tt.addToFirefighterList(f);
-            					f.getCurrentPosition().getFirefighterList().remove(f);
             					break;
             				}
             			}
             		}
             	}
             }
+            System.out.println("hi");
             
         }
         
