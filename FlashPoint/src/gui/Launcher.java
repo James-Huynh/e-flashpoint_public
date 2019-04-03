@@ -459,6 +459,7 @@ public class Launcher {
 			clientManager.setEndTurnTrigger(false);
 		}
 		table.hideRidePanel();
+		table.hideDeckGunPanel();
 		table.refresh(clientManager.getUsersGameState());
 		if(table.getMyIndex() > 5) {
 			repaint(false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
@@ -466,7 +467,6 @@ public class Launcher {
 		} else {
 			repaint(clientManager.getUsersGameState().getFireFighterList().get(table.getMyIndex()).getCurrentPosition()==null, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		}
-		showDeckGun();
 	}
 	
 	public void showRideRequest() {
