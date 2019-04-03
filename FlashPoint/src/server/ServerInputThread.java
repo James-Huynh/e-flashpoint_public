@@ -17,6 +17,7 @@ import commons.util.Constants;
 import commons.util.MyDate;
 import game.GameState;
 import lobby.Lobby;
+import token.Vehicle;
 
 
 public class ServerInputThread extends Thread {
@@ -218,7 +219,13 @@ public class ServerInputThread extends Thread {
 				
 				if(requestObject.getAction().getTitle() == ActionList.Drive) {
 					System.out.println("hello we are riding");
-					serverManager.askRelevantFirefighters(requestObject.getCurrentState().getPlayingFirefighter().getCurrentPosition().getParkingType());
+					if(requestObject.getAction().isAmbulance()) {
+						serverManager.askRelevantFirefighters(Vehicle.Ambulance);
+					}
+					else {
+						serverManager.askRelevantFirefighters(Vehicle.Engine);
+					}
+					//serverManager.askRelevantFirefighters(requestObject.getCurrentState().getPlayingFirefighter().getCurrentPosition().getParkingType());
 					System.out.println("we have asked");
 					returnGameState = new TranObject<GameState>(TranObjectType.SENDRIDERECEIVED);
 					returnGameState.setObject(serverManager.getGameState());

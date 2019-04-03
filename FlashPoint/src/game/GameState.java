@@ -1099,7 +1099,7 @@ public class GameState implements Serializable {
 //	        }
 	        
 	        if(pair.getValue()[0].booleanValue() == true) { //For those whose shouldAsked is true
-	        	if(pair.getValue()[1].booleanValue() == false) { //If your hasResponded is still false, return false
+	        	if(pair.getValue()[2].booleanValue() == false) { //If your hasResponded is still false, return false
 	        		return false;	
 	        	}
 	        }
