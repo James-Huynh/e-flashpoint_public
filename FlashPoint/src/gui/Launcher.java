@@ -466,6 +466,7 @@ public class Launcher {
 		} else {
 			repaint(clientManager.getUsersGameState().getFireFighterList().get(table.getMyIndex()).getCurrentPosition()==null, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		}
+		showDeckGun();
 	}
 	
 	public void showRideRequest() {
@@ -480,6 +481,10 @@ public class Launcher {
 	public void showGameTermination() {
 		table.showGameTermination();
 		
+	}
+	
+	public void showDeckGun() {
+		table.showDeckGunRequest();
 	}
 	
 //	public void gameRepainter() {

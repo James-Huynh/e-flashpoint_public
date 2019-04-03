@@ -77,6 +77,7 @@ public class Table {
 		private Popup advFire;
 		private Popup gameTermination;
 		private Popup rideRequest;
+		private Popup deckGunRequest;
 		private static boolean placing = true;
 		private static boolean playing = true;
 		private static boolean selectingFireFighter = false;
@@ -89,6 +90,12 @@ public class Table {
 		private int desiredFFindex;
 		
 		private HashMap<Firefighter, Integer> firefighterOrder = new HashMap<Firefighter, Integer>();
+		
+		boolean redReRoll;
+		boolean blackReRoll; 
+		double redDice;
+		double blackDice;
+		
 		
 //		public Table(GameState inputBoard) {
 //			this.currentBoard = inputBoard;
@@ -116,6 +123,10 @@ public class Table {
 			this.listenerThread = myThread;
 			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
 			this.desiredFFindex = 0;
+			
+			this.redReRoll = false;
+			this.blackReRoll = false;
+			
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
 				firefighterOrder.put(f,i);
@@ -473,7 +484,7 @@ public class Table {
 				if(currentBoard.isExperienced()) {
 					int numHS = currentBoard.getHotSpot();
 					try {
-						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HOTSPOT_"+ num + ".gif"));
+						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HOTSPOT_"+ numHS + ".gif"));
 						add(new JLabel(new ImageIcon(POIimage)));	
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -4881,6 +4892,83 @@ public class Table {
 			
 		}	
 		
+		
+		public void showDeckGunRequest() {
+			rideRequest = null;
+			PopupFactory gameT = new PopupFactory();
+			JPanel gameTPanel = new JPanel(new BorderLayout());
+			JTextArea text = new JTextArea();
+			String deckGunPrompt = "The result of the die roll was red: "+ 1/*redDie */+  " black: " + 1/*blackDie */+ ". \nWould you like to reroll either dice?";
+			
+			text.setText(deckGunPrompt);
+			text.setLineWrap(true);
+			JPanel responsePanel = new JPanel();
+			responsePanel.setLayout(new GridLayout(3,1));
+			
+			if(true /*redReroll*/) {
+				JButton redButton = new JButton("Reroll Red Dice");
+				redButton.setPreferredSize(new Dimension(40,40));
+				redButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(rerollDice(1, null)) {
+							rideRequest.hide();
+							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						}
+					}
+
+				});
+				responsePanel.add(redButton);
+			}
+			
+			if(true /*blackReroll*/) {
+				JButton blackButton = new JButton("Reroll Black Dice");
+				blackButton.setPreferredSize(new Dimension(40,40));
+				blackButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(rerollDice(2, null)) {
+							rideRequest.hide();
+							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						}
+					}
+
+				});
+				responsePanel.add(blackButton);
+			}
+			
+			JButton noButton = new JButton("No");
+			noButton.setPreferredSize(new Dimension(75,75));
+			noButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					rerollDice(0, null);
+					rideRequest.hide();
+					rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+				}
+			});
+			responsePanel.add(noButton);
+			
+			
+			gameTPanel.setPreferredSize(new Dimension(300,300));
+			gameTPanel.setBackground(tileColorWhite);
+			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
+			gameTPanel.setBorder(blackline);
+			gameTPanel.add(text, BorderLayout.NORTH);
+			gameTPanel.add(responsePanel, BorderLayout.SOUTH);
+			
+			deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+			
+			deckGunRequest.show();
+		}
+		
+		public void hideDeckGunPanel() {
+			if(deckGunRequest != null) {
+				deckGunRequest.hide();
+			}
+			
+		}	
+		
 		public int getMyIndex() {
 			return this.myIndex;
 		}
@@ -4926,5 +5014,74 @@ public class Table {
 			return clientManager.sendRideResponse(b, i);
 		}
 		
+		private boolean fireDeckGun(actions.Action a) {
+			redDice = Math.random() * 6 + 1;
+			blackDice = Math.random() * 8 + 1;
+//			int quad = a.getQuadrant;
+//			if(!redDice in quad) {
+//				flip redDice;
+//			}
+//			if(!blackDice in quad) {
+//				flip blackDice;
+//			}
+			
+			if(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getSpeciality() == Speciality.DRIVER) {
+				redReRoll = true;
+				blackReRoll = true;
+			}
+			
+			
+			if(!redReRoll && !blackReRoll) {
+				sendActionRequest(a);
+				return true;
+			}
+			
+			showRideRequest();
+			
+			return true;
+		}
+		
+		private boolean rerollDice(int i, actions.Action a) {
+			redDice = Math.random() * 6 + 1;
+			blackDice = Math.random() * 8 + 1;
+//			int quad = a.getQuadrant;
+//			if(!redDice in quad) {
+//				flip redDice;
+//			}
+//			if(!blackDice in quad) {
+//				flip blackDice;
+//			}
+			switch(i) {
+			case 0:
+				redReRoll = false;
+				blackReRoll = false;
+				if(!redReRoll & !blackReRoll) {
+					sendActionRequest(a);
+				}
+				break;
+			case 1:
+				redDice = Math.random() * 6 + 1;
+//				if(!redDice in quad) {
+//					flip redDice;
+//				}
+				redReRoll = false;
+				if(!redReRoll & !blackReRoll) {
+					sendActionRequest(a);
+				}
+				break;
+			case 2:
+				blackDice = Math.random() * 8 + 1;
+//				if(!blackDice in quad) {
+//					flip blackDice;
+//				}
+				blackReRoll = false;
+				if(!redReRoll & !blackReRoll) {
+					sendActionRequest(a);
+				}
+				break;
+			}
+			
+			return true;
+		}
 		
 }
