@@ -40,6 +40,11 @@ public class FireGun extends Action {
 	public int[] getResult() {
 		return result;
 	}
+	
+	public void updateResult(int[] newCords) {
+		this.result[0] = newCords[0];
+		this.result[1] = newCords[1];
+	}
 
 	@Override
 	public void perform(GameState gs) {
