@@ -10,6 +10,7 @@ public class Dodge extends Move {
 	public Dodge(int direction) {
 		super(direction);
 		this.APcost = 1;
+		this.title = ActionList.Dodge;
 	}
 
 	@Override
