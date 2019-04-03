@@ -86,7 +86,7 @@ public abstract class Action implements Serializable {
 		return null;
 	}
 	
-	public void setResult() {
+	public void setResult(int[] coords) {
 		//Chillin'
 	}
 
