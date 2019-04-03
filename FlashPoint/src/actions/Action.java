@@ -81,5 +81,9 @@ public abstract class Action implements Serializable {
 	public Action getAction() {
 		return null;
 	}
+	
+	public int[] getResult() {
+		return null;
+	}
 
 }
