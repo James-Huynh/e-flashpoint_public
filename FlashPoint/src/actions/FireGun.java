@@ -85,6 +85,7 @@ public class FireGun extends Action {
 		if(playingFirefighter.getSpeciality() == Speciality.DRIVER ) {
 			driver = true;
 			APcost = 2;
+			result = rollDice(gs);
 		}
 		Tile currentPosition = playingFirefighter.getCurrentPosition();
 		ParkingSpot ps = gs.getEngines()[index];

@@ -3946,10 +3946,21 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					if(sendActionRequest(a)) {
-										System.out.println("this is the print that board is refreshing");
-
-									}
+			    					
+			    					if(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getSpeciality() == Speciality.DRIVER) {
+			    						int[] deckGun = a.getResult();
+			    						redDice = deckGun[0];
+			    						blackDice = deckGun[1];
+			    						redReRoll = true;
+			    						blackReRoll = true;
+			    						showDeckGunRequest(a);
+			    						//clientManager.getUsersGameState().getFireFighterList().get(myIndex).getCurrentPosition().getParkingSpot().getQuadrants();
+			    					} else {
+			    						if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+	
+										}
+			    					}
 			    					
 			    				}
 			    			});
@@ -4893,25 +4904,25 @@ public class Table {
 		}	
 		
 		
-		public void showDeckGunRequest() {
+		public void showDeckGunRequest(actions.Action a) {
 			rideRequest = null;
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel(new BorderLayout());
 			JTextArea text = new JTextArea();
-			String deckGunPrompt = "The result of the die roll was red: "+ 1/*redDie */+  " black: " + 1/*blackDie */+ ". \nWould you like to reroll either dice?";
+			String deckGunPrompt = "The result of the die roll was red: "+ redDice +  " black: " + blackDice + ". \nWould you like to reroll either dice?";
 			
 			text.setText(deckGunPrompt);
 			text.setLineWrap(true);
 			JPanel responsePanel = new JPanel();
 			responsePanel.setLayout(new GridLayout(3,1));
 			
-			if(true /*redReroll*/) {
+			if(redReRoll) {
 				JButton redButton = new JButton("Reroll Red Dice");
 				redButton.setPreferredSize(new Dimension(40,40));
 				redButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if(rerollDice(1, null)) {
+						if(rerollDice(1, a)) {
 							rideRequest.hide();
 							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
@@ -4921,13 +4932,13 @@ public class Table {
 				responsePanel.add(redButton);
 			}
 			
-			if(true /*blackReroll*/) {
+			if(blackReRoll) {
 				JButton blackButton = new JButton("Reroll Black Dice");
 				blackButton.setPreferredSize(new Dimension(40,40));
 				blackButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if(rerollDice(2, null)) {
+						if(rerollDice(2, a)) {
 							rideRequest.hide();
 							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
@@ -4942,7 +4953,7 @@ public class Table {
 			noButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					rerollDice(0, null);
+					rerollDice(0, a);
 					rideRequest.hide();
 					rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 				}
@@ -5015,15 +5026,9 @@ public class Table {
 		}
 		
 		private boolean fireDeckGun(actions.Action a) {
-			redDice = Math.random() * 6 + 1;
-			blackDice = Math.random() * 8 + 1;
-//			int quad = a.getQuadrant;
-//			if(!redDice in quad) {
-//				flip redDice;
-//			}
-//			if(!blackDice in quad) {
-//				flip blackDice;
-//			}
+//			redDice = Math.random() * 6 + 1;
+//			blackDice = Math.random() * 8 + 1;
+
 			
 			if(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getSpeciality() == Speciality.DRIVER) {
 				redReRoll = true;
@@ -5042,42 +5047,57 @@ public class Table {
 		}
 		
 		private boolean rerollDice(int i, actions.Action a) {
-			redDice = Math.random() * 6 + 1;
-			blackDice = Math.random() * 8 + 1;
-//			int quad = a.getQuadrant;
-//			if(!redDice in quad) {
-//				flip redDice;
-//			}
-//			if(!blackDice in quad) {
-//				flip blackDice;
-//			}
+			int[] quadCoords = clientManager.getUsersGameState().getPlayingFirefighter().getCurrentPosition().getCoords();
+			int xShift = 0;
+			int yShift = 0;
+			if(quadCoords[0] > 3) {
+				if(quadCoords[1] > 4) {
+					//quad 4
+					xShift = 3;
+					yShift = 4;
+				} else {
+					//quad 3
+					xShift = 3;
+				}
+			} else {
+				if(quadCoords[1] > 4) {
+					//quad 2
+					yShift = 4;
+				} else {
+					//quad 1
+				}
+			}
 			switch(i) {
 			case 0:
 				redReRoll = false;
 				blackReRoll = false;
 				if(!redReRoll & !blackReRoll) {
+					int[] update = {(int) redDice, (int) blackDice};
+					a.setResult(update);
 					sendActionRequest(a);
 				}
 				break;
 			case 1:
-				redDice = Math.random() * 6 + 1;
-//				if(!redDice in quad) {
-//					flip redDice;
-//				}
+				redDice = (int) Math.random() * 3 + 1;
+				redDice += xShift;
 				redReRoll = false;
 				if(!redReRoll & !blackReRoll) {
+					int[] update = {(int) redDice, (int) blackDice};
+					a.setResult(update);
 					sendActionRequest(a);
 				}
+				showDeckGunRequest(a);
 				break;
 			case 2:
-				blackDice = Math.random() * 8 + 1;
-//				if(!blackDice in quad) {
-//					flip blackDice;
-//				}
+				blackDice = (int) Math.random() * 4 + 1;
+				blackDice += yShift;
 				blackReRoll = false;
 				if(!redReRoll & !blackReRoll) {
+					int[] update = {(int) redDice, (int) blackDice};
+					a.setResult(update);
 					sendActionRequest(a);
 				}
+				showDeckGunRequest(a);
 				break;
 			}
 			
