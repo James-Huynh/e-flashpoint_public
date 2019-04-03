@@ -72,6 +72,7 @@ public class FireGun extends Action {
         		neighbour.setFire(0);
         	}
         }
+        System.out.println("DUPA FIRE GUN" + target.getX() + target.getY());
 	}
 	
 	//perform driver

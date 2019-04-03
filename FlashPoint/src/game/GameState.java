@@ -659,45 +659,50 @@ public class GameState implements Serializable {
 				//@matekrk assign Tiles to Engine spots (quadrants):
 				for (ParkingSpot e : engines) {
 					int[][] quadrantIndices = new int[12][2];
-					if (e.getTiles()[0].getCoords()[0] == 0) {
-						int ii=0;
-						for (int kk=1; kk<=4; kk++) {
-							for (int jj=4; jj<=6; jj++) {
-								 quadrantIndices[ii][0] = kk;
-								quadrantIndices[ii][1] = jj;
-								ii++;
-							}
-						}
-					}
 					
-					else if ((e.getTiles()[0].getCoords()[0] == 9)) {
+					//TOP
+					if (e.getTiles()[0].getCoords()[0] == 0) {
 						int ii=0;
 						for (int kk=5; kk<=8; kk++) {
 							for (int jj=1; jj<=3; jj++) {
-								quadrantIndices[ii][0] = kk;
-								quadrantIndices[ii][1] = jj;
+								 quadrantIndices[ii][0] = jj;
+								quadrantIndices[ii][1] = kk;
 								ii++;
 							}
 						}
 					}
 					
+					// RIGHT
+					else if ((e.getTiles()[0].getCoords()[1] == 9)) {
+						int ii=0;
+						for (int kk=5; kk<=8; kk++) {
+							for (int jj=4; jj<=6; jj++) {
+								quadrantIndices[ii][0] = jj;
+								quadrantIndices[ii][1] = kk;
+								ii++;
+							}
+						}
+					}
+					
+					// LEFT ENGINE
 					else if ((e.getTiles()[0].getCoords()[1] == 0)) {
 						int ii=0;
 						for (int kk=1; kk<=4; kk++) {
 							for (int jj=1; jj<=3; jj++) {
-								quadrantIndices[ii][0] = kk;
-								quadrantIndices[ii][1] = jj;
+								 quadrantIndices[ii][0] = jj;
+								quadrantIndices[ii][1] = kk;
 								ii++;
 							}
 						}
 					}
 					
-					else if ((e.getTiles()[0].getCoords()[1] == 7)) {
+					//BOTTOM
+					else if ((e.getTiles()[0].getCoords()[0] == 7)) {
 						int ii=0;
-						for (int kk=5; kk<=8; kk++) {
+						for (int kk=1; kk<=4; kk++) {
 							for (int jj=4; jj<=6; jj++) {
-								quadrantIndices[ii][0] = kk;
-								quadrantIndices[ii][1] = jj;
+								quadrantIndices[ii][0] = jj;
+								quadrantIndices[ii][1] = kk;
 								ii++;
 							}
 						}
