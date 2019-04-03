@@ -65,7 +65,7 @@ public class GameState implements Serializable {
 	protected ArrayList<Firefighter> freeFirefighters;
 	protected ArrayList<Hazmat> lostHazmat;
 	protected ArrayList<Hazmat> disposedHazmat;
-	protected HashMap<Firefighter, Boolean[]> rideMapper; //For Ride in Experienced Mode, [0] = should be asked, [1] = responded
+	protected HashMap<Firefighter, Boolean[]> rideMapper; //For Ride in Experienced Mode, [0] = should be asked, [1] = response, [2] = hasResponded
 	protected boolean inRideMode;
 
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
@@ -525,9 +525,10 @@ public class GameState implements Serializable {
 				this.listOfFirefighters.add(tempFirefighter);
 				if(this.isExperienced()) {
 //					this.rideMapper.put(tempFirefighter, false);
-					this.rideMapper.put(tempFirefighter, new Boolean[2]);
+					this.rideMapper.put(tempFirefighter, new Boolean[3]);
 					this.rideMapper.get(tempFirefighter)[0] = false;
 					this.rideMapper.get(tempFirefighter)[1] = false;
+					this.rideMapper.get(tempFirefighter)[2] = false;
 				}
 				
 			}
@@ -1059,7 +1060,6 @@ public class GameState implements Serializable {
 							for(Firefighter f: placedOn[j].getFirefighterList()) {
 								if( f != this.getPlayingFirefighter()) {
 //									rideMapper.put(f, true);
-									System.out.println("how many times are we doing this?" + i +"||"+ j);
 									rideMapper.get(f)[0] = true;
 								}
 							}
@@ -1092,8 +1092,14 @@ public class GameState implements Serializable {
 	    Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
-	        if(pair.getValue()[0].booleanValue() == true) {
-	        	if(pair.getValue()[1].booleanValue() == false) {
+//	        if(pair.getValue()[0].booleanValue() == true) {
+//	        	if(pair.getValue()[1].booleanValue() == false) {
+//	        		return false;	
+//	        	}
+//	        }
+	        
+	        if(pair.getValue()[0].booleanValue() == true) { //For those whose shouldAsked is true
+	        	if(pair.getValue()[1].booleanValue() == false) { //If your hasResponded is still false, return false
 	        		return false;	
 	        	}
 	        }
@@ -1105,9 +1111,10 @@ public class GameState implements Serializable {
 	public void resetHashMap() {
 		Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
+	        Map.Entry<Firefighter, Boolean[]> pair = it.next(); //Reset everything!
 	        pair.getValue()[0] = false;
 	        pair.getValue()[1] = false;
+	        pair.getValue()[2] = false;
 //	        it.remove();
 	    }
 	    this.inRideMode = false;
@@ -1142,10 +1149,13 @@ public class GameState implements Serializable {
 	//It needs to happens server side so everyone is updated, and not locally
 	public void setRideOption(boolean val, int myIndex) { //Index passed from Table 
 //		rideMapper.put(listOfFirefighters.get(myIndex), val); 
-		if(!val) {
-			rideMapper.get(listOfFirefighters.get(myIndex))[0] = false;
-		}
-		rideMapper.get(listOfFirefighters.get(myIndex))[1] = val;
+//		if(!val) {
+//			rideMapper.get(listOfFirefighters.get(myIndex))[0] = false;
+//		}
+//		rideMapper.get(listOfFirefighters.get(myIndex))[1] = val;
+		
+		rideMapper.get(listOfFirefighters.get(myIndex))[1] = val; //[1] = response so setting the response
+		rideMapper.get(listOfFirefighters.get(myIndex))[2] = true; //[2] = hasResponded, so set it to true
 	}
 	
 	public void setProposedDices() {
