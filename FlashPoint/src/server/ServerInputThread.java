@@ -253,7 +253,9 @@ public class ServerInputThread extends Thread {
 				
 				
 				serverManager.performAction(requestObject.getAction());
-				serverManager.resetHashMap();
+				if (requestObject.getAction().getTitle() == ActionList.Drive) {
+					serverManager.resetHashMap();
+				}
 				returnGameState = new TranObject<GameState>(TranObjectType.ACTIONSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
 				for (OutputThread onOut : map.getAll()) {

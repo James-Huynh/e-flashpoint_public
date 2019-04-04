@@ -212,6 +212,7 @@ public class ServerManager {
 		gameManager.setFirstAction(true);
 		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
 		gameState.getPlayingFirefighter().endOfTurn();
+		gameState.vicinity(gameState.getPlayingFirefighter());
 		
 	}
 	
