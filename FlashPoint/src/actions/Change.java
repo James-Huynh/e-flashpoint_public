@@ -33,6 +33,7 @@ public class Change extends Action {
 		gs.getFreeSpecialities().remove(toSpeciality);
 		gs.setFirefighterSpeciality(current, toSpeciality);
 		current.setAP(current.getAP()-this.APcost);
+		current.setUsedAP(true);
 	}
 
 	@Override
@@ -47,14 +48,10 @@ public class Change extends Action {
 //		}
 		//New one
 		if(current.getCurrentPosition().getParkingSpot() != null) {
-			System.out.println("Got i");
 			ParkingSpot p = current.getCurrentPosition().getParkingSpot();
 			if(p.getParkingType() == Vehicle.Engine && p.getCar() == true) {
-				System.out.println("Got in");
 				if(current.getAP() >= APcost) {
-					System.out.println("Got inner");
 					if (gs.getFreeSpecialities().contains(toSpeciality) || toSpeciality == (null)) {
-						System.out.println("Got innest");
 						flag = true;
 					}
 				}

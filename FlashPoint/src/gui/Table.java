@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -93,8 +94,9 @@ public class Table {
 		
 		boolean redReRoll;
 		boolean blackReRoll; 
-		double redDice;
-		double blackDice;
+		int redDice;
+		int blackDice;
+		Random ran;
 		
 		
 //		public Table(GameState inputBoard) {
@@ -126,6 +128,7 @@ public class Table {
 			
 			this.redReRoll = false;
 			this.blackReRoll = false;
+			this.ran = new Random();
 			
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
@@ -1054,27 +1057,136 @@ public class Table {
 					} else {
 						check = this.connectedTile.getFirefighterList().get(0);
 					}
-					if(check.getColour() == Colour.WHITE) {
-						builder = builder + "WHITE";
-					} else if(check.getColour() == Colour.BLUE) {
-						builder = builder + "BLUE";
-					}else if(check.getColour() == Colour.RED) {
-						builder = builder + "RED";
-					}else if(check.getColour() == Colour.BLACK) {
-						builder = builder + "BLACK";
-					}else if(check.getColour() == Colour.GREEN) {
-						builder = builder + "GREEN";
-					}else if(check.getColour() == Colour.PURPLE) {
-						builder = builder + "PURPLE";
+					
+					if(clientManager.getUsersGameState().isExperienced()) {
+						if(check.getSpeciality() == Speciality.CAFS) {
+							try {
+								builder = builder + "CAFS_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));	
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.CAPTAIN) {
+							try {
+								builder = builder + "CAPTAIN_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+						} else if(check.getSpeciality() == Speciality.DOG) {
+							try {
+								builder = builder + "DOG_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+						} else if(check.getSpeciality() == Speciality.DRIVER) {
+							try {
+								builder = builder + "DRIVER_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+						} else if(check.getSpeciality() == Speciality.GENERALIST) {
+							try {
+								builder = builder + "WHITE_FIREMAN_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+						} else if(check.getSpeciality() == Speciality.HAZMAT_TECHNICIAN) {
+							try {
+								builder = builder + "SHAZMAT_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.IMAGING_TECHNICIAN) {
+							try {
+								builder = builder + "IMAGING_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.PARAMEDIC) {
+							try {
+								builder = builder + "PARAMEDIC_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.RESCUE_SPECIALIST) {
+							try {
+								builder = builder + "RESCUE_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.VETERAN) {
+							try {
+								builder = builder + "VETEREN_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else {
+							try {
+								builder = builder + "GREEN_FIREMAN_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					} else {
+						if(check.getColour() == Colour.WHITE) {
+							builder = builder + "WHITE";
+						} else if(check.getColour() == Colour.BLUE) {
+							builder = builder + "BLUE";
+						}else if(check.getColour() == Colour.RED) {
+							builder = builder + "RED";
+						}else if(check.getColour() == Colour.BLACK) {
+							builder = builder + "BLACK";
+						}else if(check.getColour() == Colour.GREEN) {
+							builder = builder + "GREEN";
+						}else if(check.getColour() == Colour.PURPLE) {
+							builder = builder + "PURPLE";
+						}
+						try {
+							builder = builder + "_FIREMAN";
+							int numberFF = this.connectedTile.getFirefighterList().size();
+							final BufferedImage FFimage = ImageIO.read(new File(builder +"_"+ numberFF +".gif"));
+							add(new JLabel(new ImageIcon(FFimage)));	
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
-					try {
-						builder = builder + "_FIREMAN";
-						int numberFF = this.connectedTile.getFirefighterList().size();
-						final BufferedImage FFimage = ImageIO.read(new File(builder +"_"+ numberFF +".gif"));
-						add(new JLabel(new ImageIcon(FFimage)));	
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					
 				} else {
 					add(new JLabel());
 				}
@@ -1237,7 +1349,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 					    					}
 					    					
 					    				}
@@ -1252,7 +1363,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1266,7 +1376,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1280,7 +1389,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1296,7 +1404,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1310,7 +1417,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1324,7 +1430,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -3946,10 +4051,20 @@ public class Table {
 			    	        newAction.addActionListener(new ActionListener() {
 			    				@Override
 			    				public void actionPerformed(ActionEvent e) {
-			    					if(sendActionRequest(a)) {
-										System.out.println("this is the print that board is refreshing");
-
-									}
+			    					
+			    					if(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getSpeciality() == Speciality.DRIVER) {
+			    						int[] deckGun = a.getResult();
+			    						redDice = deckGun[0];
+			    						blackDice = deckGun[1];
+			    						redReRoll = true;
+			    						blackReRoll = true;
+			    						showDeckGunRequest(a);
+			    					} else {
+			    						if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+	
+										}
+			    					}
 			    					
 			    				}
 			    			});
@@ -4691,6 +4806,10 @@ public class Table {
 					JPopupMenu popupMenu = new JPopupMenu();
 					JMenu poiMenu = new JMenu("POIs");
 					JMenu firefighterMenu = new JMenu("Firefighters");
+					JMenuItem hazmatMenu = new JMenuItem("Hazmat");
+					JMenuItem hotSpotMenu = new JMenuItem("HotSpot");
+					JMenuItem ambulanceMenu = new JMenuItem("Ambulance");
+					JMenuItem engineMenu = new JMenuItem("Engine");
 					Tile myTile = currentBoard.returnTile(coords[0], coords[1]);
 			        String builder = "";
 			        JMenuItem info;
@@ -4708,13 +4827,43 @@ public class Table {
 						poiMenu.add(info);
 					}
 					for(Firefighter f: myTile.getFirefighterList()) {
-						builder = f.getOwner().getUserName() + ": " + f.getColour().toString() + " fireman.";
-						info = new JMenuItem(builder);
-						firefighterMenu.add(info);
-					}					
-			        popupMenu.add(poiMenu);
-			        popupMenu.addSeparator();
-			        popupMenu.add(firefighterMenu);
+						if(clientManager.getUsersGameState().isExperienced()) {
+							builder = f.getOwner().getUserName() + "    Speciality: " + f.getSpeciality().toString() + " AP: "+ f.getAP() + " SAP: " + f.getSavedAP();
+							info = new JMenuItem(builder);
+							firefighterMenu.add(info);
+						} else {
+							builder = f.getOwner().getUserName() + ": " + f.getColour().toString() + " fireman." + " AP: "+ f.getAP();
+							info = new JMenuItem(builder);
+							firefighterMenu.add(info);
+						}
+					}
+					if(myTile.containsPOI()) {
+						 popupMenu.add(poiMenu);
+					      popupMenu.addSeparator();
+					}
+					if(myTile.containsFirefighter()) {
+						 popupMenu.add(firefighterMenu);
+						 popupMenu.addSeparator();
+					}
+			        if(clientManager.getUsersGameState().isExperienced()) {
+			        	if(myTile.containsHazmat()) {
+			        		popupMenu.add(hazmatMenu);
+				        	popupMenu.addSeparator();
+			        	}
+			        	if(myTile.containsHotSpot()) {
+			        		popupMenu.add(hotSpotMenu);
+			        	}
+			        	if(myTile.getParkingSpot() != null) {
+			        		if(myTile.getParkingSpot().getCar()) {
+			        			if(myTile.getParkingType() == Vehicle.Ambulance) {
+			        				popupMenu.add(ambulanceMenu);
+			        			}
+			        			if(myTile.getParkingType() == Vehicle.Engine) {
+			        				popupMenu.add(engineMenu);
+			        			}
+			        		}
+			        	}
+			        }
 			        
 			        popupMenu.show(component, x, y);		// very important
 				}
@@ -4943,27 +5092,28 @@ public class Table {
 		}	
 		
 		
-		public void showDeckGunRequest() {
+		public void showDeckGunRequest(actions.Action a) {
 			rideRequest = null;
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel(new BorderLayout());
 			JTextArea text = new JTextArea();
-			String deckGunPrompt = "The result of the die roll was red: "+ 1/*redDie */+  " black: " + 1/*blackDie */+ ". \nWould you like to reroll either dice?";
+			String deckGunPrompt = "The result of the die roll was red: "+ redDice +  " black: " + blackDice + ". \nWould you like to reroll either dice?";
 			
 			text.setText(deckGunPrompt);
 			text.setLineWrap(true);
 			JPanel responsePanel = new JPanel();
 			responsePanel.setLayout(new GridLayout(3,1));
 			
-			if(true /*redReroll*/) {
+			if(redReRoll) {
 				JButton redButton = new JButton("Reroll Red Dice");
 				redButton.setPreferredSize(new Dimension(40,40));
 				redButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if(rerollDice(1, null)) {
-							rideRequest.hide();
-							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						deckGunRequest.hide();
+						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						if(rerollDice(1, a)) {
+//							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 
@@ -4971,15 +5121,16 @@ public class Table {
 				responsePanel.add(redButton);
 			}
 			
-			if(true /*blackReroll*/) {
+			if(blackReRoll) {
 				JButton blackButton = new JButton("Reroll Black Dice");
 				blackButton.setPreferredSize(new Dimension(40,40));
 				blackButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if(rerollDice(2, null)) {
-							rideRequest.hide();
-							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						deckGunRequest.hide();
+						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						if(rerollDice(2, a)) {
+//							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 
@@ -4992,9 +5143,11 @@ public class Table {
 			noButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					rerollDice(0, null);
-					rideRequest.hide();
-					rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+					deckGunRequest.hide();
+					deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+					if(rerollDice(0, a)) {
+//						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+					}
 				}
 			});
 			responsePanel.add(noButton);
@@ -5065,15 +5218,9 @@ public class Table {
 		}
 		
 		private boolean fireDeckGun(actions.Action a) {
-			redDice = Math.random() * 6 + 1;
-			blackDice = Math.random() * 8 + 1;
-//			int quad = a.getQuadrant;
-//			if(!redDice in quad) {
-//				flip redDice;
-//			}
-//			if(!blackDice in quad) {
-//				flip blackDice;
-//			}
+//			redDice = Math.random() * 6 + 1;
+//			blackDice = Math.random() * 8 + 1;
+
 			
 			if(clientManager.getUsersGameState().getFireFighterList().get(myIndex).getSpeciality() == Speciality.DRIVER) {
 				redReRoll = true;
@@ -5092,42 +5239,65 @@ public class Table {
 		}
 		
 		private boolean rerollDice(int i, actions.Action a) {
-			redDice = Math.random() * 6 + 1;
-			blackDice = Math.random() * 8 + 1;
-//			int quad = a.getQuadrant;
-//			if(!redDice in quad) {
-//				flip redDice;
-//			}
-//			if(!blackDice in quad) {
-//				flip blackDice;
-//			}
+			int[] quadCoords = clientManager.getUsersGameState().getPlayingFirefighter().getCurrentPosition().getCoords();
+			int xShift = 0;
+			int yShift = 0;
+			System.out.println("init: red die" + redDice + " black die " + blackDice);
+			if(quadCoords[0] > 3) {
+				if(quadCoords[1] > 4) {
+					//quad 4
+					System.out.println("quad4");
+					xShift = 3;
+					yShift = 4;
+				} else {
+					//quad 3
+					xShift = 3;
+					System.out.println("quad3");
+				}
+			} else {
+				if(quadCoords[1] > 4) {
+					//quad 2
+					yShift = 4;
+					System.out.println("quad2");
+				} else {
+					//quad 1
+					System.out.println("quad1");
+				}
+			}
 			switch(i) {
 			case 0:
 				redReRoll = false;
 				blackReRoll = false;
 				if(!redReRoll & !blackReRoll) {
+					int[] update = {(int) redDice, (int) blackDice};
+					a.setResult(update);
 					sendActionRequest(a);
 				}
 				break;
 			case 1:
-				redDice = Math.random() * 6 + 1;
-//				if(!redDice in quad) {
-//					flip redDice;
-//				}
+				redDice = (int) (Math.random() * 3.0 + 1);
+				redDice += xShift;
 				redReRoll = false;
 				if(!redReRoll & !blackReRoll) {
+					int[] update = {(int) redDice, (int) blackDice};
+					a.setResult(update);
 					sendActionRequest(a);
+				} else {
+					showDeckGunRequest(a);
 				}
 				break;
 			case 2:
-				blackDice = Math.random() * 8 + 1;
-//				if(!blackDice in quad) {
-//					flip blackDice;
-//				}
+				blackDice = (int) (Math.random() * 4.0 + 1);
+				blackDice += yShift;
 				blackReRoll = false;
 				if(!redReRoll & !blackReRoll) {
+					int[] update = {(int) redDice, (int) blackDice};
+					a.setResult(update);
 					sendActionRequest(a);
+				} else {
+					showDeckGunRequest(a);
 				}
+				
 				break;
 			}
 			

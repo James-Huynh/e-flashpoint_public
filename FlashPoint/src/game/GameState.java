@@ -65,7 +65,7 @@ public class GameState implements Serializable {
 	protected ArrayList<Firefighter> freeFirefighters;
 	protected ArrayList<Hazmat> lostHazmat;
 	protected ArrayList<Hazmat> disposedHazmat;
-	protected HashMap<Firefighter, Boolean[]> rideMapper; //For Ride in Experienced Mode, [0] = should be asked, [1] = responded
+	protected HashMap<Firefighter, Boolean[]> rideMapper; //For Ride in Experienced Mode, [0] = should be asked, [1] = response, [2] = hasResponded
 	protected boolean inRideMode;
 
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
@@ -525,9 +525,10 @@ public class GameState implements Serializable {
 				this.listOfFirefighters.add(tempFirefighter);
 				if(this.isExperienced()) {
 //					this.rideMapper.put(tempFirefighter, false);
-					this.rideMapper.put(tempFirefighter, new Boolean[2]);
+					this.rideMapper.put(tempFirefighter, new Boolean[3]);
 					this.rideMapper.get(tempFirefighter)[0] = false;
 					this.rideMapper.get(tempFirefighter)[1] = false;
+					this.rideMapper.get(tempFirefighter)[2] = false;
 				}
 				
 			}
@@ -658,45 +659,50 @@ public class GameState implements Serializable {
 				//@matekrk assign Tiles to Engine spots (quadrants):
 				for (ParkingSpot e : engines) {
 					int[][] quadrantIndices = new int[12][2];
-					if (e.getTiles()[0].getCoords()[0] == 0) {
-						int ii=0;
-						for (int kk=1; kk<=4; kk++) {
-							for (int jj=4; jj<=6; jj++) {
-								 quadrantIndices[ii][0] = kk;
-								quadrantIndices[ii][1] = jj;
-								ii++;
-							}
-						}
-					}
 					
-					else if ((e.getTiles()[0].getCoords()[0] == 9)) {
+					//TOP
+					if (e.getTiles()[0].getCoords()[0] == 0) {
 						int ii=0;
 						for (int kk=5; kk<=8; kk++) {
 							for (int jj=1; jj<=3; jj++) {
-								quadrantIndices[ii][0] = kk;
-								quadrantIndices[ii][1] = jj;
+								 quadrantIndices[ii][0] = jj;
+								quadrantIndices[ii][1] = kk;
 								ii++;
 							}
 						}
 					}
 					
+					// RIGHT
+					else if ((e.getTiles()[0].getCoords()[1] == 9)) {
+						int ii=0;
+						for (int kk=5; kk<=8; kk++) {
+							for (int jj=4; jj<=6; jj++) {
+								quadrantIndices[ii][0] = jj;
+								quadrantIndices[ii][1] = kk;
+								ii++;
+							}
+						}
+					}
+					
+					// LEFT ENGINE
 					else if ((e.getTiles()[0].getCoords()[1] == 0)) {
 						int ii=0;
 						for (int kk=1; kk<=4; kk++) {
 							for (int jj=1; jj<=3; jj++) {
-								quadrantIndices[ii][0] = kk;
-								quadrantIndices[ii][1] = jj;
+								 quadrantIndices[ii][0] = jj;
+								quadrantIndices[ii][1] = kk;
 								ii++;
 							}
 						}
 					}
 					
-					else if ((e.getTiles()[0].getCoords()[1] == 7)) {
+					//BOTTOM
+					else if ((e.getTiles()[0].getCoords()[0] == 7)) {
 						int ii=0;
-						for (int kk=5; kk<=8; kk++) {
+						for (int kk=1; kk<=4; kk++) {
 							for (int jj=4; jj<=6; jj++) {
-								quadrantIndices[ii][0] = kk;
-								quadrantIndices[ii][1] = jj;
+								quadrantIndices[ii][0] = jj;
+								quadrantIndices[ii][1] = kk;
 								ii++;
 							}
 						}
@@ -915,8 +921,8 @@ public class GameState implements Serializable {
 	 * Available ACTIONS
 	 */
 
-	boolean containsAvailableActions(GameState a) {
-		return a.getAvailableActions().contains(a);
+	boolean containsAvailableActions(Action a) {
+		return getAvailableActions().contains(a);
 	}
 
 	int sizeOfAvailableActions(GameState a) {
@@ -1048,7 +1054,8 @@ public class GameState implements Serializable {
 	}
 	
 	//so this method put all relevant FF to the map right? when we change if they don't want to ride?
-	public void createFFToAsk(Vehicle type) {
+	public boolean createFFToAsk(Vehicle type) {
+		boolean flag = false;
 		this.inRideMode = true;
 		if(type == Vehicle.Ambulance) {
 			for(int i=0;i<ambulances.length;i++) {
@@ -1057,10 +1064,10 @@ public class GameState implements Serializable {
 					for(int j=0;j<placedOn.length;j++) {
 						if(placedOn[j].containsFirefighter()) {
 							for(Firefighter f: placedOn[j].getFirefighterList()) {
-								if( f != this.getPlayingFirefighter()) {
+								if( f != this.getPlayingFirefighter() && f.getSpeciality() != Speciality.DOG) {
 //									rideMapper.put(f, true);
-									System.out.println("how many times are we doing this?" + i +"||"+ j);
 									rideMapper.get(f)[0] = true;
+									flag = true;
 								}
 							}
 						}
@@ -1078,6 +1085,7 @@ public class GameState implements Serializable {
 								if( f != this.getPlayingFirefighter()) {
 	//								rideMapper.put(f, true);
 									rideMapper.get(f)[0] = true;
+									flag = true;
 								}
 							}
 						}
@@ -1085,15 +1093,21 @@ public class GameState implements Serializable {
 				}
 			}
 		}
-		System.out.println("we have reached the end of the ask");
+		return flag;
 	}
 	
 	public boolean hasEveryoneResponded() {
 	    Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
-	        if(pair.getValue()[0].booleanValue() == true) {
-	        	if(pair.getValue()[1].booleanValue() == false) {
+//	        if(pair.getValue()[0].booleanValue() == true) {
+//	        	if(pair.getValue()[1].booleanValue() == false) {
+//	        		return false;	
+//	        	}
+//	        }
+	        
+	        if(pair.getValue()[0].booleanValue() == true) { //For those whose shouldAsked is true
+	        	if(pair.getValue()[2].booleanValue() == false) { //If your hasResponded is still false, return false
 	        		return false;	
 	        	}
 	        }
@@ -1105,9 +1119,10 @@ public class GameState implements Serializable {
 	public void resetHashMap() {
 		Iterator<Entry<Firefighter, Boolean[]>> it = rideMapper.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry<Firefighter, Boolean[]> pair = it.next();
+	        Map.Entry<Firefighter, Boolean[]> pair = it.next(); //Reset everything!
 	        pair.getValue()[0] = false;
 	        pair.getValue()[1] = false;
+	        pair.getValue()[2] = false;
 //	        it.remove();
 	    }
 	    this.inRideMode = false;
@@ -1142,10 +1157,13 @@ public class GameState implements Serializable {
 	//It needs to happens server side so everyone is updated, and not locally
 	public void setRideOption(boolean val, int myIndex) { //Index passed from Table 
 //		rideMapper.put(listOfFirefighters.get(myIndex), val); 
-		if(!val) {
-			rideMapper.get(listOfFirefighters.get(myIndex))[0] = false;
-		}
-		rideMapper.get(listOfFirefighters.get(myIndex))[1] = val;
+//		if(!val) {
+//			rideMapper.get(listOfFirefighters.get(myIndex))[0] = false;
+//		}
+//		rideMapper.get(listOfFirefighters.get(myIndex))[1] = val;
+		
+		rideMapper.get(listOfFirefighters.get(myIndex))[1] = val; //[1] = response so setting the response
+		rideMapper.get(listOfFirefighters.get(myIndex))[2] = true; //[2] = hasResponded, so set it to true
 	}
 	
 	public void setProposedDices() {
@@ -1170,6 +1188,130 @@ public class GameState implements Serializable {
 	
 	public int[] getProposedDices() {
 		return this.proposedDices;
+	}
+	
+	//vicinity, all check held on gamestate
+	public void vicinity(Firefighter f) {
+		if (this.getFreeSpecialities().contains(Speciality.VETERAN)) {
+			return;
+		}
+		
+		Firefighter vet = null;
+		for (Firefighter g : getFireFighterList()) {
+			if (g.getSpeciality() == Speciality.VETERAN) {
+				vet = g;
+			}
+		}
+		
+		boolean flag = false;
+		
+		/* STRAIGHT FORWARD
+		if (f.getCurrentPosition().equals(vet.getCurrentPosition())) {
+			flag = true;
+		}
+		else {
+			for (int i=0; i<4; i++) {
+				if (getNeighbour(f.getCurrentPosition(),i).equals(vet.getCurrentPosition())) {
+					flag = true;
+					break;
+				}
+			}
+			
+			//moving 3 spaces not bloked by door or smoked or fire
+			if (!flag) {
+				//see below
+			}
+		}
+		*/	
+		
+		//now smarter
+		int posX = f.getCurrentPosition().getX();
+		int posY = f.getCurrentPosition().getY();
+		int vetX = vet.getCurrentPosition().getX();
+		int vetY = vet.getCurrentPosition().getY();
+		if (Math.abs(posX-vetX) + Math.abs(posY-vetY) <= 1) {
+			flag = true;
+		}
+		
+		else if (Math.abs(posX-vetX) + Math.abs(posY-vetY) <= 3) {
+			ArrayList<Tile> path = new ArrayList<Tile>();
+			
+			for (int i1=0; i1<4; i1++) { // first level DFS
+				Tile t1 = getNeighbour(path.get(path.size()-1), i1);
+				if (t1 != null) {
+					if (path.get(path.size()-1).getEdge(i1).isBlank() || 
+							(path.get(path.size()-1).getEdge(i1).isDoor() && 
+									(path.get(path.size()-1).getEdge(i1).getStatus() || path.get(path.size()-1).getEdge(i1).isDestroyed() ) ) ) {
+						path.add(t1);
+						if (t1.equals(vet.getCurrentPosition())) {
+							flag = true;
+						}
+						else {
+							//DFS keep going
+							for (int i2=0; i2<4; i2++) {
+								if ((i2+4+2)%4 == i1) {
+									continue; //prevents going back, exploration
+								}
+								Tile t2 = getNeighbour(path.get(path.size()-1), i2);
+								if (t2 != null) {
+									if (path.get(path.size()-1).getEdge(i2).isBlank() || 
+											(path.get(path.size()-1).getEdge(i2).isDoor() && 
+													(path.get(path.size()-1).getEdge(i2).getStatus() || path.get(path.size()-1).getEdge(i2).isDestroyed() ) ) ) {
+										path.add(t2);
+										if (t2.equals(vet.getCurrentPosition())) {
+											flag = true;
+										}
+										else {
+											//DFS keep going - last one
+											for (int i3=0; i3<4; i3++) {
+												if ((i3+4+2)%4 == i2) {
+													continue; //only new exploration
+												}
+												Tile t3 = getNeighbour(t2, i3);
+												if (t3 != null) {
+													if (path.get(path.size()-1).getEdge(i3).isBlank() || 
+															(path.get(path.size()-1).getEdge(i3).isDoor() && 
+																	(path.get(path.size()-1).getEdge(i3).getStatus() || path.get(path.size()-1).getEdge(i3).isDestroyed() ) ) ) {
+														path.add(t2);
+														if (t2.equals(vet.getCurrentPosition())) {
+															flag = true;
+														}
+													}
+													else {
+														continue;
+													}
+												}
+												else {
+													continue;
+												}
+											}
+										}
+									}
+									else {
+										continue;
+									}
+								}
+								else {
+									continue;
+								}
+							}
+						}
+					}
+					else {
+						continue;
+					}
+				}
+				else {
+					continue;
+				}
+			}
+		}
+		
+		// if vinicity
+		if (flag) {
+			f.setCanDodge(true);
+			f.setAP(f.getAP() + 1);
+		}
 	}
 	
 	/*

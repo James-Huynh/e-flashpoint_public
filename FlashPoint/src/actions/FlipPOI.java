@@ -28,6 +28,7 @@ public class FlipPOI extends Action {
 	@Override
 	public void perform(GameState gs) {
 		gs.getPlayingFirefighter().setAP(gs.getPlayingFirefighter().getAP() - APcost);
+		gs.getPlayingFirefighter().setUsedAP(true);
 		POI victim = gs.returnTile(tileLocation[0], tileLocation[1]).getPoiList().get(0);
 		if (victim.isVictim()) {
 			System.out.println("Revealing victim");

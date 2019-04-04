@@ -123,13 +123,16 @@ public class Extinguish extends Action {
         		int difference = APcost - playingFirefighter.getSP();
         		playingFirefighter.setSP(0);
         		playingFirefighter.setAP(playingFirefighter.getAP() - difference);
+        		playingFirefighter.setUsedAP(true);
         	}
         	else {
         		playingFirefighter.setAP(aP - this.APcost);
+        		playingFirefighter.setUsedAP(true);
         	}
         }
         else {
         	playingFirefighter.setAP(aP - this.APcost);
+        	playingFirefighter.setUsedAP(true);
         }
         
         Tile currentPosition = playingFirefighter.getCurrentPosition();

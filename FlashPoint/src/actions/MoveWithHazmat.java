@@ -27,7 +27,6 @@ public class MoveWithHazmat extends Move {
 	public void perform(GameState gs) {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
 		int aP = playingFirefighter.getAP();
-		playingFirefighter.setAP(aP - APcost);
 		
 		Tile currentPosition = playingFirefighter.getCurrentPosition();
 		Tile neighbour = gs.getNeighbour(currentPosition, direction);

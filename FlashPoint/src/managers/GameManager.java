@@ -354,7 +354,7 @@ public class GameManager {
     	Speciality speciality = inTurn.getSpeciality();
 //    	//OK methods as default & with existing Action logic :- Chop, Move, Extinguish, Handle, MoveWithHazmat
 //    	
-//    	//Drive && fireGun!
+//    	//Drive 
     	for (int dir : new int[]{-1,1} ) {  
     		for(int i=0;i<gs.getAmbulances().length;i++) {
     			if (gs.getAmbulances()[i].getCar()) {
@@ -367,11 +367,16 @@ public class GameManager {
     		for(int i=0;i<gs.getEngines().length;i++) {
     			if (gs.getEngines()[i].getCar()) {
     				allPossibleActions.add(new Drive(i, dir, true, false));
-    				allPossibleActions.add(new FireGun(i));
     			}
     		}
     	}
     	
+    	//&& fireGun!
+    	for(int i=0;i<gs.getEngines().length;i++) {
+			if (gs.getEngines()[i].getCar()) {
+				allPossibleActions.add(new FireGun(i));
+			}
+		}
 
 
 //		
@@ -399,7 +404,6 @@ public class GameManager {
 		for(int i=0;i<gs.getFireFighterList().size();i++) {
 			if (i != gs.getActiveFireFighterIndex()) {
 				for (int dir : new int[]{0,1,2,3} ) {
-					System.out.println("in the loop");
 					allPossibleActions.add(new Command(i, new Move(dir)));
 					allPossibleActions.add(new Command(i, new MoveWithVictim(dir)));
 					allPossibleActions.add(new Command(i, new MoveWithHazmat(dir)));
@@ -646,6 +650,7 @@ public class GameManager {
     		if(targetTile.getFire() == 2 && targetTile.containsHazmat()) {
     			while(targetTile.containsHazmat()) {
     				Hazmat temp = targetTile.popHazmat();
+    				gs.addLostHazmat(temp);
     				recentAdvFire += "hazmat explosion caused at:  " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1] +"\n";
     				explosion(targetTile);
     			}
@@ -712,7 +717,7 @@ public class GameManager {
     						
     				Tile target = respawnTile.getTiles()[tile];
     				
-    				tempFire.updateLocation(respawnTile);
+    				tempFire.setCurrentLocation(target);
     				target.addToFirefighterList(tempFire);
     				recentAdvFire += "Firefighter knocked down at tile " + coords[0] + "," + coords[1] + ".\n";
     				

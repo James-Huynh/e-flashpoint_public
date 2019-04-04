@@ -92,24 +92,52 @@ public class ServerManager {
 			if(!gameState.isExperienced()) {
 				gameState.setActiveFireFighterIndex(0);
 				generateActions();
+			} else {
+				for(int i = 0; i < 4; i++) {
+					if(gameState.getAmbulances()[i].getCar()) {
+						for(int j = 0; j<4; j++) {
+							if(gameState.getEngines()[j].getCar()) {
+								gameState.setActiveFireFighterIndex(0);
+								generateActions();
+							}
+						}
+					}
+				}
 			}
 		}
 	}
 	
 	public void placeVehicle(int direction, Vehicle type) {
+		boolean f1 = true;
 		if(type.equals(Vehicle.Ambulance)) {
-			gameState.getAmbulances()[direction].setCar(true);
+			for(int i = 0; i < 4; i++) {
+				if(gameState.getAmbulances()[i].getCar()) {
+					f1 = false;
+				}
+			}
+			if(f1) {
+				gameState.getAmbulances()[direction].setCar(true);
+			}
 		}
 		else if(type.equals(Vehicle.Engine)) {
-			gameState.getEngines()[direction].setCar(true);
+			for(int j = 0; j<4; j++) {
+				if(gameState.getEngines()[j].getCar()) {
+					f1 = false;
+				}
+			}
+			if(f1) {
+				gameState.getEngines()[direction].setCar(true);
+			}
 		}
 		
 		for(int i = 0; i < 4; i++) {
 			if(gameState.getAmbulances()[i].getCar()) {
 				for(int j = 0; j<4; j++) {
 					if(gameState.getEngines()[j].getCar()) {
-						gameState.setActiveFireFighterIndex(0);
-						generateActions();
+						if(placedFF == gameState.getFireFighterList().size()) {
+							gameState.setActiveFireFighterIndex(0);
+							generateActions();
+						}
 					}
 				}
 			}
@@ -144,7 +172,6 @@ public class ServerManager {
 	public void setLobby(Lobby newLobby) {
 		this.activeLobby = newLobby;
 		this.currentLobbies.add(this.activeLobby);
-		System.out.println(this.currentLobbies.size());
 	}
 	
 	public Player getPlayer(Integer inputInteger) {
@@ -160,15 +187,16 @@ public class ServerManager {
 	}
 
 	public ArrayList<Lobby> getLobbyList() {
-		System.out.println(this.currentLobbies.size());
 		return this.currentLobbies;
 	}
 
 	public void endTurn() {
 		Firefighter currentOne = gameState.getPlayingFirefighter();
-		currentOne.endOfTurn();
+		//currentOne.endOfTurn(); // cannot be any longer here - bc of dodge
 		advanceFire();
+		System.out.println("endturn over");
 		if(gameState.isGameTerminated() || gameState.isGameWon()) {
+			//@matekrk! here should be pop-in window so something like gameState.setEndString(gameManager.getAdvEndMessage)
 			setFFNextTurn();
 			generateActions();
 		} 
@@ -183,6 +211,7 @@ public class ServerManager {
 	public void setFFNextTurn() {
 		gameManager.setFirstAction(true);
 		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
+		gameState.getPlayingFirefighter().endOfTurn();
 		
 	}
 	
@@ -191,9 +220,8 @@ public class ServerManager {
 		gameState.setAdvFireString(gameManager.getAdvFireMessage());
 	}
 	
-	public void askRelevantFirefighters(Vehicle type) {
-		System.out.println("we are in the ask");
-		gameState.createFFToAsk(type);
+	public boolean askRelevantFirefighters(Vehicle type) {
+		return gameState.createFFToAsk(type);
 	}
 	
 	public boolean hasEveryoneResponded() {

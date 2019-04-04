@@ -54,6 +54,7 @@ public class Drive extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
         playingFirefighter.setAP(aP - this.APcost);
+        playingFirefighter.setUsedAP(true);
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         
         ParkingSpot parking;
@@ -66,16 +67,9 @@ public class Drive extends Action {
         
         //calling ambulance
         if (!moveWith) {
-        	ParkingSpot nextAmbulance = null;
-        	if (parking.getParkingType() == Vehicle.Ambulance) { //always (assure)
-    	        for (int i=0; i<4; i++) {
-    	        	if (gs.getAmbulances()[i].equals(parking)) {
-    	        		nextAmbulance = gs.getAmbulances()[ (i+direction+4)%4 ];
-    	        		nextAmbulance.setCar(true);
-    	        		parking.setCar(false);
-    	        	}
-    	        }
-            }
+        	ParkingSpot nextAmbulance = gs.getAmbulances()[ (index+direction+4)%4 ];
+    	    nextAmbulance.setCar(true);
+    	    parking.setCar(false);
         	
         	obtainTravellers(gs);
         	
@@ -91,6 +85,9 @@ public class Drive extends Action {
         			f.getCurrentPosition().getFirefighterList().remove(f);
         			f.setCurrentLocation(nextAmbulance.getTiles()[whichOne]);
         			nextAmbulance.getTiles()[whichOne].addToFirefighterList(f);
+        			if (!f.getCanDodge()) {
+        	        	gs.vicinity(f);
+        	        }
         		}
         	}
         }
@@ -117,19 +114,18 @@ public class Drive extends Action {
     	        }
             }
             else {
-            	for (int i=0; i<4; i++) {
-    	        	if (gs.getEngines()[i].equals(parking)) {
-    	        		ParkingSpot nextEngine = gs.getEngines()[ (i+direction+4)%4 ];
-    	        		target = nextEngine.getTiles()[whichOne];
-    	        		nextEngine.setCar(true);
-    	        		parking.setCar(false);
-    	        		target = nextEngine.getTiles()[whichOne];
-    	        	}
-    	        }
+        		ParkingSpot nextEngine = gs.getEngines()[ (index+direction+4)%4 ];
+        		target = nextEngine.getTiles()[whichOne];
+        		nextEngine.setCar(true);
+        		parking.setCar(false);
+        		target = nextEngine.getTiles()[whichOne];
             }
             currentPosition.getFirefighterList().remove(playingFirefighter);
             playingFirefighter.setCurrentLocation(target);
             target.addToFirefighterList(playingFirefighter);
+            if (!playingFirefighter.getCanDodge()) {
+            	gs.vicinity(playingFirefighter);
+            }
             
             obtainTravellers(gs);
             
@@ -139,14 +135,20 @@ public class Drive extends Action {
             			f.getCurrentPosition().getFirefighterList().remove(f);
             			f.setCurrentPosition(target);
             			target.addToFirefighterList(f);
+            			if (!f.getCanDodge()) {
+            	        	gs.vicinity(f);
+            	        }
             		}
             		else {
             			f.getCurrentPosition().getFirefighterList().remove(f);
             			for (Tile tt : target.getParkingSpot().getTiles()) {
             				if (!tt.equals(target)) { //tt is second tile!
+            					f.getCurrentPosition().getFirefighterList().remove(f);
             					f.setCurrentLocation(tt);
             					tt.addToFirefighterList(f);
-            					f.getCurrentPosition().getFirefighterList().remove(f);
+            					if (!f.getCanDodge()) {
+                    	        	gs.vicinity(f);
+                    	        }
             					break;
             				}
             			}

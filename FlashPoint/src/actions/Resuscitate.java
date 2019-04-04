@@ -41,6 +41,7 @@ public class Resuscitate extends Action{
         int aP = playingFirefighter.getAP();
 //		victim.setResuscitate(playingFirefighter);
 		playingFirefighter.setAP(aP - APcost);
+		playingFirefighter.setUsedAP(true);
 //		playingFirefighter.setFollow(victim);
 		playingFirefighter.getCurrentPosition().getPoiList().get(index).heal();
 	}

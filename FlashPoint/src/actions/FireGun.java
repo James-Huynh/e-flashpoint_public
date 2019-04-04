@@ -40,12 +40,18 @@ public class FireGun extends Action {
 	public int[] getResult() {
 		return result;
 	}
+	
+	public void setResult(int[] newCords) {
+		this.result[0] = newCords[0];
+		this.result[1] = newCords[1];
+	}
 
 	@Override
 	public void perform(GameState gs) {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
         playingFirefighter.setAP(aP - this.APcost);
+        playingFirefighter.setUsedAP(true);
         
         Tile target;
         if (driver) {
@@ -67,6 +73,7 @@ public class FireGun extends Action {
         		neighbour.setFire(0);
         	}
         }
+        System.out.println("DUPA FIRE GUN" + target.getX() + target.getY());
 	}
 	
 	//perform driver
@@ -80,13 +87,14 @@ public class FireGun extends Action {
 		if(playingFirefighter.getSpeciality() == Speciality.DRIVER ) {
 			driver = true;
 			APcost = 2;
+			result = rollDice(gs);
 		}
 		Tile currentPosition = playingFirefighter.getCurrentPosition();
 		ParkingSpot ps = gs.getEngines()[index];
 		if (currentPosition.getParkingSpot() != null && currentPosition.getParkingSpot().equals(ps) && 
 				currentPosition.getParkingSpot().getParkingType() == (Vehicle.Engine) && //unnecessary but assertion
 				currentPosition.getParkingSpot().getCar() == true) {
-			if (playingFirefighter.getAP() >= APcost && noOne(gs)) {
+			if (playingFirefighter.getAP() >= APcost && noOne(gs)) { // at least not now and not in that form
 				flag = true;
 			}
 		}
@@ -102,6 +110,17 @@ public class FireGun extends Action {
 			}
 		}
 		return true;
+	}
+	
+	public boolean firePresent(GameState gs) {
+		boolean flag = false;
+		int[][] quadrantIndices = gs.getEngines()[index].getQuadrants();
+		for(int i=0;i<quadrantIndices.length;i++) {
+			if(gs.returnTile(quadrantIndices[i][0], quadrantIndices[i][1]).getFire() == 2) {
+				flag = true;
+			}
+		}
+		return flag;
 	}
 	
 	@Override
