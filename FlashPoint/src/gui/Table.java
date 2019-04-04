@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -93,8 +94,9 @@ public class Table {
 		
 		boolean redReRoll;
 		boolean blackReRoll; 
-		double redDice;
-		double blackDice;
+		int redDice;
+		int blackDice;
+		Random ran;
 		
 		
 //		public Table(GameState inputBoard) {
@@ -126,6 +128,7 @@ public class Table {
 			
 			this.redReRoll = false;
 			this.blackReRoll = false;
+			this.ran = new Random();
 			
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
@@ -5087,7 +5090,7 @@ public class Table {
 				}
 				break;
 			case 1:
-				redDice = (int) Math.random() * 3 + 1;
+				redDice = (int) (Math.random() * 3.0 + 1);
 				System.out.println("The red die rerolled val " + redDice);
 				redDice += xShift;
 				redReRoll = false;
@@ -5101,7 +5104,8 @@ public class Table {
 				}
 				break;
 			case 2:
-				blackDice = (int) Math.random() * 4 + 1;
+				blackDice = (int) (Math.random() * 4.0 + 1);
+				System.out.println("The black die rerolled val " + blackDice);
 				blackDice += yShift;
 				blackReRoll = false;
 				System.out.println("BLACK REROLL: red die" + redDice + " black die " + blackDice);
