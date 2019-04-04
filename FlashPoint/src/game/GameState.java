@@ -1236,7 +1236,7 @@ public class GameState implements Serializable {
 			}
 			
 			else if (Math.abs(posX-vetX) + Math.abs(posY-vetY) <= 3) {
-				ArrayList<Tile> path = new ArrayList<Tile>();
+				ArrayList<Tile> path = new ArrayList<Tile>(); //this may be useful for preventing double check - not implemented yet
 				path.add(f.getCurrentPosition());
 				for (int i1=0; i1<4; i1++) { // first level DFS
 					Tile t1 = getNeighbour(path.get(path.size()-1), i1);
@@ -1274,8 +1274,8 @@ public class GameState implements Serializable {
 														if (path.get(path.size()-1).getEdge(i3).isBlank() || 
 																(path.get(path.size()-1).getEdge(i3).isDoor() && 
 																		(path.get(path.size()-1).getEdge(i3).getStatus() || path.get(path.size()-1).getEdge(i3).isDestroyed() ) ) ) {
-															path.add(t2);
-															if (t2.equals(vet.getCurrentPosition())) {
+															path.add(t3);
+															if (t3.equals(vet.getCurrentPosition())) {
 																flag = true;
 															}
 														}
