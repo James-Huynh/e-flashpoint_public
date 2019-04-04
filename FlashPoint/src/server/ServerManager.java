@@ -157,7 +157,6 @@ public class ServerManager {
 	public void setLobby(Lobby newLobby) {
 		this.activeLobby = newLobby;
 		this.currentLobbies.add(this.activeLobby);
-		System.out.println(this.currentLobbies.size());
 	}
 	
 	public Player getPlayer(Integer inputInteger) {
@@ -173,7 +172,6 @@ public class ServerManager {
 	}
 
 	public ArrayList<Lobby> getLobbyList() {
-		System.out.println(this.currentLobbies.size());
 		return this.currentLobbies;
 	}
 
@@ -181,6 +179,7 @@ public class ServerManager {
 		Firefighter currentOne = gameState.getPlayingFirefighter();
 		currentOne.endOfTurn();
 		advanceFire();
+		System.out.println("endturn over");
 		if(gameState.isGameTerminated() || gameState.isGameWon()) {
 			setFFNextTurn();
 			generateActions();
@@ -205,7 +204,6 @@ public class ServerManager {
 	}
 	
 	public void askRelevantFirefighters(Vehicle type) {
-		System.out.println("we are in the ask");
 		gameState.createFFToAsk(type);
 	}
 	

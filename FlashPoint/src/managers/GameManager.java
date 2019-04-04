@@ -404,7 +404,6 @@ public class GameManager {
 		for(int i=0;i<gs.getFireFighterList().size();i++) {
 			if (i != gs.getActiveFireFighterIndex()) {
 				for (int dir : new int[]{0,1,2,3} ) {
-					System.out.println("in the loop");
 					allPossibleActions.add(new Command(i, new Move(dir)));
 					allPossibleActions.add(new Command(i, new MoveWithVictim(dir)));
 					allPossibleActions.add(new Command(i, new MoveWithHazmat(dir)));
@@ -651,6 +650,7 @@ public class GameManager {
     		if(targetTile.getFire() == 2 && targetTile.containsHazmat()) {
     			while(targetTile.containsHazmat()) {
     				Hazmat temp = targetTile.popHazmat();
+    				gs.addLostHazmat(temp);
     				recentAdvFire += "hazmat explosion caused at:  " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1] +"\n";
     				explosion(targetTile);
     			}

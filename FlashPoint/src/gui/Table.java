@@ -1240,7 +1240,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 					    					}
 					    					
 					    				}
@@ -1255,7 +1254,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1269,7 +1267,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1283,7 +1280,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1299,7 +1295,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1313,7 +1308,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -1327,7 +1321,6 @@ public class Table {
 					    				@Override
 					    				public void actionPerformed(ActionEvent e) {
 					    					if(sendActionRequest(a)) {
-												System.out.println("this is the print that board is refreshing");
 											}
 					    				}
 					    			});
@@ -5082,7 +5075,6 @@ public class Table {
 			case 0:
 				redReRoll = false;
 				blackReRoll = false;
-				System.out.println("NO REROLL: 0: red die" + redDice + " black die " + blackDice);
 				if(!redReRoll & !blackReRoll) {
 					int[] update = {(int) redDice, (int) blackDice};
 					a.setResult(update);
@@ -5091,10 +5083,8 @@ public class Table {
 				break;
 			case 1:
 				redDice = (int) (Math.random() * 3.0 + 1);
-				System.out.println("The red die rerolled val " + redDice);
 				redDice += xShift;
 				redReRoll = false;
-				System.out.println("REROLL OF RED DIE: red die" + redDice + " black die " + blackDice);
 				if(!redReRoll & !blackReRoll) {
 					int[] update = {(int) redDice, (int) blackDice};
 					a.setResult(update);
@@ -5105,10 +5095,8 @@ public class Table {
 				break;
 			case 2:
 				blackDice = (int) (Math.random() * 4.0 + 1);
-				System.out.println("The black die rerolled val " + blackDice);
 				blackDice += yShift;
 				blackReRoll = false;
-				System.out.println("BLACK REROLL: red die" + redDice + " black die " + blackDice);
 				if(!redReRoll & !blackReRoll) {
 					int[] update = {(int) redDice, (int) blackDice};
 					a.setResult(update);
