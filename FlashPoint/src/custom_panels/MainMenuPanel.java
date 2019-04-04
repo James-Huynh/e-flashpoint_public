@@ -1,10 +1,14 @@
 package custom_panels;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -24,8 +28,8 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
  *
  */
 public class MainMenuPanel extends JPanel {
-	private static String defaultImagesPath = "img/";
-	private static String imageName = "background-dark_firefighters.jpg";
+	private static String defaultImagesPath = "img";
+	private static String imageName = "/background-dark_firefighters.jpg";
 
 	private	JButton createBtn;
 	private	JButton findBtn;
@@ -52,6 +56,7 @@ public class MainMenuPanel extends JPanel {
 		JPanel menuPanel = new JPanel();
 		menuPanel.setBounds(200, 129, 540, 473);
 		menuPanel.setLayout(null);
+		menuPanel.setBackground(new Color(0,0,0,0));
 
 		createButtons();
 
@@ -60,12 +65,9 @@ public class MainMenuPanel extends JPanel {
 		menuPanel.add(rulesBtn);
 		menuPanel.add(btn_LoadGame);
 
-		initializeImages();
-
 		this.add(menuPanel);
 	
-		
-
+		initializeImages();
 	}
 
 	private void createButtons() {
@@ -115,25 +117,35 @@ public class MainMenuPanel extends JPanel {
 
 
 	private void initializeImages() {
-		Image imageBackground = null;
+		BufferedImage imageBackground = null;
 		URL url_imageBackground =MainMenuPanel.class.getResource(imageName);
 
 		try {
-			imageBackground = ImageIO.read(url_imageBackground);
+			imageBackground = ImageIO.read(new File(defaultImagesPath + imageName));
 		} catch (IOException e) {
 			System.out.println("Image cannot be loaded: " + imageName);
 		}
-//		imageBackground = imageBackground.getScaledInstance(1000, 800, Image.SCALE_DEFAULT);
-		imageIconBackground = new ImageIcon(imageBackground);
+
 		
+		// TMP
+		int w = imageBackground.getWidth();
+		int h = imageBackground.getHeight();
+		BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		AffineTransform at = new AffineTransform();
+		at.scale(1.0, 1.0);
+		AffineTransformOp scaleOp = 
+		   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		after = scaleOp.filter(imageBackground, after);
+		// TMP
+		
+		imageIconBackground = new ImageIcon(after);
+	
 		lbl_image = new JLabel(imageIconBackground);
-//		lbl_image.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_image.setBounds(0, 0, 1000, 800);
-//		lbl_image.setBackground(Color.red);
-		//this.add(lbl_image);
+		this.add(lbl_image);
 		
 		
-		btn_LoadGame.setIcon(imageIconBackground); // testing
+//		btn_LoadGame.setIcon(imageIconBackground); // testing
 	}
 
 

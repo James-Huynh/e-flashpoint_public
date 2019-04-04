@@ -6,12 +6,13 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +43,6 @@ import gui.Table.LeftPanel;
 import gui.Table.RightPanel;
 import managers.GameManager;
 import personalizedlisteners.createLobbyListeners.BackListener;
-import personalizedlisteners.loadGameListeners.LoadGameSetUpListener;
 import personalizedlisteners.lobbyListeners.LeaveListener;
 import personalizedlisteners.lobbyListeners.SearchEntrySetUpListener;
 import personalizedlisteners.lobbyListeners.StartListener;
@@ -56,7 +56,7 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
  */
 public class Launcher {
 	private String EricIP = "142.157.30.157";
-	private String JamesIP = "69.194.56.28";
+	private String JamesIP = "142.157.105.75";
 	private String JunhazIP = "142.157.65.31";
 	private String ZaidIP = "142.157.145.244";
 	private String BenIP = "142.157.58.216";
@@ -92,8 +92,9 @@ public class Launcher {
 	// Saving and Loading stuff
 	private String folderPath;
 	
-	
-	private static String defaultImagesPath = "img/";
+	// Images
+	private static String defaultImagesPath = "img";
+	private static String firefighterBckgPath = "/background-firefighter_1.png";
 	
 	
 	//Used by Ben for in game testing. Not permanent.
@@ -111,6 +112,7 @@ public class Launcher {
 	private JPanel dummyCenterPanel = new JPanel(); 
 	private JPanel dummyRightPanel = new JPanel();
 	private JPanel dummyLeftPanel = new JPanel();
+	private JLabel lbl_leftPanelImage;
 
 	/**
 	 * Launch the application.
@@ -176,6 +178,39 @@ public class Launcher {
 		dummyLeftPanel.setBackground(Color.GREEN);
 		dummyLeftPanel.setPreferredSize(LEFT_PANEL_DIMENSION);
 		contentPane.add(dummyLeftPanel, BorderLayout.WEST);
+		
+		
+		
+		// adding image
+		BufferedImage bckgImage = null;
+		try {
+			bckgImage = ImageIO.read(new File(defaultImagesPath + firefighterBckgPath));
+			dummyLeftPanel.add(new JLabel(new ImageIcon(bckgImage)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		lbl_leftPanelImage = new JLabel();
+		lbl_leftPanelImage.setBounds(0, -10, (int) LEFT_PANEL_DIMENSION.getWidth(), (int) LEFT_PANEL_DIMENSION.getHeight());		
+
+		// DOES NOT WORK
+		int w = bckgImage.getWidth();
+		int h = bckgImage.getHeight();
+		BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		AffineTransform at = new AffineTransform();
+		at.scale(3.0, 3.0);
+		AffineTransformOp scaleOp = 
+		   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		after = scaleOp.filter(bckgImage, after);
+		// TMP
+		
+//		Image dimg = bckgImage.getScaledInstance((int) LEFT_PANEL_DIMENSION.getWidth(), (int) LEFT_PANEL_DIMENSION.getHeight(), Image.SCALE_SMOOTH);
+		
+		lbl_leftPanelImage.setIcon(new ImageIcon(after));
+		dummyLeftPanel.add(lbl_leftPanelImage);
+		
+		
+		
 	}
 
 	private void populateMenuBar() {
@@ -245,14 +280,6 @@ public class Launcher {
 		
 		contentPane.remove(dummyCenterPanel);
 		contentPane.add(login, BorderLayout.CENTER);
-		
-		// adding image
-		try {
-			BufferedImage loginBackground = ImageIO.read(new File(defaultImagesPath + "background-dark_firefighters.jpg"));
-			login.add(new JLabel(new ImageIcon(loginBackground)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	//------------------------------- LOGIN
