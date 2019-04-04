@@ -30,6 +30,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
@@ -4902,7 +4903,7 @@ public class Table {
 					gameTPanel.setBorder(blackline);
 					
 					JTextArea text = new JTextArea();
-					String gameOverPrompt = "           Game over.\n   The house has collapsed.";
+					String gameOverPrompt = "   Game over.\n   The house has collapsed.";
 					text.setText(gameOverPrompt);
 					text.setBackground(tileColorRed);
 					
@@ -4910,6 +4911,7 @@ public class Table {
 					backToMenuButton.setPreferredSize(new Dimension(40,40));
 					backToMenuButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
+							gameTermination.hide();
 							launcher.backToMainMenu();
 							//return back to menu
 						}
@@ -4927,7 +4929,7 @@ public class Table {
 					gameTPanel.setBorder(blackline);
 					
 					JTextArea text = new JTextArea();
-					String gameOverPrompt = "           Game over.\n   4 victims were lost.";
+					String gameOverPrompt = "   Game over.\n   4 victims were lost.";
 					text.setText(gameOverPrompt);
 					text.setBackground(tileColorRed);
 					
@@ -4935,6 +4937,7 @@ public class Table {
 					backToMenuButton.setPreferredSize(new Dimension(40,40));
 					backToMenuButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
+							gameTermination.hide();
 							launcher.backToMainMenu();
 							//return back to menu
 						}
@@ -4952,7 +4955,7 @@ public class Table {
 				gameTPanel.setBorder(blackline);
 				
 				JTextArea text = new JTextArea();
-				String gameOverPrompt = "           Game over.\n   7 victims were saved in time.";
+				String gameOverPrompt = "   Game over.\n   7 victims were saved in time.";
 				text.setText(gameOverPrompt);
 				text.setBackground(tileColorGreen);
 				
@@ -4960,6 +4963,7 @@ public class Table {
 				backToMenuButton.setPreferredSize(new Dimension(40,40));
 				backToMenuButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						gameTermination.hide();
 						launcher.backToMainMenu();
 						//return back to menu
 					}
@@ -4975,11 +4979,14 @@ public class Table {
 		
 		public void showAdvanceFireString(String message) {
 			advFire = null;
-			PopupFactory gameT = new PopupFactory();
-			JPanel gameTPanel = new JPanel(new BorderLayout());
-			JTextArea text = new JTextArea();
-			text.append(message);
-			text.setLineWrap(true);
+			PopupFactory gameLogPopup = new PopupFactory();
+			JPanel gameLog = new JPanel(new BorderLayout());
+			JTextArea logtext = new JTextArea();
+			logtext.append(message);
+			logtext.setLineWrap(true);
+			
+			JScrollPane scroll = new JScrollPane (logtext, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			scroll.setPreferredSize(new Dimension(40,230));
 			
 			JButton okButton = new JButton("ok");
 			okButton.setPreferredSize(new Dimension(20,20));
@@ -4987,16 +4994,16 @@ public class Table {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					advFire.hide();
-					advFire = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+					advFire = gameLogPopup.getPopup(rightPanel, gameLog, 1140, 50);
 				}
 			});
-			gameTPanel.setPreferredSize(new Dimension(300,400));
-			gameTPanel.setBackground(tileColorWhite);
+			gameLog.setPreferredSize(new Dimension(300,400));
+			gameLog.setBackground(tileColorWhite);
 			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
-			gameTPanel.setBorder(blackline);
-			gameTPanel.add(text, BorderLayout.NORTH);
-			gameTPanel.add(okButton, BorderLayout.SOUTH);
-			advFire = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
+			gameLog.setBorder(blackline);
+			gameLog.add(scroll, BorderLayout.NORTH);
+			gameLog.add(okButton, BorderLayout.SOUTH);
+			advFire = gameLogPopup.getPopup(rightPanel, gameLog, 1140, 50);
 			
 			advFire.show();
 		}

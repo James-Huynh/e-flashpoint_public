@@ -481,8 +481,16 @@ public class Launcher {
 	public void refreshBoard() {
 		if(clientManager.getEndTurnTrigger()) {
 			table.hideAdvPanel();
-			showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
-			clientManager.setEndTurnTrigger(false);
+			if(clientManager.getUsersGameState().isGameTerminated()) {
+				table.showGameTermination();
+			} else if (clientManager.getUsersGameState().isGameWon()){
+				table.showGameTermination();
+			} else if (clientManager.getUsersGameState().getAdvFireString().equals("")){
+				clientManager.setEndTurnTrigger(false);
+			}else {
+				showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
+				clientManager.setEndTurnTrigger(false);
+			}
 		}
 		table.hideRidePanel();
 		table.hideDeckGunPanel();
