@@ -340,7 +340,7 @@ public class ServerInputThread extends Thread {
 				break;
 			case SAVEGAME:
 				System.out.println("save game");
-				returnObject = new TranObject<User>(TranObjectType.ENDTURNSUCCESS);
+				returnObject = new TranObject<User>(TranObjectType.SAVEGAMESUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				//@CAO this is where you would save the game state
 				serverManager.saveGame();
