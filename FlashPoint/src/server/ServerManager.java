@@ -34,6 +34,7 @@ public class ServerManager {
 	private ArrayList<GameState> savedGames;
 	private static String defaulGamesPath = "savedGames/";
 	private static String currentPath = System.getProperty("user.dir");
+	private int turnCounter;
 	
 	private Lobby activeLobby;
 	private GameState gameState;
@@ -49,6 +50,7 @@ public class ServerManager {
 		accounts.put("Zaid", "apple");
 		accounts.put("me", "aa");
 		savedGames = new ArrayList<GameState>();
+		turnCounter = 1;
 		setSavedGames();
 	}
 	
@@ -212,9 +214,11 @@ public class ServerManager {
 	public void setFFNextTurn() {
 		gameManager.setFirstAction(true);
 		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
-		gameState.getPlayingFirefighter().endOfTurn();
+		if(turnCounter > gameState.getFireFighterList().size()) {
+			gameState.getPlayingFirefighter().endOfTurn();
+		}
 		gameState.vicinity(gameState.getPlayingFirefighter());
-		
+		turnCounter++;
 	}
 	
 	public void advanceFire() {
