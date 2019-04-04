@@ -218,26 +218,35 @@ public class ServerInputThread extends Thread {
 				requestObject = (User) read_tranObject.getObject();
 				
 				if(requestObject.getAction().getTitle() == ActionList.Drive) {
+					boolean popUpFlag;
 					System.out.println("hello we are riding");
 					if(requestObject.getAction().isAmbulance()) {
-						serverManager.askRelevantFirefighters(Vehicle.Ambulance);
+						popUpFlag = serverManager.askRelevantFirefighters(Vehicle.Ambulance);
 					}
 					else {
-						serverManager.askRelevantFirefighters(Vehicle.Engine);
+						popUpFlag = serverManager.askRelevantFirefighters(Vehicle.Engine);
 					}
-					//serverManager.askRelevantFirefighters(requestObject.getCurrentState().getPlayingFirefighter().getCurrentPosition().getParkingType());
-					System.out.println("we have asked");
-					returnGameState = new TranObject<GameState>(TranObjectType.SENDRIDERECEIVED);
-					returnGameState.setObject(serverManager.getGameState());
-					for (OutputThread onOut : map.getAll()) {
-						System.out.println("hello should be in the output thread");
-						onOut.setMessage(returnGameState); 
+					
+					if(popUpFlag) {
+						System.out.println("we have asked");
+						returnGameState = new TranObject<GameState>(TranObjectType.SENDRIDERECEIVED);
+						returnGameState.setObject(serverManager.getGameState());
+						for (OutputThread onOut : map.getAll()) {
+							System.out.println("hello should be in the output thread");
+							onOut.setMessage(returnGameState); 
+						}
 					}
+					else {
+						System.out.println("We didn't have to ask");
+					}
+
 					System.out.println("hello should be at the while" + serverManager.hasEveryoneResponded());
-					while(!serverManager.hasEveryoneResponded()) {
-						
+					if(popUpFlag) {
+						while(!serverManager.hasEveryoneResponded()) {
+							
+						}
+						System.out.println("Out of response checking loops");
 					}
-					System.out.println("out");
 				}
 				
 				

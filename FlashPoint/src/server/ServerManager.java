@@ -218,8 +218,8 @@ public class ServerManager {
 		gameState.setAdvFireString(gameManager.getAdvFireMessage());
 	}
 	
-	public void askRelevantFirefighters(Vehicle type) {
-		gameState.createFFToAsk(type);
+	public boolean askRelevantFirefighters(Vehicle type) {
+		return gameState.createFFToAsk(type);
 	}
 	
 	public boolean hasEveryoneResponded() {

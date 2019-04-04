@@ -93,7 +93,7 @@ public class FireGun extends Action {
 		if (currentPosition.getParkingSpot() != null && currentPosition.getParkingSpot().equals(ps) && 
 				currentPosition.getParkingSpot().getParkingType() == (Vehicle.Engine) && //unnecessary but assertion
 				currentPosition.getParkingSpot().getCar() == true) {
-			if (playingFirefighter.getAP() >= APcost && noOne(gs)) {
+			if (playingFirefighter.getAP() >= APcost && noOne(gs) && firePresent(gs)) {
 				flag = true;
 			}
 		}
@@ -109,6 +109,17 @@ public class FireGun extends Action {
 			}
 		}
 		return true;
+	}
+	
+	public boolean firePresent(GameState gs) {
+		boolean flag = false;
+		int[][] quadrantIndices = gs.getEngines()[index].getQuadrants();
+		for(int i=0;i<quadrantIndices.length;i++) {
+			if(gs.returnTile(quadrantIndices[i][0], quadrantIndices[i][1]).getFire() == 2) {
+				flag = true;
+			}
+		}
+		return flag;
 	}
 	
 	@Override
