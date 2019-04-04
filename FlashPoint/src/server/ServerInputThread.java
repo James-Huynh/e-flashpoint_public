@@ -265,16 +265,6 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameState); 
 				}
 				break;
-			case SENDRIDEREQUEST:
-				requestObject = (User) read_tranObject.getObject();
-				serverManager.askRelevantFirefighters(requestObject.getRidingObject());
-				
-				returnGameState = new TranObject<GameState>(TranObjectType.SENDRIDERECEIVED);
-				returnGameState.setObject(serverManager.getGameState());
-				for (OutputThread onOut : map.getAll()) {
-					onOut.setMessage(returnGameState); 
-				}
-				break;
 			case SENDRIDERESPONSE:
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.updateResponse(requestObject.getRideResponse(), requestObject.getMyFFIndex());
@@ -368,16 +358,54 @@ public class ServerInputThread extends Thread {
 		        	
 		        	if(serverManager.getGameManager().advanceFireStart(targetTile, additionalHotSpot) && dodgeCheck) {
 		        		System.out.println("dodge triggered after start");
-		        		
+		        		if(serverManager.generateDodgeActions()) {
+		        			System.out.println("we have asked dodge");
+							returnGameState = new TranObject<GameState>(TranObjectType.DODGERECEIVED);
+							returnGameState.setObject(serverManager.getGameState());
+							for (OutputThread onOut : map.getAll()) {
+								System.out.println("hello should be in the output thread of dodge");
+								onOut.setMessage(returnGameState); 
+							}
+							
+//							while(!serverManager.hasEveryoneDodged()) {
+//								
+//							}
+		        		}
 		        	}
 		        	
 		        	if(serverManager.getGameManager().resolveFlashOver() && dodgeCheck) {
 		        		System.out.println("dodge triggered after flashover");
+		        		if(serverManager.generateDodgeActions()) {
+		        			System.out.println("we have asked dodge");
+		        			returnGameState = new TranObject<GameState>(TranObjectType.DODGERECEIVED);
+							returnGameState.setObject(serverManager.getGameState());
+							for (OutputThread onOut : map.getAll()) {
+								System.out.println("hello should be in the output thread of dodge");
+								onOut.setMessage(returnGameState); 
+							}
+							
+//							while(!serverManager.hasEveryoneDodged()) {
+//								
+//							}
+		        		}
 		        	}
 		        	
 		        	if(serverManager.getGameState().isExperienced()) {
 		        		if(serverManager.getGameManager().resolveHazmatExplosions() && dodgeCheck) {
 		        			System.out.println("dodge triggered after hazmatExplosion");
+		        			if(serverManager.generateDodgeActions()) {
+		        				System.out.println("we have asked dodge");
+			        			returnGameState = new TranObject<GameState>(TranObjectType.DODGERECEIVED);
+								returnGameState.setObject(serverManager.getGameState());
+								for (OutputThread onOut : map.getAll()) {
+									System.out.println("hello should be in the output thread of dodge");
+									onOut.setMessage(returnGameState); 
+								}
+								
+//								while(!serverManager.hasEveryoneDodged()) {
+//									
+//								}
+			        		}
 		        		}
 		        	}
 		        	

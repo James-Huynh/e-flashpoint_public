@@ -44,9 +44,9 @@ public class clientThread implements Runnable{
 				else if(myClientManager.listenForResponses() == 1) {
 					System.out.println("hello we are not riding");
 					myLauncher.refreshBoard();
-//					if(myClientManager.getUsersGameState().getInDodgeMode()) {
-//						myLauncher.showDodgeRequest();
-//					}
+					if(myClientManager.getUsersGameState().getIsDodging()) {
+						myLauncher.showDodgeRequest();
+					}
 					toggle = true;
 				} else {
 					System.out.println("we are not meant to be here");

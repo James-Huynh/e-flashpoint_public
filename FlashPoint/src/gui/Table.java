@@ -5106,9 +5106,9 @@ public class Table {
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel(new BorderLayout());
 			JTextArea text = new JTextArea();
-			String dodgeReq = "You are in danger, which direction would you like to dodge?";
+			String dodgeReq = "You are in danger!! Which direction would you like to dodge?";
 			ArrayList<actions.Action> dodgeOptions = new ArrayList<actions.Action>();
-			//dodgeOptions = clientManager.getUsersGameState().getFireFighterList().get(myIndex).getActions();
+			dodgeOptions = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myIndex));
 			text.setText(dodgeReq);
 			JButton dodgeButton0 = new JButton("Dodge left");
 			JButton dodgeButton1 = new JButton("Dodge up");
@@ -5124,7 +5124,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
-							if(sendActionRequest(a));
+//							if(sendActionRequest(a));
 						}
 					});
 					responsePanel.add(dodgeButton0);		
@@ -5135,7 +5135,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
-							if(sendActionRequest(a));
+//							if(sendActionRequest(a));
 						}
 					});
 					responsePanel.add(dodgeButton1);
@@ -5146,7 +5146,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
-							if(sendActionRequest(a));
+//							if(sendActionRequest(a));
 						}
 					});
 					responsePanel.add(dodgeButton2);
@@ -5157,7 +5157,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
-							if(sendActionRequest(a));
+//							if(sendActionRequest(a));
 						}
 					});
 					responsePanel.add(dodgeButton3);

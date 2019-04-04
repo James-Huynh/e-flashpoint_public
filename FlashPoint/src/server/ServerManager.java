@@ -525,5 +525,11 @@ public class ServerManager {
 			gameState.resetHashMap();
 			
 		}
+
+		public boolean generateDodgeActions() {
+			return gameManager.generateDodgeActions();
+			
+			
+		}
 	
 }

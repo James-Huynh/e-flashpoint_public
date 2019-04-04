@@ -196,7 +196,12 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				break;
-			
+			case DODGERECEIVED:
+				System.out.println("Successful dodge inform request");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				flag = true;
+				break;
+				
 			}
 			
 		

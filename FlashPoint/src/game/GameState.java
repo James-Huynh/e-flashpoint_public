@@ -73,6 +73,9 @@ public class GameState implements Serializable {
 	protected boolean specialitySelecting;
 	protected int[] proposedDices;
 	
+	protected boolean isDodging;
+	protected HashMap<Firefighter, ArrayList<actions.Action>> dodgingHashMap;
+	
 	private static final long serialVersionUID = 1L; // serialization
 
 	/**
@@ -205,6 +208,8 @@ public class GameState implements Serializable {
 			this.freeSpecialities.add(Speciality.RESCUE_SPECIALIST);
 			this.freeSpecialities.add(Speciality.VETERAN);
 			this.specialitySelecting = true;
+			this.isDodging = false;
+			this.dodgingHashMap = new HashMap<Firefighter, ArrayList<actions.Action>>();
 			
 		} 
 		else {
@@ -1353,6 +1358,24 @@ public class GameState implements Serializable {
 	
 	public void setFreeFirefighters(ArrayList<Firefighter> fList) {
 		this.freeFirefighters = fList;
+	}
+
+	public void setDodgingHashMap(Firefighter f, ArrayList<Action> dodgeList) {
+		this.dodgingHashMap.put(f, dodgeList);
+		
+	}
+	
+	public HashMap<Firefighter, ArrayList<actions.Action>> getDodgingHashMap(){
+		return dodgingHashMap;
+	}
+
+	public void setIsDodging(boolean flag) {
+		this.isDodging = flag;
+		
+	}
+	
+	public boolean getIsDodging() {
+		return this.isDodging;
 	}
 
 	
