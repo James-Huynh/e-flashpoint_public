@@ -142,7 +142,6 @@ public class Drive extends Action {
             		}
             	}
             }
-            System.out.println("hi");
             
         }
         

@@ -53,9 +53,6 @@ public class Command extends Action {
 
 	@Override
 	public boolean validate(GameState gs) {
-		System.out.println("here0");
-		System.out.println(action.APcost);
-		System.out.println(action.getTitle().toString());
 		boolean flag = false;
 		Firefighter captain = gs.getPlayingFirefighter();
 		int captain_i = gs.getActiveFireFighterIndex();
@@ -63,13 +60,10 @@ public class Command extends Action {
 		if (captain.getSpeciality() == Speciality.CAPTAIN) {
 			if (action.getTitle().equals((ActionList.Handle)) || action.getTitle().equals((ActionList.Move)) || 
 					action.getTitle().equals(ActionList.MoveWithHazmat) || action.getTitle().equals(ActionList.MoveWithVictim)) {
-				System.out.println("here1");
 				if (captain.getSP() + captain.getAP() >= action.APcost) {
-					System.out.println("here2");
 					gs.setPlayingFirefighter(toObey);
 					if (action.validate(gs)) {
 						//request and permission from toObey.
-						System.out.println("here3");
 						if (!captain.getIfCommandCAPSthisTurn() && !(toObey.getSpeciality()==Speciality.CAFS && action.APcost>1)) {
 							flag = true;
 						}
