@@ -92,6 +92,17 @@ public class ServerManager {
 			if(!gameState.isExperienced()) {
 				gameState.setActiveFireFighterIndex(0);
 				generateActions();
+			} else {
+				for(int i = 0; i < 4; i++) {
+					if(gameState.getAmbulances()[i].getCar()) {
+						for(int j = 0; j<4; j++) {
+							if(gameState.getEngines()[j].getCar()) {
+								gameState.setActiveFireFighterIndex(0);
+								generateActions();
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -108,8 +119,10 @@ public class ServerManager {
 			if(gameState.getAmbulances()[i].getCar()) {
 				for(int j = 0; j<4; j++) {
 					if(gameState.getEngines()[j].getCar()) {
-						gameState.setActiveFireFighterIndex(0);
-						generateActions();
+						if(placedFF == gameState.getFireFighterList().size()) {
+							gameState.setActiveFireFighterIndex(0);
+							generateActions();
+						}
 					}
 				}
 			}
