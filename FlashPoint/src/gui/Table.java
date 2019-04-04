@@ -4921,10 +4921,10 @@ public class Table {
 				redButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						rideRequest.hide();
+						deckGunRequest.hide();
 						if(rerollDice(1, a)) {
 							
-							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 
@@ -4938,9 +4938,9 @@ public class Table {
 				blackButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						rideRequest.hide();
+						deckGunRequest.hide();
 						if(rerollDice(2, a)) {
-							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 
@@ -4953,7 +4953,7 @@ public class Table {
 			noButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					rideRequest.hide();
+					deckGunRequest.hide();
 					if(rerollDice(0, a)) rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 				}
 			});
