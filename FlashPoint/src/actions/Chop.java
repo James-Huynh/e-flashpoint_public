@@ -64,7 +64,7 @@ public class Chop extends Action {
         	gs.updateDamageCounter();
         }
 
-        
+        playingFirefighter.setUsedAP(true);
         playingFirefighter.setAP(aP - this.APcost);
     }
 

@@ -41,9 +41,11 @@ public class Command extends Action {
 			int difference = action.APcost - me.getSP();
 			me.setSP(0);
 			me.setAP(me.getAP() - difference);
+			me.setUsedAP(true);
 		}
 		else { //everything from AP
 			me.setAP(me.getAP() - action.APcost);
+			me.setUsedAP(true);
 		}
 		
 		if (toObey.getSpeciality() == Speciality.CAFS) {

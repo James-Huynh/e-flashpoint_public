@@ -51,6 +51,7 @@ public class FireGun extends Action {
 		Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
         playingFirefighter.setAP(aP - this.APcost);
+        playingFirefighter.setUsedAP(true);
         
         Tile target;
         if (driver) {
@@ -93,7 +94,7 @@ public class FireGun extends Action {
 		if (currentPosition.getParkingSpot() != null && currentPosition.getParkingSpot().equals(ps) && 
 				currentPosition.getParkingSpot().getParkingType() == (Vehicle.Engine) && //unnecessary but assertion
 				currentPosition.getParkingSpot().getCar() == true) {
-			if (playingFirefighter.getAP() >= APcost && noOne(gs) && firePresent(gs)) {
+			if (playingFirefighter.getAP() >= APcost && noOne(gs)) { // at least not now and not in that form
 				flag = true;
 			}
 		}

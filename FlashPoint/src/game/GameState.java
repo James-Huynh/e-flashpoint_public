@@ -921,8 +921,8 @@ public class GameState implements Serializable {
 	 * Available ACTIONS
 	 */
 
-	boolean containsAvailableActions(GameState a) {
-		return a.getAvailableActions().contains(a);
+	boolean containsAvailableActions(Action a) {
+		return getAvailableActions().contains(a);
 	}
 
 	int sizeOfAvailableActions(GameState a) {
@@ -1064,7 +1064,7 @@ public class GameState implements Serializable {
 					for(int j=0;j<placedOn.length;j++) {
 						if(placedOn[j].containsFirefighter()) {
 							for(Firefighter f: placedOn[j].getFirefighterList()) {
-								if( f != this.getPlayingFirefighter()) {
+								if( f != this.getPlayingFirefighter() && f.getSpeciality() != Speciality.DOG) {
 //									rideMapper.put(f, true);
 									rideMapper.get(f)[0] = true;
 									flag = true;
@@ -1188,6 +1188,130 @@ public class GameState implements Serializable {
 	
 	public int[] getProposedDices() {
 		return this.proposedDices;
+	}
+	
+	//vicinity, all check held on gamestate
+	public void vicinity(Firefighter f) {
+		if (this.getFreeSpecialities().contains(Speciality.VETERAN)) {
+			return;
+		}
+		
+		Firefighter vet = null;
+		for (Firefighter g : getFireFighterList()) {
+			if (g.getSpeciality() == Speciality.VETERAN) {
+				vet = g;
+			}
+		}
+		
+		boolean flag = false;
+		
+		/* STRAIGHT FORWARD
+		if (f.getCurrentPosition().equals(vet.getCurrentPosition())) {
+			flag = true;
+		}
+		else {
+			for (int i=0; i<4; i++) {
+				if (getNeighbour(f.getCurrentPosition(),i).equals(vet.getCurrentPosition())) {
+					flag = true;
+					break;
+				}
+			}
+			
+			//moving 3 spaces not bloked by door or smoked or fire
+			if (!flag) {
+				//see below
+			}
+		}
+		*/	
+		
+		//now smarter
+		int posX = f.getCurrentPosition().getX();
+		int posY = f.getCurrentPosition().getY();
+		int vetX = vet.getCurrentPosition().getX();
+		int vetY = vet.getCurrentPosition().getY();
+		if (Math.abs(posX-vetX) + Math.abs(posY-vetY) <= 1) {
+			flag = true;
+		}
+		
+		else if (Math.abs(posX-vetX) + Math.abs(posY-vetY) <= 3) {
+			ArrayList<Tile> path = new ArrayList<Tile>();
+			
+			for (int i1=0; i1<4; i1++) { // first level DFS
+				Tile t1 = getNeighbour(path.get(path.size()-1), i1);
+				if (t1 != null) {
+					if (path.get(path.size()-1).getEdge(i1).isBlank() || 
+							(path.get(path.size()-1).getEdge(i1).isDoor() && 
+									(path.get(path.size()-1).getEdge(i1).getStatus() || path.get(path.size()-1).getEdge(i1).isDestroyed() ) ) ) {
+						path.add(t1);
+						if (t1.equals(vet.getCurrentPosition())) {
+							flag = true;
+						}
+						else {
+							//DFS keep going
+							for (int i2=0; i2<4; i2++) {
+								if ((i2+4+2)%4 == i1) {
+									continue; //prevents going back, exploration
+								}
+								Tile t2 = getNeighbour(path.get(path.size()-1), i2);
+								if (t2 != null) {
+									if (path.get(path.size()-1).getEdge(i2).isBlank() || 
+											(path.get(path.size()-1).getEdge(i2).isDoor() && 
+													(path.get(path.size()-1).getEdge(i2).getStatus() || path.get(path.size()-1).getEdge(i2).isDestroyed() ) ) ) {
+										path.add(t2);
+										if (t2.equals(vet.getCurrentPosition())) {
+											flag = true;
+										}
+										else {
+											//DFS keep going - last one
+											for (int i3=0; i3<4; i3++) {
+												if ((i3+4+2)%4 == i2) {
+													continue; //only new exploration
+												}
+												Tile t3 = getNeighbour(t2, i3);
+												if (t3 != null) {
+													if (path.get(path.size()-1).getEdge(i3).isBlank() || 
+															(path.get(path.size()-1).getEdge(i3).isDoor() && 
+																	(path.get(path.size()-1).getEdge(i3).getStatus() || path.get(path.size()-1).getEdge(i3).isDestroyed() ) ) ) {
+														path.add(t2);
+														if (t2.equals(vet.getCurrentPosition())) {
+															flag = true;
+														}
+													}
+													else {
+														continue;
+													}
+												}
+												else {
+													continue;
+												}
+											}
+										}
+									}
+									else {
+										continue;
+									}
+								}
+								else {
+									continue;
+								}
+							}
+						}
+					}
+					else {
+						continue;
+					}
+				}
+				else {
+					continue;
+				}
+			}
+		}
+		
+		// if vinicity
+		if (flag) {
+			f.setCanDodge(true);
+			f.setAP(f.getAP() + 1);
+		}
 	}
 	
 	/*
