@@ -108,11 +108,26 @@ public class ServerManager {
 	}
 	
 	public void placeVehicle(int direction, Vehicle type) {
+		boolean f1 = true;
 		if(type.equals(Vehicle.Ambulance)) {
-			gameState.getAmbulances()[direction].setCar(true);
+			for(int i = 0; i < 4; i++) {
+				if(gameState.getAmbulances()[i].getCar()) {
+					f1 = false;
+				}
+			}
+			if(f1) {
+				gameState.getAmbulances()[direction].setCar(true);
+			}
 		}
 		else if(type.equals(Vehicle.Engine)) {
-			gameState.getEngines()[direction].setCar(true);
+			for(int j = 0; j<4; j++) {
+				if(gameState.getEngines()[j].getCar()) {
+					f1 = false;
+				}
+			}
+			if(f1) {
+				gameState.getEngines()[direction].setCar(true);
+			}
 		}
 		
 		for(int i = 0; i < 4; i++) {
