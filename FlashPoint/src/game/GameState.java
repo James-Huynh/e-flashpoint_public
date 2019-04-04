@@ -533,7 +533,7 @@ public class GameState implements Serializable {
 				
 			}
 		}
-		System.out.println("this is in the setup of FF " + this.rideMapper.size());
+//		System.out.println("this is in the setup of FF " + this.rideMapper.size());
 	}
 
 	/**
