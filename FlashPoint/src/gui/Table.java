@@ -4922,9 +4922,9 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						deckGunRequest.hide();
+						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						if(rerollDice(1, a)) {
-							
-							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+//							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 
@@ -4939,8 +4939,9 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						deckGunRequest.hide();
+						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						if(rerollDice(2, a)) {
-							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+//							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 
@@ -4954,7 +4955,10 @@ public class Table {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					deckGunRequest.hide();
-					if(rerollDice(0, a)) rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+					deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+					if(rerollDice(0, a)) {
+//						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+					}
 				}
 			});
 			responsePanel.add(noButton);
@@ -5053,25 +5057,29 @@ public class Table {
 			if(quadCoords[0] > 3) {
 				if(quadCoords[1] > 4) {
 					//quad 4
+					System.out.println("quad4");
 					xShift = 3;
 					yShift = 4;
 				} else {
 					//quad 3
 					xShift = 3;
+					System.out.println("quad3");
 				}
 			} else {
 				if(quadCoords[1] > 4) {
 					//quad 2
 					yShift = 4;
+					System.out.println("quad2");
 				} else {
 					//quad 1
+					System.out.println("quad1");
 				}
 			}
 			switch(i) {
 			case 0:
 				redReRoll = false;
 				blackReRoll = false;
-				System.out.println("0: red die" + redDice + " black die " + blackDice);
+				System.out.println("NO REROLL: 0: red die" + redDice + " black die " + blackDice);
 				if(!redReRoll & !blackReRoll) {
 					int[] update = {(int) redDice, (int) blackDice};
 					a.setResult(update);
@@ -5080,27 +5088,31 @@ public class Table {
 				break;
 			case 1:
 				redDice = (int) Math.random() * 3 + 1;
+				System.out.println("The red die rerolled val " + redDice);
 				redDice += xShift;
 				redReRoll = false;
-				System.out.println("1: red die" + redDice + " black die " + blackDice);
+				System.out.println("REROLL OF RED DIE: red die" + redDice + " black die " + blackDice);
 				if(!redReRoll & !blackReRoll) {
 					int[] update = {(int) redDice, (int) blackDice};
 					a.setResult(update);
 					sendActionRequest(a);
+				} else {
+					showDeckGunRequest(a);
 				}
-				showDeckGunRequest(a);
 				break;
 			case 2:
 				blackDice = (int) Math.random() * 4 + 1;
 				blackDice += yShift;
 				blackReRoll = false;
-				System.out.println("2: red die" + redDice + " black die " + blackDice);
+				System.out.println("BLACK REROLL: red die" + redDice + " black die " + blackDice);
 				if(!redReRoll & !blackReRoll) {
 					int[] update = {(int) redDice, (int) blackDice};
 					a.setResult(update);
 					sendActionRequest(a);
+				} else {
+					showDeckGunRequest(a);
 				}
-				showDeckGunRequest(a);
+				
 				break;
 			}
 			
