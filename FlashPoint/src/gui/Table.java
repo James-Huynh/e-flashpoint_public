@@ -4741,33 +4741,83 @@ public class Table {
 			gameTermination = null;
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel();
+			gameTPanel.setLayout(null);
 			
 			if(clientManager.getUsersGameState().isGameTerminated()) {
 				if(clientManager.getUsersGameState().getDamageCounter() >= 24) {
-					JLabel popupMsg = new JLabel("Game over.\n The house has collapsed.");
+					
+					gameTPanel.setLayout(new BorderLayout());
 					gameTPanel.setPreferredSize(new Dimension(300,300));
 					gameTPanel.setBackground(tileColorRed);
 					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
 					gameTPanel.setBorder(blackline);
-					gameTPanel.add(popupMsg);
+					
+					JTextArea text = new JTextArea();
+					String gameOverPrompt = "           Game over.\n   The house has collapsed.";
+					text.setText(gameOverPrompt);
+					text.setBackground(tileColorRed);
+					
+					JButton backToMenuButton = new JButton("Back to Menu");
+					backToMenuButton.setPreferredSize(new Dimension(40,40));
+					backToMenuButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							launcher.backToMainMenu();
+							//return back to menu
+						}
+					});
+					
+					gameTPanel.add(text, BorderLayout.NORTH);
+					gameTPanel.add(backToMenuButton, BorderLayout.SOUTH);
 					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 					
 				} else if(clientManager.getUsersGameState().getLostVictimsList().size() >= 4) {
-					JLabel popupMsg = new JLabel("Game over.\n 4 victims were lost.");
+					gameTPanel.setLayout(new BorderLayout());
 					gameTPanel.setPreferredSize(new Dimension(300,300));
 					gameTPanel.setBackground(tileColorRed);
 					Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
 					gameTPanel.setBorder(blackline);
-					gameTPanel.add(popupMsg);
+					
+					JTextArea text = new JTextArea();
+					String gameOverPrompt = "           Game over.\n   4 victims were lost.";
+					text.setText(gameOverPrompt);
+					text.setBackground(tileColorRed);
+					
+					JButton backToMenuButton = new JButton("Back to Menu");
+					backToMenuButton.setPreferredSize(new Dimension(40,40));
+					backToMenuButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							launcher.backToMainMenu();
+							//return back to menu
+						}
+					});
+					
+					gameTPanel.add(text, BorderLayout.NORTH);
+					gameTPanel.add(backToMenuButton, BorderLayout.SOUTH);
 					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 				}
 			} else if(clientManager.getUsersGameState().isGameWon()) {
-				JLabel popupMsg = new JLabel("Game Won.\n 7 victims were saved in time.");
+				gameTPanel.setLayout(new BorderLayout());
 				gameTPanel.setPreferredSize(new Dimension(300,300));
 				gameTPanel.setBackground(tileColorGreen);
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
 				gameTPanel.setBorder(blackline);
-				gameTPanel.add(popupMsg);
+				
+				JTextArea text = new JTextArea();
+				String gameOverPrompt = "           Game over.\n   7 victims were saved in time.";
+				text.setText(gameOverPrompt);
+				text.setBackground(tileColorGreen);
+				
+				JButton backToMenuButton = new JButton("Back to Menu");
+				backToMenuButton.setPreferredSize(new Dimension(40,40));
+				backToMenuButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						launcher.backToMainMenu();
+						//return back to menu
+					}
+				});
+				
+				gameTPanel.add(text, BorderLayout.NORTH);
+				gameTPanel.add(backToMenuButton, BorderLayout.SOUTH);
 				gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 			}
 			
