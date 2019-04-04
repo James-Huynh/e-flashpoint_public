@@ -92,7 +92,7 @@ public class Launcher {
 	private static GameManager current;
 	private static GameState tester;
 	
-
+	
 	/**
 	 * Below is for to get around a problem. Wanted to specify an outline for the frame
 	 * And use that to pull in frames
@@ -435,6 +435,16 @@ public class Launcher {
 		contentPane.add(LPanel, BorderLayout.WEST);
 		contentPane.add(board, BorderLayout.CENTER);
 		contentPane.add(RPanel, BorderLayout.EAST);
+		motherFrame.revalidate();
+	}
+	// Back to Main Menu
+	public void backToMainMenu(){
+		//remove old lobby on server
+		
+		//remove old game state gui
+		contentPane.removeAll();
+		//create and make visible mainMenuPage
+		setupMainMenuPage();
 		motherFrame.revalidate();
 	}
 	public void repaint(boolean placingChange, boolean playingChange) {
