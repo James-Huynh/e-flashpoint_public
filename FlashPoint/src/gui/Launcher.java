@@ -12,7 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -51,7 +56,7 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
  */
 public class Launcher {
 	private String EricIP = "142.157.30.157";
-	private String JamesIP = "142.157.105.75";
+	private String JamesIP = "69.194.56.28";
 	private String JunhazIP = "142.157.65.31";
 	private String ZaidIP = "142.157.145.244";
 	private String BenIP = "142.157.58.216";
@@ -59,7 +64,7 @@ public class Launcher {
 	
 	private static Client client;
 	
-	private String ServerIP = MatIP;
+	private String ServerIP = JamesIP;
 
 	int port = 8888;
 	User userOne = new User();
@@ -86,6 +91,9 @@ public class Launcher {
 
 	// Saving and Loading stuff
 	private String folderPath;
+	
+	
+	private static String defaultImagesPath = "img/";
 	
 	
 	//Used by Ben for in game testing. Not permanent.
@@ -237,6 +245,14 @@ public class Launcher {
 		
 		contentPane.remove(dummyCenterPanel);
 		contentPane.add(login, BorderLayout.CENTER);
+		
+		// adding image
+		try {
+			BufferedImage loginBackground = ImageIO.read(new File(defaultImagesPath + "background-dark_firefighters.jpg"));
+			login.add(new JLabel(new ImageIcon(loginBackground)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	//------------------------------- LOGIN
