@@ -16,6 +16,7 @@ import token.Speciality;
  */
 public class Move extends Action {
 
+	private static final long serialVersionUID = 1L;
 	protected int direction;
 	protected ActionList title = ActionList.Move;
 	
@@ -99,15 +100,9 @@ public class Move extends Action {
         	}
         }
         
-        //speciality paramedic
-//        if (playingFirefighter.getSpeciality() == Speciality.PARAMEDIC && playingFirefighter.getFollow() != null && neighbour.getFire() == 2) {
-//        	flag = false;
-//        }
-        
         if (playingFirefighter.getCarriedPOI() != null && neighbour.getFire() == 2) {
         	flag = false;
         }
-        
         
         return flag;
     }
@@ -126,13 +121,16 @@ public class Move extends Action {
         		int difference = APcost - playingFirefighter.getSP();
         		playingFirefighter.setSP(0);
         		playingFirefighter.setAP(playingFirefighter.getAP() - difference);
+        		playingFirefighter.setUsedAP(true);
         	}
         	else {
         		playingFirefighter.setAP(aP - this.APcost);
+        		playingFirefighter.setUsedAP(true);
         	}
         }
         else {
         	playingFirefighter.setAP(aP - this.APcost);
+        	playingFirefighter.setUsedAP(true);
         }
         
 
@@ -140,6 +138,9 @@ public class Move extends Action {
         playingFirefighter.setCurrentPosition(neighbour);
         currentPosition.removeFromFirefighterList(playingFirefighter);
         neighbour.addToFirefighterList(playingFirefighter);
+        if (!playingFirefighter.getCanDodge()) {
+        	gs.vicinity(playingFirefighter);
+        }
         
         //@matekrk - logic POI move/poiFlip
         if(neighbour.containsPOI() == true) {

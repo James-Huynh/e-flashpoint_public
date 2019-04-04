@@ -22,6 +22,7 @@ public class RemoveHazmat extends Action {
 	@Override
 	public void perform(GameState gs) {
 		gs.getPlayingFirefighter().setAP( gs.getPlayingFirefighter().getAP() - APcost);
+		gs.getPlayingFirefighter().setUsedAP(true);
 		Hazmat hazmat = gs.getPlayingFirefighter().getCurrentPosition().popHazmat();
 		hazmat.setDisposed();
 		gs.addDisposedHazmat(hazmat);

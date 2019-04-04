@@ -54,6 +54,7 @@ public class Drive extends Action {
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int aP = playingFirefighter.getAP();
         playingFirefighter.setAP(aP - this.APcost);
+        playingFirefighter.setUsedAP(true);
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         
         ParkingSpot parking;
@@ -84,6 +85,9 @@ public class Drive extends Action {
         			f.getCurrentPosition().getFirefighterList().remove(f);
         			f.setCurrentLocation(nextAmbulance.getTiles()[whichOne]);
         			nextAmbulance.getTiles()[whichOne].addToFirefighterList(f);
+        			if (!f.getCanDodge()) {
+        	        	gs.vicinity(f);
+        	        }
         		}
         	}
         }
@@ -119,6 +123,9 @@ public class Drive extends Action {
             currentPosition.getFirefighterList().remove(playingFirefighter);
             playingFirefighter.setCurrentLocation(target);
             target.addToFirefighterList(playingFirefighter);
+            if (!playingFirefighter.getCanDodge()) {
+            	gs.vicinity(playingFirefighter);
+            }
             
             obtainTravellers(gs);
             
@@ -128,6 +135,9 @@ public class Drive extends Action {
             			f.getCurrentPosition().getFirefighterList().remove(f);
             			f.setCurrentPosition(target);
             			target.addToFirefighterList(f);
+            			if (!f.getCanDodge()) {
+            	        	gs.vicinity(f);
+            	        }
             		}
             		else {
             			f.getCurrentPosition().getFirefighterList().remove(f);
@@ -136,6 +146,9 @@ public class Drive extends Action {
             					f.getCurrentPosition().getFirefighterList().remove(f);
             					f.setCurrentLocation(tt);
             					tt.addToFirefighterList(f);
+            					if (!f.getCanDodge()) {
+                    	        	gs.vicinity(f);
+                    	        }
             					break;
             				}
             			}

@@ -64,6 +64,7 @@ public class Handle extends Action{
         int AP = playingFirefighter.getAP();
         door.change();
         playingFirefighter.setAP(AP - cost);
+        playingFirefighter.setUsedAP(true);
 	}
     
     @Override

@@ -33,6 +33,7 @@ public class Change extends Action {
 		gs.getFreeSpecialities().remove(toSpeciality);
 		gs.setFirefighterSpeciality(current, toSpeciality);
 		current.setAP(current.getAP()-this.APcost);
+		current.setUsedAP(true);
 	}
 
 	@Override

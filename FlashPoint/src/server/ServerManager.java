@@ -192,10 +192,11 @@ public class ServerManager {
 
 	public void endTurn() {
 		Firefighter currentOne = gameState.getPlayingFirefighter();
-		currentOne.endOfTurn();
+		//currentOne.endOfTurn(); // cannot be any longer here - bc of dodge
 		advanceFire();
 		System.out.println("endturn over");
 		if(gameState.isGameTerminated() || gameState.isGameWon()) {
+			//@matekrk! here should be pop-in window so something like gameState.setEndString(gameManager.getAdvEndMessage)
 			setFFNextTurn();
 			generateActions();
 		} 
@@ -210,6 +211,7 @@ public class ServerManager {
 	public void setFFNextTurn() {
 		gameManager.setFirstAction(true);
 		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
+		gameState.getPlayingFirefighter().endOfTurn();
 		
 	}
 	

@@ -23,6 +23,8 @@ public class Firefighter extends Token implements Serializable {
 	protected Player myPlayer;
 	public Speciality speciality;
 	protected int SP;
+	protected boolean canDodge; // be careful! dog canDodge can be true but in validation it is false!
+	protected boolean usedAP; //Experience point
 	private static final long serialVersionUID = 1L;
 	protected POI carrying;
 	protected boolean ifCommandCAPSthisTurn;
@@ -38,6 +40,8 @@ public class Firefighter extends Token implements Serializable {
 		this.myColour = setColour;
 		this.speciality = null;
 		this.SP = 0;
+		this.canDodge = false;
+		this.usedAP = false;
 		this.carrying = null;
 		this.ifCommandCAPSthisTurn = false;
 		//Colour = Player.getColour();
@@ -70,8 +74,9 @@ public class Firefighter extends Token implements Serializable {
 			this.SP = 0;
 		}
 		else if (speciality == Speciality.VETERAN) {
-			this.AP = 4; //?
-			this.SP = 0; //?
+			this.AP = 4; 
+			this.SP = 0; 
+			this.canDodge = true;
 		}
 		else {
 			this.AP = 4;
@@ -122,6 +127,14 @@ public class Firefighter extends Token implements Serializable {
 	
 	public boolean getIfCommandCAPSthisTurn() {
 		return this.ifCommandCAPSthisTurn;
+	}
+	
+	public boolean getCanDodge() {
+		return canDodge;
+	}
+	
+	public boolean getUsedAP() {
+		return usedAP;
 	}
 	
 	//------------------------ SETTTERS -------------------------//
@@ -196,6 +209,14 @@ public class Firefighter extends Token implements Serializable {
 		this.SP = SP;
 	}
 	
+	public void setCanDodge(boolean canDodge) {
+		this.canDodge = canDodge;
+	}
+	
+	public void setUsedAP(boolean usedAP) {
+		this.usedAP = usedAP;
+	}
+	
 	public void setCarriedPOI(POI victim) {
 		carrying = victim;
 	}
@@ -204,37 +225,61 @@ public class Firefighter extends Token implements Serializable {
 		ifCommandCAPSthisTurn = value;
 	}
 	
-	// end of turn
+	// end of turn ---- big update in terms of logic - actually it is beginning of turn!
 	
 	public void endOfTurn() {
 		if (speciality == Speciality.CAPTAIN) {
+			if (canDodge && !usedAP) {
+				this.AP = Math.max(0, AP-1);
+			}
 			this.AP = Math.min(8, this.AP + 4);
 			this.SP = 2;
+			this.canDodge = false;
 			this.ifCommandCAPSthisTurn = false;
 		}
 		else if (speciality == Speciality.CAFS) {
+			if (canDodge && !usedAP) {
+				this.AP = Math.max(0, AP-1);
+			}
 			this.AP = Math.min(8, this.AP + 3);
 			this.SP = 3;
+			this.canDodge = false;
 		}
 		else if (speciality == Speciality.GENERALIST) {
+			if (canDodge && !usedAP) {
+				this.AP = Math.max(0, AP-1);
+			}
 			this.AP = Math.min(8, this.AP + 5);
 			this.SP = 0;
+			this.canDodge = false;
 		}
 		else if (speciality == Speciality.RESCUE_SPECIALIST) {
+			if (canDodge && !usedAP) {
+				this.AP = Math.max(0, AP-1);
+			}
 			this.AP = Math.min(8, this.AP + 4);
 			this.SP = 3;
+			this.canDodge = false;
 		}
 		else if (speciality == Speciality.DOG) {
-			this.AP = Math.min(12, this.AP + 6);
+			if (canDodge && !usedAP) {
+				this.AP = Math.max(0, AP-1);
+			}
+			this.AP = Math.min(18, this.AP + 12);
 			this.SP = 0;
+			this.canDodge = false;
 		}
 		else if (speciality == Speciality.VETERAN) {
-			this.AP = Math.min(8, this.AP + 4); //?
-			this.SP = 0; //?
-		}
-		else {
 			this.AP = Math.min(8, this.AP + 4);
 			this.SP = 0;
+		}
+		else {
+			if (canDodge && !usedAP) {
+				this.AP = Math.max(0, AP-1);
+			}
+			this.AP = Math.min(8, this.AP + 4);
+			this.SP = 0;
+			this.canDodge = false;
 		}
 	}
 	
@@ -243,7 +288,7 @@ public class Firefighter extends Token implements Serializable {
 	public String toString() {
 		return "Firefighter [AP=" + AP + ", savedAP=" + savedAP + ", carryingVictim=" + carryingVictim + ", victim="
 				+ victim.toString() + ", myColour=" + myColour.toString() + ", myPlayer=" + myPlayer.toString() + ", speciality=" + speciality.toString() + ", SP="
-				+ SP + ", follow=" + carrying.toString() + ", ifCommandCAPSthisTurn=" + ifCommandCAPSthisTurn + ", x=" + x + ", y="
+				+ SP + ", canDodge=" + canDodge + ", usedAP=" + usedAP + ", follow=" + carrying.toString() + ", ifCommandCAPSthisTurn=" + ifCommandCAPSthisTurn + ", x=" + x + ", y="
 				+ y + ", tileOn=" + tileOn.toString() + "]";
 	}
 
