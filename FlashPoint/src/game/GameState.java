@@ -1202,7 +1202,9 @@ public class GameState implements Serializable {
 					vet = g;
 				}
 			}
-			
+			if(vet == f) {
+				return;
+			}
 			boolean flag = false;
 			
 			/* STRAIGHT FORWARD
@@ -1235,7 +1237,7 @@ public class GameState implements Serializable {
 			
 			else if (Math.abs(posX-vetX) + Math.abs(posY-vetY) <= 3) {
 				ArrayList<Tile> path = new ArrayList<Tile>();
-				
+				path.add(f.getCurrentPosition());
 				for (int i1=0; i1<4; i1++) { // first level DFS
 					Tile t1 = getNeighbour(path.get(path.size()-1), i1);
 					if (t1 != null) {

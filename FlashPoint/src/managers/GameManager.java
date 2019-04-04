@@ -563,8 +563,8 @@ public class GameManager {
     }
 
   //Ben and eric, ready for testing
-    public void resolveFlashOver() {
-        /* TODO: No message view defined */
+    public boolean resolveFlashOver() {
+        boolean returnFlag = false;
     	Tile targetTile = gs.returnTile(0,0);
     	int[] tempCoords = targetTile.getCoords();
     	while(true) {       // all tiles
@@ -603,7 +603,7 @@ public class GameManager {
         				if(fireCheck == 2) {
         					targetTile.setFire(2);
         					recentAdvFire += "Flashover spread the fire to tile " + tempCoords[0] + "," + tempCoords[1] + ".\n";
-        					
+        					returnFlag = true;
         					//resets the targetTile
         					targetTile = gs.returnTile(0,0);
         		
@@ -638,14 +638,17 @@ public class GameManager {
     		}
     		
     	}
+    	return returnFlag;
     	
     }
     
-    private void resolveHazmatExplosions() {
+    public boolean resolveHazmatExplosions() {
   		// TODO Auto-generated method stub
+    	boolean returnFlag = false;
     	Tile targetTile = gs.returnTile(0,0);
     	int[] tempCoords = targetTile.getCoords();
     	while(true) {       // all tiles
+    		System.out.println("in hazmat explosion loop");
     		tempCoords = targetTile.getCoords();
     		if(targetTile.getFire() == 2 && targetTile.containsHazmat()) {
     			while(targetTile.containsHazmat()) {
@@ -653,6 +656,7 @@ public class GameManager {
     				gs.addLostHazmat(temp);
     				recentAdvFire += "hazmat explosion caused at:  " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1] +"\n";
     				explosion(targetTile);
+    				returnFlag = true;
     			}
     			if(gs.getHotSpot() > 0) {
     				targetTile.setHotSpot(1);
@@ -672,6 +676,7 @@ public class GameManager {
     		}
     		
     	}
+    	return returnFlag;
   	}
 
   //Ben and eric, skeleton code 
@@ -689,6 +694,7 @@ public class GameManager {
     	int[] coords = targetTile.getCoords();
     
     	while(true){	
+    		System.out.println("in knockdown loop");
     		int curFire = targetTile.getFire();
     		coords = targetTile.getCoords();
     		boolean fire = false;
@@ -769,6 +775,7 @@ public class GameManager {
         int currentPOI = gs.getCurrentPOI();
         Tile targetTile = gs.rollForTile();
         while (currentPOI < 3) {
+        	System.out.println("in POI loop");
         	boolean containsPOI = targetTile.containsPOI();
         	boolean containsFireFighter = targetTile.containsFirefighter();
         	int curFire = targetTile.getFire();
@@ -967,8 +974,94 @@ public class GameManager {
     	}
     	
     }
+    
+    //Takes a tile as input the rolled tile and if if advanceFire is in recursion. This increments the tiles fire accordingly, calls explosion if requried
+    public boolean advanceFireStart(Tile targetTile, boolean additionalHotspot) {
+    	int curFire = targetTile.getFire();
+    	int[] tempCoords = targetTile.getCoords();
+    	if(curFire == 0) {
+    		boolean flag = false;
+    		for(int direction = 0; direction<4; direction ++) {
+    			//checks for if the adj tiles are above/below the map
+				if(tempCoords[0] == 0) {
+					if(direction == 1) {
+						continue;
+					}
+				} else if(tempCoords[0] == 7) {
+					if(direction == 3) {
+						continue;
+					}
+				}
+				//checks for if the adj tiles are left or right of the map
+				if(tempCoords[1] == 0) {
+					if(direction == 0) {
+						continue;
+					}
+				} else if(tempCoords[1] == 9) {
+					if(direction == 2) {
+						continue;
+					}
+				}
+				//checks if a barrier is in the way, if not it checks if the tile in said direction is on fire and flashes over is so
+				boolean checkBarriers = targetTile.checkBarriers(direction);
+				if(checkBarriers == false) {
+					Tile adjTile =  gs.getNeighbour(targetTile,direction);
+    				int fireCheck = adjTile.getFire();
+    				
+    				if(fireCheck == 2) {
+    					flag = true;
+    				}
+				}
+    		}
+    		if(flag) {
+    			targetTile.setFire(2);
+    			if(additionalHotspot) {
+    				recentAdvFire += "Another advanced fire triggered\n Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke and caught Fire.\n";
+    			} else {
+    				recentAdvFire += "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke and caught Fire.\n";
+    			}
+    		}else {
+    			targetTile.setFire(1);
+    			if(additionalHotspot) {
+    				recentAdvFire += "Another advanced fire triggered\n Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke.\n";
+    			} else {
+    				recentAdvFire += "Tile "+ tempCoords[0] +"," + tempCoords[1] + " turned to smoke.\n";
+    			}
+    			
+    		}
+    	}else if(curFire == 1) {
+    		targetTile.setFire(2);
+    		if(additionalHotspot) {
+    			recentAdvFire += "Another advanced fire triggered\n Tile "+ tempCoords[0] +"," + tempCoords[1] + " caught Fire.\n";
+    		}
+    		else {
+    			recentAdvFire += "Tile "+ tempCoords[0] +"," + tempCoords[1] + " caught Fire.\n";
+    		}
+    		
+    	}
+    	else {
+    		if(additionalHotspot) {
+    			recentAdvFire += "Another advanced fire triggered\n An explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". \n";
+    		} else {
+    			recentAdvFire += "An explosion occured at tile "+ tempCoords[0] +"," + tempCoords[1] + ". \n";
+    		}
+    		explosion(targetTile);
+    		return true;
+    		
+    	}
+    	return false;
+    }
+    private boolean advanceFireStage2() {
+    	return false;
+    }
+    private boolean advanceFireStage3() {
+    	return false;
+    }
+    private boolean advanceFireStage4() {
+    	return false;
+    }
 
-	private void clearExteriorFire() {
+	public void clearExteriorFire() {
 		for(int i = 0; i<8; i++) {
 			gs.returnTile(i,0).setFire(0);
 			gs.returnTile(i, 9).setFire(0);
@@ -1072,6 +1165,10 @@ public class GameManager {
 		this.firstAction = firstAction;
 	}
     
+	public void setAdvFire(String input) {
+		this.recentAdvFire = input;
+	}
+	
 //    public static void main(String[] args) {
 //    	GameManager gm = new GameManager();
 //    	gm.runFlashpoint();

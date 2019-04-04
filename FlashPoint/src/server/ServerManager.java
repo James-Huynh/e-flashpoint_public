@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import actions.Action;
+import actions.ActionList;
 import chat.ChatMsgEntity;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
@@ -193,7 +194,7 @@ public class ServerManager {
 	public void endTurn() {
 		Firefighter currentOne = gameState.getPlayingFirefighter();
 		//currentOne.endOfTurn(); // cannot be any longer here - bc of dodge
-		advanceFire();
+		advanceFireNew();
 		System.out.println("endturn over");
 		if(gameState.isGameTerminated() || gameState.isGameWon()) {
 			//@matekrk! here should be pop-in window so something like gameState.setEndString(gameManager.getAdvEndMessage)
@@ -219,6 +220,81 @@ public class ServerManager {
 	public void advanceFire() {
 		gameManager.advanceFire(false); //this boolean is saying that it is the initial advanced fire and not one caused by a hotspot flare up
 		gameState.setAdvFireString(gameManager.getAdvFireMessage());
+	}
+	
+	public void advanceFireNew() {
+		System.out.println("starting advance fire new\n\n\n\n");
+		//looper set to false in family, true if the initial tile has a hot spot
+		boolean hasHotSpot = true;
+		//used to know if the loop is on the first iteration or not
+		boolean additionalHotSpot;
+		int count = 0;
+		gameManager.setAdvFire("");
+    	
+		//checking if a vet exists in the game
+		boolean dodgeCheck = false;
+		if(gameState.isExperienced()) {
+			for(Firefighter f : gameState.getFireFighterList()) {
+				if(f.getSpeciality() == Speciality.VETERAN) {
+					dodgeCheck = true;
+					System.out.println("deodgecheck" + dodgeCheck);
+				}
+			}
+		}
+		
+    	//gs.endTurn();
+    	while(hasHotSpot) {
+    		additionalHotSpot = 0<count;
+    		Tile targetTile = gameState.rollForTile();
+        	if(gameState.isExperienced()) {
+        		hasHotSpot = targetTile.containsHotSpot();
+        	} else {
+        		hasHotSpot = false;
+        	}
+        	
+        	if(gameManager.advanceFireStart(targetTile, additionalHotSpot) && dodgeCheck) {
+        		System.out.println("dodge triggered after start");
+        	}
+        	
+        	if(gameManager.resolveFlashOver() && dodgeCheck) {
+        		System.out.println("dodge triggered after flashover");
+        	}
+        	
+        	if(gameState.isExperienced()) {
+        		if(gameManager.resolveHazmatExplosions() && dodgeCheck) {
+        			System.out.println("dodge triggered after hazmatExplosion");
+        		}
+        	}
+        	
+        	if(additionalHotSpot) {
+        		if(gameState.getHotSpot()>0) {
+    				targetTile.setHotSpot(1);
+        			gameState.setHotSpot(gameState.getHotSpot() - 1);
+        			gameManager.setAdvFire("hotSpot added to final tile at coords: " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1]  +"\n");
+    			}
+        	}
+        	
+        	count++;
+        	if(hasHotSpot) {
+        		gameManager.setAdvFire("hotSpot triggered another advanceFire \n");
+        	}
+    	}
+    	
+    	gameManager.checkKnockDowns();
+    	gameManager.placePOI();
+    	gameManager.clearExteriorFire();
+    	
+    	int wallCheck = gameState.getDamageCounter();//should this running the same time with the main process? @Eric
+    	int victimCheck = gameState.getLostVictimsList().size();
+    	int savedVictimCheck = gameState.getSavedVictimsList().size();
+    	
+    	
+    	if(wallCheck >= 24 || victimCheck >= 4) {
+    		gameState.terminateGame();
+    	} else if(savedVictimCheck >= 7) {
+    		gameState.winGame();
+    	}
+    	gameState.setAdvFireString(gameManager.getAdvFireMessage());
 	}
 	
 	public boolean askRelevantFirefighters(Vehicle type) {
