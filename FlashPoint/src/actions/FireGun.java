@@ -41,7 +41,7 @@ public class FireGun extends Action {
 		return result;
 	}
 	
-	public void updateResult(int[] newCords) {
+	public void setResult(int[] newCords) {
 		this.result[0] = newCords[0];
 		this.result[1] = newCords[1];
 	}
