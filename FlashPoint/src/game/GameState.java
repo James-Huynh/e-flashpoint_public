@@ -1054,7 +1054,8 @@ public class GameState implements Serializable {
 	}
 	
 	//so this method put all relevant FF to the map right? when we change if they don't want to ride?
-	public void createFFToAsk(Vehicle type) {
+	public boolean createFFToAsk(Vehicle type) {
+		boolean flag = false;
 		this.inRideMode = true;
 		if(type == Vehicle.Ambulance) {
 			for(int i=0;i<ambulances.length;i++) {
@@ -1066,6 +1067,7 @@ public class GameState implements Serializable {
 								if( f != this.getPlayingFirefighter()) {
 //									rideMapper.put(f, true);
 									rideMapper.get(f)[0] = true;
+									flag = true;
 								}
 							}
 						}
@@ -1083,6 +1085,7 @@ public class GameState implements Serializable {
 								if( f != this.getPlayingFirefighter()) {
 	//								rideMapper.put(f, true);
 									rideMapper.get(f)[0] = true;
+									flag = true;
 								}
 							}
 						}
@@ -1090,7 +1093,7 @@ public class GameState implements Serializable {
 				}
 			}
 		}
-		System.out.println("we have reached the end of the ask");
+		return flag;
 	}
 	
 	public boolean hasEveryoneResponded() {
