@@ -1057,27 +1057,136 @@ public class Table {
 					} else {
 						check = this.connectedTile.getFirefighterList().get(0);
 					}
-					if(check.getColour() == Colour.WHITE) {
-						builder = builder + "WHITE";
-					} else if(check.getColour() == Colour.BLUE) {
-						builder = builder + "BLUE";
-					}else if(check.getColour() == Colour.RED) {
-						builder = builder + "RED";
-					}else if(check.getColour() == Colour.BLACK) {
-						builder = builder + "BLACK";
-					}else if(check.getColour() == Colour.GREEN) {
-						builder = builder + "GREEN";
-					}else if(check.getColour() == Colour.PURPLE) {
-						builder = builder + "PURPLE";
+					
+					if(clientManager.getUsersGameState().isExperienced()) {
+						if(check.getSpeciality() == Speciality.CAFS) {
+							try {
+								builder = builder + "CAFS_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));	
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.CAPTAIN) {
+							try {
+								builder = builder + "CAPTAIN_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+						} else if(check.getSpeciality() == Speciality.DOG) {
+							try {
+								builder = builder + "DOG_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+						} else if(check.getSpeciality() == Speciality.DRIVER) {
+							try {
+								builder = builder + "DRIVER_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+						} else if(check.getSpeciality() == Speciality.GENERALIST) {
+							try {
+								builder = builder + "WHITE_FIREMAN_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+						} else if(check.getSpeciality() == Speciality.HAZMAT_TECHNICIAN) {
+							try {
+								builder = builder + "SHAZMAT_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.IMAGING_TECHNICIAN) {
+							try {
+								builder = builder + "IMAGING_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.PARAMEDIC) {
+							try {
+								builder = builder + "PARAMEDIC_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.RESCUE_SPECIALIST) {
+							try {
+								builder = builder + "RESCUE_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else if(check.getSpeciality() == Speciality.VETERAN) {
+							try {
+								builder = builder + "VETEREN_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else {
+							try {
+								builder = builder + "GREEN_FIREMAN_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					} else {
+						if(check.getColour() == Colour.WHITE) {
+							builder = builder + "WHITE";
+						} else if(check.getColour() == Colour.BLUE) {
+							builder = builder + "BLUE";
+						}else if(check.getColour() == Colour.RED) {
+							builder = builder + "RED";
+						}else if(check.getColour() == Colour.BLACK) {
+							builder = builder + "BLACK";
+						}else if(check.getColour() == Colour.GREEN) {
+							builder = builder + "GREEN";
+						}else if(check.getColour() == Colour.PURPLE) {
+							builder = builder + "PURPLE";
+						}
+						try {
+							builder = builder + "_FIREMAN";
+							int numberFF = this.connectedTile.getFirefighterList().size();
+							final BufferedImage FFimage = ImageIO.read(new File(builder +"_"+ numberFF +".gif"));
+							add(new JLabel(new ImageIcon(FFimage)));	
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
-					try {
-						builder = builder + "_FIREMAN";
-						int numberFF = this.connectedTile.getFirefighterList().size();
-						final BufferedImage FFimage = ImageIO.read(new File(builder +"_"+ numberFF +".gif"));
-						add(new JLabel(new ImageIcon(FFimage)));	
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					
 				} else {
 					add(new JLabel());
 				}
