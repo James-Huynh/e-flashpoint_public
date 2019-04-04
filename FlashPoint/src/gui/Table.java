@@ -4806,6 +4806,10 @@ public class Table {
 					JPopupMenu popupMenu = new JPopupMenu();
 					JMenu poiMenu = new JMenu("POIs");
 					JMenu firefighterMenu = new JMenu("Firefighters");
+					JMenuItem hazmatMenu = new JMenuItem("Hazmat");
+					JMenuItem hotSpotMenu = new JMenuItem("HotSpot");
+					JMenuItem ambulanceMenu = new JMenuItem("Ambulance");
+					JMenuItem engineMenu = new JMenuItem("Engine");
 					Tile myTile = currentBoard.returnTile(coords[0], coords[1]);
 			        String builder = "";
 			        JMenuItem info;
@@ -4823,13 +4827,43 @@ public class Table {
 						poiMenu.add(info);
 					}
 					for(Firefighter f: myTile.getFirefighterList()) {
-						builder = f.getOwner().getUserName() + ": " + f.getColour().toString() + " fireman.";
-						info = new JMenuItem(builder);
-						firefighterMenu.add(info);
-					}					
-			        popupMenu.add(poiMenu);
-			        popupMenu.addSeparator();
-			        popupMenu.add(firefighterMenu);
+						if(clientManager.getUsersGameState().isExperienced()) {
+							builder = f.getOwner().getUserName() + "    Speciality: " + f.getSpeciality().toString() + " AP: "+ f.getAP() + " SAP: " + f.getSavedAP();
+							info = new JMenuItem(builder);
+							firefighterMenu.add(info);
+						} else {
+							builder = f.getOwner().getUserName() + ": " + f.getColour().toString() + " fireman." + " AP: "+ f.getAP();
+							info = new JMenuItem(builder);
+							firefighterMenu.add(info);
+						}
+					}
+					if(myTile.containsPOI()) {
+						 popupMenu.add(poiMenu);
+					      popupMenu.addSeparator();
+					}
+					if(myTile.containsFirefighter()) {
+						 popupMenu.add(firefighterMenu);
+						 popupMenu.addSeparator();
+					}
+			        if(clientManager.getUsersGameState().isExperienced()) {
+			        	if(myTile.containsHazmat()) {
+			        		popupMenu.add(hazmatMenu);
+				        	popupMenu.addSeparator();
+			        	}
+			        	if(myTile.containsHotSpot()) {
+			        		popupMenu.add(hotSpotMenu);
+			        	}
+			        	if(myTile.getParkingSpot() != null) {
+			        		if(myTile.getParkingSpot().getCar()) {
+			        			if(myTile.getParkingType() == Vehicle.Ambulance) {
+			        				popupMenu.add(ambulanceMenu);
+			        			}
+			        			if(myTile.getParkingType() == Vehicle.Engine) {
+			        				popupMenu.add(engineMenu);
+			        			}
+			        		}
+			        	}
+			        }
 			        
 			        popupMenu.show(component, x, y);		// very important
 				}
