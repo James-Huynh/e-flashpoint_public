@@ -196,8 +196,9 @@ public class Firefighter extends Token implements Serializable {
 			this.SP = 0;
 		}
 		else if (speciality == Speciality.VETERAN) {
-			this.AP = 4; //?
-			this.SP = 0; //?
+			this.AP = 4;
+			this.SP = 0;
+			this.canDodge = true;
 		}
 		else {
 			this.AP = 4;
