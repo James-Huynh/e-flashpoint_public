@@ -39,6 +39,7 @@ public class GameManager {
 	private String recentAdvFire;
 	private Lobby representsLobby;
 	private boolean firstAction;
+	private boolean[] dodgeResponseChecker;
 	
 	// MAIN
     public void runFlashpoint() {
@@ -66,6 +67,7 @@ public class GameManager {
     	gs.setListOfPlayers(representsLobby.getPlayers());
     	setupGameType();
     	gs.setFirefighters();
+    	dodgeResponseChecker = new boolean[gs.getFireFighterList().size()];
     }
 	
     public void loadGameState(GameState ngs) {
@@ -1185,11 +1187,30 @@ public class GameManager {
 				}
 			}
 			gs.setDodgingHashMap(f, dodgeList);
+			if(dodgeList.size() > 0) {
+				dodgeResponseChecker[gs.getFireFighterList().lastIndexOf(f)] = false;
+			} else {
+				dodgeResponseChecker[gs.getFireFighterList().lastIndexOf(f)] = true;
+			}
 		}
 		gs.setPlayingFirefighter(inturn);
 		gs.setIsDodging(flag);
 		return flag;
 		
+	}
+
+	public void setDodgeResponseChecker(int myFFIndex) {
+		dodgeResponseChecker[myFFIndex] = true;
+		
+	}
+
+	public boolean hasEveryoneDodged() {
+		for(int i = 0; i < dodgeResponseChecker.length; i++) {
+			if(dodgeResponseChecker[i] == false) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 //    public static void main(String[] args) {

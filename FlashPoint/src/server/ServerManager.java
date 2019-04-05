@@ -41,6 +41,7 @@ public class ServerManager {
 	private GameManager gameManager;
 	
 	
+	
 	private int placedFF = 0;
 	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public ServerManager() {
@@ -66,6 +67,7 @@ public class ServerManager {
 			gameState = gameManager.getGameState();
 			gameState.setActiveFireFighterIndex(-1);
 			gameManager.setFirstAction(true);
+			
 		}
 		
 	}
@@ -214,11 +216,11 @@ public class ServerManager {
 	public void setFFNextTurn() {
 		gameManager.setFirstAction(true);
 		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
-		if(turnCounter > gameState.getFireFighterList().size()) {
+//		if(turnCounter > gameState.getFireFighterList().size()) {
 			gameState.getPlayingFirefighter().endOfTurn();
-		}
+//		}
 		gameState.vicinity(gameState.getPlayingFirefighter());
-		turnCounter++;
+//		turnCounter++;
 	}
 	
 	public void advanceFire() {
@@ -530,6 +532,19 @@ public class ServerManager {
 			return gameManager.generateDodgeActions();
 			
 			
+		}
+
+		public void updateDodgeRespone(Action dodgeAction, int myFFIndex) {
+			Firefighter inturn = gameState.getPlayingFirefighter();
+			gameState.setPlayingFirefighter(gameState.getFireFighterList().get(myFFIndex));
+			dodgeAction.perform(gameState);
+			gameState.setPlayingFirefighter(inturn);
+			gameManager.setDodgeResponseChecker(myFFIndex);
+			
+		}
+
+		public boolean hasEveryoneDodged() {
+			return gameManager.hasEveryoneDodged();
 		}
 	
 }

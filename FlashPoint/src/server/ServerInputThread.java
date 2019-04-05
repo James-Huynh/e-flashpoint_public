@@ -367,9 +367,9 @@ public class ServerInputThread extends Thread {
 								onOut.setMessage(returnGameState); 
 							}
 							
-//							while(!serverManager.hasEveryoneDodged()) {
-//								
-//							}
+							while(!serverManager.hasEveryoneDodged()) {
+								
+							}
 		        		}
 		        	}
 		        	
@@ -384,9 +384,9 @@ public class ServerInputThread extends Thread {
 								onOut.setMessage(returnGameState); 
 							}
 							
-//							while(!serverManager.hasEveryoneDodged()) {
-//								
-//							}
+							while(!serverManager.hasEveryoneDodged()) {
+								
+							}
 		        		}
 		        	}
 		        	
@@ -402,9 +402,9 @@ public class ServerInputThread extends Thread {
 									onOut.setMessage(returnGameState); 
 								}
 								
-//								while(!serverManager.hasEveryoneDodged()) {
-//									
-//								}
+								while(!serverManager.hasEveryoneDodged()) {
+									
+								}
 			        		}
 		        		}
 		        	}
@@ -448,6 +448,12 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameStateEnd);
 				}
 				break;
+			case DODGERESPONSE:
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.updateDodgeRespone(requestObject.getDodgeAction(), requestObject.getMyFFIndex());
+				System.out.println("hello we have updated riderResponse");
+				break;
+				
 			case SAVEGAME:
 				System.out.println("save game");
 				returnObject = new TranObject<User>(TranObjectType.SAVEGAMESUCCESS);

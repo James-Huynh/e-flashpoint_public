@@ -708,6 +708,15 @@ public class ClientManager {
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;
+	}
+
+	public boolean dodgeAnswer(Action a, int myIndex) {
+		requestObject.setDodgeAction(a);
+		requestObject.setMyFFIndex(myIndex);
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.DODGERESPONSE);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
 	} 
 	
 	

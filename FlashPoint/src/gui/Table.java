@@ -37,6 +37,7 @@ import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+import actions.Action;
 import actions.ActionList;
 import client.ClientManager;
 import custom_panels.ChatBox;
@@ -5127,8 +5128,9 @@ public class Table {
 							System.out.println("this should not happen");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-//							if(sendActionRequest(a));
+							sendDodgeAnswer(a,myIndex);
 						}
+
 					});
 					responsePanel.add(dodgeButton0);		
 				} else if (a.getDirection() == 1) {
@@ -5139,7 +5141,7 @@ public class Table {
 							System.out.println("this should not happen");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-//							if(sendActionRequest(a));
+							sendDodgeAnswer(a,myIndex);
 						}
 					});
 					responsePanel.add(dodgeButton1);
@@ -5151,7 +5153,7 @@ public class Table {
 							System.out.println("this should not happen");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-//							if(sendActionRequest(a));
+							sendDodgeAnswer(a,myIndex);
 						}
 					});
 					responsePanel.add(dodgeButton2);
@@ -5163,7 +5165,7 @@ public class Table {
 							System.out.println("this should not happen");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-//							if(sendActionRequest(a));
+							sendDodgeAnswer(a,myIndex);
 						}
 					});
 					responsePanel.add(dodgeButton3);
@@ -5402,6 +5404,11 @@ public class Table {
 			}
 			
 			return true;
+		}
+		
+		private void sendDodgeAnswer(Action a, int myIndex) {
+			clientManager.dodgeAnswer(a,myIndex);
+			
 		}
 		
 }
