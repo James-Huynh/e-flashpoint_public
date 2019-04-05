@@ -54,9 +54,7 @@ public class ServerInputThread extends Thread {
 //		serverManager = new ServerManager();
 		try {
 			while (isStart) {
-				//System.out.println("Looping?");
-//				serverManager.readMessage(out, ois);
-				// JUNHA : this is supposed to be serverManager.readMessage();
+				System.out.println("Server reading message");
 				 readMessage();
 
 			}
@@ -367,6 +365,7 @@ public class ServerInputThread extends Thread {
 				serverManager.getGameManager().setAdvFire("");
 				//checking if a vet exists in the game
 				boolean dodgeCheck = false;
+				int testCounter = 0;
 				if(serverManager.getGameState().isExperienced()) {
 					for(Firefighter f : serverManager.getGameState().getFireFighterList()) {
 						if(f.getSpeciality() == Speciality.VETERAN) {
@@ -396,10 +395,19 @@ public class ServerInputThread extends Thread {
 								System.out.println("hello should be in the output thread of dodge");
 								onOut.setMessage(returnGameState); 
 							}
-							
-							while(!serverManager.hasEveryoneDodged()) {
-								
+							System.out.println("Exited sending output thread to everyone");
+							while(true) {
+								readMessage();
+								if(serverManager.hasEveryoneDodged()) {
+									break;
+								}
 							}
+//							readMessage();
+//							while(!serverManager.hasEveryoneDodged()) {
+
+								
+//							}
+							System.out.println("Everyone has responded");
 		        		}
 		        	}
 		        	
@@ -413,10 +421,18 @@ public class ServerInputThread extends Thread {
 								System.out.println("hello should be in the output thread of dodge");
 								onOut.setMessage(returnGameState); 
 							}
-							
-							while(!serverManager.hasEveryoneDodged()) {
-								
+							System.out.println("Exited sending output thread to everyone");
+							while(true) {
+								readMessage();
+								if(serverManager.hasEveryoneDodged()) {
+									break;
+								}
 							}
+//							readMessage();
+//							while(!serverManager.hasEveryoneDodged()) {
+//
+//							}
+							System.out.println("Everyone has responded");
 		        		}
 		        	}
 		        	
@@ -431,10 +447,18 @@ public class ServerInputThread extends Thread {
 									System.out.println("hello should be in the output thread of dodge");
 									onOut.setMessage(returnGameState); 
 								}
-								
-								while(!serverManager.hasEveryoneDodged()) {
-									
+								System.out.println("Exited sending output thread to everyone");
+								while(true) {
+									readMessage();
+									if(serverManager.hasEveryoneDodged()) {
+										break;
+									}
 								}
+//								readMessage();
+//								while(!serverManager.hasEveryoneDodged()) {
+//									
+//								}
+								System.out.println("Everyone has responded");
 			        		}
 		        		}
 		        	}
@@ -486,9 +510,9 @@ public class ServerInputThread extends Thread {
 //				}
 				break;
 			case DODGERESPONSE:
+				System.out.println("hello we have updated dodge Response");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.updateDodgeRespone(requestObject.getDodgeAction(), requestObject.getMyFFIndex());
-				System.out.println("hello we have updated dodge Response");
 				break;
 			case SAVEGAME:
 				System.out.println("save game");

@@ -564,7 +564,11 @@ public class ServerManager {
 		}
 
 		public boolean hasEveryoneDodged() {
-			return gameManager.hasEveryoneDodged();
+			boolean flag = gameManager.hasEveryoneDodged();
+			if(flag) {
+				gameState.setIsDodging(false);
+			}
+			return flag;
 		}
 
 		public void resetForNewGame() {
