@@ -751,7 +751,11 @@ public class ServerInputThread extends Thread {
 				serverManager.resetForNewGame();
 				
 				returnObject.setObject(requestObject);
-				out.setMessage(returnObject);
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
+					onOut.setMessage(returnObject);
+				}
+//				out.setMessage(returnObject);
 				//serverManager.getGameManager().end();
 			default:
 				break;
