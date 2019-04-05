@@ -778,6 +778,7 @@ public class GameManager {
     	recentAdvFire += "\n";
         int currentPOI = gs.getCurrentPOI();
         Tile targetTile = gs.rollForTile();
+        int count = 0;
         while (currentPOI < 3) {
         	System.out.println("in POI loop");
         	boolean containsPOI = targetTile.containsPOI();
@@ -786,8 +787,13 @@ public class GameManager {
         	if(containsPOI == false) {
         		if(this.representsLobby.getMode().equals("Experienced")) {
         			if(curFire > 0 || containsFireFighter) {
-        				//targetTile = getNewPOITile(targetTile.getCoords());
-        				targetTile = gs.rollForTile();
+        				if(count > 10) {
+        					targetTile = getNewPOITile();
+        				}
+        				else {
+        					count++;
+        					targetTile = gs.rollForTile();
+        				}
         			} else {
         				POI newPOI = gs.generatePOI();
             			targetTile.addPoi(newPOI);
@@ -834,22 +840,83 @@ public class GameManager {
         		}
         	}
         	currentPOI = gs.getCurrentPOI();
-        	if(this.representsLobby.getMode().equals("Experienced")) {
-
-        	} else {
-        		targetTile = gs.rollForTile();
-        	}
+        	targetTile = gs.rollForTile();
         }
     }
     
-    public Tile getNewPOITile(int[] coords) {
-    	int row = coords[0];
-    	int coloumn = coords[1];
-    	//if(row == 0 ||)
+    public Tile getNewPOITile() {
+//    	int row = coords[0];
+//    	int coloumn = coords[1];
+    	Tile check = null;
+    	boolean flag = true; 
+    	for(int i = 1; i<7; i++) {
+    		for(int j = 1; j<9; j++) {
+    			Tile temp = gs.returnTile(i,j);
+    			if(temp.containsFirefighter() || temp.containsPOI() || (temp.getFire() > 0)) {
+    				flag = false;
+    			} else {
+    				flag = true;
+    			}
+    			if(flag) {
+    				check = temp;
+    				break;
+    			}
+    		}
+    		if(check != null) {
+    			break;
+    		}
+    	}
     	
+    	if(check != null) {
+    		return check;
+    	}
     	
+    	for(int i = 1; i<7; i++) {
+    		for(int j = 1; j<9; j++) {
+    			Tile temp = gs.returnTile(i,j);
+    			if(temp.containsFirefighter() || temp.containsPOI() || (temp.getFire() > 1)) {
+    				flag = false;
+    			} else {
+    				flag = true;
+    			}
+    			if(flag) {
+    				check = temp;
+    				break;
+    			}
+    		}
+    		if(check != null) {
+    			break;
+    		}
+    	}
     	
-    	return null;
+    	if(check!= null) {
+    		check.setFire(0);
+    		return check;
+    	}
+    	
+    	for(int i = 1; i<7; i++) {
+    		for(int j = 1; j<9; j++) {
+    			Tile temp = gs.returnTile(i,j);
+    			if(temp.containsFirefighter() || temp.containsPOI()) {
+    				flag = false;
+    			} else {
+    				flag = true;
+    			}
+    			if(flag) {
+    				check = temp;
+    				break;
+    			}
+    		}
+    		if(check != null) {
+    			break;
+    		}
+    	}
+    	if(check!= null) {
+    		check.setFire(0);
+    		return check;
+    	}
+    	return check;
+    	
     }
 
     //Ben and eric, skeleton code 
