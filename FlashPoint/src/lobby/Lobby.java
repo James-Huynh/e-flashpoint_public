@@ -28,6 +28,8 @@ public class Lobby implements Serializable  {
 
 	private TemplateGame template;
 	private static final long serialVersionUID = 1L;
+	
+	private ArrayList<Integer> randomBoards;
 
 
 	public Lobby(){
@@ -166,7 +168,15 @@ public class Lobby implements Serializable  {
 		else {
 			System.out.println("creating random Board");
 			Random rn = new Random();
-			int boardNumber = rn.nextInt(5) + 1;
+			int boardNumber;
+			while(true) {
+				boardNumber = rn.nextInt(5) + 1;
+				if (!this.randomBoards.contains(boardNumber)) {
+					break;
+				}
+			}
+			
+			
 			if(this.mode.equals("Family")) {
 				if(boardNumber == 1) template = new RandomBoardOne("Family");
 				if(boardNumber == 2) template = new RandomBoardTwo("Family");
@@ -198,6 +208,14 @@ public class Lobby implements Serializable  {
 	
 	public int getRandomGame() {
 		return randomGame;
+	}
+	
+	public void setRandomBoards(ArrayList<Integer> randomBoards) {
+		this.randomBoards = randomBoards;
+	}
+	
+	public ArrayList<Integer> getRandomBoards(){
+		return this.randomBoards;
 	}
 
 }

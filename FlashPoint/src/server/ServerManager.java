@@ -69,7 +69,8 @@ public class ServerManager {
 			gameManager.setFirstAction(true);
 			firstTurn = true;
 			if (gameManager.getGameState().getRandomBoard() >= 0) {
-				gameManager.getGameState().setRandomGame(randomBoards.get(randomBoards.size()-1));
+				// gameManager.getGameState().setRandomGame(randomBoards.get(randomBoards.size()-1));
+				this.randomBoards.add(gameManager.getGameState().getRandomBoard());
 			}
 		}
 		
@@ -78,6 +79,7 @@ public class ServerManager {
 	public void initializeGameManager() {
 //		gameManager = new GameManager(gameState, activeLobby);
 		gameManager = new GameManager(activeLobby);
+		gameManager.setRandomBoards(this.randomBoards);
 	}
 	
 	public void generateActions() {
@@ -220,7 +222,7 @@ public class ServerManager {
 		gameManager.setFirstAction(true);
 		int newIndex = (gameState.getActiveFireFighterIndex() + 1);
 		if (newIndex >= gameState.getFreeFirefighters().size()) {
-			firstTurn = true;
+			firstTurn = false;
 		}
 		gameState.setActiveFireFighterIndex( newIndex%(gameState.getFireFighterList().size()) );
 		if(!firstTurn) {

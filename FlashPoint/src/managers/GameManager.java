@@ -40,6 +40,7 @@ public class GameManager {
 	private Lobby representsLobby;
 	private boolean firstAction;
 	private boolean[] dodgeResponseChecker;
+	public ArrayList<Integer> randomBoards;
 	
 	// MAIN
     public void runFlashpoint() {
@@ -1214,6 +1215,15 @@ public class GameManager {
 			}
 		}
 		return true;
+	}
+	
+	public void setRandomBoards(ArrayList<Integer> randomBoards) {
+		this.randomBoards = randomBoards;
+		representsLobby.setRandomBoards(randomBoards);
+	}
+	
+	public ArrayList<Integer> getRandomBoards(){
+		return this.randomBoards;
 	}
 	
 //    public static void main(String[] args) {
