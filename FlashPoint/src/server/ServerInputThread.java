@@ -17,6 +17,9 @@ import commons.util.Constants;
 import commons.util.MyDate;
 import game.GameState;
 import lobby.Lobby;
+import tile.Tile;
+import token.Firefighter;
+import token.Speciality;
 import token.Vehicle;
 
 
@@ -81,8 +84,31 @@ public class ServerInputThread extends Thread {
 	 */
 
 	public void readMessage() throws IOException, ClassNotFoundException {
+//		while (true) {
+//		socket.sendUrgentData(0xFF); // 发送心跳包
+//		System.out.println("目前是处于链接状态！");
+//		
+//} catch (Exception e) {
+//	System.out.println("目前是处于断开状态！");
+//			e.printStackTrace();
+//				}
+		
 		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
-		//System.out.println("Insinde readMessage");
+		try{ 
+			socket.sendUrgentData(0xFF); 
+		}
+		catch(Exception ex){ 
+			for (OutputThread onOut : map.getAll()) {
+			
+				TranObject read_tranObject2 = (TranObject) readObject;
+				TranObject<User> returnObject2;
+				User requestObject2;
+				returnObject2 = new TranObject<User>(TranObjectType.ERROR);
+				
+				onOut.setMessage(returnObject2);
+			}
+		}
+		System.out.println("Insinde readMessage");
 //		UserDao dao = UserDaoFactory.getInstance();// 通锟斤拷dao模式锟斤拷锟斤拷锟教�
 		if (readObject != null && readObject instanceof TranObject) {
 		//	System.out.println("Entered IF");
@@ -262,16 +288,6 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameState); 
 				}
 				break;
-			case SENDRIDEREQUEST:
-				requestObject = (User) read_tranObject.getObject();
-				serverManager.askRelevantFirefighters(requestObject.getRidingObject());
-				
-				returnGameState = new TranObject<GameState>(TranObjectType.SENDRIDERECEIVED);
-				returnGameState.setObject(serverManager.getGameState());
-				for (OutputThread onOut : map.getAll()) {
-					onOut.setMessage(returnGameState); 
-				}
-				break;
 			case SENDRIDERESPONSE:
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.updateResponse(requestObject.getRideResponse(), requestObject.getMyFFIndex());
@@ -332,11 +348,135 @@ public class ServerInputThread extends Thread {
 				System.out.println(" end turn");
 				TranObject returnGameStateEnd = new TranObject<GameState>(TranObjectType.ENDTURNSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
-				serverManager.endTurn();
+				//serverManager.endTurn();
+				
+				//moving advanced fire here
+				System.out.println("starting advance fire new\n\n\n\n");
+				//looper set to false in family, true if the initial tile has a hot spot
+				boolean hasHotSpot = true;
+				//used to know if the loop is on the first iteration or not
+				boolean additionalHotSpot;
+				int count = 0;
+				serverManager.getGameManager().setAdvFire("");
+				//checking if a vet exists in the game
+				boolean dodgeCheck = false;
+				if(serverManager.getGameState().isExperienced()) {
+					for(Firefighter f : serverManager.getGameState().getFireFighterList()) {
+						if(f.getSpeciality() == Speciality.VETERAN) {
+							dodgeCheck = true;
+							System.out.println("deodgecheck" + dodgeCheck);
+						}
+					}
+				}
+				
+		    	//gs.endTurn();
+		    	while(hasHotSpot) {
+		    		additionalHotSpot = 0<count;
+		    		Tile targetTile = serverManager.getGameState().rollForTile();
+		        	if(serverManager.getGameState().isExperienced()) {
+		        		hasHotSpot = targetTile.containsHotSpot();
+		        	} else {
+		        		hasHotSpot = false;
+		        	}
+		        	
+		        	if(serverManager.getGameManager().advanceFireStart(targetTile, additionalHotSpot) && dodgeCheck) {
+		        		System.out.println("dodge triggered after start");
+		        		if(serverManager.generateDodgeActions()) {
+		        			System.out.println("we have asked dodge");
+							returnGameState = new TranObject<GameState>(TranObjectType.DODGERECEIVED);
+							returnGameState.setObject(serverManager.getGameState());
+							for (OutputThread onOut : map.getAll()) {
+								System.out.println("hello should be in the output thread of dodge");
+								onOut.setMessage(returnGameState); 
+							}
+							
+							while(!serverManager.hasEveryoneDodged()) {
+								
+							}
+		        		}
+		        	}
+		        	
+		        	if(serverManager.getGameManager().resolveFlashOver() && dodgeCheck) {
+		        		System.out.println("dodge triggered after flashover");
+		        		if(serverManager.generateDodgeActions()) {
+		        			System.out.println("we have asked dodge");
+		        			returnGameState = new TranObject<GameState>(TranObjectType.DODGERECEIVED);
+							returnGameState.setObject(serverManager.getGameState());
+							for (OutputThread onOut : map.getAll()) {
+								System.out.println("hello should be in the output thread of dodge");
+								onOut.setMessage(returnGameState); 
+							}
+							
+							while(!serverManager.hasEveryoneDodged()) {
+								
+							}
+		        		}
+		        	}
+		        	
+		        	if(serverManager.getGameState().isExperienced()) {
+		        		if(serverManager.getGameManager().resolveHazmatExplosions() && dodgeCheck) {
+		        			System.out.println("dodge triggered after hazmatExplosion");
+		        			if(serverManager.generateDodgeActions()) {
+		        				System.out.println("we have asked dodge");
+			        			returnGameState = new TranObject<GameState>(TranObjectType.DODGERECEIVED);
+								returnGameState.setObject(serverManager.getGameState());
+								for (OutputThread onOut : map.getAll()) {
+									System.out.println("hello should be in the output thread of dodge");
+									onOut.setMessage(returnGameState); 
+								}
+								
+								while(!serverManager.hasEveryoneDodged()) {
+									
+								}
+			        		}
+		        		}
+		        	}
+		        	
+		        	if(additionalHotSpot) {
+		        		if(serverManager.getGameState().getHotSpot()>0) {
+		    				targetTile.setHotSpot(1);
+		    				serverManager.getGameState().setHotSpot(serverManager.getGameState().getHotSpot() - 1);
+		    				serverManager.getGameManager().setAdvFire("hotSpot added to final tile at coords: " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1]  +"\n");
+		    			}
+		        	}
+		        	
+		        	count++;
+		        	if(hasHotSpot) {
+		        		serverManager.getGameManager().setAdvFire("hotSpot triggered another advanceFire \n");
+		        	}
+		    	}
+		    	
+		    	serverManager.getGameManager().checkKnockDowns();
+		    	serverManager.getGameManager().placePOI();
+		    	serverManager.getGameManager().clearExteriorFire();
+		    	
+		    	int wallCheck = serverManager.getGameState().getDamageCounter();//should this running the same time with the main process? @Eric
+		    	int victimCheck = serverManager.getGameState().getLostVictimsList().size();
+		    	int savedVictimCheck = serverManager.getGameState().getSavedVictimsList().size();
+		    	
+		    	
+		    	if(wallCheck >= 24 || victimCheck >= 4) {
+		    		serverManager.getGameState().terminateGame();
+		    	} else if(savedVictimCheck >= 7) {
+		    		serverManager.getGameState().winGame();
+		    	}
+		    	serverManager.getGameState().setAdvFireString(serverManager.getGameManager().getAdvFireMessage());
+		    	
+				serverManager.setFFNextTurn();
+				serverManager.generateActions();
+				//ending advanced fire here
+				
+				System.out.println("end fo advance fire");
+				
 				returnGameStateEnd.setObject(serverManager.getGameState());
 				for(OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnGameStateEnd);
 				}
+				break;
+			case DODGERESPONSE:
+				requestObject = (User) read_tranObject.getObject();
+				serverManager.updateDodgeRespone(requestObject.getDodgeAction(), requestObject.getMyFFIndex());
+				System.out.println("hello we have updated dodge Response");
 				break;
 			case SAVEGAME:
 				System.out.println("save game");

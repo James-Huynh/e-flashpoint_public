@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import actions.Action;
+import actions.ActionList;
 import chat.ChatMsgEntity;
 import commons.bean.User;
 import commons.tran.bean.TranObject;
@@ -33,11 +34,13 @@ public class ServerManager {
 	private ArrayList<GameState> savedGames;
 	private static String defaulGamesPath = "savedGames/";
 	private static String currentPath = System.getProperty("user.dir");
+	private boolean firstTurn; //should be in game state?
 	
 	private Lobby activeLobby;
 	private GameState gameState;
 	private GameManager gameManager;
 	
+	public ArrayList<Integer> randomBoards;
 	
 	private int placedFF = 0;
 	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
@@ -49,6 +52,7 @@ public class ServerManager {
 		accounts.put("me", "aa");
 		savedGames = new ArrayList<GameState>();
 		setSavedGames();
+		randomBoards = new ArrayList<Integer>();
 	}
 	
 	public void createPlayer(String name, String password, Integer ID) {
@@ -63,6 +67,11 @@ public class ServerManager {
 			gameState = gameManager.getGameState();
 			gameState.setActiveFireFighterIndex(-1);
 			gameManager.setFirstAction(true);
+			firstTurn = true;
+			if (gameManager.getGameState().getRandomBoard() >= 0) {
+				// gameManager.getGameState().setRandomGame(randomBoards.get(randomBoards.size()-1));
+				this.randomBoards.add(gameManager.getGameState().getRandomBoard());
+			}
 		}
 		
 	}
@@ -70,6 +79,7 @@ public class ServerManager {
 	public void initializeGameManager() {
 //		gameManager = new GameManager(gameState, activeLobby);
 		gameManager = new GameManager(activeLobby);
+		gameManager.setRandomBoards(this.randomBoards);
 	}
 	
 	public void generateActions() {
@@ -193,7 +203,7 @@ public class ServerManager {
 	public void endTurn() {
 		Firefighter currentOne = gameState.getPlayingFirefighter();
 		//currentOne.endOfTurn(); // cannot be any longer here - bc of dodge
-		advanceFire();
+		advanceFireNew();
 		System.out.println("endturn over");
 		if(gameState.isGameTerminated() || gameState.isGameWon()) {
 			//@matekrk! here should be pop-in window so something like gameState.setEndString(gameManager.getAdvEndMessage)
@@ -210,15 +220,95 @@ public class ServerManager {
 	
 	public void setFFNextTurn() {
 		gameManager.setFirstAction(true);
-		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
-		gameState.getPlayingFirefighter().endOfTurn();
+		int newIndex = (gameState.getActiveFireFighterIndex() + 1);
+		if (newIndex >= gameState.getFreeFirefighters().size()) {
+			firstTurn = false;
+		}
+		gameState.setActiveFireFighterIndex( newIndex%(gameState.getFireFighterList().size()) );
+		if(!firstTurn) {
+			gameState.getPlayingFirefighter().endOfTurn();
+		}
 		gameState.vicinity(gameState.getPlayingFirefighter());
-		
 	}
 	
 	public void advanceFire() {
 		gameManager.advanceFire(false); //this boolean is saying that it is the initial advanced fire and not one caused by a hotspot flare up
 		gameState.setAdvFireString(gameManager.getAdvFireMessage());
+	}
+	
+	public void advanceFireNew() {
+		System.out.println("starting advance fire new\n\n\n\n");
+		//looper set to false in family, true if the initial tile has a hot spot
+		boolean hasHotSpot = true;
+		//used to know if the loop is on the first iteration or not
+		boolean additionalHotSpot;
+		int count = 0;
+		gameManager.setAdvFire("");
+    	
+		//checking if a vet exists in the game
+		boolean dodgeCheck = false;
+		if(gameState.isExperienced()) {
+			for(Firefighter f : gameState.getFireFighterList()) {
+				if(f.getSpeciality() == Speciality.VETERAN) {
+					dodgeCheck = true;
+					System.out.println("deodgecheck" + dodgeCheck);
+				}
+			}
+		}
+		
+    	//gs.endTurn();
+    	while(hasHotSpot) {
+    		additionalHotSpot = 0<count;
+    		Tile targetTile = gameState.rollForTile();
+        	if(gameState.isExperienced()) {
+        		hasHotSpot = targetTile.containsHotSpot();
+        	} else {
+        		hasHotSpot = false;
+        	}
+        	
+        	if(gameManager.advanceFireStart(targetTile, additionalHotSpot) && dodgeCheck) {
+        		System.out.println("dodge triggered after start");
+        	}
+        	
+        	if(gameManager.resolveFlashOver() && dodgeCheck) {
+        		System.out.println("dodge triggered after flashover");
+        	}
+        	
+        	if(gameState.isExperienced()) {
+        		if(gameManager.resolveHazmatExplosions() && dodgeCheck) {
+        			System.out.println("dodge triggered after hazmatExplosion");
+        		}
+        	}
+        	
+        	if(additionalHotSpot) {
+        		if(gameState.getHotSpot()>0) {
+    				targetTile.setHotSpot(1);
+        			gameState.setHotSpot(gameState.getHotSpot() - 1);
+        			gameManager.setAdvFire("hotSpot added to final tile at coords: " + targetTile.getCoords()[0] + "," + targetTile.getCoords()[1]  +"\n");
+    			}
+        	}
+        	
+        	count++;
+        	if(hasHotSpot) {
+        		gameManager.setAdvFire("hotSpot triggered another advanceFire \n");
+        	}
+    	}
+    	
+    	gameManager.checkKnockDowns();
+    	gameManager.placePOI();
+    	gameManager.clearExteriorFire();
+    	
+    	int wallCheck = gameState.getDamageCounter();//should this running the same time with the main process? @Eric
+    	int victimCheck = gameState.getLostVictimsList().size();
+    	int savedVictimCheck = gameState.getSavedVictimsList().size();
+    	
+    	
+    	if(wallCheck >= 24 || victimCheck >= 4) {
+    		gameState.terminateGame();
+    	} else if(savedVictimCheck >= 7) {
+    		gameState.winGame();
+    	}
+    	gameState.setAdvFireString(gameManager.getAdvFireMessage());
 	}
 	
 	public boolean askRelevantFirefighters(Vehicle type) {
@@ -444,6 +534,25 @@ public class ServerManager {
 		public void resetHashMap() {
 			gameState.resetHashMap();
 			
+		}
+
+		public boolean generateDodgeActions() {
+			return gameManager.generateDodgeActions();
+			
+			
+		}
+
+		public void updateDodgeRespone(Action dodgeAction, int myFFIndex) {
+			Firefighter inturn = gameState.getPlayingFirefighter();
+			gameState.setPlayingFirefighter(gameState.getFireFighterList().get(myFFIndex));
+			dodgeAction.perform(gameState);
+			gameState.setPlayingFirefighter(inturn);
+			gameManager.setDodgeResponseChecker(myFFIndex);
+			
+		}
+
+		public boolean hasEveryoneDodged() {
+			return gameManager.hasEveryoneDodged();
 		}
 	
 }

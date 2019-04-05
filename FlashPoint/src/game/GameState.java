@@ -73,6 +73,10 @@ public class GameState implements Serializable {
 	protected boolean specialitySelecting;
 	protected int[] proposedDices;
 	
+	protected boolean isDodging;
+	protected HashMap<Firefighter, ArrayList<actions.Action>> dodgingHashMap;
+	
+	int randomGame;
 	private static final long serialVersionUID = 1L; // serialization
 
 	/**
@@ -148,6 +152,7 @@ public class GameState implements Serializable {
 		this.experiencedMode = copy.experiencedMode;
 		this.specialitySelecting = copy.specialitySelecting;
 		this.proposedDices = copy.proposedDices;
+		this.randomGame = copy.getRandomBoard();
 		
 		//for loading and selecting, may need to change
 		System.out.println(this.listOfFirefighters.size());
@@ -190,6 +195,7 @@ public class GameState implements Serializable {
 		this.lostHazmat = new ArrayList<Hazmat>();
 		this.disposedHazmat = new ArrayList<Hazmat>();
 		this.proposedDices=new int[] {-1,-1};
+		this.randomGame = lobby.getRandomGame();
 		if(lobby.getMode().equals("Experienced")) {
 			this.experiencedMode = true;
 			rideMapper = new HashMap<Firefighter, Boolean[]>();
@@ -205,6 +211,8 @@ public class GameState implements Serializable {
 			this.freeSpecialities.add(Speciality.RESCUE_SPECIALIST);
 			this.freeSpecialities.add(Speciality.VETERAN);
 			this.specialitySelecting = true;
+			this.isDodging = false;
+			this.dodgingHashMap = new HashMap<Firefighter, ArrayList<actions.Action>>();
 			
 		} 
 		else {
@@ -1202,7 +1210,9 @@ public class GameState implements Serializable {
 					vet = g;
 				}
 			}
-			
+			if(vet == f) {
+				return;
+			}
 			boolean flag = false;
 			
 			/* STRAIGHT FORWARD
@@ -1234,8 +1244,8 @@ public class GameState implements Serializable {
 			}
 			
 			else if (Math.abs(posX-vetX) + Math.abs(posY-vetY) <= 3) {
-				ArrayList<Tile> path = new ArrayList<Tile>();
-				
+				ArrayList<Tile> path = new ArrayList<Tile>(); //this may be useful for preventing double check - not implemented yet
+				path.add(f.getCurrentPosition());
 				for (int i1=0; i1<4; i1++) { // first level DFS
 					Tile t1 = getNeighbour(path.get(path.size()-1), i1);
 					if (t1 != null) {
@@ -1272,8 +1282,8 @@ public class GameState implements Serializable {
 														if (path.get(path.size()-1).getEdge(i3).isBlank() || 
 																(path.get(path.size()-1).getEdge(i3).isDoor() && 
 																		(path.get(path.size()-1).getEdge(i3).getStatus() || path.get(path.size()-1).getEdge(i3).isDestroyed() ) ) ) {
-															path.add(t2);
-															if (t2.equals(vet.getCurrentPosition())) {
+															path.add(t3);
+															if (t3.equals(vet.getCurrentPosition())) {
 																flag = true;
 															}
 														}
@@ -1331,7 +1341,8 @@ public class GameState implements Serializable {
 				+ poiList + ", lostVictimsList=" + lostVictimsList + ", savedVictimsList=" + savedVictimsList
 				+ ", revealedFalseAlarmsList=" + revealedFalseAlarmsList + ", freeSpecialities=" + freeSpecialities
 				+ ", lostHazmat=" + lostHazmat + ", disposedHazmat=" + disposedHazmat + ", remainingHotSpots="
-				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + "proposedDices=" + Arrays.toString(proposedDices) + "]";
+				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + ",proposedDices=" + Arrays.toString(proposedDices) 
+				+ ", randomGame" + randomGame + "]";
 	}
 
 	public void setSpecialitySelecting(boolean b) {
@@ -1353,7 +1364,31 @@ public class GameState implements Serializable {
 		this.freeFirefighters = fList;
 	}
 
+	public void setDodgingHashMap(Firefighter f, ArrayList<Action> dodgeList) {
+		this.dodgingHashMap.put(f, dodgeList);
+		
+	}
 	
+	public HashMap<Firefighter, ArrayList<actions.Action>> getDodgingHashMap(){
+		return dodgingHashMap;
+	}
+
+	public void setIsDodging(boolean flag) {
+		this.isDodging = flag;
+		
+	}
+	
+	public boolean getIsDodging() {
+		return this.isDodging;
+	}
+
+	public int getRandomBoard() {
+		return this.randomGame;
+	}
+	
+	public void setRandomGame(int randomGame) {
+		this.randomGame = randomGame;
+	}
 	
 }
 

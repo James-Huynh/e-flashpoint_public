@@ -24,15 +24,19 @@ public class Lobby implements Serializable  {
 
 	private String mode, name, difficulty, board;
 	private int capacity;
+	private int randomGame;
 
 	private TemplateGame template;
 	private static final long serialVersionUID = 1L;
+	
+	private ArrayList<Integer> randomBoards;
 
 
 	public Lobby(){
 
 		//dummy
 		players = new ArrayList<Player>();
+		randomGame = -1;
 
 //		assignColours();
 
@@ -46,6 +50,7 @@ public class Lobby implements Serializable  {
 		assignableColours.add(token.Colour.RED);
 		assignableColours.add(token.Colour.PURPLE);
 		assignableColours.add(token.Colour.BLUE);
+		//mat tomorrow capacity
 		for(int i = 0; i<players.size(); i++) {
 			if(this.players.get(i) != null) {
 				this.players.get(i).setColour(this.assignableColours.get(i));
@@ -147,6 +152,7 @@ public class Lobby implements Serializable  {
 			else if(this.mode.equals("Experienced")) {
 				template = new BoardOne("Experienced");
 			}
+			this.randomGame = -1;
 		}
 		
 		else if(this.board.equals("Board 2")) {
@@ -156,12 +162,21 @@ public class Lobby implements Serializable  {
 			else if(this.mode.equals("Experienced")) {
 				template = new BoardTwo("Experienced");
 			}
+			this.randomGame = -1;
 		}
 		
 		else {
 			System.out.println("creating random Board");
 			Random rn = new Random();
-			int boardNumber = rn.nextInt(5) + 1;
+			int boardNumber;
+			while(true) {
+				boardNumber = rn.nextInt(5) + 1;
+				if (!this.randomBoards.contains(boardNumber)) {
+					break;
+				}
+			}
+			
+			
 			if(this.mode.equals("Family")) {
 				if(boardNumber == 1) template = new RandomBoardOne("Family");
 				if(boardNumber == 2) template = new RandomBoardTwo("Family");
@@ -175,6 +190,7 @@ public class Lobby implements Serializable  {
 				if(boardNumber == 4) template = new RandomBoardFour("Experienced");
 				if(boardNumber == 5) template = new RandomBoardFive("Experienced");
 			}
+			this.randomGame = boardNumber;
 		}
 	}
 
@@ -184,6 +200,22 @@ public class Lobby implements Serializable  {
 
 	public void setIsLoadGame(boolean isLoadGame) {
 		this.isLoadGame = isLoadGame;
+	}
+	
+	public void setRandomGame(int k) {
+		this.randomGame = k;
+	}
+	
+	public int getRandomGame() {
+		return randomGame;
+	}
+	
+	public void setRandomBoards(ArrayList<Integer> randomBoards) {
+		this.randomBoards = randomBoards;
+	}
+	
+	public ArrayList<Integer> getRandomBoards(){
+		return this.randomBoards;
 	}
 
 }

@@ -148,6 +148,7 @@ public class ClientManager {
 				System.out.println("Successful joinlobby request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				flag = true;
+				break;
 			case ENDTURNSUCCESS:
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
@@ -196,7 +197,15 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				break;
-			
+			case DODGERECEIVED:
+				System.out.println("Successful dodge inform request");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				flag = true;
+				startGameFlag = 1;
+				break;
+				
+			case ERROR:
+				System.out.println("SOMEONEDISCONNECTED!!");
 			}
 		}
 		return flag;
@@ -694,6 +703,15 @@ public class ClientManager {
 	public boolean fireFighterSelectionRequest(int i) {
 		requestObject.setDesiredFirefighter(i);
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FIREFIGHTERSELECTREQUEST);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
+	}
+
+	public boolean dodgeAnswer(Action a, int myIndex) {
+		requestObject.setDodgeAction(a);
+		requestObject.setMyFFIndex(myIndex);
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.DODGERESPONSE);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;
