@@ -64,7 +64,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = MatIP;
+	private String ServerIP = BenIP;
 
 
 	int port = 8888;
@@ -214,7 +214,7 @@ public class Launcher {
 		dummyLeftPanel.add(lbl_leftPanelImage);
 //		contentPane.remove(dummyLeftPanel);
 		contentPane.remove(dummyRightPanel);
-		//		dummyLeftPanel.add(lbl_leftPanelImage);
+		//dummyLeftPanel.add(lbl_leftPanelImage);
 
 
 	}
@@ -494,8 +494,8 @@ public class Launcher {
 		//remove old game state gui
 		contentPane.removeAll();
 		//create and make visible mainMenuPage
-		setupDummies();
-		contentPane.remove(dummyCenterPanel);
+//		setupDummies();
+//		contentPane.remove(dummyCenterPanel);
 		setupMainMenuPage();
 		motherFrame.revalidate();
 	}

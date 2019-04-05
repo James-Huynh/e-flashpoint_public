@@ -4495,8 +4495,8 @@ public class Table {
 		        fileMenu.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						
-//						System.exit(0);
+						launcher.backToMainMenu();
+						clientManager.sendEndGameRequest();
 					}
 				});
 		        popupMenu.add(endTurn);

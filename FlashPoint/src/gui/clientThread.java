@@ -51,6 +51,7 @@ public class clientThread implements Runnable{
 					myLauncher.refreshBoard();
 					toggle = true;
 				} else {
+					myLauncher.backToMainMenu();
 					System.out.println("we are not meant to be here");
 				}
 			}

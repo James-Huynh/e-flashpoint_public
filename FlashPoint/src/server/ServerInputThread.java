@@ -772,10 +772,15 @@ public class ServerInputThread extends Thread {
 			case ENDGAME:
 				returnObject=new TranObject<User>(TranObjectType.ENDGAME);
 				requestObject = (User) read_tranObject.getObject();
+				ArrayList<Player> temp = serverManager.getGameState().getListOfPlayers();
 				serverManager.resetForNewGame();
 				
 				returnObject.setObject(requestObject);
-				out.setMessage(returnObject);
+				for(Player p: temp) {
+					OutputThread onOut = map.getById(p.getID());
+					onOut.setMessage(returnObject);
+				}
+//				out.setMessage(returnObject);
 				//serverManager.getGameManager().end();
 			default:
 				break;
