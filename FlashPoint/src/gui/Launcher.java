@@ -64,7 +64,7 @@ public class Launcher {
 	
 	private static Client client;
 	
-	private String ServerIP = JamesIP;
+	private String ServerIP = MatIP;
 
 	int port = 8888;
 	User userOne = new User();
