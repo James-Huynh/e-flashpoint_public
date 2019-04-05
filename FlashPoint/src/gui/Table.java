@@ -4915,6 +4915,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							gameTermination.hide();
 							launcher.backToMainMenu();
+							clientManager.sendEndGameRequest();
 							//return back to menu
 						}
 					});
@@ -4941,6 +4942,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							gameTermination.hide();
 							launcher.backToMainMenu();
+							clientManager.sendEndGameRequest();
 							//return back to menu
 						}
 					});
@@ -4967,6 +4969,7 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						gameTermination.hide();
 						launcher.backToMainMenu();
+						clientManager.sendEndGameRequest();
 						//return back to menu
 					}
 				});
