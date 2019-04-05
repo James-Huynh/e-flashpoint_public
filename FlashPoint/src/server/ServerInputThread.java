@@ -38,7 +38,7 @@ public class ServerInputThread extends Thread {
 		this.map = map;
 		this.serverManager = newServerManager;
 		try {
-			ois = new ObjectInputStream(socket.getInputStream());// 实锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟�
+			ois = new ObjectInputStream(socket.getInputStream());// å®žé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿï¿½
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -85,15 +85,15 @@ public class ServerInputThread extends Thread {
 
 	public void readMessage() throws IOException, ClassNotFoundException {
 //		while (true) {
-//		socket.sendUrgentData(0xFF); // 发送心跳包
-//		System.out.println("目前是处于链接状态！");
+//		socket.sendUrgentData(0xFF); // å�‘é€�å¿ƒè·³åŒ…
+//		System.out.println("ç›®å‰�æ˜¯å¤„äºŽé“¾æŽ¥çŠ¶æ€�ï¼�");
 //		
 //} catch (Exception e) {
-//	System.out.println("目前是处于断开状态！");
+//	System.out.println("ç›®å‰�æ˜¯å¤„äºŽæ–­å¼€çŠ¶æ€�ï¼�");
 //			e.printStackTrace();
 //				}
 		
-		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
+		Object readObject = ois.readObject();// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå�«è®¹æ‹·å�–é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 //		try{ 
 //			socket.sendUrgentData(0xFF); 
 //		}
@@ -109,10 +109,10 @@ public class ServerInputThread extends Thread {
 //			}
 //		}
 		System.out.println("Insinde readMessage");
-//		UserDao dao = UserDaoFactory.getInstance();// 通锟斤拷dao模式锟斤拷锟斤拷锟教�
+//		UserDao dao = UserDaoFactory.getInstance();// é€šé”Ÿæ–¤æ‹·daoæ¨¡å¼�é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ•™ï¿½
 		if (readObject != null && readObject instanceof TranObject) {
 		//	System.out.println("Entered IF");
-			TranObject read_tranObject = (TranObject) readObject;// 转锟斤拷锟缴达拷锟斤拷锟斤拷锟�
+			TranObject read_tranObject = (TranObject) readObject;// è½¬é”Ÿæ–¤æ‹·é”Ÿç¼´è¾¾æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿï¿½
 			TranObject<User> returnObject;
 			TranObject<GameState> returnGameState;
 			TranObject<List> returnChat;
@@ -181,7 +181,8 @@ public class ServerInputThread extends Thread {
 				requestObject.setChatArray(serverManager.getChatArray());
 				
 				returnObject.setObject(requestObject);
-				for (OutputThread onOut : map.getAll()) {
+				for(Player p: serverManager.getLobby().getPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnObject);
 				}
 				break;
@@ -233,10 +234,15 @@ public class ServerInputThread extends Thread {
 				returnGameState = new TranObject<GameState>(TranObjectType.FFPLACEMENTSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
 //				out.setMessage(returnGameState);
-				for (OutputThread onOut : map.getAll()) {
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnGameState);
-					System.out.println(java.lang.Thread.activeCount());
 				}
+//				for (OutputThread onOut : map.getAll()) {
+//					onOut.setMessage(returnGameState);
+//					System.out.println(java.lang.Thread.activeCount());
+//				}
+//				
 
 				break;
 			case ACTIONREQUEST:
@@ -284,8 +290,9 @@ public class ServerInputThread extends Thread {
 				}
 				returnGameState = new TranObject<GameState>(TranObjectType.ACTIONSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
-				for (OutputThread onOut : map.getAll()) {
-					onOut.setMessage(returnGameState); 
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
+					onOut.setMessage(returnGameState);
 				}
 				break;
 			case SENDRIDERESPONSE:
@@ -327,7 +334,7 @@ public class ServerInputThread extends Thread {
 //				System.out.println("test 2 this should be entered username of second user" + requestObject.getCurrentLobby().getPlayers().get(1).getUserName());
 ////				out.setMessage(returnObject);
 //				for (OutputThread onOut : map.getAll()) {
-//					onOut.setMessage(returnObject);// 广播一下用户上线
+//					onOut.setMessage(returnObject);// å¹¿æ’­ä¸€ä¸‹ç”¨æˆ·ä¸Šçº¿
 //				}
 //				break;
 				
@@ -338,7 +345,7 @@ public class ServerInputThread extends Thread {
 //				requestObject.setCurrentLobby(serverManager.getLobby());
 				returnLobby.setObject(serverManager.getLobby());
 //				for (OutputThread onOut : map.getAll()) {
-//					onOut.setMessage(returnLobby);// 广播一下用户上线
+//					onOut.setMessage(returnLobby);// å¹¿æ’­ä¸€ä¸‹ç”¨æˆ·ä¸Šçº¿
 //				}
 				for(Player p : serverManager.getLobby().getPlayers()) {
 					map.getById(p.getID()).setMessage(returnLobby);;
@@ -469,9 +476,14 @@ public class ServerInputThread extends Thread {
 				System.out.println("end fo advance fire");
 				
 				returnGameStateEnd.setObject(serverManager.getGameState());
-				for(OutputThread onOut : map.getAll()) {
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnGameStateEnd);
 				}
+				
+//				for(OutputThread onOut : map.getAll()) {
+//					onOut.setMessage(returnGameStateEnd);
+//				}
 				break;
 			case DODGERESPONSE:
 				requestObject = (User) read_tranObject.getObject();
@@ -520,7 +532,8 @@ public class ServerInputThread extends Thread {
 				returnGameState = new TranObject<GameState>(TranObjectType.VEHICLEPLACEMENTSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
 
-				for (OutputThread onOut : map.getAll()) {
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnGameState);
 				}
 				break;
@@ -530,7 +543,8 @@ public class ServerInputThread extends Thread {
 				serverManager.setSpeciality(requestObject, requestObject.getDesiredSpeciality() );
 				returnGameState = new TranObject<GameState>(TranObjectType.SPECIALITYSELECTED);
 				returnGameState.setObject(serverManager.getGameState());
-				for (OutputThread onOut : map.getAll()) {
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnGameState);
 				}
 				break;
@@ -540,7 +554,8 @@ public class ServerInputThread extends Thread {
 				serverManager.setSpecialitySelecting(false);
 				returnGameState = new TranObject<GameState>(TranObjectType.SPECIALITYENDSUCCESS);
 				returnGameState.setObject(serverManager.getGameState());
-				for (OutputThread onOut : map.getAll()) {
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnGameState);
 				}
 				break;
@@ -550,7 +565,8 @@ public class ServerInputThread extends Thread {
 				serverManager.setFirefighter(requestObject);
 				returnGameState = new TranObject<GameState>(TranObjectType.FIREFIGHTERSELECTED);
 				returnGameState.setObject(serverManager.getGameState());
-				for (OutputThread onOut : map.getAll()) {
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnGameState);
 				}
 				break;
@@ -560,7 +576,8 @@ public class ServerInputThread extends Thread {
 				serverManager.setDice();
 				returnGameState = new TranObject<GameState>(TranObjectType.FIREFIGHTERSELECTED);
 				returnGameState.setObject(serverManager.getGameState());
-				for (OutputThread onOut : map.getAll()) {
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnGameState);
 				}
 				break;
@@ -589,28 +606,28 @@ public class ServerInputThread extends Thread {
 				User logoutUser = (User) read_tranObject.getObject();
 				int offId = logoutUser.getId();
 				System.out
-						.println(MyDate.getDateCN() + " 用户：" + offId + " 下线了");
+						.println(MyDate.getDateCN() + " ç”¨æˆ·ï¼š" + offId + " ä¸‹çº¿äº†");
 			
 				isStart = false;
-				map.remove(offId);// 从缓存的线程中移除
-				out.setMessage(null);// 先要设置一个空消息去唤醒写线程
-				out.setStart(false);// 再结束写线程循环
+				map.remove(offId);// ä»Žç¼“å­˜çš„çº¿ç¨‹ä¸­ç§»é™¤
+				out.setMessage(null);// å…ˆè¦�è®¾ç½®ä¸€ä¸ªç©ºæ¶ˆæ�¯åŽ»å”¤é†’å†™çº¿ç¨‹
+				out.setStart(false);// å†�ç»“æ�Ÿå†™çº¿ç¨‹å¾ªçŽ¯
 
 				TranObject<User> offObject = new TranObject<User>(
 						TranObjectType.LOGOUT);
 				User logout2User = new User();
 				logout2User.setId(logoutUser.getId());
 				offObject.setObject(logout2User);
-				for (OutputThread offOut : map.getAll()) {// 广播用户下线消息
+				for (OutputThread offOut : map.getAll()) {// å¹¿æ’­ç”¨æˆ·ä¸‹çº¿æ¶ˆæ�¯
 					offOut.setMessage(offObject);
 				}
 				break;
-//			case REGISTER:// 锟斤拷锟斤拷没锟斤拷锟阶拷锟�
+//			case REGISTER:// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æ²¡é”Ÿæ–¤æ‹·é”Ÿé˜¶î�®æ‹·é”Ÿï¿½
 //				User registerUser = (User) read_tranObject.getObject();
 ////				int registerResult = dao.register(registerUser);
-//				System.out.println(MyDate.getDateCN() + " 锟斤拷锟矫伙拷注锟斤拷:"
+//				System.out.println(MyDate.getDateCN() + " é”Ÿæ–¤æ‹·é”ŸçŸ«ä¼™æ‹·æ³¨é”Ÿæ–¤æ‹·:"
 ////						+ registerResult);
-//				// 锟斤拷锟矫伙拷锟截革拷锟斤拷息
+//				// é”Ÿæ–¤æ‹·é”ŸçŸ«ä¼™æ‹·é”Ÿæˆªé�©æ‹·é”Ÿæ–¤æ‹·æ�¯
 //				TranObject<User> register2TranObject = new TranObject<User>(
 //						TranObjectType.REGISTER);
 //				User register2user = new User();
@@ -635,17 +652,17 @@ public class ServerInputThread extends Thread {
 			/*	ArrayList<User> list = dao.login(loginUser);
 				TranObject<ArrayList<User>> login2Object = new TranObject<ArrayList<User>>(
 						TranObjectType.LOGIN);
-				if (list != null) {// 锟斤拷锟斤拷录锟缴癸拷
+				if (list != null) {// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å½•é”Ÿç¼´ç™¸æ‹·
 					TranObject<User> onObject = new TranObject<User>(
 							TranObjectType.LOGIN);
 					User login2User = new User();
 					login2User.setId(loginUser.getId());
 					onObject.setObject(login2User);
 					for (OutputThread onOut : map.getAll()) {
-						onOut.setMessage(onObject);// 锟姐播一锟斤拷锟矫伙拷锟斤拷锟斤拷
+						onOut.setMessage(onObject);// é”Ÿå§�æ’­ä¸€é”Ÿæ–¤æ‹·é”ŸçŸ«ä¼™æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 					}
-					map.add(loginUser.getId(), out);// 锟饺广播锟斤拷锟劫把讹拷应锟矫伙拷id锟斤拷写锟竭程达拷锟斤拷map锟叫ｏ拷锟皆憋拷转锟斤拷锟斤拷息时锟斤拷锟斤拷
-					login2Object.setObject(list);// 锟窖猴拷锟斤拷锟叫憋拷锟斤拷锟截革拷锟侥讹拷锟斤拷锟斤拷
+					map.add(loginUser.getId(), out);// é”Ÿé¥ºå¹¿æ’­é”Ÿæ–¤æ‹·é”ŸåŠ«æŠŠè®¹æ‹·åº”é”ŸçŸ«ä¼™æ‹·idé”Ÿæ–¤æ‹·å†™é”Ÿç«­ç¨‹è¾¾æ‹·é”Ÿæ–¤æ‹·mapé”Ÿå�«ï½�æ‹·é”Ÿçš†æ†‹æ‹·è½¬é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æ�¯æ—¶é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+					login2Object.setObject(list);// é”Ÿçª–çŒ´æ‹·é”Ÿæ–¤æ‹·é”Ÿå�«æ†‹æ‹·é”Ÿæ–¤æ‹·é”Ÿæˆªé�©æ‹·é”Ÿä¾¥è®¹æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 				} else {
 					login2Object.setObject(null);
 				}
@@ -654,23 +671,23 @@ public class ServerInputThread extends Thread {
 //				System.out.println(MyDate.getDateCN() + "user"
 //						+ loginUser.getId() + " is online");
 //				break;
-//			case LOGOUT:// 锟斤拷锟斤拷锟斤拷顺锟斤拷锟斤拷锟斤拷锟斤拷锟捷匡拷锟斤拷锟斤拷状态锟斤拷同时群锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟矫伙拷
+//			case LOGOUT:// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é¡ºé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ�·åŒ¡æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·çŠ¶æ€�é”Ÿæ–¤æ‹·å�Œæ—¶ç¾¤é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”ŸçŸ«ä¼™æ‹·
 //				User logoutUser = (User) read_tranObject.getObject();
 //				int offId = logoutUser.getId();
 //				System.out
-//						.println(MyDate.getDateCN() + " 锟矫伙拷锟斤拷" + offId + " 锟斤拷锟斤拷锟斤拷");
+//						.println(MyDate.getDateCN() + " é”ŸçŸ«ä¼™æ‹·é”Ÿæ–¤æ‹·" + offId + " é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·");
 //				dao.logout(offId);
-//				isStart = false;// 锟斤拷锟斤拷锟皆硷拷锟侥讹拷循锟斤拷
-//				map.remove(offId);// 锟接伙拷锟斤拷锟斤拷叱锟斤拷锟斤拷瞥锟�
-//				out.setMessage(null);// 锟斤拷要锟斤拷锟斤拷一锟斤拷锟斤拷锟斤拷息去锟斤拷锟斤拷写锟竭筹拷
-//				out.setStart(false);// 锟劫斤拷锟斤拷写锟竭筹拷循锟斤拷
+//				isStart = false;// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿçš†ç¡·æ‹·é”Ÿä¾¥è®¹æ‹·å¾ªé”Ÿæ–¤æ‹·
+//				map.remove(offId);// é”ŸæŽ¥ä¼™æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å�±é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·çž¥é”Ÿï¿½
+//				out.setMessage(null);// é”Ÿæ–¤æ‹·è¦�é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä¸€é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æ�¯åŽ»é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å†™é”Ÿç«­ç­¹æ‹·
+//				out.setStart(false);// é”ŸåŠ«æ–¤æ‹·é”Ÿæ–¤æ‹·å†™é”Ÿç«­ç­¹æ‹·å¾ªé”Ÿæ–¤æ‹·
 //
 //				TranObject<User> offObject = new TranObject<User>(
 //						TranObjectType.LOGOUT);
 //				User logout2User = new User();
 //				logout2User.setId(logoutUser.getId());
 //				offObject.setObject(logout2User);
-//				for (OutputThread offOut : map.getAll()) {// 锟姐播锟矫伙拷锟斤拷锟斤拷锟斤拷息
+//				for (OutputThread offOut : map.getAll()) {// é”Ÿå§�æ’­é”ŸçŸ«ä¼™æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æ�¯
 //					offOut.setMessage(offObject);
 //				}
 //				break;
