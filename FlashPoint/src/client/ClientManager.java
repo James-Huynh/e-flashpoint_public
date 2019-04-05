@@ -206,6 +206,8 @@ public class ClientManager {
 				
 			case ERROR:
 				System.out.println("SOMEONEDISCONNECTED!!");
+			case ENDGAME:
+				
 			}
 		}
 		return flag;
@@ -716,6 +718,11 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		return true;
 	} 
-	
+	public void sendEndGameRequest() {
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.ENDGAME);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		
+	}
 	
 }
