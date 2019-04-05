@@ -5126,7 +5126,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							System.out.println("this should not happen");
 							dodgeRequest.hide();
-							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
 //							if(sendActionRequest(a));
 						}
 					});
@@ -5138,7 +5138,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							System.out.println("this should not happen");
 							dodgeRequest.hide();
-							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
 //							if(sendActionRequest(a));
 						}
 					});
@@ -5150,7 +5150,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							System.out.println("this should not happen");
 							dodgeRequest.hide();
-							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
 //							if(sendActionRequest(a));
 						}
 					});
@@ -5162,7 +5162,7 @@ public class Table {
 						public void actionPerformed(ActionEvent e) {
 							System.out.println("this should not happen");
 							dodgeRequest.hide();
-							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
 //							if(sendActionRequest(a));
 						}
 					});
@@ -5178,7 +5178,7 @@ public class Table {
 			gameTPanel.add(responsePanel, BorderLayout.SOUTH);
 		
 			
-			dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 1500, 50);
+			dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
 			
 			dodgeRequest.show();
 		}
