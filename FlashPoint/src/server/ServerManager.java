@@ -511,7 +511,7 @@ public class ServerManager {
 		public void setFirefighter(User person) {
 			int ff = person.getDesiredFirefighter();
 			System.out.println("we are in hrerererer" + ff);
-			if(gameState.getFreeFirefighters().size() != 0) {
+			if(gameState.getFireFighterList().size() != 0) {
 				Player player = onlinePlayers.get(person.getId());
 				if(player.getFirefighter()!=null) {
 					if(gameState.getListOfPlayers().size() == gameState.getFireFighterList().size()) {

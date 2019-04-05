@@ -527,7 +527,7 @@ public class GameState implements Serializable {
 		this.listOfFirefighters = new ArrayList<Firefighter>();
 		for (int i = 0; i < listOfPlayers.size(); i++) {
 			if (this.listOfPlayers.get(i) != null) {
-				Firefighter tempFirefighter = new Firefighter(this.listOfPlayers.get(i).getColour());
+				Firefighter tempFirefighter = new Firefighter(this.listOfPlayers.get(i).getColour()); ///!!!
 				tempFirefighter.setPlayer(this.listOfPlayers.get(i));
 				this.listOfPlayers.get(i).setFirefighter(tempFirefighter);
 				this.listOfFirefighters.add(tempFirefighter);

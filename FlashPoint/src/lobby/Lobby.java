@@ -39,6 +39,13 @@ public class Lobby implements Serializable  {
 		randomGame = -1;
 		randomBoards = new ArrayList<Integer>();
 		randomBoards.add(6);
+//		assignableColours = new ArrayList<token.Colour>();
+//		assignableColours.add(token.Colour.GREEN);
+//		assignableColours.add(token.Colour.BLACK);
+//		assignableColours.add(token.Colour.WHITE);
+//		assignableColours.add(token.Colour.RED);
+//		assignableColours.add(token.Colour.PURPLE);
+//		assignableColours.add(token.Colour.BLUE);
 //		assignColours();
 
 	}
@@ -51,8 +58,10 @@ public class Lobby implements Serializable  {
 		assignableColours.add(token.Colour.RED);
 		assignableColours.add(token.Colour.PURPLE);
 		assignableColours.add(token.Colour.BLUE);
-		//mat tomorrow capacity
+		
 		for(int i = 0; i<players.size(); i++) {
+			// if (i>=this.players.size()){
+			//	blah blah
 			if(this.players.get(i) != null) {
 				this.players.get(i).setColour(this.assignableColours.get(i));
 			}
