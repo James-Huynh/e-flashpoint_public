@@ -557,7 +557,7 @@ public class ServerManager {
 
 		public void resetForNewGame() {
 			this.placedFF = 0;
-			currentLobbies.clear(); //hard coded : we can only have one lobby in our game
+			currentLobbies.remove(activeLobby); //we can only have one active lobby in our game
 			this.firstTurn = true;
 			this.activeLobby = null;
 			this.gameState = null;
