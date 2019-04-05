@@ -49,6 +49,7 @@ public class User implements Serializable {
     private ArrayList<GameState> savedGameStates;
     private int[] dices;
     private actions.Action dodgeAction;
+    private token.Colour desiredFirefighterColour;
     
     private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public Integer getId() {
@@ -260,6 +261,15 @@ public class User implements Serializable {
 	
 	public int getDesiredFirefighter() {
 		return this.desiredFirefighter;
+	}
+	
+	public void setDesiredFirefighterColour(token.Colour i) {
+		this.desiredFirefighterColour = i;
+		
+	}
+	
+	public token.Colour getDesiredFirefighterColour() {
+		return this.desiredFirefighterColour;
 	}
 	
 	public void setDices(int[] dices) {

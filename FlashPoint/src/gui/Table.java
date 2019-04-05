@@ -90,8 +90,8 @@ public class Table {
 		private Launcher launcher;
 		private int myIndex = 7;
 		private clientThread listenerThread;
-		
 		private int desiredFFindex;
+		private token.Colour desiredFFindexColour;
 		
 		private HashMap<Firefighter, Integer> firefighterOrder = new HashMap<Firefighter, Integer>();
 		
@@ -4696,8 +4696,8 @@ public class Table {
 					info.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							desiredFFindex = 0;
-							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+							desiredFFindexColour = clientManager.getUsersGameState().getFreeFirefighters().get(0).getColour();
+							if(sendFireFighterSelectionRequest(desiredFFindexColour)) {
 								
 							}
 						}
@@ -4711,8 +4711,8 @@ public class Table {
 					info.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							desiredFFindex = 1;
-							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+							desiredFFindexColour = clientManager.getUsersGameState().getFreeFirefighters().get(1).getColour();
+							if(sendFireFighterSelectionRequest(desiredFFindexColour)) {
 								
 							}
 						}
@@ -4726,8 +4726,8 @@ public class Table {
 					info.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							desiredFFindex = 2;
-							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+							desiredFFindexColour = clientManager.getUsersGameState().getFreeFirefighters().get(2).getColour();
+							if(sendFireFighterSelectionRequest(desiredFFindexColour)) {
 								
 							}
 						}
@@ -4741,8 +4741,8 @@ public class Table {
 					info.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							desiredFFindex = 3;
-							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+							desiredFFindexColour = clientManager.getUsersGameState().getFreeFirefighters().get(3).getColour();
+							if(sendFireFighterSelectionRequest(desiredFFindexColour)) {
 								
 							}
 						}
@@ -4756,8 +4756,8 @@ public class Table {
 					info.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							desiredFFindex = 4;
-							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+							desiredFFindexColour = clientManager.getUsersGameState().getFreeFirefighters().get(4).getColour();
+							if(sendFireFighterSelectionRequest(desiredFFindexColour)) {
 								
 							}
 						}
@@ -4771,8 +4771,8 @@ public class Table {
 					info.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							desiredFFindex = 5;
-							if(sendFireFighterSelectionRequest(desiredFFindex)) {
+							desiredFFindexColour = clientManager.getUsersGameState().getFreeFirefighters().get(5).getColour();
+							if(sendFireFighterSelectionRequest(desiredFFindexColour)) {
 								
 							}
 						}
@@ -5327,7 +5327,7 @@ public class Table {
 			return clientManager.sendSelectionEndRequest();
 		}
 		
-		private boolean sendFireFighterSelectionRequest(int i) {
+		private boolean sendFireFighterSelectionRequest(token.Colour i) {
 			return clientManager.fireFighterSelectionRequest(i);
 		}
 		

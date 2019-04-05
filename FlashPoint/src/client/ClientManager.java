@@ -14,6 +14,7 @@ import game.BoardOne;
 import game.GameState;
 import gui.Launcher;
 import lobby.Lobby;
+import token.Colour;
 import token.Firefighter;
 import token.Speciality;
 import token.Vehicle;
@@ -707,8 +708,8 @@ public class ClientManager {
 		return true;
 	}
 
-	public boolean fireFighterSelectionRequest(int i) {
-		requestObject.setDesiredFirefighter(i);
+	public boolean fireFighterSelectionRequest(token.Colour i) {
+		requestObject.setDesiredFirefighterColour(i);
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FIREFIGHTERSELECTREQUEST);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
