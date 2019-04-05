@@ -118,7 +118,6 @@ public class MainMenuPanel extends JPanel {
 
 	private void initializeImages() {
 		BufferedImage imageBackground = null;
-		URL url_imageBackground =MainMenuPanel.class.getResource(imageName);
 
 		try {
 			imageBackground = ImageIO.read(new File(defaultImagesPath + imageName));
@@ -141,6 +140,7 @@ public class MainMenuPanel extends JPanel {
 		imageIconBackground = new ImageIcon(after);
 	
 		lbl_image = new JLabel(imageIconBackground);
+//		lbl_image.setal
 		lbl_image.setBounds(0, 0, 1000, 800);
 		this.add(lbl_image);
 		

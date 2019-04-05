@@ -61,17 +61,17 @@ public class Launcher {
 	private String ZaidIP = "142.157.145.244";
 	private String BenIP = "142.157.58.216";
 	private String MatIP = "142.157.63.60";
-	
+
 	private static Client client;
-	
-	private String ServerIP = MatIP;
+
+	private String ServerIP = JamesIP;
 
 
 	int port = 8888;
 	User userOne = new User();
 	private ClientManager clientManager;
-	
-	
+
+
 	private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(1500,800);
 	private final static Dimension CENTER_PANEL_DIMENSION = new Dimension(1000,800);
 	private final static Dimension RIGHT_PANEL_DIMENSION = new Dimension(300,800);
@@ -92,17 +92,18 @@ public class Launcher {
 
 	// Saving and Loading stuff
 	private String folderPath;
-	
+
 	// Images
 	private static String defaultImagesPath = "img";
 	private static String firefighterBckgPath = "/background-firefighter_1.png";
-	
-	
+	private static String logoBckgPath = "/background-FF-Logo.jpg";
+
+
 	//Used by Ben for in game testing. Not permanent.
 	private static GameManager current;
 	private static GameState tester;
-	
-	
+
+
 	/**
 	 * Below is for to get around a problem. Wanted to specify an outline for the frame
 	 * And use that to pull in frames
@@ -160,12 +161,13 @@ public class Launcher {
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		setupDummies();
+		setupBackgroundImages();
 		populateMenuBar();
 		addMenuBar();
 		setupLoginPage();
 
 	}
-	
+
 
 	private void setupDummies() {
 		dummyCenterPanel.setBackground(Color.YELLOW);
@@ -176,42 +178,46 @@ public class Launcher {
 		dummyRightPanel.setPreferredSize(RIGHT_PANEL_DIMENSION);
 		contentPane.add(dummyRightPanel, BorderLayout.EAST);
 
-		dummyLeftPanel.setBackground(Color.GREEN);
+		//		dummyLeftPanel.setBackground(Color.GREEN);
 		dummyLeftPanel.setPreferredSize(LEFT_PANEL_DIMENSION);
 		contentPane.add(dummyLeftPanel, BorderLayout.WEST);
-		
-		
-		
-		// adding image
+	}
+
+	private void setupBackgroundImages() {
+		// Left Panel
 		BufferedImage bckgImage = null;
+
+		//		dummyCenterPanel.setLayout(null);
 		try {
-			bckgImage = ImageIO.read(new File(defaultImagesPath + firefighterBckgPath));
+			bckgImage = ImageIO.read(new File(defaultImagesPath + logoBckgPath));
 			dummyLeftPanel.add(new JLabel(new ImageIcon(bckgImage)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		lbl_leftPanelImage = new JLabel();
-		lbl_leftPanelImage.setBounds(0, -10, (int) LEFT_PANEL_DIMENSION.getWidth(), (int) LEFT_PANEL_DIMENSION.getHeight());		
+		lbl_leftPanelImage.setBounds(0, 0, (int) LEFT_PANEL_DIMENSION.getWidth(), (int) LEFT_PANEL_DIMENSION.getHeight());		
 
-		// DOES NOT WORK
+
+		// TMP
 		int w = bckgImage.getWidth();
 		int h = bckgImage.getHeight();
 		BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		AffineTransform at = new AffineTransform();
-		at.scale(3.0, 3.0);
+		at.scale(0.1, 0.1);
+		at.translate(0, 0);
 		AffineTransformOp scaleOp = 
-		   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+				new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 		after = scaleOp.filter(bckgImage, after);
-		// TMP
-		
-//		Image dimg = bckgImage.getScaledInstance((int) LEFT_PANEL_DIMENSION.getWidth(), (int) LEFT_PANEL_DIMENSION.getHeight(), Image.SCALE_SMOOTH);
-		
+
+
 		lbl_leftPanelImage.setIcon(new ImageIcon(after));
-		dummyLeftPanel.add(lbl_leftPanelImage);
-		
-		
-		
+
+		contentPane.remove(dummyLeftPanel);
+		contentPane.remove(dummyRightPanel);
+		//		dummyLeftPanel.add(lbl_leftPanelImage);
+
+
 	}
 
 	private void populateMenuBar() {
@@ -232,8 +238,8 @@ public class Launcher {
 				}
 			}
 		});
-		
-		
+
+
 		fileMenu.add(saveMenuItem);
 
 		final JMenuItem exitMenuItem = new JMenuItem("Exit");
@@ -273,24 +279,26 @@ public class Launcher {
 				setupMainMenuPage();
 
 			}
-			
+
 			public void clickRegister() {
 				System.out.println("Back in login page");
 			}
 		});
-		
+
 		contentPane.remove(dummyCenterPanel);
+//		contentPane.setLayout(null);
 		contentPane.add(login, BorderLayout.CENTER);
+		login.setLocation(contentPane.getWidth()/2 - login.getWidth()/2, 0);
 	}
 
 	//------------------------------- LOGIN
-	
+
 
 	//	MAIN MENU -------------------------------
 	private void setupMainMenuPage() {
 		mainMenu = new MainMenuPanel(clientManager);
 		contentPane.add(mainMenu);
-		
+
 		mainMenu.addSelectionPiecesListenerListener(new MainMenuListener() {
 			@Override
 			public void clickCreate() {
@@ -298,7 +306,7 @@ public class Launcher {
 				motherFrame.remove(mainMenu);
 				setupCreateLobbyPage();
 			}
-			
+
 			// James
 			@Override
 			public void clickFind() {
@@ -313,15 +321,15 @@ public class Launcher {
 				mainMenu.setVisible(false);
 				motherFrame.remove(mainMenu);
 				setUpLoadPage();
-				
+
 			}
 
 
 		});
 	}
 	//------------------------------- MAIN MENU
-	
-	
+
+
 	//  CREATE LOBBY -------------------------------  
 	private void setupCreateLobbyPage() {
 		createLobby = new CreateLobbyPanel(CENTER_PANEL_DIMENSION, clientManager);
@@ -337,8 +345,8 @@ public class Launcher {
 				setupLobbyPage();
 			}
 		});
-		
-		
+
+
 		createLobby.addSelectionPiecesListenerListener(new BackListener() {
 			public void clickBack() {
 				createLobby.setVisible(false);
@@ -348,13 +356,13 @@ public class Launcher {
 		});
 	}
 	//------------------------------- CREATE LOBBY
-	
-	
+
+
 	// James
 	//  FIND LOBBY -------------------------------  
 	private void setupFindLobbyPage() {
 		findLobby = new FindLobbyPanel(clientManager);
-		
+
 		findLobby.addSelectionPiecesListenerListener(new SearchEntrySetUpListener() {
 			@Override
 			public void SearchEntrySetUp() {
@@ -363,15 +371,15 @@ public class Launcher {
 				setupLobbyPage();
 			}
 		});
-		
+
 		contentPane.add(findLobby);		
 	}
-	
+
 	//------------------------------- FIND LOBBY
 	//  LOAD GAME -------------------------------
 	private void setUpLoadPage() {
 		loadGame = new LoadGamePanel(this.clientManager);
-		
+
 		loadGame.addSelectionPiecesListenerListener(new personalizedlisteners.loadGameListeners.LoadGameSetUpListener() {
 			@Override
 			public void clickLoadGame() {
@@ -381,19 +389,19 @@ public class Launcher {
 				System.out.println("finshed load Game");
 			}
 		});
-		
+
 		contentPane.add(loadGame);	
-		
+
 	}
 	//------------------------------- LOAD GAME
-	
+
 	//	LOBBY ------------------------------- 
 	private void setupLobbyPage() {
 		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION,this.clientManager);
 		contentPane.add(lobby, BorderLayout.CENTER);
 		contentPane.remove(dummyRightPanel);
 		listenerThread.begin();
-		
+
 		System.out.println("lobby?"+clientManager.getLobby().getIsLoadGame());
 		System.out.println(clientManager.getLobby().getPlayers().get(0).getUserName());
 		System.out.println(clientManager.getUserName());
@@ -402,15 +410,15 @@ public class Launcher {
 				public void clickStart(boolean flag) {
 
 					if(!clientManager.getLobby().getPlayers().get(0).getUserName().equals(clientManager.getUserName())) {
-	//					lobby.setVisible(false);
-	//					motherFrame.remove(lobby);
-	//					setupGamePage();
+						//					lobby.setVisible(false);
+						//					motherFrame.remove(lobby);
+						//					setupGamePage();
 					}
 					else {
 						if(sendGameStateRequest()) {
-	//						lobby.setVisible(false);
-	//						motherFrame.remove(lobby);
-	//						setupGamePage();
+							//						lobby.setVisible(false);
+							//						motherFrame.remove(lobby);
+							//						setupGamePage();
 						} else {
 							System.out.println("faileddddd");
 						}
@@ -418,20 +426,20 @@ public class Launcher {
 				}
 			});
 		}
-		
+
 		lobby.addSelectionPiecesListenerListener(new LeaveListener() {
 			public void clickLeave() {
-//				lobby.setVisible(false);
-//				motherFrame.remove(lobby);
-//				lobby.refreshDisplay();
-//				System.out.println("Trying to update lobby page");
-//				contentPane.add(lobby);
-//				lobby.setVisible(true);
+				//				lobby.setVisible(false);
+				//				motherFrame.remove(lobby);
+				//				lobby.refreshDisplay();
+				//				System.out.println("Trying to update lobby page");
+				//				contentPane.add(lobby);
+				//				lobby.setVisible(true);
 			}
 		});
-		
+
 	}
-	
+
 	public void refreshLobby() {
 		lobby.setVisible(false);
 		motherFrame.remove(lobby);
@@ -440,23 +448,23 @@ public class Launcher {
 		contentPane.remove(dummyRightPanel);
 		lobby.setVisible(true);
 		motherFrame.revalidate();
-		
+
 	}
-	
+
 	public void startGame() {
 		lobby.setVisible(false);
 		motherFrame.remove(lobby);
-//		try {
-//			listenerThread.holdUp();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		//		try {
+		//			listenerThread.holdUp();
+		//		} catch (InterruptedException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
 		setupGamePage();
 	}
 	//------------------------------- LOBBY
-	
-	
+
+
 	// GAME	------------------------------- 
 	private void setupGamePage() {
 		/**
@@ -464,16 +472,16 @@ public class Launcher {
 		 */
 		//A fake gamestate set up to allow the gui to build from something
 
-//		current = new GameManager(tester);
+		//		current = new GameManager(tester);
 		current = new GameManager(clientManager.getLobby());
-		
+
 		table = new Table(clientManager.getUsersGameState(), clientManager, this, listenerThread);
 		BoardPanel board = table.genBoard();
 		LeftPanel LPanel = table.genLeftPanel();
 		RightPanel RPanel = table.genRightPanel();
-		
-//		Table boardView = new Table(tester);
-//		boardView.setVisible(true);
+
+		//		Table boardView = new Table(tester);
+		//		boardView.setVisible(true);
 		contentPane.removeAll();
 		contentPane.add(LPanel, BorderLayout.WEST);
 		contentPane.add(board, BorderLayout.CENTER);
@@ -483,7 +491,7 @@ public class Launcher {
 	// Back to Main Menu
 	public void backToMainMenu(){
 		//remove old lobby on server
-		
+
 		//remove old game state gui
 		contentPane.removeAll();
 		//create and make visible mainMenuPage
@@ -510,7 +518,7 @@ public class Launcher {
 		contentPane.add(RPanel, BorderLayout.EAST);
 		motherFrame.revalidate();
 	}
-	
+
 	public void refreshBoard() {
 		if(clientManager.getEndTurnTrigger()) {
 			table.hideAdvPanel();
@@ -530,89 +538,89 @@ public class Launcher {
 		table.refresh(clientManager.getUsersGameState());
 		if(table.getMyIndex() > 5) {
 			repaint(false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
-			
+
 		} else {
 			repaint(clientManager.getUsersGameState().getFireFighterList().get(table.getMyIndex()).getCurrentPosition()==null, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
 		}
 	}
-	
+
 	public void showRideRequest() {
 		table.showRideRequest();
 	}
-	
+
 	public void showDodgeRequest() {
 		table.showDodgeRequest();
-		
+
 	}
-	
+
 	public void showAdvanceFireString(String advFireString) {
 		table.showAdvanceFireString(advFireString);
-		
+
 	}
 
 	public void showGameTermination() {
 		table.showGameTermination();
-		
+
 	}
 
 	public void showDeckGun() {
 		//table.showDeckGunRequest();
 	}
-	
-//	public void gameRepainter() {
-//		Table table = new Table(tester);
-//		BoardPanel board = table.genBoard();
-//		LeftPanel LPanel = table.new LeftPanel(tester);
-//		RightPanel RPanel = table.new RightPanel(tester);
-//		contentPane.removeAll();
-//		contentPane.add(LPanel, BorderLayout.WEST);
-//		contentPane.add(board, BorderLayout.CENTER);
-//		contentPane.add(RPanel, BorderLayout.EAST);
-//		motherFrame.revalidate();
-//	}
+
+	//	public void gameRepainter() {
+	//		Table table = new Table(tester);
+	//		BoardPanel board = table.genBoard();
+	//		LeftPanel LPanel = table.new LeftPanel(tester);
+	//		RightPanel RPanel = table.new RightPanel(tester);
+	//		contentPane.removeAll();
+	//		contentPane.add(LPanel, BorderLayout.WEST);
+	//		contentPane.add(board, BorderLayout.CENTER);
+	//		contentPane.add(RPanel, BorderLayout.EAST);
+	//		motherFrame.revalidate();
+	//	}
 	//	------------------------------- GAME 
-	
+
 	private boolean sendGameStateRequest() {
-		
+
 		return clientManager.gameStateRequest(userOne);
 	}
-	
+
 	public void updateGameState(GameState updated) {
 		this.tester = updated;
 	}
-	
+
 	public boolean sendSaveGameRequest() {
 		return clientManager.saveGameRequest();
 	}
-	
+
 	public static Client getClient() {
 		return client;
 	}
-	
+
 	private boolean sendConnectionRequest() {
-//		boolean flag = false;
-//		ClientOutputThread output = client.getClientOutputThread();
-//		ClientInputThread input = client.getClientInputThread();
-//		String username = "Zaid";
-//		String pword = "zzz";
-//		TranObject<User> user = new TranObject<User>(TranObjectType.CONNECT);
-//		userOne.setName(username);
-//		userOne.setPassword(pword);
-//		user.setObject(userOne);
-//		output.setMsg(user);
-		
-//		return clientManager.connectionRequest(userOne);
+		//		boolean flag = false;
+		//		ClientOutputThread output = client.getClientOutputThread();
+		//		ClientInputThread input = client.getClientInputThread();
+		//		String username = "Zaid";
+		//		String pword = "zzz";
+		//		TranObject<User> user = new TranObject<User>(TranObjectType.CONNECT);
+		//		userOne.setName(username);
+		//		userOne.setPassword(pword);
+		//		user.setObject(userOne);
+		//		output.setMsg(user);
+
+		//		return clientManager.connectionRequest(userOne);
 		return clientManager.connectionRequest(userOne);
-		
-		
+
+
 		/*
 		 * try { while(input.readMessage() != true) { System.out.println("waiting"); } }
 		 * catch(ClassNotFoundException f) { System.out.println("Error class"); }
 		 * catch(IOException k) { System.out.println("Error IO"); }
 		 */
-//	
-//		flag = true;
-//		return flag; 
+		//	
+		//		flag = true;
+		//		return flag; 
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
@@ -632,5 +640,5 @@ public class Launcher {
 		});
 	}
 
-	
+
 }

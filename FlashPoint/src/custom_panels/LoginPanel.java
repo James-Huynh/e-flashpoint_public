@@ -77,14 +77,14 @@ public class LoginPanel extends JPanel {
 	private void createHeaderPanel() {
 		headerPanel = new JPanel();
 		headerPanel.setLayout(null);
-		headerPanel.setBounds(131,60, 653,126);
+		headerPanel.setBounds((1000/2) - (653/2), 68, 653,126);
 		createHeader();
 		this.add(headerPanel);
 	}
 
 	private void createInputPanel() {
 		inputPanel = new JPanel();
-		inputPanel.setBounds(187, 229, 439, 286);
+		inputPanel.setBounds((1000/2) - (439/2), 245, 439, 286);
 		inputPanel.setLayout(null);
 
 		//this.add(inputPanel);
