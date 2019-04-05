@@ -5102,6 +5102,7 @@ public class Table {
 		
 		
 		public void showDodgeRequest() {
+			System.out.println("show dodge request trigged");
 			dodgeRequest = null;
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel(new BorderLayout());
@@ -5117,11 +5118,13 @@ public class Table {
 			JPanel responsePanel = new JPanel();
 			responsePanel.setLayout(new GridLayout(4,1));
 			for(actions.Action a : dodgeOptions) {
+				System.out.println("dodging buttons");
 				if(a.getDirection() == 0) {
 					dodgeButton0.setPreferredSize(new Dimension(40,40));
 					dodgeButton0.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							System.out.println("this should not happen");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
 //							if(sendActionRequest(a));
@@ -5133,6 +5136,7 @@ public class Table {
 					dodgeButton1.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							System.out.println("this should not happen");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
 //							if(sendActionRequest(a));
@@ -5144,6 +5148,7 @@ public class Table {
 					dodgeButton2.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							System.out.println("this should not happen");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
 //							if(sendActionRequest(a));
@@ -5155,6 +5160,7 @@ public class Table {
 					dodgeButton3.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							System.out.println("this should not happen");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 900, 50);
 //							if(sendActionRequest(a));
@@ -5178,6 +5184,7 @@ public class Table {
 		}
 		
 		public void hideDodgePanel() {
+			System.out.println("this should not be called");
 			if(dodgeRequest != null) {
 				dodgeRequest.hide();
 			}

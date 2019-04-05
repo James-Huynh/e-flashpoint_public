@@ -40,13 +40,18 @@ public class clientThread implements Runnable{
 					myLauncher.showRideRequest();
 					toggle = false;
 					
+				} else if(myClientManager.getUsersGameState().getIsDodging() && toggle) {
+					System.out.println("check if is dodging is true");
+					myLauncher.showDodgeRequest();
+					toggle = false;
 				}
 				else if(myClientManager.listenForResponses() == 1) {
 					System.out.println("hello we are not riding");
 					myLauncher.refreshBoard();
-					if(myClientManager.getUsersGameState().getIsDodging()) {
-						myLauncher.showDodgeRequest();
-					}
+//					if(myClientManager.getUsersGameState().getIsDodging()) {
+//						System.out.println("check if is dodging is true");
+//						myLauncher.showDodgeRequest();
+//					}
 					toggle = true;
 				} else {
 					System.out.println("we are not meant to be here");

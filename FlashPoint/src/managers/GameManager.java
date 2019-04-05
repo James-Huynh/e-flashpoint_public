@@ -1186,6 +1186,7 @@ public class GameManager {
 			}
 			gs.setDodgingHashMap(f, dodgeList);
 		}
+		gs.setPlayingFirefighter(inturn);
 		gs.setIsDodging(flag);
 		return flag;
 		
