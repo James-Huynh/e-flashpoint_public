@@ -61,7 +61,7 @@ public class ServerManager {
 	}
 	
 	public void createGame() {
-		if(gameState == null) {
+//		if(gameState == null) {
 			initializeGameManager();
 			gameManager.setup();
 			gameState = gameManager.getGameState();
@@ -72,7 +72,7 @@ public class ServerManager {
 				// gameManager.getGameState().setRandomGame(randomBoards.get(randomBoards.size()-1));
 				this.randomBoards.add(gameManager.getGameState().getRandomBoard());
 			}
-		}
+//		}
 		
 	}
 	
@@ -553,6 +553,16 @@ public class ServerManager {
 
 		public boolean hasEveryoneDodged() {
 			return gameManager.hasEveryoneDodged();
+		}
+
+		public void resetForNewGame() {
+			this.placedFF = 0;
+			currentLobbies.clear(); //hard coded : we can only have one lobby in our game
+			this.firstTurn = true;
+			this.activeLobby = null;
+			this.gameState = null;
+			this.gameManager = null;
+			
 		}
 	
 }

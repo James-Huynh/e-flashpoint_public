@@ -209,6 +209,7 @@ public class ClientManager {
 			case ENDGAME:
 				System.out.println("Successful EndGame request");
 				requestObject = (User) read_tranObject.getObject();
+				startGameFlag = 3;
 				flag = true;
 				launcher.createNewThread();
 				break;

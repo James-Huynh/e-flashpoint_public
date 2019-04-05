@@ -730,9 +730,11 @@ public class ServerInputThread extends Thread {
 			case ENDGAME:
 				returnObject=new TranObject<User>(TranObjectType.ENDGAME);
 				requestObject = (User) read_tranObject.getObject();
+				serverManager.resetForNewGame();
+				
 				returnObject.setObject(requestObject);
-				out.setMessage(returnObject);	
-				serverManager.getGameManager().end();
+				out.setMessage(returnObject);
+				//serverManager.getGameManager().end();
 			default:
 				break;
 			}
