@@ -122,7 +122,7 @@ public class LobbyPanel extends JPanel {
 	}
 	
 	private void createLeaveButton() {
-		leaveBtn = new JButton("REFRESH");
+		leaveBtn = new JButton("Go Back");
 		leaveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listen();

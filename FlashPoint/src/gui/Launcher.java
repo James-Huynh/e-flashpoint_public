@@ -64,7 +64,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = JamesIP;
+	private String ServerIP = MatIP;
 
 
 	int port = 8888;
@@ -96,7 +96,7 @@ public class Launcher {
 	// Images
 	private static String defaultImagesPath = "img";
 	private static String firefighterBckgPath = "/background-firefighter_1.png";
-	private static String logoBckgPath = "/background-FF-Logo.jpg";
+	private static String logoBckgPath = "/background-FF-Logo.gif";
 
 
 	//Used by Ben for in game testing. Not permanent.
@@ -174,7 +174,7 @@ public class Launcher {
 		dummyCenterPanel.setPreferredSize(CENTER_PANEL_DIMENSION);
 		contentPane.add(dummyCenterPanel, BorderLayout.CENTER);
 
-		dummyRightPanel.setBackground(Color.RED);
+//		dummyRightPanel.setBackground(Color.RED);
 		dummyRightPanel.setPreferredSize(RIGHT_PANEL_DIMENSION);
 		contentPane.add(dummyRightPanel, BorderLayout.EAST);
 
@@ -190,7 +190,6 @@ public class Launcher {
 		//		dummyCenterPanel.setLayout(null);
 		try {
 			bckgImage = ImageIO.read(new File(defaultImagesPath + logoBckgPath));
-			dummyLeftPanel.add(new JLabel(new ImageIcon(bckgImage)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -212,7 +211,7 @@ public class Launcher {
 
 
 		lbl_leftPanelImage.setIcon(new ImageIcon(after));
-
+		dummyLeftPanel.add(lbl_leftPanelImage);
 //		contentPane.remove(dummyLeftPanel);
 		contentPane.remove(dummyRightPanel);
 		//		dummyLeftPanel.add(lbl_leftPanelImage);
