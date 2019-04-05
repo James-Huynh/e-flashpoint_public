@@ -223,7 +223,7 @@ public class ServerManager {
 	public void setFFNextTurn() {
 		gameManager.setFirstAction(true);
 		int newIndex = (gameState.getActiveFireFighterIndex() + 1);
-		if (newIndex >= gameState.getFreeFirefighters().size()) {
+		if (newIndex >= gameState.getFireFighterList().size()) {
 			firstTurn = false;
 		}
 		gameState.setActiveFireFighterIndex( newIndex%(gameState.getFireFighterList().size()) );
@@ -512,10 +512,10 @@ public class ServerManager {
 			token.Colour ff = person.getDesiredFirefighterColour();
 			int desiredFF = 0;
 			System.out.println("we are in hrerererer" + ff.toString());
-			if(gameState.getFireFighterList().size() != 0) {
+			if(gameState.getFreeFirefighters().size() != 0) {
 				Player player = onlinePlayers.get(person.getId());
-				for(int i = 0; i<gameState.getFireFighterList().size(); i++) {
-					if(gameState.getFireFighterList().get(i).getColour() == ff) {
+				for(int i = 0; i<gameState.getFreeFirefighters().size(); i++) {
+					if(gameState.getFreeFirefighters().get(i).getColour() == ff) {
 						desiredFF = i;
 					}
 				}
