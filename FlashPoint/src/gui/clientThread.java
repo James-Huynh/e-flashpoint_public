@@ -9,12 +9,14 @@ public class clientThread implements Runnable{
 	boolean inLobby;
 	Thread t1;
 	boolean toggle;
+	boolean exit;
 	
 	clientThread(Launcher mylauncher, ClientManager myManager, Boolean inLobby){
 		this.myLauncher = mylauncher;
 		this.myClientManager = myManager;
 		this.inLobby = inLobby;
 		this.toggle = true;
+		this.exit = true;
 		
 		
 	}
@@ -23,7 +25,7 @@ public class clientThread implements Runnable{
 	public void run() {
 		
 		
-		while(true) {
+		while(exit) {
 			
 			if(this.inLobby) {
 				int flag = myClientManager.listenForResponses();
@@ -63,6 +65,10 @@ public class clientThread implements Runnable{
 		// TODO Auto-generated method stub
 		t1 = new Thread(this);
 		t1.start();
+	}
+	
+	public void stop() {
+		this.exit = false;
 	}
 
 	
