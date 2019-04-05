@@ -148,6 +148,7 @@ public class ClientManager {
 				System.out.println("Successful joinlobby request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				flag = true;
+				break;
 			case ENDTURNSUCCESS:
 				System.out.println("Successful endTurn request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
@@ -200,6 +201,7 @@ public class ClientManager {
 				System.out.println("Successful dodge inform request");
 				requestObject.setCurrentState((GameState) read_tranObject.getObject());
 				flag = true;
+				startGameFlag = 1;
 				break;
 				
 			case ERROR:
@@ -715,7 +717,7 @@ public class ClientManager {
 	public boolean dodgeAnswer(Action a, int myIndex) {
 		requestObject.setDodgeAction(a);
 		requestObject.setMyFFIndex(myIndex);
-		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.HELLLLL);
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.DODGERESPONSE);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;

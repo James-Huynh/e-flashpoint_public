@@ -473,7 +473,7 @@ public class ServerInputThread extends Thread {
 					onOut.setMessage(returnGameStateEnd);
 				}
 				break;
-			case HELLLLL:
+			case DODGERESPONSE:
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.updateDodgeRespone(requestObject.getDodgeAction(), requestObject.getMyFFIndex());
 				System.out.println("hello we have updated dodge Response");
