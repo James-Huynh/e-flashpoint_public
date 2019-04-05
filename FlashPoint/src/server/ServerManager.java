@@ -53,6 +53,7 @@ public class ServerManager {
 		savedGames = new ArrayList<GameState>();
 		setSavedGames();
 		randomBoards = new ArrayList<Integer>();
+		randomBoards.add(6);
 	}
 	
 	public void createPlayer(String name, String password, Integer ID) {
@@ -71,6 +72,7 @@ public class ServerManager {
 			if (gameManager.getGameState().getRandomBoard() >= 0) {
 				// gameManager.getGameState().setRandomGame(randomBoards.get(randomBoards.size()-1));
 				this.randomBoards.add(gameManager.getGameState().getRandomBoard());
+				this.gameManager.setRandomBoards(this.randomBoards);
 			}
 //		}
 		

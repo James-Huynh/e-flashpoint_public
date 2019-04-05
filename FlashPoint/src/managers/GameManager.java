@@ -1225,6 +1225,7 @@ public class GameManager {
 	public ArrayList<Integer> getRandomBoards(){
 		return this.randomBoards;
 	}
+	
 	@SuppressWarnings("deprecation")
 	public void end() {
 		try {
