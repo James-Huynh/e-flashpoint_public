@@ -209,11 +209,6 @@ public class ClientManager {
 			case ENDGAME:
 				
 			}
-			
-		
-		
-			
-			
 		}
 		return flag;
 	}
@@ -268,7 +263,7 @@ public class ClientManager {
 		catch(IOException k) {
 			
 		}
-		return flag;
+		return true;
 	
 	}
 
@@ -323,7 +318,7 @@ public class ClientManager {
 		
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
-
+		
 		try {
 			while(readMessage() != true) {
 				
@@ -508,10 +503,9 @@ public class ClientManager {
 		System.out.println("I am listening in client manager");
 //		
 //		startGameFlag = 0;
-		boolean flag = false;
 		try {
 			while(readMessage() != true) {
-				
+				System.out.println("im here 1212");
 			}
 //			flag = true;
 		}
@@ -521,7 +515,7 @@ public class ClientManager {
 		catch(IOException k) {
 			
 		}
-		return startGameFlag;
+		return this.startGameFlag;
 	}
 
 	public String getUserName() {
