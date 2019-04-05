@@ -27,8 +27,11 @@ public class Dodge extends Move {
 		}
 		// FF should be able to click if they want to stay or move.
 		
-		gs.getPlayingFirefighter().setCanDodge(false);
-		gs.vicinity(gs.getPlayingFirefighter());
+		if (gs.getPlayingFirefighter().getSpeciality() != Speciality.VETERAN) {
+			gs.getPlayingFirefighter().setCanDodge(false);
+			gs.vicinity(gs.getPlayingFirefighter());
+		}
+		
 		gs.getPlayingFirefighter().setUsedAP(true);
 		
 		/*
