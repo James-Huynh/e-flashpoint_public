@@ -1225,7 +1225,15 @@ public class GameManager {
 	public ArrayList<Integer> getRandomBoards(){
 		return this.randomBoards;
 	}
-	
+	@SuppressWarnings("deprecation")
+	public void end() {
+		try {
+			this.finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 //    public static void main(String[] args) {
 //    	GameManager gm = new GameManager();
 //    	gm.runFlashpoint();
