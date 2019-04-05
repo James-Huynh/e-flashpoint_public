@@ -213,7 +213,7 @@ public class Launcher {
 
 		lbl_leftPanelImage.setIcon(new ImageIcon(after));
 
-		contentPane.remove(dummyLeftPanel);
+//		contentPane.remove(dummyLeftPanel);
 		contentPane.remove(dummyRightPanel);
 		//		dummyLeftPanel.add(lbl_leftPanelImage);
 
@@ -286,9 +286,9 @@ public class Launcher {
 		});
 
 		contentPane.remove(dummyCenterPanel);
-//		contentPane.setLayout(null);
-		contentPane.add(login, BorderLayout.CENTER);
-		login.setLocation(contentPane.getWidth()/2 - login.getWidth()/2, 0);
+		login.setBounds(1200, 1200, login.getWidth(), login.getHeight());//
+
+		contentPane.add(login);
 	}
 
 	//------------------------------- LOGIN
