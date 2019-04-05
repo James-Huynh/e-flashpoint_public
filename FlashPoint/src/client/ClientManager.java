@@ -207,7 +207,11 @@ public class ClientManager {
 			case ERROR:
 				System.out.println("SOMEONEDISCONNECTED!!");
 			case ENDGAME:
-				
+				System.out.println("Successful EndGame request");
+				requestObject = (User) read_tranObject.getObject();
+				flag = true;
+				launcher.createNewThread();
+				break;
 			}
 		}
 		return flag;

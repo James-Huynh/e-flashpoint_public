@@ -491,6 +491,8 @@ public class Launcher {
 		contentPane.remove(dummyCenterPanel);
 		setupMainMenuPage();
 		motherFrame.revalidate();
+	}
+	public void createNewThread() {
 		listenerThread.stop();
 		listenerThread = new clientThread(this, clientManager, true); 
 	}
