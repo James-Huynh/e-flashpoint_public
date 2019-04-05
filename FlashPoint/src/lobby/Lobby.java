@@ -37,7 +37,8 @@ public class Lobby implements Serializable  {
 		//dummy
 		players = new ArrayList<Player>();
 		randomGame = -1;
-
+		randomBoards = new ArrayList<Integer>();
+		randomBoards.add(6);
 //		assignColours();
 
 	}
@@ -168,14 +169,9 @@ public class Lobby implements Serializable  {
 		else {
 			System.out.println("creating random Board");
 			Random rn = new Random();
-			int boardNumber;
-			while(true) {
-				boardNumber = rn.nextInt(5) + 1;
-				if (!this.randomBoards.contains(boardNumber)) {
-					break;
-				}
-			}
-			
+			int boardNumber = this.randomBoards.get(randomBoards.size()-1) - 1;
+			this.randomGame = boardNumber;
+			this.randomBoards.add(boardNumber);
 			
 			if(this.mode.equals("Family")) {
 				if(boardNumber == 1) template = new RandomBoardOne("Family");
@@ -190,7 +186,7 @@ public class Lobby implements Serializable  {
 				if(boardNumber == 4) template = new RandomBoardFour("Experienced");
 				if(boardNumber == 5) template = new RandomBoardFive("Experienced");
 			}
-			this.randomGame = boardNumber;
+			
 		}
 	}
 

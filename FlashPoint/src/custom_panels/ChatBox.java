@@ -165,6 +165,7 @@ public class ChatBox extends JPanel{
 		}
 
 		textField.setText("");
+		textField.requestFocus();
 	}
 
 	/*

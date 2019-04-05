@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
 import client.ClientManager;
@@ -37,6 +38,9 @@ public class MainMenuPanel extends JPanel {
 	private JButton btn_LoadGame;
 	private JLabel lbl_image;
 	private ImageIcon imageIconBackground;
+	
+	private JPanel headerPanel;
+	private JLabel headerLabel;
 
 	private ClientManager clientManager;
 
@@ -59,6 +63,7 @@ public class MainMenuPanel extends JPanel {
 		menuPanel.setBackground(new Color(0,0,0,0));
 
 		createButtons();
+		createHeaderPanel();
 
 		menuPanel.add(createBtn);
 		menuPanel.add(findBtn);
@@ -68,6 +73,24 @@ public class MainMenuPanel extends JPanel {
 		this.add(menuPanel);
 	
 		initializeImages();
+	}
+
+	private void createHeaderPanel() {
+		headerPanel = new JPanel();
+		headerPanel.setLayout(null);
+		headerPanel.setBounds(34,22,449,107);
+		headerPanel.setOpaque(false);
+		this.add(headerPanel);
+		createHeader();
+	}
+	
+	private void createHeader() {
+		headerLabel = new JLabel("FLASHPOINT");
+		headerLabel.setBounds(6, 6, 533, 84);
+		headerLabel.setForeground(new Color(255, 0, 0));
+		headerLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		headerLabel.setFont(new Font("Nanum Brush Script", Font.BOLD | Font.ITALIC, 58));
+		headerPanel.add(headerLabel);	
 	}
 
 	private void createButtons() {
@@ -118,7 +141,6 @@ public class MainMenuPanel extends JPanel {
 
 	private void initializeImages() {
 		BufferedImage imageBackground = null;
-		URL url_imageBackground =MainMenuPanel.class.getResource(imageName);
 
 		try {
 			imageBackground = ImageIO.read(new File(defaultImagesPath + imageName));
@@ -141,6 +163,7 @@ public class MainMenuPanel extends JPanel {
 		imageIconBackground = new ImageIcon(after);
 	
 		lbl_image = new JLabel(imageIconBackground);
+//		lbl_image.setal
 		lbl_image.setBounds(0, 0, 1000, 800);
 		this.add(lbl_image);
 		
