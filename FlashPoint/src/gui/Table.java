@@ -37,6 +37,7 @@ import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+import actions.Action;
 import actions.ActionList;
 import client.ClientManager;
 import custom_panels.ChatBox;
@@ -80,6 +81,7 @@ public class Table {
 		private Popup gameTermination;
 		private Popup rideRequest;
 		private Popup deckGunRequest;
+		private Popup dodgeRequest;
 		private static boolean placing = true;
 		private static boolean playing = true;
 		private static boolean selectingFireFighter = false;
@@ -5099,6 +5101,99 @@ public class Table {
 		}	
 		
 		
+		
+		public void showDodgeRequest() {
+			System.out.println("show dodge request trigged");
+			dodgeRequest = null;
+			PopupFactory gameT = new PopupFactory();
+			JPanel gameTPanel = new JPanel(new BorderLayout());
+			JTextArea text = new JTextArea();
+			String dodgeReq = "You are in danger!! Which direction would you like to dodge?";
+			ArrayList<actions.Action> dodgeOptions = new ArrayList<actions.Action>();
+			dodgeOptions = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myIndex));
+			text.setText(dodgeReq);
+			JButton dodgeButton0 = new JButton("Dodge left");
+			JButton dodgeButton1 = new JButton("Dodge up");
+			JButton dodgeButton2 = new JButton("Dodge right");
+			JButton dodgeButton3 = new JButton("Dodge down");
+			JPanel responsePanel = new JPanel();
+			responsePanel.setLayout(new GridLayout(4,1));
+			for(actions.Action a : dodgeOptions) {
+				System.out.println("dodging buttons");
+				if(a.getDirection() == 0) {
+					dodgeButton0.setPreferredSize(new Dimension(40,40));
+					dodgeButton0.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("this should not happen");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(a,myIndex);
+						}
+
+					});
+					responsePanel.add(dodgeButton0);		
+				} else if (a.getDirection() == 1) {
+					dodgeButton1.setPreferredSize(new Dimension(40,40));
+					dodgeButton1.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("this should not happen");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(a,myIndex);
+						}
+					});
+					responsePanel.add(dodgeButton1);
+				} else if (a.getDirection() == 2) {
+					dodgeButton2.setPreferredSize(new Dimension(40,40));
+					dodgeButton2.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("this should not happen");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(a,myIndex);
+						}
+					});
+					responsePanel.add(dodgeButton2);
+				} else if (a.getDirection() == 3) {
+					dodgeButton3.setPreferredSize(new Dimension(40,40));
+					dodgeButton3.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("this should not happen");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(a,myIndex);
+						}
+					});
+					responsePanel.add(dodgeButton3);
+				}
+			}
+				
+			gameTPanel.setPreferredSize(new Dimension(400,400));
+			gameTPanel.setBackground(tileColorWhite);
+			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
+			gameTPanel.setBorder(blackline);
+			gameTPanel.add(text, BorderLayout.NORTH);
+			gameTPanel.add(responsePanel, BorderLayout.SOUTH);
+		
+			
+			dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+			
+			dodgeRequest.show();
+		}
+		
+		public void hideDodgePanel() {
+			System.out.println("this should not be called");
+			if(dodgeRequest != null) {
+				dodgeRequest.hide();
+			}
+			
+		}	
+		
+		
 		public void showDeckGunRequest(actions.Action a) {
 			rideRequest = null;
 			PopupFactory gameT = new PopupFactory();
@@ -5309,6 +5404,11 @@ public class Table {
 			}
 			
 			return true;
+		}
+		
+		private boolean sendDodgeAnswer(Action a, int myIndex) {
+			return clientManager.dodgeAnswer(a,myIndex);
+			
 		}
 		
 }

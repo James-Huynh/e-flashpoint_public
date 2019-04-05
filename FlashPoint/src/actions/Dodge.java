@@ -42,6 +42,10 @@ public class Dodge extends Move {
 	public boolean validate(GameState gs) {
 		boolean sup = super.validate(gs);
 		
+		if (gs.getNeighbour(gs.getPlayingFirefighter().getCurrentPosition(),direction).getFire() == 2) {
+			return false;
+		}
+		
 		if (gs.getPlayingFirefighter().getSpeciality() != Speciality.VETERAN) {
 			this.APcost = 2;
 		}

@@ -196,7 +196,12 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				flag = true;
 				break;
-			
+			case DODGERECEIVED:
+				System.out.println("Successful dodge inform request");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				flag = true;
+				break;
+				
 			}
 			
 		
@@ -700,6 +705,15 @@ public class ClientManager {
 	public boolean fireFighterSelectionRequest(int i) {
 		requestObject.setDesiredFirefighter(i);
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.FIREFIGHTERSELECTREQUEST);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
+	}
+
+	public boolean dodgeAnswer(Action a, int myIndex) {
+		requestObject.setDodgeAction(a);
+		requestObject.setMyFFIndex(myIndex);
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.HELLLLL);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;

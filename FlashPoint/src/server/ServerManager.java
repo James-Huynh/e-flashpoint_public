@@ -34,11 +34,13 @@ public class ServerManager {
 	private ArrayList<GameState> savedGames;
 	private static String defaulGamesPath = "savedGames/";
 	private static String currentPath = System.getProperty("user.dir");
+	private boolean firstTurn; //should be in game state?
 	
 	private Lobby activeLobby;
 	private GameState gameState;
 	private GameManager gameManager;
 	
+	public ArrayList<Integer> randomBoards;
 	
 	private int placedFF = 0;
 	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
@@ -50,6 +52,7 @@ public class ServerManager {
 		accounts.put("me", "aa");
 		savedGames = new ArrayList<GameState>();
 		setSavedGames();
+		randomBoards = new ArrayList<Integer>();
 	}
 	
 	public void createPlayer(String name, String password, Integer ID) {
@@ -64,6 +67,10 @@ public class ServerManager {
 			gameState = gameManager.getGameState();
 			gameState.setActiveFireFighterIndex(-1);
 			gameManager.setFirstAction(true);
+			firstTurn = true;
+			if (gameManager.getGameState().getRandomBoard() >= 0) {
+				gameManager.getGameState().setRandomGame(randomBoards.get(randomBoards.size()-1));
+			}
 		}
 		
 	}
@@ -211,10 +218,15 @@ public class ServerManager {
 	
 	public void setFFNextTurn() {
 		gameManager.setFirstAction(true);
-		gameState.setActiveFireFighterIndex( (gameState.getActiveFireFighterIndex() + 1)%(gameState.getFireFighterList().size()) );
-		gameState.getPlayingFirefighter().endOfTurn();
+		int newIndex = (gameState.getActiveFireFighterIndex() + 1);
+		if (newIndex >= gameState.getFreeFirefighters().size()) {
+			firstTurn = true;
+		}
+		gameState.setActiveFireFighterIndex( newIndex%(gameState.getFireFighterList().size()) );
+		if(!firstTurn) {
+			gameState.getPlayingFirefighter().endOfTurn();
+		}
 		gameState.vicinity(gameState.getPlayingFirefighter());
-		
 	}
 	
 	public void advanceFire() {
@@ -520,6 +532,25 @@ public class ServerManager {
 		public void resetHashMap() {
 			gameState.resetHashMap();
 			
+		}
+
+		public boolean generateDodgeActions() {
+			return gameManager.generateDodgeActions();
+			
+			
+		}
+
+		public void updateDodgeRespone(Action dodgeAction, int myFFIndex) {
+			Firefighter inturn = gameState.getPlayingFirefighter();
+			gameState.setPlayingFirefighter(gameState.getFireFighterList().get(myFFIndex));
+			dodgeAction.perform(gameState);
+			gameState.setPlayingFirefighter(inturn);
+			gameManager.setDodgeResponseChecker(myFFIndex);
+			
+		}
+
+		public boolean hasEveryoneDodged() {
+			return gameManager.hasEveryoneDodged();
 		}
 	
 }

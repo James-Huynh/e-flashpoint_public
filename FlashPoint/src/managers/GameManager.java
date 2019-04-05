@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 // Start of user code for imports
 // End of user code
 import java.util.HashSet;
@@ -38,6 +39,7 @@ public class GameManager {
 	private String recentAdvFire;
 	private Lobby representsLobby;
 	private boolean firstAction;
+	private boolean[] dodgeResponseChecker;
 	
 	// MAIN
     public void runFlashpoint() {
@@ -65,6 +67,7 @@ public class GameManager {
     	gs.setListOfPlayers(representsLobby.getPlayers());
     	setupGameType();
     	gs.setFirefighters();
+    	dodgeResponseChecker = new boolean[gs.getFireFighterList().size()];
     }
 	
     public void loadGameState(GameState ngs) {
@@ -1167,6 +1170,50 @@ public class GameManager {
     
 	public void setAdvFire(String input) {
 		this.recentAdvFire = input;
+	}
+
+	public boolean generateDodgeActions() {
+		boolean flag = false;
+		Firefighter inturn = gs.getPlayingFirefighter();
+		
+		for(Firefighter f : gs.getFireFighterList()) {
+			gs.setPlayingFirefighter(f);
+			ArrayList<actions.Action> dodgeList = new ArrayList<actions.Action>();
+			for(int direction = 0; direction<4; direction ++) {
+				Dodge currentAction = new Dodge(direction);
+				if(currentAction.validate(gs)) {
+					flag = true;
+					dodgeList.add(currentAction);
+				}
+			}
+			gs.setDodgingHashMap(f, dodgeList);
+			System.out.println(f.getColour().toString() + "||" + dodgeList.size() + "||" + gs.getFireFighterList().lastIndexOf(f));
+			if(dodgeList.size() > 0) {
+				dodgeResponseChecker[gs.getFireFighterList().lastIndexOf(f)] = false;
+			} else {
+				dodgeResponseChecker[gs.getFireFighterList().lastIndexOf(f)] = true;
+			}
+			System.out.println("after the changes" + dodgeResponseChecker[gs.getFireFighterList().lastIndexOf(f)]);
+		}
+		gs.setPlayingFirefighter(inturn);
+		gs.setIsDodging(flag);
+		return flag;
+		
+	}
+
+	public void setDodgeResponseChecker(int myFFIndex) {
+		dodgeResponseChecker[myFFIndex] = true;
+		System.out.println("I change ff " + dodgeResponseChecker[myFFIndex] + "||" + myFFIndex);
+		
+	}
+
+	public boolean hasEveryoneDodged() {
+		for(int i = 0; i < dodgeResponseChecker.length; i++) {
+			if(dodgeResponseChecker[i] == false) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 //    public static void main(String[] args) {

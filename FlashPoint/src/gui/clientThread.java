@@ -40,8 +40,11 @@ public class clientThread implements Runnable{
 					myLauncher.showRideRequest();
 					toggle = false;
 					
-				}
-				else if(myClientManager.listenForResponses() == 1) {
+				} else if(myClientManager.getUsersGameState().getIsDodging() && toggle) {
+					System.out.println("hello we are riding");
+					myLauncher.showDodgeRequest();
+					toggle = false;
+				}else if(myClientManager.listenForResponses() == 1) {
 					System.out.println("hello we are not riding");
 					myLauncher.refreshBoard();
 					toggle = true;

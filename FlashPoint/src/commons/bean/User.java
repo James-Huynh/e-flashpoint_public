@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import actions.Action;
 import chat.ChatMsgEntity;
 import game.GameState;
 import lobby.Lobby;
@@ -47,6 +48,7 @@ public class User implements Serializable {
     private int loadNum;
     private ArrayList<GameState> savedGameStates;
     private int[] dices;
+    private actions.Action dodgeAction;
     
     private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	public Integer getId() {
@@ -282,6 +284,14 @@ public class User implements Serializable {
 
 	public void setMyFFIndex(int myFFIndex) {
 		this.myFFIndex = myFFIndex;
+	}
+
+	public void setDodgeAction(Action a) {
+		this.dodgeAction = a;
+		
+	}
+	public actions.Action getDodgeAction(){
+		return this.dodgeAction;
 	}
 
 //	public int getImg() {

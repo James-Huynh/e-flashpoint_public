@@ -57,7 +57,7 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
 public class Launcher {
 	private String EricIP = "142.157.30.157";
 	private String JamesIP = "142.157.105.75";
-	private String JunhazIP = "142.157.65.31";
+	private String JunhazIP = "142.157.65.237";
 	private String ZaidIP = "142.157.145.244";
 	private String BenIP = "142.157.58.216";
 	private String MatIP = "142.157.63.60";
@@ -534,6 +534,11 @@ public class Launcher {
 		table.showRideRequest();
 	}
 	
+	public void showDodgeRequest() {
+		table.showDodgeRequest();
+		
+	}
+	
 	public void showAdvanceFireString(String advFireString) {
 		table.showAdvanceFireString(advFireString);
 		
@@ -543,7 +548,7 @@ public class Launcher {
 		table.showGameTermination();
 		
 	}
-	
+
 	public void showDeckGun() {
 		//table.showDeckGunRequest();
 	}
@@ -620,4 +625,6 @@ public class Launcher {
 			}
 		});
 	}
+
+	
 }
