@@ -57,14 +57,14 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
 public class Launcher {
 	private String EricIP = "142.157.30.157";
 	private String JamesIP = "142.157.105.75";
-	private String JunhazIP = "142.157.65.31";
+	private String JunhaIP = "142.157.65.237";
 	private String ZaidIP = "142.157.145.244";
 	private String BenIP = "142.157.58.216";
 	private String MatIP = "142.157.63.60";
 	
 	private static Client client;
 	
-	private String ServerIP = JamesIP;
+	private String ServerIP = "142.157.65.237";
 
 	int port = 8888;
 	User userOne = new User();
@@ -388,7 +388,6 @@ public class Launcher {
 	
 	//	LOBBY ------------------------------- 
 	private void setupLobbyPage() {
-		System.out.println("setting up lobby page" + clientManager.getLobby().getDifficulty());
 		lobby = new LobbyPanel(CENTER_PANEL_DIMENSION,this.clientManager);
 		contentPane.add(lobby, BorderLayout.CENTER);
 		contentPane.remove(dummyRightPanel);
@@ -487,8 +486,12 @@ public class Launcher {
 		//remove old game state gui
 		contentPane.removeAll();
 		//create and make visible mainMenuPage
+		setupDummies();
+		contentPane.remove(dummyCenterPanel);
 		setupMainMenuPage();
 		motherFrame.revalidate();
+		listenerThread.stop();
+		listenerThread = new clientThread(this, clientManager, true); 
 	}
 	public void repaint(boolean placingChange, boolean playingChange) {
 		//Table table = new Table(tester, clientManager);
