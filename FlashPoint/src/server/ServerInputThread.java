@@ -85,7 +85,7 @@ public class ServerInputThread extends Thread {
 
 	public void readMessage() throws IOException, ClassNotFoundException {
 		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
-		//System.out.println("Insinde readMessage");
+		System.out.println("Insinde readMessage");
 //		UserDao dao = UserDaoFactory.getInstance();// 通锟斤拷dao模式锟斤拷锟斤拷锟教�
 		if (readObject != null && readObject instanceof TranObject) {
 		//	System.out.println("Entered IF");
@@ -443,17 +443,18 @@ public class ServerInputThread extends Thread {
 				serverManager.generateActions();
 				//ending advanced fire here
 				
+				System.out.println("end fo advance fire");
+				
 				returnGameStateEnd.setObject(serverManager.getGameState());
 				for(OutputThread onOut : map.getAll()) {
 					onOut.setMessage(returnGameStateEnd);
 				}
 				break;
-			case DODGERESPONSE:
+			case HELLLLL:
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.updateDodgeRespone(requestObject.getDodgeAction(), requestObject.getMyFFIndex());
-				System.out.println("hello we have updated riderResponse");
+				System.out.println("hello we have updated dodge Response");
 				break;
-				
 			case SAVEGAME:
 				System.out.println("save game");
 				returnObject = new TranObject<User>(TranObjectType.SAVEGAMESUCCESS);

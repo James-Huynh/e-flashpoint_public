@@ -713,7 +713,7 @@ public class ClientManager {
 	public boolean dodgeAnswer(Action a, int myIndex) {
 		requestObject.setDodgeAction(a);
 		requestObject.setMyFFIndex(myIndex);
-		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.DODGERESPONSE);
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.HELLLLL);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
 		return true;

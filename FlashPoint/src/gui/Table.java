@@ -5406,8 +5406,8 @@ public class Table {
 			return true;
 		}
 		
-		private void sendDodgeAnswer(Action a, int myIndex) {
-			clientManager.dodgeAnswer(a,myIndex);
+		private boolean sendDodgeAnswer(Action a, int myIndex) {
+			return clientManager.dodgeAnswer(a,myIndex);
 			
 		}
 		

@@ -1187,11 +1187,13 @@ public class GameManager {
 				}
 			}
 			gs.setDodgingHashMap(f, dodgeList);
+			System.out.println(f.getColour().toString() + "||" + dodgeList.size() + "||" + gs.getFireFighterList().lastIndexOf(f));
 			if(dodgeList.size() > 0) {
 				dodgeResponseChecker[gs.getFireFighterList().lastIndexOf(f)] = false;
 			} else {
 				dodgeResponseChecker[gs.getFireFighterList().lastIndexOf(f)] = true;
 			}
+			System.out.println("after the changes" + dodgeResponseChecker[gs.getFireFighterList().lastIndexOf(f)]);
 		}
 		gs.setPlayingFirefighter(inturn);
 		gs.setIsDodging(flag);
@@ -1201,6 +1203,7 @@ public class GameManager {
 
 	public void setDodgeResponseChecker(int myFFIndex) {
 		dodgeResponseChecker[myFFIndex] = true;
+		System.out.println("I change ff " + dodgeResponseChecker[myFFIndex] + "||" + myFFIndex);
 		
 	}
 
