@@ -960,7 +960,7 @@ public class Table {
 									showPopUpMenuFFSelector(e.getComponent(), e.getX(), e.getY(), currentBoard, coords);
 								}
 							}else {
-								if(playing) {
+								if(playing && !clientManager.getUsersGameState().isGameWon() && !clientManager.getUsersGameState().isGameTerminated()) {
 									check = currentBoard.getFireFighterList().get(currentBoard.getActiveFireFighterIndex()).getCurrentPosition().getCoords();
 									if(connectedTile.getCoords()[0] == check[0] && connectedTile.getCoords()[1] == check[1]) {
 										showPopUpMenuCurrent(e.getComponent(), e.getX(), e.getY(), currentBoard);
