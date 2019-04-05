@@ -64,7 +64,8 @@ public class Launcher {
 	
 	private static Client client;
 	
-	private String ServerIP = "142.157.65.237";
+	private String ServerIP = MatIP;
+
 
 	int port = 8888;
 	User userOne = new User();
@@ -537,6 +538,11 @@ public class Launcher {
 		table.showRideRequest();
 	}
 	
+	public void showDodgeRequest() {
+		table.showDodgeRequest();
+		
+	}
+	
 	public void showAdvanceFireString(String advFireString) {
 		table.showAdvanceFireString(advFireString);
 		
@@ -546,7 +552,7 @@ public class Launcher {
 		table.showGameTermination();
 		
 	}
-	
+
 	public void showDeckGun() {
 		//table.showDeckGunRequest();
 	}
@@ -623,4 +629,6 @@ public class Launcher {
 			}
 		});
 	}
+
+	
 }
