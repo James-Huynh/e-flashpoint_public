@@ -84,7 +84,30 @@ public class ServerInputThread extends Thread {
 	 */
 
 	public void readMessage() throws IOException, ClassNotFoundException {
+//		while (true) {
+//		socket.sendUrgentData(0xFF); // 发送心跳包
+//		System.out.println("目前是处于链接状态！");
+//		
+//} catch (Exception e) {
+//	System.out.println("目前是处于断开状态！");
+//			e.printStackTrace();
+//				}
+		
 		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
+		try{ 
+			socket.sendUrgentData(0xFF); 
+		}
+		catch(Exception ex){ 
+			for (OutputThread onOut : map.getAll()) {
+			
+				TranObject read_tranObject2 = (TranObject) readObject;
+				TranObject<User> returnObject2;
+				User requestObject2;
+				returnObject2 = new TranObject<User>(TranObjectType.ERROR);
+				
+				onOut.setMessage(returnObject2);
+			}
+		}
 		System.out.println("Insinde readMessage");
 //		UserDao dao = UserDaoFactory.getInstance();// 通锟斤拷dao模式锟斤拷锟斤拷锟教�
 		if (readObject != null && readObject instanceof TranObject) {

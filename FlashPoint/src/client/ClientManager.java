@@ -202,6 +202,8 @@ public class ClientManager {
 				flag = true;
 				break;
 				
+			case ERROR:
+				System.out.println("SOMEONEDISCONNECTED!!");
 			}
 			
 		
