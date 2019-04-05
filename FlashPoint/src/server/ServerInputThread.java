@@ -94,20 +94,20 @@ public class ServerInputThread extends Thread {
 //				}
 		
 		Object readObject = ois.readObject();// 锟斤拷锟斤拷锟叫讹拷取锟斤拷锟斤拷
-		try{ 
-			socket.sendUrgentData(0xFF); 
-		}
-		catch(Exception ex){ 
-			for (OutputThread onOut : map.getAll()) {
-			
-				TranObject read_tranObject2 = (TranObject) readObject;
-				TranObject<User> returnObject2;
-				User requestObject2;
-				returnObject2 = new TranObject<User>(TranObjectType.ERROR);
-				
-				onOut.setMessage(returnObject2);
-			}
-		}
+//		try{ 
+//			socket.sendUrgentData(0xFF); 
+//		}
+//		catch(Exception ex){ 
+//			for (OutputThread onOut : map.getAll()) {
+//			
+//				TranObject read_tranObject2 = (TranObject) readObject;
+//				TranObject<User> returnObject2;
+//				User requestObject2;
+//				returnObject2 = new TranObject<User>(TranObjectType.ERROR);
+//				
+//				onOut.setMessage(returnObject2);
+//			}
+//		}
 		System.out.println("Insinde readMessage");
 //		UserDao dao = UserDaoFactory.getInstance();// 通锟斤拷dao模式锟斤拷锟斤拷锟教�
 		if (readObject != null && readObject instanceof TranObject) {
@@ -727,6 +727,11 @@ public class ServerInputThread extends Thread {
                          TranObjectType.CLOSEQ);
 				 out.setMessage(on2Object);
 				break;
+			case ENDGAME:
+				returnObject=new TranObject<User>(TranObjectType.ENDGAME);
+				requestObject = (User) read_tranObject.getObject();
+				returnObject.setObject(requestObject);
+				out.setMessage(returnObject);
 			default:
 				break;
 			}
