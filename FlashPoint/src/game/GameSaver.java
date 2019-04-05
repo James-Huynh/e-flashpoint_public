@@ -37,7 +37,7 @@ public class GameSaver {
 	public static void saveObjectByObjectOutput(Object o/*, File file*/) {
         try {
         	int savedGameNumber = new File(defaulGamesPath).listFiles().length; //check how many games are already saved
-        	FileOutputStream f = new FileOutputStream(new File(defaulGamesPath + (savedGameNumber++) + ".txt")); //save it as "savedGame#.txt"
+        	FileOutputStream f = new FileOutputStream(new File(defaulGamesPath + (savedGameNumber+1) + ".txt")); //save it as "savedGame#.txt"
         	ObjectOutputStream ob = new ObjectOutputStream(f);
             ob.writeObject(o);
        

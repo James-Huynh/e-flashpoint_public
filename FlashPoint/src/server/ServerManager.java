@@ -365,7 +365,7 @@ public class ServerManager {
 			
 			this.gameManager.getGameState().updateGameStateFromObject(gameState);
 			this.gameState = gameManager.getGameState();
-			
+			this.gameState.setListOfPlayers(this.activeLobby.getPlayers());
 			oi.close();
 			fi.close();
 		} catch (FileNotFoundException e) {
@@ -430,6 +430,7 @@ public class ServerManager {
     }
     
     public void setSavedGames() {
+    	this.savedGames.clear();
     	String folderPath = defaulGamesPath;
     	File folder = new File(folderPath);
     	File[] listOfFiles = folder.listFiles();
@@ -543,7 +544,7 @@ public class ServerManager {
 			
 			
 		}
-
+		
 		public void updateDodgeRespone(Action dodgeAction, int myFFIndex) {
 			Firefighter inturn = gameState.getPlayingFirefighter();
 			gameState.setPlayingFirefighter(gameState.getFireFighterList().get(myFFIndex));

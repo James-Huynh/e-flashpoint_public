@@ -191,15 +191,15 @@ public class ServerInputThread extends Thread {
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setLobby(requestObject.getCurrentLobby());
 				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
+				requestObject.setCurrentLobby(serverManager.getLobby());
 				//serverManager.getLobby().setCapacity(serverManager.getGameState().getListOfPlayers().size());
 				//serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));  //
 				//serverManager.getLobby().setDifficulty("serverManager.getGameState().getDifficulty()");
 				//serverManager.getLobby().setMode("mode");
 				returnObject = new TranObject<User>(TranObjectType.LOADSAVESUCCESS);
+				
 				returnObject.setObject(requestObject);
-				for (OutputThread onOut : map.getAll()) {
-					onOut.setMessage(returnObject);
-				}
+				out.setMessage(returnObject);
 				break;
 			
 			case STARTGAMESTATE:
@@ -505,6 +505,7 @@ public class ServerInputThread extends Thread {
 				System.out.println("request saved game state objects");
 				returnObject = new TranObject<User>(TranObjectType.REQUESTSAVEDLISTSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
+				serverManager.setSavedGames();
 				requestObject.setSavedGameStates(serverManager.getSavedGames());
 
 				System.out.println("list length is: " + requestObject.getsavedGameStates().size() );

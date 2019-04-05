@@ -86,7 +86,7 @@ public class LoadGamePanel extends JPanel {
 //		listEntries.add(entry_3);
 //		listEntries.add(entry_4);
 //		listEntries.add(entry_5);
-
+		
 		for (int i = 1; i <= savedGames.size(); i++) {
 //			JLabel currEntry = listEntries.get(i);
 //
