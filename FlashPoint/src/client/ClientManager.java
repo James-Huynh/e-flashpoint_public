@@ -600,7 +600,7 @@ public class ClientManager {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CHATMESSAGE);
 		ChatMsgEntity entity = new ChatMsgEntity();
 		entity.setMessage(message.getMessage());
-		entity.setDate(MyDate.getDateCN());
+		entity.setDate(MyDate.getComDate());
 		entity.setName(requestObject.getName());
 		User a= new User();
 		a.setChat(entity);

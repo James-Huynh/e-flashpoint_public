@@ -134,7 +134,7 @@ public class ChatBox extends JPanel{
 //			}
 			for (ChatMsgEntity entity : mDataArrays) {
 				finalText.delete(0, finalText.length());
-				finalText.append("[" + entity.getDate() + "] ");
+				finalText.append(entity.getDate());
 				finalText.append(entity.getName() + ": ");
 				finalText.append(entity.getMessage() + "\n");
 				
