@@ -13,6 +13,7 @@ public class ChatMsgEntity  implements Serializable {
 	private String message;
 	private int img;
 	private boolean isComMeg = true;
+	private String colour;
 
 	public ChatMsgEntity() {
 
@@ -58,6 +59,12 @@ public class ChatMsgEntity  implements Serializable {
 
 	public void setMsgType(boolean isComMsg) {
 		isComMeg = isComMsg;
+	}
+	public void setColour(String colour) {
+		this.colour=colour;
+	}
+	public String getColour() {
+		return colour;
 	}
 
 

@@ -14,6 +14,7 @@ import game.BoardOne;
 import game.GameState;
 import gui.Launcher;
 import lobby.Lobby;
+import server.Player;
 import token.Colour;
 import token.Firefighter;
 import token.Speciality;
@@ -54,6 +55,9 @@ public class ClientManager {
 		if (readObject != null && readObject instanceof TranObject) {
 			TranObject read_tranObject = (TranObject) readObject;
 			switch(read_tranObject.getType()) {
+			case LOGINFAILURE:
+				System.out.println("fail to login!");
+				break;
 			case STARTGAMESTATESUCCESS:
 				System.out.println("Succesuful gameStateRetrieval");
 				System.out.println(read_tranObject.getType());
@@ -260,6 +264,8 @@ public class ClientManager {
 			}
 			if(requestObject.getIsOnline() == 1) {
 				flag = true;
+			}else {
+				return false;
 			}
 			//if client.getIsOnline() == 0 flag = false;	
 		}
@@ -602,8 +608,16 @@ public class ClientManager {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CHATMESSAGE);
 		ChatMsgEntity entity = new ChatMsgEntity();
 		entity.setMessage(message.getMessage());
-		entity.setDate(MyDate.getDateCN());
+		entity.setDate(MyDate.getComDate());
 		entity.setName(requestObject.getName());
+		String colour = "";
+		for(Player p : requestObject.getCurrentLobby().getPlayers()) {
+			if(p.getUserName().equals(requestObject.getName())) {
+				colour = p.getColour().toString();
+			}
+		}
+		System.out.println("sending");
+		entity.setColour(colour);
 		User a= new User();
 		a.setChat(entity);
 		objectToSend.setObject(a);
@@ -682,7 +696,7 @@ public class ClientManager {
 	}
 	
 	public boolean sendRideResponse(boolean val, int index) {
-		boolean flag = false;
+		boolean flag = true;
 		
 		requestObject.setRideResponse(val);
 		requestObject.setMyFFIndex(index);
@@ -693,9 +707,10 @@ public class ClientManager {
 		return flag;
 	}
 
-	public boolean sendSpecialitySelectionRequest(Speciality s) {
+	public boolean sendSpecialitySelectionRequest(Speciality s, int i) {
 		// TODO Auto-generated method stub
 		requestObject.setDesiredSpeciality(s);
+		requestObject.setDesiredFirefighter(i);
 		
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SPECIALITYSELECTREQUEST);
 		objectToSend.setObject(requestObject);
