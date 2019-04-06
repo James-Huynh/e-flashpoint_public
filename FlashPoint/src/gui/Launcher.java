@@ -534,6 +534,9 @@ public class Launcher {
 		}
 		table.hideRidePanel();
 		table.hideDeckGunPanel();
+		if(!clientManager.getUsersGameState().getIsDodging()) {
+			table.hideDodgePanel();
+		}
 		table.refresh(clientManager.getUsersGameState());
 		if(table.getMyIndex() > 5) {
 			repaint(false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
