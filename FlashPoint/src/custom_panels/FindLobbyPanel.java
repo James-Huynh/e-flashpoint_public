@@ -3,8 +3,11 @@ package custom_panels;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -13,6 +16,7 @@ import javax.swing.event.EventListenerList;
 import client.ClientManager;
 import lobby.Lobby;
 import lobby.LobbySearchEntry;
+import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.lobbyListeners.SearchEntryListener;
 import personalizedlisteners.lobbyListeners.SearchEntrySetUpListener;
 
@@ -24,6 +28,8 @@ import personalizedlisteners.lobbyListeners.SearchEntrySetUpListener;
 public class FindLobbyPanel extends JPanel {
 	ClientManager clientManager;
 	
+	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
+	
 	private JPanel panel_main;
 	private JLabel lbl_findLobby;
 	private Lobby dummyLobby;	// Test
@@ -34,15 +40,15 @@ public class FindLobbyPanel extends JPanel {
 	private ArrayList<LobbySearchEntry> lobbyEntries;
 	private int nbLobbies = 10;		// arbitrary number
 	private int positionMultiplier = 150;
+
+	private JButton backBtn;
 	
-	private final EventListenerList REGISTERED_OBJECTS;
 	
 	/**
 	 * Create the visible components
 	 */
 	public FindLobbyPanel(ClientManager myClientManager) {
 		
-		REGISTERED_OBJECTS = new EventListenerList();
 		this.clientManager = myClientManager;
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
@@ -63,14 +69,10 @@ public class FindLobbyPanel extends JPanel {
 	}
 
 	private void initialize() {
-		// @server
 		availLobbies =  clientManager.getLobbyList();
-//		dummyLobby = availLobbies.get(0);
 		
-		
+		createBackButton();
 		createSearchEntries();
-		
-		
 		displaySearchEntries();
 	}
 
@@ -90,6 +92,18 @@ public class FindLobbyPanel extends JPanel {
 			lobbyEntries.add(currEntry);
 		}
 		
+	}
+	
+	private void createBackButton() {
+		backBtn = new JButton("BACK");
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				raiseEventBackBtn();
+			}
+		});
+		backBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
+		backBtn.setBounds(188, 623, 140, 54);
+		this.add(backBtn);
 	}
 
 	private void displaySearchEntries() {
@@ -111,10 +125,23 @@ public class FindLobbyPanel extends JPanel {
 	public void addSelectionPiecesListenerListener(SearchEntrySetUpListener obj) {
 		REGISTERED_OBJECTS.add(SearchEntrySetUpListener.class, obj);
 	}
+	
+	public void addSelectionPiecesListenerListener(BackListener obj) {
+		REGISTERED_OBJECTS.add(BackListener.class, obj);
+	}
 
 	private void raiseEventCallSetUpLobby() {
 		for (SearchEntrySetUpListener listener: REGISTERED_OBJECTS.getListeners(SearchEntrySetUpListener.class)) {
 			listener.SearchEntrySetUp();
+		}
+	}
+	
+	/**
+	 * Raise an event: the back button has been clicked
+	 */
+	private void raiseEventBackBtn() {
+		for (BackListener listener: REGISTERED_OBJECTS.getListeners(BackListener.class)) {
+			listener.clickBack();
 		}
 	}
 	

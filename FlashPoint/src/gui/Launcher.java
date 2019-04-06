@@ -64,7 +64,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = BenIP;
+	private String ServerIP = JunhaIP;
 
 
 	int port = 8888;
@@ -114,7 +114,7 @@ public class Launcher {
 	private JPanel dummyCenterPanel = new JPanel(); 
 	private JPanel dummyRightPanel = new JPanel();
 	private JPanel dummyLeftPanel = new JPanel();
-	private JLabel lbl_leftPanelImage;
+	private JLabel lbl_logoImage;
 
 	/**
 	 * Launch the application.
@@ -154,7 +154,7 @@ public class Launcher {
 	private void initialize() {
 		motherFrame = new JFrame();
 		contentPane = motherFrame.getContentPane(); // @Zaid : from James, you're welcome for shortcutting the call :))
-		motherFrame.setBounds(100, 100, 450, 300);
+		motherFrame.setBounds(20, 20, 450, 300);
 		motherFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		motherFrame.setSize(OUTER_FRAME_DIMENSION);
 		motherFrame.setTitle("You're a god if you recognized this quote: \"Whether you think you can, or you think you can't--you're right.\"");
@@ -170,17 +170,17 @@ public class Launcher {
 
 
 	private void setupDummies() {
-		dummyCenterPanel.setBackground(Color.YELLOW);
+//		dummyCenterPanel.setBackground(Color.YELLOW);
 		dummyCenterPanel.setPreferredSize(CENTER_PANEL_DIMENSION);
-		contentPane.add(dummyCenterPanel, BorderLayout.CENTER);
+		contentPane.add(dummyCenterPanel, null);
 
-//		dummyRightPanel.setBackground(Color.RED);
+		//		dummyRightPanel.setBackground(Color.RED);
 		dummyRightPanel.setPreferredSize(RIGHT_PANEL_DIMENSION);
-		contentPane.add(dummyRightPanel, BorderLayout.EAST);
+//		contentPane.add(dummyRightPanel, BorderLayout.EAST);
 
-		//		dummyLeftPanel.setBackground(Color.GREEN);
+		//				dummyLeftPanel.setBackground(Color.GREEN);
 		dummyLeftPanel.setPreferredSize(LEFT_PANEL_DIMENSION);
-		contentPane.add(dummyLeftPanel, BorderLayout.WEST);
+//		contentPane.add(dummyLeftPanel, BorderLayout.WEST);
 	}
 
 	private void setupBackgroundImages() {
@@ -194,8 +194,8 @@ public class Launcher {
 			e.printStackTrace();
 		}
 
-		lbl_leftPanelImage = new JLabel();
-		lbl_leftPanelImage.setBounds(0, 0, (int) LEFT_PANEL_DIMENSION.getWidth(), (int) LEFT_PANEL_DIMENSION.getHeight());		
+		lbl_logoImage = new JLabel();
+		lbl_logoImage.setBounds((int) OUTER_FRAME_DIMENSION.getWidth() -bckgImage.getWidth() - 18, -400 + bckgImage.getHeight()/2 , 200, 800); // doesnt work		
 
 
 		// TMP
@@ -203,17 +203,17 @@ public class Launcher {
 		int h = bckgImage.getHeight();
 		BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		AffineTransform at = new AffineTransform();
-		at.scale(0.1, 0.1);
+		at.scale(1, 1);
 		at.translate(0, 0);
 		AffineTransformOp scaleOp = 
 				new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 		after = scaleOp.filter(bckgImage, after);
 
-
-		lbl_leftPanelImage.setIcon(new ImageIcon(after));
-		dummyLeftPanel.add(lbl_leftPanelImage);
-//		contentPane.remove(dummyLeftPanel);
-		contentPane.remove(dummyRightPanel);
+//		dummyLeftPanel.setLayout(null);
+		lbl_logoImage.setIcon(new ImageIcon(after));
+		contentPane.add(lbl_logoImage);
+		//		contentPane.remove(dummyLeftPanel);
+//		contentPane.remove(dummyRightPanel);
 		//dummyLeftPanel.add(lbl_leftPanelImage);
 
 
@@ -494,8 +494,8 @@ public class Launcher {
 		//remove old game state gui
 		contentPane.removeAll();
 		//create and make visible mainMenuPage
-//		setupDummies();
-//		contentPane.remove(dummyCenterPanel);
+		//		setupDummies();
+		//		contentPane.remove(dummyCenterPanel);
 		setupMainMenuPage();
 		motherFrame.revalidate();
 	}
