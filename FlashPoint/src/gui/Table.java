@@ -130,15 +130,20 @@ public class Table {
 			this.launcher = launcher;
 			this.listenerThread = myThread;
 			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
+			this.playing = false;
+			this.placing = false;
+			this.selectingFireFighter = false;
+			if(!clientManager.getUsersGameState().isExperienced()) {
+				this.selectingSpeciality = false;
+				this.placing = true;
+			} 
 			this.desiredFFindex = 0;
 			this.myFFIndexes = new int[6];
 			this.myIndex = 0;
 			this.redReRoll = false;
 			this.blackReRoll = false;
 			this.ran = new Random();
-			this.playing = false;
-			this.placing = false;
-			this.selectingFireFighter = false;
+
 			
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
@@ -168,6 +173,8 @@ public class Table {
 				this.placing = false;
 			}
 			System.out.println("this is my index" + myIndex);
+			
+			System.out.println("specil " + this.selectingSpeciality + " place " + this.placing + "playing " +this.playing + "loadin " + this.selectingFireFighter);
 		}
 		
 		public BoardPanel genBoard() {
@@ -232,6 +239,8 @@ public class Table {
 						}
 					}
 				}
+			} else {
+				selectingSpeciality = false;
 			}
 			
 			for(int i = 0; i<6; i++) {
