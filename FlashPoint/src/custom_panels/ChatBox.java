@@ -17,9 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import chat.ChatMsgEntity;
 import client.ClientManager;
@@ -44,9 +46,8 @@ public class ChatBox extends JPanel{
 	private Rectangle rect_button;
 	private JTextPane textPane;
 
-	private DefaultStyledDocument document = new DefaultStyledDocument();
-	private StyleContext context = new StyleContext();
-	private Style style = context.addStyle("James", null);
+	private StyledDocument documento;
+	private Style style;
 
 	private ClientManager clientManager;
 	private List<ChatMsgEntity> mDataArrays;
@@ -55,7 +56,7 @@ public class ChatBox extends JPanel{
 		setLayout(null);
 
 		this.clientManager = myClientManager;
-
+				
 		rect_main = new Rectangle(0, 0, x, y);
 		createRectangles();
 
@@ -74,14 +75,13 @@ public class ChatBox extends JPanel{
 		});
 
 
+		textPane = new JTextPane();
+		documento = (StyledDocument) textPane.getStyledDocument();
+		
+		style = textPane.addStyle("StyleName", null);
+		//change font color here
+		StyleConstants.setForeground(style, Color.RED);
 
-		document = new DefaultStyledDocument();
-		StyleConstants.setForeground(style, Color.red);
-		document.addStyle("hello", style);
-		textPane = new JTextPane(document);
-
-		textPane.setFont(new Font("Open Sans", Font.BOLD, 18));
-		textPane.setEnabled(false);
 		textPane.setBounds(rect_textArea);
 
 
@@ -104,6 +104,7 @@ public class ChatBox extends JPanel{
 		btn_sendMess.setBounds(rect_button);
 		panel_main.add(btn_sendMess);
 	}
+	
 
 
 	private void createRectangles() {
@@ -121,7 +122,7 @@ public class ChatBox extends JPanel{
 
 	public void refreshChatBox(boolean b) {
 		final StringBuilder finalText = new StringBuilder();
-		//document = new DefaultStyledDocument();
+
 		
 		mDataArrays = clientManager.getChatArray();
 		
@@ -159,7 +160,9 @@ public class ChatBox extends JPanel{
 	private void updateChatGUI(String text) {
 		try {
 			System.out.println("this is in UCG" + text);
-			document.insertString(document.getLength(), text, style);
+			
+			documento.insertString(documento.getLength(), text, style);
+			
 		} catch(BadLocationException exc) {
 			exc.printStackTrace();
 		}
