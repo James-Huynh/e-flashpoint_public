@@ -1,6 +1,7 @@
 package server;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import token.Firefighter;
 
@@ -13,7 +14,9 @@ public class Player implements Serializable {
     protected String userName;
     private String password;
     private token.Colour myColour;
-    private Firefighter myFireFighter;
+//    private Firefighter myFireFighter;
+    private ArrayList<Firefighter> myFireFighters;
+    private int indexMarker;
     private Integer ID;
     private static final long serialVersionUID = 1L;
     
@@ -21,15 +24,23 @@ public class Player implements Serializable {
     	this.userName = userName;
     	this.password = password;
     	this.ID = ID;
+    	this.myFireFighters = new ArrayList<Firefighter>();
+    	this.indexMarker = -1;
     }
+
     
     /*
      * GETTERS
      */
     public Firefighter getFirefighter() {
-    	return this.myFireFighter;
+    	this.indexMarker++;
+    	return this.myFireFighters.get(indexMarker);
+    	
     }
     
+    public ArrayList<Firefighter> getFirefighters(){
+    	return this.myFireFighters;
+    }
     
     public token.Colour getColour(){
     	return this.myColour;
@@ -47,7 +58,8 @@ public class Player implements Serializable {
      * SETTERS 
      */
     public void setFirefighter(Firefighter newFirefighter) {
-    	this.myFireFighter = newFirefighter;
+//    	this.myFireFighter = newFirefighter;
+    	this.myFireFighters.add(newFirefighter);
     }
     
     
@@ -62,7 +74,7 @@ public class Player implements Serializable {
 	@Override
 	public String toString() {
 		return "Player [userName=" + userName + ", password=" + password + ", myColour=" + myColour.toString() + ", myFireFighter="
-				+ myFireFighter.toString() + ", ID=" + ID + "]";
+				+ myFireFighters.get(0).toString() + ", ID=" + ID + "]";
 	}
     
     

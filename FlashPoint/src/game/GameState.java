@@ -45,6 +45,7 @@ public class GameState implements Serializable {
 	protected Tile[][] matTiles;
 	protected ParkingSpot[] engines;
 	protected ParkingSpot[] ambulances;
+	protected int numFirefighters; //Should map to same number as lobby capacity
 
 	protected String advFireString = "";
 
@@ -196,6 +197,7 @@ public class GameState implements Serializable {
 		this.disposedHazmat = new ArrayList<Hazmat>();
 		this.proposedDices=new int[] {-1,-1};
 		this.randomGame = lobby.getRandomGame();
+		this.numFirefighters = lobby.getCapacity();
 		if(lobby.getMode().equals("Experienced")) {
 			this.experiencedMode = true;
 			rideMapper = new HashMap<Firefighter, Boolean[]>();
@@ -525,23 +527,47 @@ public class GameState implements Serializable {
 	
 	public void setFirefighters() {
 		this.listOfFirefighters = new ArrayList<Firefighter>();
-		for (int i = 0; i < listOfPlayers.size(); i++) {
-			if (this.listOfPlayers.get(i) != null) {
-				Firefighter tempFirefighter = new Firefighter(this.listOfPlayers.get(i).getColour()); ///!!!
-				tempFirefighter.setPlayer(this.listOfPlayers.get(i));
-				this.listOfPlayers.get(i).setFirefighter(tempFirefighter);
-				this.listOfFirefighters.add(tempFirefighter);
-				if(this.isExperienced()) {
-//					this.rideMapper.put(tempFirefighter, false);
-					this.rideMapper.put(tempFirefighter, new Boolean[3]);
-					this.rideMapper.get(tempFirefighter)[0] = false;
-					this.rideMapper.get(tempFirefighter)[1] = false;
-					this.rideMapper.get(tempFirefighter)[2] = false;
-				}
-				
+//		for (int i = 0; i < listOfPlayers.size(); i++) {
+//			if (this.listOfPlayers.get(i) != null) {
+//				Firefighter tempFirefighter = new Firefighter(this.listOfPlayers.get(i).getColour()); ///!!!
+//				tempFirefighter.setPlayer(this.listOfPlayers.get(i));
+//				this.listOfPlayers.get(i).setFirefighter(tempFirefighter);
+//				this.listOfFirefighters.add(tempFirefighter);
+//				if(this.isExperienced()) {
+//					this.rideMapper.put(tempFirefighter, new Boolean[3]);
+//					this.rideMapper.get(tempFirefighter)[0] = false;
+//					this.rideMapper.get(tempFirefighter)[1] = false;
+//					this.rideMapper.get(tempFirefighter)[2] = false;
+//				}
+//				
+//			}
+//		}
+		
+		//Give y firefighters = capacity of lobby, to host
+		Player host = this.listOfPlayers.get(0);
+		for(int i=0; i<this.numFirefighters; i++) {
+			Firefighter tempFirefighter = new Firefighter(host.getColour());
+			tempFirefighter.setPlayer(host);
+			host.setFirefighter(tempFirefighter);
+			this.listOfFirefighters.add(tempFirefighter);
+			if(this.isExperienced()) {
+				this.rideMapper.put(tempFirefighter, new Boolean[3]);
+				this.rideMapper.get(tempFirefighter)[0] = false;
+				this.rideMapper.get(tempFirefighter)[1] = false;
+				this.rideMapper.get(tempFirefighter)[2] = false;
 			}
 		}
-//		System.out.println("this is in the setup of FF " + this.rideMapper.size());
+		
+		//For x players other than host, give x firefighters to these players
+		//After this loop, host will have more than one if he needs to
+		for(int i=1;i<this.listOfPlayers.size(); i++) {
+			System.out.println("I SHOULDN'T ENTER HERE");
+			Player reassignedPlayer = this.listOfPlayers.get(i);
+			Firefighter tempFirefighter = host.getFirefighters().remove(i);
+			tempFirefighter.setColour(reassignedPlayer.getColour());
+			tempFirefighter.setPlayer(reassignedPlayer);
+		}
+
 	}
 
 	/**

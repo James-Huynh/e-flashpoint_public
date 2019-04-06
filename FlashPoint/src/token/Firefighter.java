@@ -154,6 +154,10 @@ public class Firefighter extends Token implements Serializable {
 		// TODO Auto-generated method stub
 		this.myPlayer = player;
 	}
+	
+	public void setColour(Colour c) {
+		this.myColour = c;
+	}
 
 	/**
 	 * updateLocation sets the coordinates of the firefighter to the tile
