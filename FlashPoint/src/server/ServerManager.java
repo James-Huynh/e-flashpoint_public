@@ -456,15 +456,14 @@ public class ServerManager {
     }
 
 	public void setSpeciality(User person, Speciality desiredSpeciality) {
-		int count = 0;
 		if(gameState.getFreeSpecialities().contains(desiredSpeciality)) {
 			Player player = onlinePlayers.get(person.getId());
-			if(player.getFirefighter().getSpeciality()!=null) {
-				gameState.addFreedSpeciality(player.getFirefighter().getSpeciality());
-				player.getFirefighter().setSpeciality(desiredSpeciality);
+			if(gameState.getFireFighterList().get(person.getDesiredFirefighter()).getSpeciality()!=null) {
+				gameState.addFreedSpeciality(gameState.getFireFighterList().get(person.getDesiredFirefighter()).getSpeciality());
+				gameState.getFireFighterList().get(person.getDesiredFirefighter()).setSpeciality(desiredSpeciality);
 				gameState.removeSelectedSpeciality(desiredSpeciality);
 			}else {
-				player.getFirefighter().setSpeciality(desiredSpeciality);
+				gameState.getFireFighterList().get(person.getDesiredFirefighter()).setSpeciality(desiredSpeciality);
 				gameState.removeSelectedSpeciality(desiredSpeciality);
 			}
 			

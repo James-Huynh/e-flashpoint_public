@@ -4731,7 +4731,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s)) {
+										if(sendSpecialitySelectionRequest(s, 0)) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4749,7 +4749,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s)) {
+										if(sendSpecialitySelectionRequest(s, 1)) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4767,7 +4767,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s)) {
+										if(sendSpecialitySelectionRequest(s, 2)) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4785,7 +4785,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s)) {
+										if(sendSpecialitySelectionRequest(s, 3)) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4803,7 +4803,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s)) {
+										if(sendSpecialitySelectionRequest(s, 4)) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4821,7 +4821,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s)) {
+										if(sendSpecialitySelectionRequest(s, 5)) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -5555,8 +5555,8 @@ public class Table {
 			return clientManager.sendRideRequests(type);
 		}
 		
-		private boolean sendSpecialitySelectionRequest(Speciality s) {
-			return clientManager.sendSpecialitySelectionRequest(s);
+		private boolean sendSpecialitySelectionRequest(Speciality s, int i) {
+			return clientManager.sendSpecialitySelectionRequest(s, i);
 		}
 		
 		private boolean sendSelectionEndRequest() {

@@ -702,9 +702,10 @@ public class ClientManager {
 		return flag;
 	}
 
-	public boolean sendSpecialitySelectionRequest(Speciality s) {
+	public boolean sendSpecialitySelectionRequest(Speciality s, int i) {
 		// TODO Auto-generated method stub
 		requestObject.setDesiredSpeciality(s);
+		requestObject.setDesiredFirefighter(i);
 		
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SPECIALITYSELECTREQUEST);
 		objectToSend.setObject(requestObject);
