@@ -137,9 +137,8 @@ public class ServerInputThread extends Thread {
 				
 				requestObject = (User) read_tranObject.getObject();
 
-				if(serverManager.getAccounts().get(requestObject.getName()) != null) {
+				if(serverManager.getAccounts().get(requestObject.getName()) != null&&serverManager.getAccounts().get(requestObject.getName()).equals(requestObject.getPassword())) {
 					System.out.println(serverManager.getAccounts().get(requestObject.getName()));
-					if(serverManager.getAccounts().get(requestObject.getName()).equals(requestObject.getPassword())){
 						System.out.println("is online ");
 						requestObject.setIsOnline(1);	
 						serverManager.createPlayer(requestObject.getName(), requestObject.getPassword(), requestObject.getId());
@@ -150,9 +149,10 @@ public class ServerInputThread extends Thread {
 					out.setMessage(returnObject);
 					map.add(loginUser.getId(), out);
 					}
-				}
+				
 				else { //User doesn't exist
 					//System.out.println("is online set to 0");
+				System.out.println("weeeeee are here!");
 					requestObject.setIsOnline(0);
 					returnObject = new TranObject<User>(TranObjectType.LOGINFAILURE);
 					returnObject.setObject(requestObject);
