@@ -693,7 +693,7 @@ public class ClientManager {
 	}
 	
 	public boolean sendRideResponse(boolean val, int index) {
-		boolean flag = false;
+		boolean flag = true;
 		
 		requestObject.setRideResponse(val);
 		requestObject.setMyFFIndex(index);
