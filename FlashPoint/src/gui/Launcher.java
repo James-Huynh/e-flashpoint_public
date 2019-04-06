@@ -503,10 +503,10 @@ public class Launcher {
 		listenerThread.stop();
 		listenerThread = new clientThread(this, clientManager, true); 
 	}
-	public void repaint(boolean placingChange, boolean playingChange) {
+	public void repaint(/*boolean placingChange, boolean playingChange*/) {
 		//Table table = new Table(tester, clientManager);
-		table.setPlaying(playingChange);
-		table.setPlacing(placingChange);
+//		table.setPlaying(playingChange);
+//		table.setPlacing(placingChange);
 		System.out.println("started repainting");
 		BoardPanel board = table.getBoard();
 		LeftPanel LPanel = table.getLeftPanel();
@@ -539,10 +539,10 @@ public class Launcher {
 		}
 		table.refresh(clientManager.getUsersGameState());
 		if(table.getMyIndex() > 5) {
-			repaint(false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
+			repaint(/*false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex()*/);
 
 		} else {
-			repaint(clientManager.getUsersGameState().getFireFighterList().get(table.getMyIndex()).getCurrentPosition()==null, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex());
+			repaint(/*clientManager.getUsersGameState().getFireFighterList().get(table.getMyIndex()).getCurrentPosition()==null, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex()*/);
 		}
 	}
 
