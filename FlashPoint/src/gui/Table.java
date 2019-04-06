@@ -4706,20 +4706,176 @@ public class Table {
 				JMenu specialityMenu = new JMenu("Select Speciality");
 				String builder = "";
 				JMenuItem info;
-				for(Speciality s : clientManager.getUsersGameState().getFreeSpecialities()) {
-					builder = s.toString();
-					info = new JMenuItem(builder);
+				
+				
+				JMenu specialityMenu1 = new JMenu();
+				JMenu specialityMenu2 = new JMenu();
+				JMenu specialityMenu3 = new JMenu();
+				JMenu specialityMenu4 = new JMenu();
+				JMenu specialityMenu5 = new JMenu();
+				JMenu specialityMenu6 = new JMenu();
+				boolean menu1 = false, menu2 = false, menu3 = false, menu4 = false, menu5 =false, menu6 = false;
+				String menuLabel = "";
+				for(int i = 0; i<6; i++) {
+					menuLabel = "";
+					if(myFFIndexes[i] != 7) {
+						menuLabel = clientManager.getUserName() + " " + clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[i]).getColour().toString();
 					
-					info.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							if(sendSpecialitySelectionRequest(s)) {
-								System.out.println("Speciality selected is " + s.toString());
+						switch (i) {
+						case 0:
+							specialityMenu1.setText(menuLabel);
+							for(Speciality s : clientManager.getUsersGameState().getFreeSpecialities()) {
+								builder = s.toString();
+								info = new JMenuItem(builder);
+								
+								info.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										if(sendSpecialitySelectionRequest(s)) {
+											System.out.println("Speciality selected is " + s.toString());
+										}
+									}
+								});
+								specialityMenu1.add(info);
 							}
+							menu1 = true;
+							break;
+						case 1:
+							specialityMenu2.setText(menuLabel);
+							for(Speciality s : clientManager.getUsersGameState().getFreeSpecialities()) {
+								builder = s.toString();
+								info = new JMenuItem(builder);
+								
+								info.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										if(sendSpecialitySelectionRequest(s)) {
+											System.out.println("Speciality selected is " + s.toString());
+										}
+									}
+								});
+								specialityMenu2.add(info);
+							}
+							menu2 = true;
+							break;
+						case 2:
+							specialityMenu3.setText(menuLabel);
+							for(Speciality s : clientManager.getUsersGameState().getFreeSpecialities()) {
+								builder = s.toString();
+								info = new JMenuItem(builder);
+								
+								info.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										if(sendSpecialitySelectionRequest(s)) {
+											System.out.println("Speciality selected is " + s.toString());
+										}
+									}
+								});
+								specialityMenu3.add(info);
+							}
+							menu3 = true;
+							break;
+						case 3:
+							specialityMenu4.setText(menuLabel);
+							for(Speciality s : clientManager.getUsersGameState().getFreeSpecialities()) {
+								builder = s.toString();
+								info = new JMenuItem(builder);
+								
+								info.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										if(sendSpecialitySelectionRequest(s)) {
+											System.out.println("Speciality selected is " + s.toString());
+										}
+									}
+								});
+								specialityMenu4.add(info);
+							}
+							menu4 = true;
+							break;
+						case 4:
+							specialityMenu5.setText(menuLabel);
+							for(Speciality s : clientManager.getUsersGameState().getFreeSpecialities()) {
+								builder = s.toString();
+								info = new JMenuItem(builder);
+								
+								info.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										if(sendSpecialitySelectionRequest(s)) {
+											System.out.println("Speciality selected is " + s.toString());
+										}
+									}
+								});
+								specialityMenu5.add(info);
+							}
+							menu5 = true;
+							break;
+						case 5:
+							specialityMenu6.setText(menuLabel);
+							for(Speciality s : clientManager.getUsersGameState().getFreeSpecialities()) {
+								builder = s.toString();
+								info = new JMenuItem(builder);
+								
+								info.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										if(sendSpecialitySelectionRequest(s)) {
+											System.out.println("Speciality selected is " + s.toString());
+										}
+									}
+								});
+								specialityMenu6.add(info);
+							}
+							menu6 = true;
+							break;
 						}
-					});
-					specialityMenu.add(info);
+					}
 				}
+				
+				if(menu1) {
+					specialityMenu.add(specialityMenu1);
+					specialityMenu.addSeparator();
+				} 
+				if(menu2) {
+					specialityMenu.add(specialityMenu2);
+					specialityMenu.addSeparator();
+				} 
+				if(menu3) {
+					specialityMenu.add(specialityMenu3);
+					specialityMenu.addSeparator();
+				} 
+				if(menu4) {
+					specialityMenu.add(specialityMenu4);
+					specialityMenu.addSeparator();
+				} 
+				if(menu5) {
+					specialityMenu.add(specialityMenu5);
+					specialityMenu.addSeparator();
+				} 
+				if(menu6) {
+					specialityMenu.add(specialityMenu6);
+					specialityMenu.addSeparator();
+				} 
+				
+				
+				
+				
+//				for(Speciality s : clientManager.getUsersGameState().getFreeSpecialities()) {
+//					builder = s.toString();
+//					info = new JMenuItem(builder);
+//					
+//					info.addActionListener(new ActionListener() {
+//						@Override
+//						public void actionPerformed(ActionEvent e) {
+//							if(sendSpecialitySelectionRequest(s)) {
+//								System.out.println("Speciality selected is " + s.toString());
+//							}
+//						}
+//					});
+//					specialityMenu.add(info);
+//				}
 				
 				boolean flag = true;
 				for(Firefighter f : clientManager.getUsersGameState().getFireFighterList()) {
