@@ -569,6 +569,7 @@ public class GameState implements Serializable {
 			tempFirefighter.setPlayer(reassignedPlayer);
 			reassignedPlayer.setFirefighter(tempFirefighter);
 		}
+		System.out.println("the size ff in host " + host.getFirefighters().size());
 
 		//we need to alter the colours of the ff after this step 
 		if(this.listOfFirefighters.size() > this.listOfPlayers.size()) {
