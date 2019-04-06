@@ -1,5 +1,6 @@
 package custom_panels;
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -26,6 +27,7 @@ import javax.swing.text.StyledDocument;
 import chat.ChatMsgEntity;
 import client.ClientManager;
 import commons.bean.TextMessage;
+import token.Colour;
 
 /**
  * 
@@ -51,7 +53,7 @@ public class ChatBox extends JPanel{
 
 	private ClientManager clientManager;
 	private List<ChatMsgEntity> mDataArrays;
-
+	
 	public ChatBox(int x, int y, ClientManager myClientManager) {
 		setLayout(null);
 
@@ -79,8 +81,7 @@ public class ChatBox extends JPanel{
 		documento = (StyledDocument) textPane.getStyledDocument();
 		
 		style = textPane.addStyle("StyleName", null);
-		//change font color here
-		StyleConstants.setForeground(style, Color.RED);
+		
 
 		textPane.setBounds(rect_textArea);
 
@@ -148,6 +149,14 @@ public class ChatBox extends JPanel{
 				finalText.append(entity.getName() + ": ");
 				finalText.append(entity.getMessage() + "\n");
 				
+				Colour playerColor = entity.getColour();
+				//change font color here
+				if(playerColor == Colour.GREEN) StyleConstants.setForeground(style, Color.GREEN);
+				if(playerColor == Colour.BLUE) StyleConstants.setForeground(style, Color.BLUE);
+				if(playerColor == Colour.RED) StyleConstants.setForeground(style, Color.RED);
+				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(style, Color.MAGENTA);
+				if(playerColor == Colour.BLACK) StyleConstants.setForeground(style, Color.BLACK);
+				if(playerColor == Colour.WHITE) StyleConstants.setForeground(style, Color.WHITE);
 				
 				updateChatGUI(finalText.toString());
 			}
@@ -160,7 +169,6 @@ public class ChatBox extends JPanel{
 	private void updateChatGUI(String text) {
 		try {
 			System.out.println("this is in UCG" + text);
-			
 			documento.insertString(documento.getLength(), text, style);
 			
 		} catch(BadLocationException exc) {
