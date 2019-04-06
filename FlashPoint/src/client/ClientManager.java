@@ -14,6 +14,7 @@ import game.BoardOne;
 import game.GameState;
 import gui.Launcher;
 import lobby.Lobby;
+import server.Player;
 import token.Colour;
 import token.Firefighter;
 import token.Speciality;
@@ -604,6 +605,14 @@ public class ClientManager {
 		entity.setMessage(message.getMessage());
 		entity.setDate(MyDate.getComDate());
 		entity.setName(requestObject.getName());
+		String colour = "";
+		for(Player p : requestObject.getCurrentLobby().getPlayers()) {
+			if(p.getUserName().equals(requestObject.getName())) {
+				colour = p.getColour().toString();
+			}
+		}
+		System.out.println("sending");
+		entity.setColour(colour);
 		User a= new User();
 		a.setChat(entity);
 		objectToSend.setObject(a);
