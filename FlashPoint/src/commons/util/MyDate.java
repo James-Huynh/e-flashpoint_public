@@ -15,4 +15,9 @@ public class MyDate {
 		String date1 = format1.format(new Date(System.currentTimeMillis()));
 		return date1;// 2012-10-03 23:41:31
 	}
+	public static String getComDate() {
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		String date2= format.format(new Date(System.currentTimeMillis()));
+		return date2;
+	}
 }
