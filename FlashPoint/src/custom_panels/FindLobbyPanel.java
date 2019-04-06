@@ -102,8 +102,8 @@ public class FindLobbyPanel extends JPanel {
 			}
 		});
 		backBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
-		backBtn.setBounds(188, 623, 140, 54);
-		this.add(backBtn);
+		backBtn.setBounds(22, 560, 140, 54);
+		panel_main.add(backBtn);
 	}
 
 	private void displaySearchEntries() {

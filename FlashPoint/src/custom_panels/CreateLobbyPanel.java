@@ -422,6 +422,7 @@ public class CreateLobbyPanel extends JPanel {
 			listener.clickCreate();
 		}
 	}
+	
 	/**
 	 * Raise an event: the back button has been clicked
 	 */
