@@ -148,13 +148,14 @@ public class ServerInputThread extends Thread {
 					
 					out.setMessage(returnObject);
 					map.add(loginUser.getId(), out);
+					System.out.println("w123123123123123123123213!");
 					}
 				
 				else { //User doesn't exist
 					//System.out.println("is online set to 0");
 				System.out.println("weeeeee are here!");
 					requestObject.setIsOnline(0);
-					returnObject = new TranObject<User>(TranObjectType.LOGINFAILURE);
+					returnObject = new TranObject<User>(TranObjectType.LOGINSUCCESS);
 					returnObject.setObject(requestObject);
 					
 					out.setMessage(returnObject);

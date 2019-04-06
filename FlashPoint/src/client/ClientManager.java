@@ -57,6 +57,7 @@ public class ClientManager {
 			switch(read_tranObject.getType()) {
 			case LOGINFAILURE:
 				System.out.println("fail to login!");
+				break;
 			case STARTGAMESTATESUCCESS:
 				System.out.println("Succesuful gameStateRetrieval");
 				System.out.println(read_tranObject.getType());
@@ -263,6 +264,8 @@ public class ClientManager {
 			}
 			if(requestObject.getIsOnline() == 1) {
 				flag = true;
+			}else {
+				return false;
 			}
 			//if client.getIsOnline() == 0 flag = false;	
 		}
