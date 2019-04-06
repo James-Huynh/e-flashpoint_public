@@ -91,7 +91,7 @@ public class LoginPanel extends JPanel {
 		createLoginFields();
 		createLoginButton();
 		createRegisterButton();
-		createRememberMe();
+//		createRememberMe();
 		this.add(inputPanel);
 
 	}

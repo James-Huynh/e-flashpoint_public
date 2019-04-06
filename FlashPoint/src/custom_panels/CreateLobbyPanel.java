@@ -157,6 +157,7 @@ public class CreateLobbyPanel extends JPanel {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange()==ItemEvent.SELECTED){
 					GameModeSelected (familyBtn);
+					toggleDifficultyPanel(false);
 				}
 			}
 		});
@@ -168,6 +169,7 @@ public class CreateLobbyPanel extends JPanel {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange()==ItemEvent.SELECTED){
 					GameModeSelected (expBtn);
+					toggleDifficultyPanel(true);
 				}
 			}
 		});
@@ -344,7 +346,7 @@ public class CreateLobbyPanel extends JPanel {
 	}
 
 	private void createPlayerHeader() {
-		plyrLabel = new JLabel("Number of Players :- 0");
+		plyrLabel = new JLabel("Number of firefighters :- 0");
 		plyrLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		plyrLabel.setBounds(6, 6, 190, 16);
 		playerPanel.add(plyrLabel);
@@ -355,7 +357,7 @@ public class CreateLobbyPanel extends JPanel {
 		plyrSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				nbPlayers = plyrSlider.getValue();
-				plyrLabel.setText("Number of Players :- " + nbPlayers);
+				plyrLabel.setText("Number of firefighters :- " + nbPlayers);
 			}
 		});
 		plyrSlider.setPaintTicks(true);
@@ -364,8 +366,7 @@ public class CreateLobbyPanel extends JPanel {
 		plyrSlider.setBounds(10, 28, 190, 29);
 		playerPanel.add(plyrSlider);
 	}
-
-
+f
 	// @James
 	private void createCreateButton() {
 		createBtn = new JButton("CREATE");
@@ -392,6 +393,12 @@ public class CreateLobbyPanel extends JPanel {
 		backBtn.setFont(new Font("Lao MN", Font.PLAIN, 22));
 		backBtn.setBounds(188, 623, 140, 54);
 		this.add(backBtn);
+	}
+	
+
+	private void toggleDifficultyPanel(boolean b) {
+		difficultyPanel.setVisible(b);
+		
 	}
 
 	// James

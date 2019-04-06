@@ -72,7 +72,7 @@ public class MainMenuPanel extends JPanel {
 
 		this.add(menuPanel);
 	
-		initializeImages();
+//		initializeImages();
 	}
 
 	private void createHeaderPanel() {
