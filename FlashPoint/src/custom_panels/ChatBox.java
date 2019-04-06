@@ -80,7 +80,7 @@ public class ChatBox extends JPanel{
 		document.addStyle("hello", style);
 		textPane = new JTextPane(document);
 
-		textPane.setFont(new Font("Open Sans", Font.BOLD, 18));
+		textPane.setFont(new Font("Open Sans", Font.BOLD, 12));
 		textPane.setEnabled(false);
 		textPane.setBounds(rect_textArea);
 
