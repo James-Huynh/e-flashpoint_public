@@ -55,6 +55,8 @@ public class ClientManager {
 		if (readObject != null && readObject instanceof TranObject) {
 			TranObject read_tranObject = (TranObject) readObject;
 			switch(read_tranObject.getType()) {
+			case LOGINFAILURE:
+				System.out.println("fail to login!");
 			case STARTGAMESTATESUCCESS:
 				System.out.println("Succesuful gameStateRetrieval");
 				System.out.println(read_tranObject.getType());
