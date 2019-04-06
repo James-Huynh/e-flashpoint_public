@@ -143,12 +143,13 @@ public class ServerInputThread extends Thread {
 						System.out.println("is online ");
 						requestObject.setIsOnline(1);	
 						serverManager.createPlayer(requestObject.getName(), requestObject.getPassword(), requestObject.getId());
-					}	
+						
 					returnObject = new TranObject<User>(TranObjectType.LOGINSUCCESS);
 					returnObject.setObject(requestObject);
 					
 					out.setMessage(returnObject);
 					map.add(loginUser.getId(), out);
+					}
 				}
 				else { //User doesn't exist
 					//System.out.println("is online set to 0");
