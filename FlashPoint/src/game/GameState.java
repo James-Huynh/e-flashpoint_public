@@ -16,6 +16,7 @@ import token.Vehicle;
 import edge.Edge;
 import tile.ParkingSpot;
 import tile.Tile;
+import token.Colour;
 import token.Firefighter;
 import token.Hazmat;
 import token.Speciality;
@@ -566,8 +567,25 @@ public class GameState implements Serializable {
 			Firefighter tempFirefighter = host.getFirefighters().remove(i);
 			tempFirefighter.setColour(reassignedPlayer.getColour());
 			tempFirefighter.setPlayer(reassignedPlayer);
+			reassignedPlayer.setFirefighter(tempFirefighter);
 		}
 
+		//we need to alter the colours of the ff after this step 
+		if(this.listOfFirefighters.size() > this.listOfPlayers.size()) {
+			for(int i = this.listOfPlayers.size()-1; i< this.listOfFirefighters.size(); i++) {
+				if(i == 1) {
+					this.listOfFirefighters.get(i).setColour(Colour.BLACK);	
+				} else if (i == 2) {
+					this.listOfFirefighters.get(i).setColour(Colour.WHITE);	
+				} else if (i == 3) {
+					this.listOfFirefighters.get(i).setColour(Colour.RED);	
+				} else if (i == 4) {
+					this.listOfFirefighters.get(i).setColour(Colour.PURPLE);	
+				} else if (i == 5) {
+					this.listOfFirefighters.get(i).setColour(Colour.BLUE);	
+				}
+			}
+		}
 	}
 
 	/**
