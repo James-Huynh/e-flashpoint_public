@@ -354,8 +354,8 @@ public class Launcher {
 			}	
 		});
 	}
-	//------------------------------- CREATE LOBBY
-
+	//------------------------------- CREATE LOBB
+	
 
 	// James
 	//  FIND LOBBY -------------------------------  
@@ -368,6 +368,15 @@ public class Launcher {
 				findLobby.setVisible(false);
 				motherFrame.remove(findLobby);
 				setupLobbyPage();
+			}
+		});
+		
+		findLobby.addSelectionPiecesListenerListener(new BackListener() {
+			@Override
+			public void clickBack() {
+				findLobby.setVisible(false);
+				motherFrame.remove(findLobby);
+				setupMainMenuPage();
 			}
 		});
 
@@ -386,6 +395,15 @@ public class Launcher {
 				motherFrame.remove(loadGame);
 				setupLobbyPage();
 				System.out.println("finshed load Game");
+			}
+		});
+		
+		loadGame.addSelectionPiecesListenerListener(new BackListener() {
+			@Override
+			public void clickBack() {
+				loadGame.setVisible(false);
+				motherFrame.remove(loadGame);
+				setupMainMenuPage();
 			}
 		});
 

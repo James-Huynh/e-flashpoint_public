@@ -31,6 +31,8 @@ import edge.Blank;
 
 public class GameState implements Serializable {
 	
+	
+	protected Player host;
 	protected int remainingVictims; // start with 12 //10 for Family
 	protected int remainingFalseAlarms; // start with 6 //5 for Family
 	protected int wallsDamaged; // start with 0 upto MAX_WALL_DMGD
@@ -546,6 +548,7 @@ public class GameState implements Serializable {
 		
 		//Give y firefighters = capacity of lobby, to host
 		Player host = this.listOfPlayers.get(0);
+		host = this.listOfPlayers.get(0);
 		for(int i=0; i<this.numFirefighters; i++) {
 			Firefighter tempFirefighter = new Firefighter(host.getColour());
 			tempFirefighter.setPlayer(host);
@@ -1433,6 +1436,14 @@ public class GameState implements Serializable {
 	
 	public void setRandomGame(int randomGame) {
 		this.randomGame = randomGame;
+	}
+
+	public Player getHost() {
+		return host;
+	}
+
+	public void setHost(Player host) {
+		this.host = host;
 	}
 	
 }
