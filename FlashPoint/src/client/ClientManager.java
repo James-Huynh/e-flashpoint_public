@@ -415,6 +415,8 @@ public class ClientManager {
 		
 		
 	}
+	
+	
 	public ArrayList<GameState> getSavedGameStates(){
 		return requestObject.getsavedGameStates();
 	}
