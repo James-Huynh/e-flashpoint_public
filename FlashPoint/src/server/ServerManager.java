@@ -557,7 +557,9 @@ public class ServerManager {
 		public void updateDodgeRespone(Action dodgeAction, int myFFIndex) {
 			Firefighter inturn = gameState.getPlayingFirefighter();
 			gameState.setPlayingFirefighter(gameState.getFireFighterList().get(myFFIndex));
-			dodgeAction.perform(gameState);
+			if(dodgeAction != null) {
+				dodgeAction.perform(gameState);
+			}
 			gameState.setPlayingFirefighter(inturn);
 			gameManager.setDodgeResponseChecker(myFFIndex);
 			

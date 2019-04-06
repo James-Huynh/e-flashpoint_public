@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import actions.ActionList;
 import chat.ChatMsgEntity;
@@ -397,10 +398,16 @@ public class ServerInputThread extends Thread {
 							}
 							System.out.println("Exited sending output thread to everyone");
 							while(true) {
-								readMessage();
 								if(serverManager.hasEveryoneDodged()) {
 									break;
 								}
+								try {
+									TimeUnit.SECONDS.sleep(15);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								readMessage();
 							}
 //							readMessage();
 //							while(!serverManager.hasEveryoneDodged()) {
@@ -423,10 +430,17 @@ public class ServerInputThread extends Thread {
 							}
 							System.out.println("Exited sending output thread to everyone");
 							while(true) {
-								readMessage();
 								if(serverManager.hasEveryoneDodged()) {
 									break;
 								}
+								
+								try {
+								TimeUnit.SECONDS.sleep(15);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+								readMessage();
 							}
 //							readMessage();
 //							while(!serverManager.hasEveryoneDodged()) {
@@ -449,10 +463,16 @@ public class ServerInputThread extends Thread {
 								}
 								System.out.println("Exited sending output thread to everyone");
 								while(true) {
-									readMessage();
 									if(serverManager.hasEveryoneDodged()) {
 										break;
 									}
+									try {
+									TimeUnit.SECONDS.sleep(15);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+									readMessage();
 								}
 //								readMessage();
 //								while(!serverManager.hasEveryoneDodged()) {
@@ -782,6 +802,7 @@ public class ServerInputThread extends Thread {
 				}
 //				out.setMessage(returnObject);
 				//serverManager.getGameManager().end();
+				break;
 			default:
 				break;
 			}

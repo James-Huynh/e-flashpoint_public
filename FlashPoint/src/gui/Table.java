@@ -5119,9 +5119,10 @@ public class Table {
 			JButton dodgeButton1 = new JButton("Dodge up");
 			JButton dodgeButton2 = new JButton("Dodge right");
 			JButton dodgeButton3 = new JButton("Dodge down");
-			JButton okButton = new JButton("OK");
+			
 			JPanel responsePanel = new JPanel();
-			responsePanel.setLayout(new GridLayout(4,1));
+			responsePanel.setLayout(new GridLayout(6,1));
+			boolean flag = false;
 			for(actions.Action a : dodgeOptions) {
 				System.out.println("dodging buttons");
 				if(a.getDirection() == 0) {
@@ -5136,6 +5137,7 @@ public class Table {
 						}
 
 					});
+					flag = true;
 					responsePanel.add(dodgeButton0);		
 				} else if (a.getDirection() == 1) {
 					dodgeButton1.setPreferredSize(new Dimension(40,40));
@@ -5148,6 +5150,7 @@ public class Table {
 							sendDodgeAnswer(a,myIndex);
 						}
 					});
+					flag = true;
 					responsePanel.add(dodgeButton1);
 				} else if (a.getDirection() == 2) {
 					dodgeButton2.setPreferredSize(new Dimension(40,40));
@@ -5160,6 +5163,7 @@ public class Table {
 							sendDodgeAnswer(a,myIndex);
 						}
 					});
+					flag = true;
 					responsePanel.add(dodgeButton2);
 				} else if (a.getDirection() == 3) {
 					dodgeButton3.setPreferredSize(new Dimension(40,40));
@@ -5172,21 +5176,37 @@ public class Table {
 							sendDodgeAnswer(a,myIndex);
 						}
 					});
+					flag = true;
 					responsePanel.add(dodgeButton3);
 				}
 			}
 			
-			
-			okButton.setPreferredSize(new Dimension(40,40));
-			okButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					System.out.println("OK BUTTON CLICKED");
-					dodgeRequest.hide();
-					dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-				}
-			});
-			responsePanel.add(okButton);
+			if(flag) {
+				JButton okButton = new JButton("Don't Dodge");
+				okButton.setPreferredSize(new Dimension(40,40));
+				okButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.out.println("OK BUTTON CLICKED");
+						dodgeRequest.hide();
+						dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+						sendDodgeAnswer(null,myIndex);
+					}
+				});
+				responsePanel.add(okButton);
+			} else {
+				JButton okButton = new JButton("OK");
+				okButton.setPreferredSize(new Dimension(40,40));
+				okButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.out.println("OK BUTTON CLICKED");
+						dodgeRequest.hide();
+						dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+					}
+				});
+				responsePanel.add(okButton);
+			}
 				
 			gameTPanel.setPreferredSize(new Dimension(400,400));
 			gameTPanel.setBackground(tileColorWhite);
