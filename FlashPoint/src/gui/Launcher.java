@@ -64,7 +64,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = JunhaIP;
+	private String ServerIP = BenIP;
 
 
 	int port = 8888;
@@ -537,25 +537,32 @@ public class Launcher {
 	}
 
 	public void refreshBoard() {
-		if(clientManager.getEndTurnTrigger()) {
-			table.hideAdvPanel();
-			if(clientManager.getUsersGameState().isGameTerminated()) {
-				table.showGameTermination();
-			} else if (clientManager.getUsersGameState().isGameWon()){
-				table.showGameTermination();
-			} else if (clientManager.getUsersGameState().getAdvFireString().equals("")){
-				clientManager.setEndTurnTrigger(false);
-			}else {
-				showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
-				clientManager.setEndTurnTrigger(false);
-			}
-		}
 		table.hideRidePanel();
 		table.hideDeckGunPanel();
 		if(!clientManager.getUsersGameState().getIsDodging()) {
 			table.hideDodgePanel();
 		}
 		table.refresh(clientManager.getUsersGameState());
+		if(clientManager.getEndTurnTrigger()) {
+			System.out.println("end turn trigger triggered");
+			table.hideAdvPanel();
+			if(clientManager.getUsersGameState().isGameTerminated()) {
+				System.out.println("not temrination");
+				table.showGameTermination();
+			} else if (clientManager.getUsersGameState().isGameWon()){
+				System.out.println("not winning");
+				table.showGameTermination();
+			} 
+//			else if (clientManager.getUsersGameState().getAdvFireString().equals("")){
+//				clientManager.setEndTurnTrigger(false);
+//			}
+			else {
+				System.out.println("end turn trigger hit this part");
+				showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
+				clientManager.setEndTurnTrigger(false);
+			}
+		}
+		
 		if(table.getMyIndex() > 5) {
 			repaint(/*false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex()*/);
 
