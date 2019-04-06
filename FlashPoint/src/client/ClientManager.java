@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -610,13 +611,13 @@ public class ClientManager {
 		entity.setMessage(message.getMessage());
 		entity.setDate(MyDate.getComDate());
 		entity.setName(requestObject.getName());
-		String colour = "";
+		Colour colour = null;
 		for(Player p : requestObject.getCurrentLobby().getPlayers()) {
 			if(p.getUserName().equals(requestObject.getName())) {
-				colour = p.getColour().toString();
+				colour = p.getColour();
 			}
 		}
-		System.out.println("sending");
+
 		entity.setColour(colour);
 		User a= new User();
 		a.setChat(entity);

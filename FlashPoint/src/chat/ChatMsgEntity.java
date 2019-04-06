@@ -1,6 +1,9 @@
 package chat;
 
+import java.awt.Color;
 import java.io.Serializable;
+
+import token.Colour;
 
 /**
  * 
@@ -13,7 +16,7 @@ public class ChatMsgEntity  implements Serializable {
 	private String message;
 	private int img;
 	private boolean isComMeg = true;
-	private String colour;
+	private Colour colour;
 
 	public ChatMsgEntity() {
 
@@ -60,10 +63,10 @@ public class ChatMsgEntity  implements Serializable {
 	public void setMsgType(boolean isComMsg) {
 		isComMeg = isComMsg;
 	}
-	public void setColour(String colour) {
+	public void setColour(Colour colour) {
 		this.colour=colour;
 	}
-	public String getColour() {
+	public Colour getColour() {
 		return colour;
 	}
 
