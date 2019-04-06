@@ -366,7 +366,7 @@ public class CreateLobbyPanel extends JPanel {
 		plyrSlider.setBounds(10, 28, 190, 29);
 		playerPanel.add(plyrSlider);
 	}
-f
+
 	// @James
 	private void createCreateButton() {
 		createBtn = new JButton("CREATE");
