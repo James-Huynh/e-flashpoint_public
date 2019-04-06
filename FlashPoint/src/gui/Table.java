@@ -247,6 +247,8 @@ public class Table {
 						this.myIndex = this.myFFIndexes[i];
 						playing = true;
 						break;
+					} else {
+						playing = false;
 					}
 				}
 			}
