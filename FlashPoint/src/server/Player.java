@@ -32,8 +32,11 @@ public class Player implements Serializable {
     /*
      * GETTERS
      */
-    public Firefighter getFirefighter() {
+    public Firefighter getFirefighter() { // this wont work.... we have too many places where this is called. we should be setting it via an input from the client or just use current playing ff for actions and so on
     	this.indexMarker++;
+    	if(this.indexMarker >= this.myFireFighters.size()) {
+    		this.indexMarker = 0;
+    	}
     	return this.myFireFighters.get(indexMarker);
     	
     }

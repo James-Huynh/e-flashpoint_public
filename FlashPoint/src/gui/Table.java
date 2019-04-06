@@ -82,13 +82,16 @@ public class Table {
 		private Popup rideRequest;
 		private Popup deckGunRequest;
 		private Popup dodgeRequest;
-		private static boolean placing = true;
-		private static boolean playing = true;
-		private static boolean selectingFireFighter = false;
+		private static boolean placing;
+		private static boolean playing;
+		private static boolean selectingFireFighter;
 		private static boolean selectingSpeciality;
 		private ClientManager clientManager;
 		private Launcher launcher;
 		private int myIndex = 7;
+		private int[] myFFIndexes;
+		private static boolean host = false;
+		
 		private clientThread listenerThread;
 		private int desiredFFindex;
 		private token.Colour desiredFFindexColour;
@@ -128,17 +131,31 @@ public class Table {
 			this.listenerThread = myThread;
 			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
 			this.desiredFFindex = 0;
-			
+			this.myFFIndexes = new int[6];
+			this.myIndex = 0;
 			this.redReRoll = false;
 			this.blackReRoll = false;
 			this.ran = new Random();
+			this.playing = false;
+			this.placing = false;
+			this.selectingFireFighter = false;
 			
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
 				firefighterOrder.put(f,i);
 				if(updatedClientManager.getUserName().equals(f.getOwner().getUserName())) {
-					this.myIndex = i;
+//					this.myIndex = i;
+					this.myFFIndexes[this.myIndex] = i;
+					this.myIndex++;
 				}
+			}
+			
+			if(this.myFFIndexes[0] == 0) {
+				this.host = true;
+			}
+			
+			for(; this.myIndex<6;this.myIndex++) {
+				this.myFFIndexes[this.myIndex] = 7;
 			}
 			
 			System.out.println("hello this is the free ff check " + clientManager.getUsersGameState().getFreeFirefighters().size());
@@ -151,7 +168,6 @@ public class Table {
 				this.placing = false;
 			}
 			System.out.println("this is my index" + myIndex);
-//			this.listenerThread.restart();
 		}
 		
 		public BoardPanel genBoard() {
@@ -202,7 +218,40 @@ public class Table {
 						}
 					}
 				}
+			} else {
+				selectingFireFighter = true;
 			}
+			if(this.selectingSpeciality) {
+				for(int i = 0; i<6; i++) {
+					if(this.myFFIndexes[i] != 7) {
+						if(clientManager.getUsersGameState().getFireFighterList().get(i).getSpeciality() == null) {
+							this.myIndex = i;
+							selectingSpeciality = true;
+						} else {
+							
+						}
+					}
+				}
+			}
+			
+			for(int i = 0; i<6; i++) {
+				if(this.myFFIndexes[i] != 7) {
+					if(clientManager.getUsersGameState().getFireFighterList().get(this.myFFIndexes[i]).getCurrentPosition() == null) {
+						this.myIndex = this.myFFIndexes[i];
+						placing = true;
+						break;
+					} else {
+						placing = false;
+					}
+					if(clientManager.getUsersGameState().getActiveFireFighterIndex() == this.myFFIndexes[i]) {
+						this.myIndex = this.myFFIndexes[i];
+						playing = true;
+						break;
+					}
+				}
+			}
+			
+			
 //			boardPanel.drawBoard(newBoard);
 //			rightPanel.drawPanel(newBoard);
 //			leftPanel.drawPanel(newBoard);
@@ -969,7 +1018,7 @@ public class Table {
 									}
 								} 
 								else {
-									if(clientManager.getUsersGameState().getActiveFireFighterIndex() == -1 && clientManager.getUsersGameState().isExperienced() && getMyIndex() == 0) {
+									if(clientManager.getUsersGameState().getActiveFireFighterIndex() == -1 && clientManager.getUsersGameState().isExperienced() && host/*getMyIndex() == 0*/) {
 										showPopUpMenuVehicle(e.getComponent(), e.getX(), e.getY(), currentBoard);
 									}
 								}
