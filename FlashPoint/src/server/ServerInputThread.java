@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import actions.ActionList;
 import chat.ChatMsgEntity;
@@ -55,7 +54,9 @@ public class ServerInputThread extends Thread {
 //		serverManager = new ServerManager();
 		try {
 			while (isStart) {
-				System.out.println("Server reading message");
+				//System.out.println("Looping?");
+//				serverManager.readMessage(out, ois);
+				// JUNHA : this is supposed to be serverManager.readMessage();
 				 readMessage();
 
 			}
@@ -133,24 +134,32 @@ public class ServerInputThread extends Thread {
 			case LOGIN:
 				System.out.println("In login request");
 				User loginUser = (User) read_tranObject.getObject();
-				returnObject = new TranObject<User>(TranObjectType.LOGINSUCCESS);
+				
 				requestObject = (User) read_tranObject.getObject();
 
 				if(serverManager.getAccounts().get(requestObject.getName()) != null) {
+					System.out.println(serverManager.getAccounts().get(requestObject.getName()));
 					if(serverManager.getAccounts().get(requestObject.getName()).equals(requestObject.getPassword())){
 						System.out.println("is online ");
 						requestObject.setIsOnline(1);	
 						serverManager.createPlayer(requestObject.getName(), requestObject.getPassword(), requestObject.getId());
 					}	
+					returnObject = new TranObject<User>(TranObjectType.LOGINSUCCESS);
+					returnObject.setObject(requestObject);
+					
+					out.setMessage(returnObject);
+					map.add(loginUser.getId(), out);
 				}
 				else { //User doesn't exist
 					//System.out.println("is online set to 0");
 					requestObject.setIsOnline(0);
-				}
-				returnObject.setObject(requestObject);
+					returnObject = new TranObject<User>(TranObjectType.LOGINFAILURE);
+					returnObject.setObject(requestObject);
+					
+					out.setMessage(returnObject);
 				
-				out.setMessage(returnObject);
-				map.add(loginUser.getId(), out);
+				}
+				
 				break;
 			case REGISTER:
 				System.out.println("In register request");
@@ -366,7 +375,6 @@ public class ServerInputThread extends Thread {
 				serverManager.getGameManager().setAdvFire("");
 				//checking if a vet exists in the game
 				boolean dodgeCheck = false;
-				int testCounter = 0;
 				if(serverManager.getGameState().isExperienced()) {
 					for(Firefighter f : serverManager.getGameState().getFireFighterList()) {
 						if(f.getSpeciality() == Speciality.VETERAN) {
@@ -396,25 +404,10 @@ public class ServerInputThread extends Thread {
 								System.out.println("hello should be in the output thread of dodge");
 								onOut.setMessage(returnGameState); 
 							}
-							System.out.println("Exited sending output thread to everyone");
-							while(true) {
-								if(serverManager.hasEveryoneDodged()) {
-									break;
-								}
-								try {
-									TimeUnit.SECONDS.sleep(15);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								readMessage();
-							}
-//							readMessage();
-//							while(!serverManager.hasEveryoneDodged()) {
-
+							
+							while(!serverManager.hasEveryoneDodged()) {
 								
-//							}
-							System.out.println("Everyone has responded");
+							}
 		        		}
 		        	}
 		        	
@@ -428,25 +421,10 @@ public class ServerInputThread extends Thread {
 								System.out.println("hello should be in the output thread of dodge");
 								onOut.setMessage(returnGameState); 
 							}
-							System.out.println("Exited sending output thread to everyone");
-							while(true) {
-								if(serverManager.hasEveryoneDodged()) {
-									break;
-								}
+							
+							while(!serverManager.hasEveryoneDodged()) {
 								
-								try {
-								TimeUnit.SECONDS.sleep(15);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
 							}
-								readMessage();
-							}
-//							readMessage();
-//							while(!serverManager.hasEveryoneDodged()) {
-//
-//							}
-							System.out.println("Everyone has responded");
 		        		}
 		        	}
 		        	
@@ -461,24 +439,10 @@ public class ServerInputThread extends Thread {
 									System.out.println("hello should be in the output thread of dodge");
 									onOut.setMessage(returnGameState); 
 								}
-								System.out.println("Exited sending output thread to everyone");
-								while(true) {
-									if(serverManager.hasEveryoneDodged()) {
-										break;
-									}
-									try {
-									TimeUnit.SECONDS.sleep(15);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+								
+								while(!serverManager.hasEveryoneDodged()) {
+									
 								}
-									readMessage();
-								}
-//								readMessage();
-//								while(!serverManager.hasEveryoneDodged()) {
-//									
-//								}
-								System.out.println("Everyone has responded");
 			        		}
 		        		}
 		        	}
@@ -530,9 +494,9 @@ public class ServerInputThread extends Thread {
 //				}
 				break;
 			case DODGERESPONSE:
-				System.out.println("hello we have updated dodge Response");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.updateDodgeRespone(requestObject.getDodgeAction(), requestObject.getMyFFIndex());
+				System.out.println("hello we have updated dodge Response");
 				break;
 			case SAVEGAME:
 				System.out.println("save game");
@@ -792,17 +756,11 @@ public class ServerInputThread extends Thread {
 			case ENDGAME:
 				returnObject=new TranObject<User>(TranObjectType.ENDGAME);
 				requestObject = (User) read_tranObject.getObject();
-				ArrayList<Player> temp = serverManager.getGameState().getListOfPlayers();
 				serverManager.resetForNewGame();
 				
 				returnObject.setObject(requestObject);
-				for(Player p: temp) {
-					OutputThread onOut = map.getById(p.getID());
-					onOut.setMessage(returnObject);
-				}
-//				out.setMessage(returnObject);
+				out.setMessage(returnObject);
 				//serverManager.getGameManager().end();
-				break;
 			default:
 				break;
 			}
