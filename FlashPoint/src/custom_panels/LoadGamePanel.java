@@ -18,7 +18,9 @@ import javax.swing.event.EventListenerList;
 import client.ClientManager;
 import game.GameState;
 import personalizedlisteners.loadGameListeners.LoadGameSetUpListener;
+import personalizedlisteners.createLobbyListeners.BackListener;
 import personalizedlisteners.createLobbyListeners.CreateListener;
+import javax.swing.JButton;
 
 public class LoadGamePanel extends JPanel {
 	private JPanel pnl_loadGame;
@@ -73,7 +75,20 @@ public class LoadGamePanel extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds((int) lblX, (int) lblY, (int) lblW, (int) lblH);
 		pnl_main.add(lblNewLabel);
-
+	
+		createBackButton();
+	}
+	
+	private void createBackButton() {
+		JButton btn_back = new JButton("Go Back");
+		btn_back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				raiseEventBackBtn();
+			}
+		});
+		btn_back.setFont(new Font("Open Sans", Font.PLAIN, 22));
+		btn_back.setBounds(135, 652, 153, 62);
+		add(btn_back);
 	}
 
 
@@ -173,7 +188,6 @@ public class LoadGamePanel extends JPanel {
 	}
 
 	public void addSelectionPiecesListenerListener(LoadGameSetUpListener obj) {
-		
 		REGISTERED_OBJECTS.add(LoadGameSetUpListener.class, obj);
 	}
 	
@@ -185,6 +199,14 @@ public class LoadGamePanel extends JPanel {
 			listener.clickLoadGame();
 		}
 	}
-
-
+	
+	
+	/**
+	 * Raise an event: the back button has been clicked
+	 */
+	private void raiseEventBackBtn() {
+		for (BackListener listener: REGISTERED_OBJECTS.getListeners(BackListener.class)) {
+			listener.clickBack();
+		}
+	}
 }
