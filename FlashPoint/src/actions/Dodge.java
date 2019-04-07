@@ -50,6 +50,7 @@ public class Dodge extends Move {
 		
 		if (gs.getPlayingFirefighter().getSpeciality() != Speciality.VETERAN) {
 			this.APcost = 2;
+			gs.vicinity(gs.getPlayingFirefighter());
 		}
 		
 		boolean sup = super.validate(gs);
