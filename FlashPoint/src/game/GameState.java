@@ -157,6 +157,7 @@ public class GameState implements Serializable {
 		this.specialitySelecting = copy.specialitySelecting;
 		this.proposedDices = copy.proposedDices;
 		this.randomGame = copy.getRandomBoard();
+		this.host = copy.getHost();
 		
 		//for loading and selecting, may need to change
 		System.out.println(this.listOfFirefighters.size());
@@ -229,7 +230,7 @@ public class GameState implements Serializable {
 		createEngine();
 		initializeTiles();
 		setClosest();
-		
+		this.host = lobby.getPlayers().get(0);
 		
 
 	}
@@ -1373,24 +1374,24 @@ public class GameState implements Serializable {
 		}
 	}
 	
-	/*
-	 * SAVING
-	 */
 	@Override
 	public String toString() {
-		return "GameState [remainingVictims=" + remainingVictims + ", remainingFalseAlarms=" + remainingFalseAlarms
-				+ ", wallsDamaged=" + wallsDamaged + ", lostVictims=" + lostVictims + ", savedVictims=" + savedVictims
-				+ ", gameTerminated=" + gameTerminated + ", gameWon=" + gameWon + ", activeFireFighterIndex="
-				+ activeFireFighterIndex + ", isActiveGame=" + isActiveGame + ", matEdges=" + Arrays.toString(matEdges)
-				+ ", matTiles=" + Arrays.toString(matTiles) + ", engines=" + Arrays.toString(engines) + ", ambulances="
-				+ Arrays.toString(ambulances) + ", advFireString=" + advFireString + ", currentTile=" + currentTile
+		return "GameState [host=" + host.toString() + ", remainingVictims=" + remainingVictims + ", remainingFalseAlarms="
+				+ remainingFalseAlarms + ", wallsDamaged=" + wallsDamaged + ", lostVictims=" + lostVictims
+				+ ", savedVictims=" + savedVictims + ", gameTerminated=" + gameTerminated + ", gameWon=" + gameWon
+				+ ", activeFireFighterIndex=" + activeFireFighterIndex + ", isActiveGame=" + isActiveGame
+				+ ", matEdges=" + Arrays.toString(matEdges) + ", matTiles=" + Arrays.toString(matTiles) + ", engines="
+				+ Arrays.toString(engines) + ", ambulances=" + Arrays.toString(ambulances) + ", numFirefighters="
+				+ numFirefighters + ", advFireString=" + advFireString + ", currentTile=" + currentTile
 				+ ", availableActions=" + availableActions + ", listOfPlayers=" + listOfPlayers
 				+ ", listOfFirefighters=" + listOfFirefighters + ", MAX_WALL_DMGD=" + MAX_WALL_DMGD + ", poiList="
 				+ poiList + ", lostVictimsList=" + lostVictimsList + ", savedVictimsList=" + savedVictimsList
 				+ ", revealedFalseAlarmsList=" + revealedFalseAlarmsList + ", freeSpecialities=" + freeSpecialities
-				+ ", lostHazmat=" + lostHazmat + ", disposedHazmat=" + disposedHazmat + ", remainingHotSpots="
-				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + ",proposedDices=" + Arrays.toString(proposedDices) 
-				+ ", randomGame" + randomGame + "]";
+				+ ", freeFirefighters=" + freeFirefighters + ", lostHazmat=" + lostHazmat + ", disposedHazmat="
+				+ disposedHazmat + ", rideMapper=" + rideMapper + ", inRideMode=" + inRideMode + ", remainingHotSpots="
+				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + ", specialitySelecting="
+				+ specialitySelecting + ", proposedDices=" + Arrays.toString(proposedDices) + ", isDodging=" + isDodging
+				+ ", dodgingHashMap=" + dodgingHashMap + ", randomGame=" + randomGame + "]";
 	}
 
 	public void setSpecialitySelecting(boolean b) {

@@ -436,7 +436,9 @@ public class ServerManager {
     	File[] listOfFiles = folder.listFiles();
     	for (File f : listOfFiles) {
     		GameState gs = GameState.getInstance();
-    		gs = loadGameMat(f.getAbsolutePath());
+    		gs = loadGameMat("1");
+    		System.out.println("im here:" + gs.getSavedVictims());
+    		System.out.println("im here:" + gs.getListOfPlayers().get(0).getUserName());
     		this.savedGames.add(gs);
     	}
     }

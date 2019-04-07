@@ -292,9 +292,13 @@ public class Firefighter extends Token implements Serializable {
 	@Override
 	public String toString() {
 		return "Firefighter [AP=" + AP + ", savedAP=" + savedAP + ", carryingVictim=" + carryingVictim + ", victim="
-				+ victim.toString() + ", myColour=" + myColour.toString() + ", myPlayer=" + myPlayer.toString() + ", speciality=" + speciality.toString() + ", SP="
-				+ SP + ", canDodge=" + canDodge + ", usedAP=" + usedAP + ", follow=" + carrying.toString() + ", ifCommandCAPSthisTurn=" + ifCommandCAPSthisTurn + ", x=" + x + ", y="
-				+ y + ", tileOn=" + tileOn.toString() + "]";
+				+ victim.toString() + ", myColour=" + 
+				myColour.toString() + ", myPlayer=" + 
+				myPlayer.toString() + ", speciality=" 
+				+ speciality.toString() + ", SP="
+				+ SP + ", canDodge=" + canDodge + ", usedAP=" + usedAP + ", carrying=" + carrying
+				+ ", ifCommandCAPSthisTurn=" + ifCommandCAPSthisTurn + ", x=" + x + ", y=" + y + ", tileOn=" + tileOn.toString()
+				+ "]";
 	}
 
 }

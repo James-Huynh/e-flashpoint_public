@@ -104,7 +104,7 @@ public class LoadGamePanel extends JPanel {
 		//		listEntries.add(entry_4);
 		//		listEntries.add(entry_5);
 
-		for (int i = 1; i <= savedGames.size(); i++) {
+		for (int i = 0; i < savedGames.size(); i++) {
 			//			JLabel currEntry = listEntries.get(i);
 			//
 			//			currEntry = new JLabel();
@@ -169,7 +169,8 @@ public class LoadGamePanel extends JPanel {
 		StringBuilder stringbuilder = new StringBuilder();
 		GameState currGame =  savedGames.get(i); 	// currGame is null
 		
-		stringbuilder.append("Name: " + currGame.getHost() + " - ");
+		System.out.println(currGame.getListOfPlayers());
+		stringbuilder.append("Name: " + currGame.getListOfPlayers().get(0).getUserName() + " - ");
 //		stringbuilder.append(currGame.get+ " - ");
 		
 		

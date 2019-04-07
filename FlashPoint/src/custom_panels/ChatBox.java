@@ -77,11 +77,11 @@ public class ChatBox extends JPanel{
 		textPane = new JTextPane();
 		documento = (StyledDocument) textPane.getStyledDocument();
 		
-		style = textPane.addStyle("StyleName", null);
+		//style = textPane.addStyle("StyleName", null);
 		
-
+		style = textPane.addStyle("StyleName", null);
 		textPane.setBounds(rect_textArea);
-
+		
 
 
 		scrollPane = new JScrollPane(textPane);
@@ -154,7 +154,7 @@ public class ChatBox extends JPanel{
 				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(style, Color.MAGENTA);
 				if(playerColor == Colour.BLACK) StyleConstants.setForeground(style, Color.BLACK);
 				if(playerColor == Colour.WHITE) StyleConstants.setForeground(style, Color.WHITE);
-				
+			
 				updateChatGUI(finalText.toString());
 			}
 		}
@@ -166,6 +166,16 @@ public class ChatBox extends JPanel{
 	private void updateChatGUI(String text) {
 		try {
 			System.out.println("this is in UCG" + text);
+			ChatMsgEntity entity  = mDataArrays.get(0);
+			Colour playerColor = entity.getColour();
+			//change font color here
+			if(playerColor == Colour.GREEN) StyleConstants.setForeground(style, Color.GREEN);
+			if(playerColor == Colour.BLUE) StyleConstants.setForeground(style, Color.BLUE);
+			if(playerColor == Colour.RED) StyleConstants.setForeground(style, Color.RED);
+			if(playerColor == Colour.PURPLE) StyleConstants.setForeground(style, Color.MAGENTA);
+			if(playerColor == Colour.BLACK) StyleConstants.setForeground(style, Color.BLACK);
+			if(playerColor == Colour.WHITE) StyleConstants.setForeground(style, Color.WHITE);
+			
 			documento.insertString(documento.getLength(), text, style);
 			
 		} catch(BadLocationException exc) {

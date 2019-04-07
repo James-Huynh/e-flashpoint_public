@@ -76,8 +76,8 @@ public class Player implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Player [userName=" + userName + ", password=" + password + ", myColour=" + myColour.toString() + ", myFireFighter="
-				+ myFireFighters.get(0).toString() + ", ID=" + ID + "]";
+		return "Player [userName=" + userName + ", password=" + password + ", myColour=" + myColour.toString()
+				+ ", myFireFighters=" + myFireFighters + ", indexMarker=" + indexMarker + ", ID=" + ID + "]";
 	}
     
     
