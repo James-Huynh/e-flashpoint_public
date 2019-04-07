@@ -570,13 +570,18 @@ public class GameState implements Serializable {
 		for(int i=1;i<this.listOfPlayers.size(); i++) {
 			System.out.println("I SHOULDN'T ENTER HERE");
 			Player reassignedPlayer = this.listOfPlayers.get(i);
-			Firefighter tempFirefighter = host.getFirefighters().remove(i);
+//			Firefighter tempFirefighter = host.getFirefighters().remove(i);
+			Firefighter tempFirefighter = host.getFirefighters().get(i);
 			tempFirefighter.setColour(reassignedPlayer.getColour());
 			tempFirefighter.setPlayer(reassignedPlayer);
 			reassignedPlayer.setFirefighter(tempFirefighter);
 		}
 		System.out.println("the size ff in host " + host.getFirefighters().size());
 
+		for(int i = this.getListOfPlayers().size()-1; i>=1;i--) {
+			host.getFirefighters().remove(i);
+		}
+		
 		//we need to alter the colours of the ff after this step 
 		if(this.listOfFirefighters.size() > this.listOfPlayers.size()) {
 			for(int i = this.listOfPlayers.size()-1; i< this.listOfFirefighters.size(); i++) {
