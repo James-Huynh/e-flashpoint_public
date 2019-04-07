@@ -67,7 +67,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = MatIP;
+	private String ServerIP = BenIP;
 
 
 	int port = 8888;
@@ -570,6 +570,9 @@ public class Launcher {
 				clientManager.setEndTurnTrigger(false);
 			}
 		}
+		
+		table.resetDodge();
+		table.resetRode();
 		
 		if(table.getMyIndex() > 5) {
 			repaint(/*false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex()*/);
