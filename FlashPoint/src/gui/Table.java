@@ -5228,6 +5228,12 @@ public class Table {
 			gameTermination.show();
 		}
 		
+		public void hideGameTermination() {
+			if(gameTermination != null) {
+				gameTermination.hide();
+			}
+		}
+		
 		public void showAdvanceFireString(String message) {
 			advFire = null;
 			PopupFactory gameLogPopup = new PopupFactory();
