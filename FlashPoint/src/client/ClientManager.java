@@ -224,6 +224,9 @@ public class ClientManager {
 				
 			case ERROR:
 				System.out.println("SOMEONEDISCONNECTED!!");
+				flag = true;
+				launcher.showPopUp();
+				break;
 			case ENDGAME:
 				System.out.println("Successful EndGame request");
 //				requestObject = (User) read_tranObject.getObject();
