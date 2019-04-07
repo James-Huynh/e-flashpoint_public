@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import game.BoardTwo;
+import game.GameState;
 import game.RandomBoardFive;
 import game.RandomBoardFour;
 import game.RandomBoardOne;
@@ -47,8 +48,12 @@ public class Lobby implements Serializable  {
 //		assignableColours.add(token.Colour.PURPLE);
 //		assignableColours.add(token.Colour.BLUE);
 //		assignColours();
-
 	}
+	
+//	public Lobby(GameState gs) {
+//		players = gs.getListOfPlayers();
+//		randomGame = gs.getR
+//	}
 
 	public void assignColours(){
 		assignableColours = new ArrayList<token.Colour>();

@@ -24,8 +24,11 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 
 import client.Client;
@@ -622,7 +625,18 @@ public class Launcher {
 	}
 
 	public boolean sendSaveGameRequest() {
-		return clientManager.saveGameRequest();
+		// new panel String
+		JTextArea textArea = new JTextArea();
+        textArea.setEditable(true);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.requestFocus();
+        textArea.requestFocusInWindow();
+        scrollPane.setPreferredSize(new Dimension(80, 60));
+        JOptionPane.showInputDialog(this, "Name of the saved game:");
+        String info = textArea.getText();
+		
+		//
+		return clientManager.saveGameRequestString(info);
 	}
 
 	public static Client getClient() {

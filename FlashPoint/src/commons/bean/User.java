@@ -46,12 +46,14 @@ public class User implements Serializable {
     private Speciality desiredSpeciality;
     private int desiredFirefighter;
     private int loadNum;
+    private int loadIndex;
     private ArrayList<GameState> savedGameStates;
     private int[] dices;
     private actions.Action dodgeAction;
     private token.Colour desiredFirefighterColour;
     
     private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
+	private String gameName;
 	public Integer getId() {
 		return id;
 	}
@@ -60,9 +62,18 @@ public class User implements Serializable {
 		this.loadNum = loadNum;
 	}
 	
+	public int getLoadIndex() {
+		return this.loadIndex;
+	}
+	
+	public void setLoadIndex(int loadIndex) {
+		this.loadIndex = loadIndex;
+	}
+	
 	public int getNum() {
 		return this.loadNum;
 	}
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -302,6 +313,14 @@ public class User implements Serializable {
 	}
 	public actions.Action getDodgeAction(){
 		return this.dodgeAction;
+	}
+
+	public String getGameName() {
+		return this.gameName;
+	}
+	
+	public void setGameName(String s) {
+		this.gameName = s;
 	}
 
 //	public int getImg() {

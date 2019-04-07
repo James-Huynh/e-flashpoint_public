@@ -38,6 +38,7 @@ public class ClientManager {
 	private TranObjectType anyString;
 	private Launcher launcher;
 	private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
+	private String gameName;
 	
 	private boolean endTurnTrigger = false;
 	
@@ -75,6 +76,15 @@ public class ClientManager {
 				flag = true;
 				startGameFlag = 2;
 				break;
+				
+			case STARTSAVEDGAMESTATENAMESUCCESS:
+				System.out.println("Succesuful 'saved' gameStateRetrieval Mat");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				requestObject.setGameName((String) read_tranObject.getObject());
+				flag = true;
+				startGameFlag = 2;
+				break;
+				
 			case SUCCESS:
 				System.out.println("Succesuful connection");
 				System.out.println(read_tranObject.getType());
@@ -427,6 +437,13 @@ public class ClientManager {
 		
 	}
 	
+	public String getGameName() {
+		return requestObject.getGameName();
+	}
+	
+	public void setGameName(String gN) {
+		this.gameName = gN;
+	}
 	
 	public ArrayList<GameState> getSavedGameStates(){
 		return requestObject.getsavedGameStates();
@@ -570,6 +587,14 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		return true;
 	}
+	
+	public boolean saveGameRequestString(String name) {
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.SAVEGAMENAME);
+		requestObject.setGameName(name);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		return true;
+	}
 
 	public boolean getEndTurnTrigger() {
 		return endTurnTrigger;
@@ -583,6 +608,37 @@ public class ClientManager {
 		boolean flag = false;
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOADSAVE);
 		requestObject.setNum(savedGameNum); //which # savedGame the player selected
+		
+		Lobby lobby = new Lobby();
+		lobby.setIsLoadGame(true);
+		//lobby.setCapacity(capacity)
+		
+		
+		requestObject.setCurrentLobby(lobby);
+		
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+		
+		try {
+			while(readMessage() != true) {
+				
+			}
+			flag = true;
+		}
+		
+		catch(Exception E) {
+			System.out.println("Exception occured during createLobbyRequest.");
+		}
+		
+		
+		return flag;
+	}
+	
+	public boolean loadGameLobbyRequestMat(int savedGameIndex) {
+		boolean flag = false;
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.LOADSAVE);
+		//requestObject.setNum(savedGameNum); //which # savedGame the player selected
+		requestObject.setLoadIndex(savedGameIndex);
 		
 		Lobby lobby = new Lobby();
 		lobby.setIsLoadGame(true);

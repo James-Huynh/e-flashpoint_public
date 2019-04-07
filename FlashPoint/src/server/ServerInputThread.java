@@ -230,7 +230,7 @@ public class ServerInputThread extends Thread {
 			case STARTSAVEDGAMESTATE:
 				requestObject = (User) read_tranObject.getObject();
 				System.out.println(requestObject.getNum());
-				serverManager.loadGame(requestObject.getNum());
+				serverManager.loadGameMat(requestObject.getLoadIndex());
 				returnGameState = new TranObject<GameState>(TranObjectType.STARTSAVEDGAMESTATESUCCESS);
 				returnGameState.setObject(serverManager.getGameState()); // this was already done earlier
 				for (OutputThread onOut : map.getAll()) {
@@ -558,6 +558,16 @@ public class ServerInputThread extends Thread {
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;
+				
+			case SAVEGAMENAME:
+				System.out.println("save game with name");
+				returnObject = new TranObject<User>(TranObjectType.SAVEGAMENAMESUCCESS);
+				requestObject = (User) read_tranObject.getObject();
+				String name = (String) requestObject.getGameName();
+				System.out.println("WE ARE HERE!" + name);
+				serverManager.saveGameMat(serverManager.getGameState(), name);
+				serverManager.setSavedGames();
+				requestObject.setSavedGameStates(serverManager.getSavedGames());
 				
 			case REQUESTSAVEDLIST:
 				System.out.println("request saved game state objects");
