@@ -710,7 +710,7 @@ public class GameManager {
     				
     				fire = true;
     				ParkingSpot respawnTile = targetTile.getNearestAmbulance();
-    				if(this.representsLobby.getMode().equals("Experienced")){
+    				if(gs.isExperienced()){
     					for(int i = 0; i<4; i++) {
     						if(gs.getAmbulances()[i].getCar()) {
     							respawnTile = gs.getAmbulances()[i];
@@ -783,7 +783,7 @@ public class GameManager {
         	boolean containsFireFighter = targetTile.containsFirefighter();
         	int curFire = targetTile.getFire();
         	if(containsPOI == false) {
-        		if(this.representsLobby.getMode().equals("Experienced")) {
+        		if(gs.isExperienced()) {
         			if(curFire > 0 || containsFireFighter) {
         				if(count > 10) {
         					targetTile = getNewPOITile();
@@ -926,7 +926,7 @@ public class GameManager {
     	
     	Tile targetTile = gs.rollForTile();
     	boolean initialHotSpot = false;
-    	if(this.representsLobby.getMode().equals("Experienced")) {
+    	if(gs.isExperienced()) {
     		initialHotSpot = targetTile.containsHotSpot();
     	} 
     	
@@ -1004,7 +1004,7 @@ public class GameManager {
     	resolveFlashOver();
     	
     	//checking each tile for if a hazmat is present, causing explosions if yes
-    	if(this.representsLobby.getMode().equals("Experienced")) {
+    	if(gs.isExperienced()) {
     		recentAdvFire += "hazmat Explosion check commenced \n";
     		resolveHazmatExplosions();
     	}

@@ -81,6 +81,7 @@ public class GameState implements Serializable {
 	protected HashMap<Firefighter, ArrayList<actions.Action>> dodgingHashMap;
 	
 	int randomGame;
+	protected String savedGameName;
 	private static final long serialVersionUID = 1L; // serialization
 
 	/**
@@ -158,6 +159,7 @@ public class GameState implements Serializable {
 		this.proposedDices = copy.proposedDices;
 		this.randomGame = copy.getRandomBoard();
 		this.host = copy.getHost();
+		this.savedGameName = copy.savedGameName;
 		
 		//for loading and selecting, may need to change
 		System.out.println(this.listOfFirefighters.size());
@@ -1391,7 +1393,7 @@ public class GameState implements Serializable {
 				+ disposedHazmat + ", rideMapper=" + rideMapper + ", inRideMode=" + inRideMode + ", remainingHotSpots="
 				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + ", specialitySelecting="
 				+ specialitySelecting + ", proposedDices=" + Arrays.toString(proposedDices) + ", isDodging=" + isDodging
-				+ ", dodgingHashMap=" + dodgingHashMap + ", randomGame=" + randomGame + "]";
+				+ ", dodgingHashMap=" + dodgingHashMap + ", randomGame=" + randomGame + ", savedGameName=" + savedGameName + "]";
 	}
 
 	public void setSpecialitySelecting(boolean b) {
@@ -1445,6 +1447,14 @@ public class GameState implements Serializable {
 
 	public void setHost(Player host) {
 		this.host = host;
+	}
+	
+	public void setSavedGameName(String savedGameName) {
+		this.savedGameName = savedGameName;
+	}
+	
+	public String getSavedGameName() {
+		return this.savedGameName;
 	}
 	
 }

@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -46,7 +47,8 @@ public class ChatBox extends JPanel{
 	private JTextPane textPane;
 
 	private StyledDocument documento;
-	private Style style;
+	MutableAttributeSet attrs;
+	//private Style style;
 
 	private ClientManager clientManager;
 	private List<ChatMsgEntity> mDataArrays;
@@ -79,10 +81,11 @@ public class ChatBox extends JPanel{
 		
 		//style = textPane.addStyle("StyleName", null);
 		
-		style = textPane.addStyle("StyleName", null);
+		attrs = textPane.getInputAttributes();
+		//style = textPane.addStyle("StyleName", null);
+		//that's how u change color
+		StyleConstants.setForeground(attrs, Color.GREEN);
 		textPane.setBounds(rect_textArea);
-		
-
 
 		scrollPane = new JScrollPane(textPane);
 
@@ -137,6 +140,17 @@ public class ChatBox extends JPanel{
 				finalText.append(entity.getName() + ": ");
 				finalText.append(entity.getMessage() + "\n");
 				
+				
+//				Colour playerColor = entity.getColour();
+//				System.out.println("im here" + playerColor);
+//				//change font color here
+//				if(playerColor == Colour.GREEN) StyleConstants.setForeground(attrs, Color.GREEN);
+//				if(playerColor == Colour.BLUE) StyleConstants.setForeground(attrs, Color.BLUE);
+//				if(playerColor == Colour.RED) StyleConstants.setForeground(attrs, Color.RED);
+//				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(attrs, Color.MAGENTA);
+//				if(playerColor == Colour.BLACK) StyleConstants.setForeground(attrs, Color.BLACK);
+//				if(playerColor == Colour.WHITE) StyleConstants.setForeground(attrs, Color.WHITE);
+				
 				updateChatGUI(finalText.toString());
 			}
 		} else {
@@ -147,14 +161,16 @@ public class ChatBox extends JPanel{
 				finalText.append(entity.getMessage() + "\n");
 				
 				Colour playerColor = entity.getColour();
+				System.out.println("im here2" + playerColor);
 				//change font color here
-				if(playerColor == Colour.GREEN) StyleConstants.setForeground(style, Color.GREEN);
-				if(playerColor == Colour.BLUE) StyleConstants.setForeground(style, Color.BLUE);
-				if(playerColor == Colour.RED) StyleConstants.setForeground(style, Color.RED);
-				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(style, Color.MAGENTA);
-				if(playerColor == Colour.BLACK) StyleConstants.setForeground(style, Color.BLACK);
-				if(playerColor == Colour.WHITE) StyleConstants.setForeground(style, Color.WHITE);
-			
+				if(playerColor == Colour.GREEN) StyleConstants.setForeground(attrs, Color.GREEN);
+				if(playerColor == Colour.BLUE) StyleConstants.setForeground(attrs, Color.BLUE);
+				if(playerColor == Colour.RED) StyleConstants.setForeground(attrs, Color.RED);
+				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(attrs, Color.MAGENTA);
+				if(playerColor == Colour.BLACK) StyleConstants.setForeground(attrs, Color.BLACK);
+				if(playerColor == Colour.WHITE) StyleConstants.setForeground(attrs, Color.WHITE);
+				
+				
 				updateChatGUI(finalText.toString());
 			}
 		}
@@ -166,17 +182,17 @@ public class ChatBox extends JPanel{
 	private void updateChatGUI(String text) {
 		try {
 			System.out.println("this is in UCG" + text);
-			ChatMsgEntity entity  = mDataArrays.get(0);
-			Colour playerColor = entity.getColour();
-			//change font color here
-			if(playerColor == Colour.GREEN) StyleConstants.setForeground(style, Color.GREEN);
-			if(playerColor == Colour.BLUE) StyleConstants.setForeground(style, Color.BLUE);
-			if(playerColor == Colour.RED) StyleConstants.setForeground(style, Color.RED);
-			if(playerColor == Colour.PURPLE) StyleConstants.setForeground(style, Color.MAGENTA);
-			if(playerColor == Colour.BLACK) StyleConstants.setForeground(style, Color.BLACK);
-			if(playerColor == Colour.WHITE) StyleConstants.setForeground(style, Color.WHITE);
+//			ChatMsgEntity entity  = mDataArrays.get(0);
+//			Colour playerColor = entity.getColour();
+//			//change font color here
+//			if(playerColor == Colour.GREEN) StyleConstants.setForeground(style, Color.GREEN);
+//			if(playerColor == Colour.BLUE) StyleConstants.setForeground(style, Color.BLUE);
+//			if(playerColor == Colour.RED) StyleConstants.setForeground(style, Color.RED);
+//			if(playerColor == Colour.PURPLE) StyleConstants.setForeground(style, Color.MAGENTA);
+//			if(playerColor == Colour.BLACK) StyleConstants.setForeground(style, Color.BLACK);
+//			if(playerColor == Colour.WHITE) StyleConstants.setForeground(style, Color.WHITE);
 			
-			documento.insertString(documento.getLength(), text, style);
+			documento.insertString(documento.getLength(), text, attrs);
 			
 		} catch(BadLocationException exc) {
 			exc.printStackTrace();
