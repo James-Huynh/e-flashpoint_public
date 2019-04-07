@@ -104,6 +104,9 @@ public class Table {
 		int blackDice;
 		Random ran;
 		
+		private boolean[] dodged;
+		private boolean[] rode;
+		
 		
 //		public Table(GameState inputBoard) {
 //			this.currentBoard = inputBoard;
@@ -143,6 +146,8 @@ public class Table {
 			this.redReRoll = false;
 			this.blackReRoll = false;
 			this.ran = new Random();
+			this.dodged = new boolean[6];
+			this.rode = new boolean[6];
 
 			
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
@@ -1372,25 +1377,25 @@ public class Table {
 			    JMenu p6HandleMenu = new JMenu("Toggle Door");
 			    
 			    
-			    for(int pCount = 0; pCount < clientManager.getUsersGameState().getListOfPlayers().size(); pCount++) {
+			    for(int pCount = 0; pCount < clientManager.getUsersGameState().getFireFighterList().size(); pCount++) {
 			    	switch(pCount) {
 			    		case 0:
-			    			commandP1Menu = new JMenu(clientManager.getUsersGameState().getListOfPlayers().get(pCount).getUserName());
+			    			commandP1Menu = new JMenu(clientManager.getUsersGameState().getFireFighterList().get(pCount).getOwner().getUserName() +" | "+ clientManager.getUsersGameState().getFireFighterList().get(pCount).getColour().toString());
 			    			break;
 			    		case 1:
-			    			commandP2Menu = new JMenu(clientManager.getUsersGameState().getListOfPlayers().get(pCount).getUserName());
+			    			commandP2Menu = new JMenu(clientManager.getUsersGameState().getFireFighterList().get(pCount).getOwner().getUserName()+" | "+ clientManager.getUsersGameState().getFireFighterList().get(pCount).getColour().toString());
 			    			break;
 			    		case 2:
-			    			commandP3Menu = new JMenu(clientManager.getUsersGameState().getListOfPlayers().get(pCount).getUserName());
+			    			commandP3Menu = new JMenu(clientManager.getUsersGameState().getFireFighterList().get(pCount).getOwner().getUserName()+" | "+ clientManager.getUsersGameState().getFireFighterList().get(pCount).getColour().toString());
 			    			break;
 			    		case 3:
-			    			commandP4Menu = new JMenu(clientManager.getUsersGameState().getListOfPlayers().get(pCount).getUserName());
+			    			commandP4Menu = new JMenu(clientManager.getUsersGameState().getFireFighterList().get(pCount).getOwner().getUserName()+" | "+ clientManager.getUsersGameState().getFireFighterList().get(pCount).getColour().toString());
 			    			break;
 			    		case 4:
-			    			commandP5Menu = new JMenu(clientManager.getUsersGameState().getListOfPlayers().get(pCount).getUserName());
+			    			commandP5Menu = new JMenu(clientManager.getUsersGameState().getFireFighterList().get(pCount).getOwner().getUserName()+" | "+ clientManager.getUsersGameState().getFireFighterList().get(pCount).getColour().toString());
 			    			break;
 			    		case 5:
-			    			commandP6Menu = new JMenu(clientManager.getUsersGameState().getListOfPlayers().get(pCount).getUserName());
+			    			commandP6Menu = new JMenu(clientManager.getUsersGameState().getFireFighterList().get(pCount).getOwner().getUserName()+" | "+ clientManager.getUsersGameState().getFireFighterList().get(pCount).getColour().toString());
 			    			break;
 			    	}
 			    	
@@ -4731,7 +4736,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s, 0)) {
+										if(sendSpecialitySelectionRequest(s, myFFIndexes[0])) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4749,7 +4754,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s, 1)) {
+										if(sendSpecialitySelectionRequest(s, myFFIndexes[1])) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4767,7 +4772,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s, 2)) {
+										if(sendSpecialitySelectionRequest(s, myFFIndexes[2])) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4785,7 +4790,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s, 3)) {
+										if(sendSpecialitySelectionRequest(s, myFFIndexes[3])) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4803,7 +4808,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s, 4)) {
+										if(sendSpecialitySelectionRequest(s, myFFIndexes[4])) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -4821,7 +4826,7 @@ public class Table {
 								info.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										if(sendSpecialitySelectionRequest(s, 5)) {
+										if(sendSpecialitySelectionRequest(s, myFFIndexes[5])) {
 											System.out.println("Speciality selected is " + s.toString());
 										}
 									}
@@ -5239,53 +5244,380 @@ public class Table {
 		public void showRideRequest() {
 			rideRequest = null;
 			PopupFactory gameT = new PopupFactory();
-			JPanel gameTPanel = new JPanel(new BorderLayout());
+			JPanel gameTPanel = new JPanel(new GridLayout(7,1));
+			gameTPanel.setPreferredSize(new Dimension(700,700));
+			gameTPanel.setBackground(tileColorWhite);
+			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
+			gameTPanel.setBorder(blackline);
 			JTextArea text = new JTextArea();
-			String rideReq = "Would you like to ride?";
+			
+			
+			JPanel FF0 = new JPanel(new GridLayout(3,1));
+			JPanel FF1 = new JPanel(new GridLayout(3,1));
+			JPanel FF2 = new JPanel(new GridLayout(3,1));
+			JPanel FF3 = new JPanel(new GridLayout(3,1));
+			JPanel FF4 = new JPanel(new GridLayout(3,1));
+			JPanel FF5 = new JPanel(new GridLayout(3,1));
+			
+			JTextArea text0 = new JTextArea();
+			JTextArea text1 = new JTextArea();
+			JTextArea text2 = new JTextArea();
+			JTextArea text3 = new JTextArea();
+			JTextArea text4 = new JTextArea();
+			JTextArea text5 = new JTextArea();
+			JTextArea text6 = new JTextArea();
+			
+			String rideReq = "You have firefighters who can ride. Please respond for each of them.";
+			String header0 = "";
+			String header1 = ""; 
+			String header2 = "";
+			String header3 = ""; 
+			String header4 = "";
+			String header5 = ""; 
+			
 			String rideInform = "We are waiting on the ride responses";
 			System.out.println("myyyyyy index " + myIndex);
-			if(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex)) {
-				System.out.println(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex));
+			
+			boolean menu0 = false, menu1 = false, menu2 = false, menu3 = false, menu4 = false, menu5 = false;
+			for(int i = 0; i< 6; i ++) {
+				if(myFFIndexes[i] != 7) {
+					switch (i) {
+						case 0:
+							menu0 = true;
+							header0 = clientManager.getUsersGameState().getFireFighterList().get(0).getColour().toString() + " Fireman";
+							break;
+						case 1:
+							menu1 = true;
+							header1 = clientManager.getUsersGameState().getFireFighterList().get(1).getColour().toString() + " Fireman";
+							break;
+						case 2:
+							menu2 = true;
+							header2 = clientManager.getUsersGameState().getFireFighterList().get(2).getColour().toString() + " Fireman";
+							break;
+						case 3:
+							menu3 = true;
+							header3 = clientManager.getUsersGameState().getFireFighterList().get(3).getColour().toString() + " Fireman";
+							break;
+						case 4:
+							menu4 = true;
+							header4 = clientManager.getUsersGameState().getFireFighterList().get(4).getColour().toString() + " Fireman";
+							break;
+						case 5:
+							menu5 = true;
+							header5 = clientManager.getUsersGameState().getFireFighterList().get(5).getColour().toString() + " Fireman";
+							break;
+					}
+				} else {
+					rode[i] = true;
+				}
+			}
+			
+			if(menu0 || menu1 || menu2 || menu3 || menu4 || menu5) {
 				text.setText(rideReq);
-				
-				JButton yesButton = new JButton("Yes");
-				yesButton.setPreferredSize(new Dimension(40,40));
-				yesButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if(sendRideResponse(true, myIndex)) {
-							rideRequest.hide();
-							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+				gameTPanel.add(text);
+			}
+			
+			if(menu0) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(0)) {
+					text0.setText(header0);
+					FF0.add(text0);
+					JButton yesButton = new JButton("Yes");
+					yesButton.setPreferredSize(new Dimension(20,20));
+					yesButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("helloashf");
+							if(sendRideResponse(true, 0)) {
+								rode[0] = true;
+								System.out.println("hello");
+								clientManager.getUsersGameState().setRideOption(true, 0);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								
+								} else {
+									showRideRequest();
+								}
+							}
 						}
-					}
-				});
-				
+					});
+					
 
-				JButton noButton = new JButton("No");
-				noButton.setPreferredSize(new Dimension(40,40));
-				noButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if(sendRideResponse(false, myIndex)) {
-							rideRequest.hide();
-							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+					JButton noButton = new JButton("No");
+					noButton.setPreferredSize(new Dimension(20,20));
+					noButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(false, 0)) {
+								rode[0] = true;
+								clientManager.getUsersGameState().setRideOption(false, 0);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+									
+								} else {
+									showRideRequest();
+								}
+							}
 						}
+					});
+					
+					FF0.add(yesButton);
+					FF0.add(noButton);
+					if(!rode[0]) {
+						gameTPanel.add(FF0);
 					}
-				});
-				
-				JPanel responsePanel = new JPanel();
-				responsePanel.setLayout(new GridLayout(2,1));
-				responsePanel.add(yesButton);
-				responsePanel.add(noButton);
-				
-				
-				gameTPanel.setPreferredSize(new Dimension(700,700));
-				gameTPanel.setBackground(tileColorWhite);
-				Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
-				gameTPanel.setBorder(blackline);
-				gameTPanel.add(text, BorderLayout.NORTH);
-				gameTPanel.add(responsePanel, BorderLayout.SOUTH);
-			} else {
+					
+					
+				}
+			} 
+			
+			if(menu1) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(1)) {
+					text1.setText(header1);
+					FF1.add(text1);
+					JButton yesButton = new JButton("Yes");
+					yesButton.setPreferredSize(new Dimension(20,20));
+					yesButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(true, 0)) {
+								rode[1] = true;
+								clientManager.getUsersGameState().setRideOption(true, 1);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+
+					JButton noButton = new JButton("No");
+					noButton.setPreferredSize(new Dimension(20,20));
+					noButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(false, 1)) {
+								rode[1] = true;
+								clientManager.getUsersGameState().setRideOption(false, 1);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+					FF1.add(yesButton);
+					FF1.add(noButton);
+					if(!rode[1]) {
+						gameTPanel.add(FF1);
+					}
+					
+				}
+			}
+			if(menu2) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(2)) {
+					text2.setText(header2);
+					FF2.add(text2);
+					JButton yesButton = new JButton("Yes");
+					yesButton.setPreferredSize(new Dimension(20,20));
+					yesButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(true, 2)) {
+								rode[2] = true;
+								clientManager.getUsersGameState().setRideOption(true, 2);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+
+					JButton noButton = new JButton("No");
+					noButton.setPreferredSize(new Dimension(20,20));
+					noButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(false, 2)) {
+								rode[2] = true;
+								clientManager.getUsersGameState().setRideOption(false, 2);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+					FF2.add(yesButton);
+					FF2.add(noButton);
+					if(!rode[2]) {
+						gameTPanel.add(FF2);
+					}
+					
+				}
+			}
+			if(menu3) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(3)) {
+					text3.setText(header3);
+					FF3.add(text3);
+					JButton yesButton = new JButton("Yes");
+					yesButton.setPreferredSize(new Dimension(20,20));
+					yesButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(true, 3)) {
+								rode[3] = true;
+								clientManager.getUsersGameState().setRideOption(true, 3);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+
+					JButton noButton = new JButton("No");
+					noButton.setPreferredSize(new Dimension(20,20));
+					noButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(false, 3)) {
+								rode[3] = true;
+								clientManager.getUsersGameState().setRideOption(false, 3);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+					FF3.add(yesButton);
+					FF3.add(noButton);
+					if(!rode[3]) {
+						gameTPanel.add(FF3);
+					}
+					
+				}
+			}
+			if(menu4) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(4)) {
+					text4.setText(header4);
+					FF4.add(text4);
+					JButton yesButton = new JButton("Yes");
+					yesButton.setPreferredSize(new Dimension(20,20));
+					yesButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(true, 4)) {
+								rode[4] = true;
+								clientManager.getUsersGameState().setRideOption(true, 4);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+
+					JButton noButton = new JButton("No");
+					noButton.setPreferredSize(new Dimension(20,20));
+					noButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(false, 4)) {
+								rode[4] = true;
+								clientManager.getUsersGameState().setRideOption(false, 4);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+					FF4.add(yesButton);
+					FF4.add(noButton);
+					if(!rode[4]) {
+						gameTPanel.add(FF4);
+					}
+				}
+			}
+			if(menu5) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(5)) {
+					text5.setText(header5);
+					FF5.add(text5);
+					JButton yesButton = new JButton("Yes");
+					yesButton.setPreferredSize(new Dimension(20,20));
+					yesButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(true, 5)) {
+								rode[5] = true;
+								clientManager.getUsersGameState().setRideOption(true, 5);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+
+					JButton noButton = new JButton("No");
+					noButton.setPreferredSize(new Dimension(20,20));
+					noButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(sendRideResponse(false, 5)) {
+								rode[5] = true;
+								clientManager.getUsersGameState().setRideOption(false, 5);
+								rideRequest.hide();
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
+								} else {
+									showRideRequest();
+								}
+							}
+						}
+					});
+					
+					FF5.add(yesButton);
+					FF5.add(noButton);
+					if(!rode[5]) {
+						gameTPanel.add(FF5);
+					}
+				}
+			}
+			
+			if(rode[0] && rode[1] && rode[2] && rode[3] && rode[4] && rode[5]) {
 				System.out.println(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex));
 				text.setText(rideInform);
 				
@@ -5298,14 +5630,74 @@ public class Table {
 						rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 					}
 				});
-				gameTPanel.setPreferredSize(new Dimension(700,700));
-				gameTPanel.setBackground(tileColorWhite);
-				Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
-				gameTPanel.setBorder(blackline);
+				
 				gameTPanel.add(text, BorderLayout.NORTH);
 				gameTPanel.add(okButton, BorderLayout.SOUTH);
-				
 			}
+			
+			
+			
+					
+			
+			
+			
+//			if(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex)) {
+//				System.out.println(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex));
+//				text.setText(rideReq);
+//				
+//				JButton yesButton = new JButton("Yes");
+//				yesButton.setPreferredSize(new Dimension(40,40));
+//				yesButton.addActionListener(new ActionListener() {
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+//						if(sendRideResponse(true, myIndex)) {
+//							rideRequest.hide();
+//							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+//						}
+//					}
+//				});
+//				
+//
+//				JButton noButton = new JButton("No");
+//				noButton.setPreferredSize(new Dimension(40,40));
+//				noButton.addActionListener(new ActionListener() {
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+//						if(sendRideResponse(false, myIndex)) {
+//							rideRequest.hide();
+//							rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+//						}
+//					}
+//				});
+//				
+//				JPanel responsePanel = new JPanel();
+//				responsePanel.setLayout(new GridLayout(2,1));
+//				responsePanel.add(yesButton);
+//				responsePanel.add(noButton);
+//				gameTPanel.add(text);
+//				gameTPanel.add(responsePanel);
+//			} 
+//			else {
+//				System.out.println(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex));
+//				text.setText(rideInform);
+//				
+//				JButton okButton = new JButton("ok");
+//				okButton.setPreferredSize(new Dimension(75,75));
+//				okButton.addActionListener(new ActionListener() {
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+//						rideRequest.hide();
+//						rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+//					}
+//				});
+//				gameTPanel.setPreferredSize(new Dimension(700,700));
+//				gameTPanel.setBackground(tileColorWhite);
+//				Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
+//				gameTPanel.setBorder(blackline);
+//				gameTPanel.add(text, BorderLayout.NORTH);
+//				gameTPanel.add(okButton, BorderLayout.SOUTH);
+//				
+//			}
 			
 			rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 			
@@ -5325,111 +5717,785 @@ public class Table {
 			System.out.println("show dodge request trigged");
 			dodgeRequest = null;
 			PopupFactory gameT = new PopupFactory();
-			JPanel gameTPanel = new JPanel(new BorderLayout());
+			JPanel gameTPanel = new JPanel(new GridLayout(7,1));
 			JTextArea text = new JTextArea();
 			String dodgeReq = "You are in danger!! Which direction would you like to dodge?";
-			ArrayList<actions.Action> dodgeOptions = new ArrayList<actions.Action>();
-			dodgeOptions = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myIndex));
 			text.setText(dodgeReq);
-			JButton dodgeButton0 = new JButton("Dodge left");
-			JButton dodgeButton1 = new JButton("Dodge up");
-			JButton dodgeButton2 = new JButton("Dodge right");
-			JButton dodgeButton3 = new JButton("Dodge down");
 			
-			JPanel responsePanel = new JPanel();
-			responsePanel.setLayout(new GridLayout(6,1));
-			boolean flag = false;
-			for(actions.Action a : dodgeOptions) {
-				System.out.println("dodging buttons");
-				if(a.getDirection() == 0) {
-					dodgeButton0.setPreferredSize(new Dimension(40,40));
-					dodgeButton0.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							System.out.println("this should not happen");
-							dodgeRequest.hide();
-							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(a,myIndex);
-						}
-
-					});
-					flag = true;
-					responsePanel.add(dodgeButton0);		
-				} else if (a.getDirection() == 1) {
-					dodgeButton1.setPreferredSize(new Dimension(40,40));
-					dodgeButton1.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							System.out.println("this should not happen");
-							dodgeRequest.hide();
-							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(a,myIndex);
-						}
-					});
-					flag = true;
-					responsePanel.add(dodgeButton1);
-				} else if (a.getDirection() == 2) {
-					dodgeButton2.setPreferredSize(new Dimension(40,40));
-					dodgeButton2.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							System.out.println("this should not happen");
-							dodgeRequest.hide();
-							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(a,myIndex);
-						}
-					});
-					flag = true;
-					responsePanel.add(dodgeButton2);
-				} else if (a.getDirection() == 3) {
-					dodgeButton3.setPreferredSize(new Dimension(40,40));
-					dodgeButton3.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							System.out.println("this should not happen");
-							dodgeRequest.hide();
-							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(a,myIndex);
-						}
-					});
-					flag = true;
-					responsePanel.add(dodgeButton3);
-				}
-			}
-			
-			if(flag) {
-				JButton okButton = new JButton("Don't Dodge");
-				okButton.setPreferredSize(new Dimension(40,40));
-				okButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						System.out.println("OK BUTTON CLICKED");
-						dodgeRequest.hide();
-						dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-						sendDodgeAnswer(null,myIndex);
-					}
-				});
-				responsePanel.add(okButton);
-			} else {
-				JButton okButton = new JButton("OK");
-				okButton.setPreferredSize(new Dimension(40,40));
-				okButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						System.out.println("OK BUTTON CLICKED");
-						dodgeRequest.hide();
-						dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-					}
-				});
-				responsePanel.add(okButton);
-			}
-				
-			gameTPanel.setPreferredSize(new Dimension(400,400));
+			gameTPanel.setPreferredSize(new Dimension(700,700));
 			gameTPanel.setBackground(tileColorWhite);
 			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
 			gameTPanel.setBorder(blackline);
-			gameTPanel.add(text, BorderLayout.NORTH);
-			gameTPanel.add(responsePanel, BorderLayout.SOUTH);
+			gameTPanel.add(text);
+			
+			
+			JPanel FF0 = new JPanel(new GridLayout(6,1));
+			JPanel FF1 = new JPanel(new GridLayout(6,1));
+			JPanel FF2 = new JPanel(new GridLayout(6,1));
+			JPanel FF3 = new JPanel(new GridLayout(6,1));
+			JPanel FF4 = new JPanel(new GridLayout(6,1));
+			JPanel FF5 = new JPanel(new GridLayout(6,1));
+			
+			JTextArea text0 = new JTextArea();
+			JTextArea text1 = new JTextArea();
+			JTextArea text2 = new JTextArea();
+			JTextArea text3 = new JTextArea();
+			JTextArea text4 = new JTextArea();
+			JTextArea text5 = new JTextArea();
+			
+			String header0 = "";
+			String header1 = ""; 
+			String header2 = "";
+			String header3 = ""; 
+			String header4 = "";
+			String header5 = ""; 
+			
+			ArrayList<actions.Action> dodgeOptions0 = new ArrayList<actions.Action>();
+			ArrayList<actions.Action> dodgeOptions1 = new ArrayList<actions.Action>();
+			ArrayList<actions.Action> dodgeOptions2 = new ArrayList<actions.Action>();
+			ArrayList<actions.Action> dodgeOptions3 = new ArrayList<actions.Action>();
+			ArrayList<actions.Action> dodgeOptions4 = new ArrayList<actions.Action>();
+			ArrayList<actions.Action> dodgeOptions5 = new ArrayList<actions.Action>();
+			
+			boolean menu0 = false, menu1 = false, menu2 = false, menu3 = false, menu4 = false, menu5 = false;
+			for(int i = 0; i< 6; i ++) {
+				if(myFFIndexes[i] != 7) {
+					switch (i) {
+						case 0:
+							menu0 = true;
+							header0 = clientManager.getUsersGameState().getFireFighterList().get(0).getColour().toString() + " Fireman";
+							dodgeOptions0 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(0));
+//							dodged[0] = false;
+							if(dodgeOptions0.size() == 0) {
+								menu0 = false;
+								dodged[0] = true;
+							}
+							break;
+						case 1:
+							menu1 = true;
+							header1 = clientManager.getUsersGameState().getFireFighterList().get(1).getColour().toString() + " Fireman";
+							dodgeOptions1 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(1));
+//							dodged[1] = false;
+							if(dodgeOptions1.size() == 0) {
+								menu1 = false;
+								dodged[1] = true;
+							}
+							break;
+						case 2:
+							menu2 = true;
+							header2 = clientManager.getUsersGameState().getFireFighterList().get(2).getColour().toString() + " Fireman";
+							dodgeOptions2 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(2));
+//							dodged[2] = false;
+							if(dodgeOptions2.size() == 0) {
+								menu2 = false;
+								dodged[2] = true;
+							}
+							break;
+						case 3:
+							menu3 = true;
+							header3 = clientManager.getUsersGameState().getFireFighterList().get(3).getColour().toString() + " Fireman";
+							dodgeOptions3 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(3));
+//							dodged[3] = false;
+							if(dodgeOptions3.size() == 0) {
+								menu3 = false;
+								dodged[3] = true;
+							}
+							break;
+						case 4:
+							menu4 = true;
+							header4 = clientManager.getUsersGameState().getFireFighterList().get(4).getColour().toString() + " Fireman";
+							dodgeOptions4 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(4));
+//							dodged[4] = false;
+							if(dodgeOptions4.size() == 0) {
+								menu4 = false;
+								dodged[4] = true;
+							}
+							break;
+						case 5:
+							menu5 = true;
+							header5 = clientManager.getUsersGameState().getFireFighterList().get(5).getColour().toString() + " Fireman";
+							dodgeOptions5 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(5));
+//							dodged[5] = false;
+							if(dodgeOptions5.size() == 0) {
+								menu5 = false;
+								dodged[5] = true;
+							}
+							break;
+					}
+				}
+				else {
+					dodged[i] = true;
+				}
+			}
+			
+			if(menu0) {
+				text0.setText(header0);
+				FF0.add(text0);
+				JButton dodgeButtonLeft0 = new JButton("Dodge left");
+				JButton dodgeButtonUp0 = new JButton("Dodge up");
+				JButton dodgeButtonRight0 = new JButton("Dodge right");
+				JButton dodgeButtonDown0 = new JButton("Dodge down");
+				
+				boolean flag = false;
+				for(actions.Action a : dodgeOptions0) {
+					System.out.println("dodging buttons");
+					if(a.getDirection() == 0) {
+						dodgeButtonLeft0.setPreferredSize(new Dimension(20,20));
+						dodgeButtonLeft0.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,0);
+								dodged[0] = true;
+								showDodgeRequest();
+							}
+	
+						});
+						flag = true;
+						FF0.add(dodgeButtonLeft0);		
+					} else if (a.getDirection() == 1) {
+						dodgeButtonUp0.setPreferredSize(new Dimension(20,20));
+						dodgeButtonUp0.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,0);
+								dodged[0] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF0.add(dodgeButtonUp0);
+					} else if (a.getDirection() == 2) {
+						dodgeButtonRight0.setPreferredSize(new Dimension(20,20));
+						dodgeButtonRight0.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,0);
+								dodged[0] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF0.add(dodgeButtonRight0);
+					} else if (a.getDirection() == 3) {
+						dodgeButtonDown0.setPreferredSize(new Dimension(20,20));
+						dodgeButtonDown0.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,0);
+								dodged[0] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF0.add(dodgeButtonDown0);
+					}
+				}
+				
+				if(flag) {
+					JButton okButton0 = new JButton("Don't Dodge");
+					okButton0.setPreferredSize(new Dimension(20,20));
+					okButton0.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("OK BUTTON CLICKED");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(null,0);
+							dodged[0] = true;
+							showDodgeRequest();
+						}
+					});
+					FF0.add(okButton0);
+				}
+			}
+			if(menu1) {
+				text1.setText(header1);
+				FF1.add(text1);
+				JButton dodgeButtonLeft1 = new JButton("Dodge left");
+				JButton dodgeButtonUp1 = new JButton("Dodge up");
+				JButton dodgeButtonRight1 = new JButton("Dodge right");
+				JButton dodgeButtonDown1 = new JButton("Dodge down");
+				
+				boolean flag = false;
+				for(actions.Action a : dodgeOptions1) {
+					System.out.println("dodging buttons");
+					if(a.getDirection() == 0) {
+						dodgeButtonLeft1.setPreferredSize(new Dimension(20,20));
+						dodgeButtonLeft1.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,1);
+								dodged[1] = true;
+								showDodgeRequest();
+							}
+	
+						});
+						flag = true;
+						FF1.add(dodgeButtonLeft1);		
+					} else if (a.getDirection() == 1) {
+						dodgeButtonUp1.setPreferredSize(new Dimension(20,20));
+						dodgeButtonUp1.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,1);
+								dodged[1] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF1.add(dodgeButtonUp1);
+					} else if (a.getDirection() == 2) {
+						dodgeButtonRight1.setPreferredSize(new Dimension(20,20));
+						dodgeButtonRight1.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,1);
+								dodged[1] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF1.add(dodgeButtonRight1);
+					} else if (a.getDirection() == 3) {
+						dodgeButtonDown1.setPreferredSize(new Dimension(20,20));
+						dodgeButtonDown1.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,1);
+								dodged[1] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF1.add(dodgeButtonDown1);
+					}
+				}
+				
+				if(flag) {
+					JButton okButton1 = new JButton("Don't Dodge");
+					okButton1.setPreferredSize(new Dimension(20,20));
+					okButton1.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("OK BUTTON CLICKED");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(null,1);
+							dodged[1] = true;
+							showDodgeRequest();
+						}
+					});
+					FF1.add(okButton1);
+				}
+			}
+			if(menu2) {
+				text2.setText(header2);
+				FF2.add(text2);
+				JButton dodgeButtonLeft2 = new JButton("Dodge left");
+				JButton dodgeButtonUp2 = new JButton("Dodge up");
+				JButton dodgeButtonRight2 = new JButton("Dodge right");
+				JButton dodgeButtonDown2 = new JButton("Dodge down");
+				
+				boolean flag = false;
+				for(actions.Action a : dodgeOptions2) {
+					System.out.println("dodging buttons");
+					if(a.getDirection() == 0) {
+						dodgeButtonLeft2.setPreferredSize(new Dimension(20,20));
+						dodgeButtonLeft2.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,2);
+								dodged[2] = true;
+								showDodgeRequest();
+							}
+	
+						});
+						flag = true;
+						FF2.add(dodgeButtonLeft2);		
+					} else if (a.getDirection() == 1) {
+						dodgeButtonUp2.setPreferredSize(new Dimension(20,20));
+						dodgeButtonUp2.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,2);
+								dodged[2] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF2.add(dodgeButtonUp2);
+					} else if (a.getDirection() == 2) {
+						dodgeButtonRight2.setPreferredSize(new Dimension(20,20));
+						dodgeButtonRight2.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,2);
+								dodged[2] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF2.add(dodgeButtonRight2);
+					} else if (a.getDirection() == 3) {
+						dodgeButtonDown2.setPreferredSize(new Dimension(20,20));
+						dodgeButtonDown2.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,2);
+								dodged[2] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF2.add(dodgeButtonDown2);
+					}
+				}
+				
+				if(flag) {
+					JButton okButton2 = new JButton("Don't Dodge");
+					okButton2.setPreferredSize(new Dimension(20,20));
+					okButton2.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("OK BUTTON CLICKED");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(null,2);
+							dodged[2] = true;
+							showDodgeRequest();
+						}
+					});
+					FF2.add(okButton2);
+				}
+			}
+			if(menu3) {
+				text3.setText(header3);
+				FF3.add(text3);
+				JButton dodgeButtonLeft3 = new JButton("Dodge left");
+				JButton dodgeButtonUp3 = new JButton("Dodge up");
+				JButton dodgeButtonRight3 = new JButton("Dodge right");
+				JButton dodgeButtonDown3 = new JButton("Dodge down");
+				
+				boolean flag = false;
+				for(actions.Action a : dodgeOptions3) {
+					System.out.println("dodging buttons");
+					if(a.getDirection() == 0) {
+						dodgeButtonLeft3.setPreferredSize(new Dimension(20,20));
+						dodgeButtonLeft3.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,3);
+								dodged[3] = true;
+								showDodgeRequest();
+							}
+	
+						});
+						flag = true;
+						FF3.add(dodgeButtonLeft3);		
+					} else if (a.getDirection() == 1) {
+						dodgeButtonUp3.setPreferredSize(new Dimension(20,20));
+						dodgeButtonUp3.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,3);
+								dodged[3] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF3.add(dodgeButtonUp3);
+					} else if (a.getDirection() == 2) {
+						dodgeButtonRight3.setPreferredSize(new Dimension(20,20));
+						dodgeButtonRight3.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,3);
+								dodged[3] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF3.add(dodgeButtonRight3);
+					} else if (a.getDirection() == 3) {
+						dodgeButtonDown3.setPreferredSize(new Dimension(20,20));
+						dodgeButtonDown3.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,3);
+								dodged[3] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF3.add(dodgeButtonDown3);
+					}
+				}
+				
+				if(flag) {
+					JButton okButton3 = new JButton("Don't Dodge");
+					okButton3.setPreferredSize(new Dimension(20,20));
+					okButton3.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("OK BUTTON CLICKED");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(null,3);
+							dodged[3] = true;
+							showDodgeRequest();
+						}
+					});
+					FF3.add(okButton3);
+				}
+			}
+			if(menu4) {
+				text4.setText(header4);
+				FF4.add(text4);
+				JButton dodgeButtonLeft4 = new JButton("Dodge left");
+				JButton dodgeButtonUp4 = new JButton("Dodge up");
+				JButton dodgeButtonRight4 = new JButton("Dodge right");
+				JButton dodgeButtonDown4 = new JButton("Dodge down");
+				
+				boolean flag = false;
+				for(actions.Action a : dodgeOptions0) {
+					System.out.println("dodging buttons");
+					if(a.getDirection() == 0) {
+						dodgeButtonLeft4.setPreferredSize(new Dimension(20,20));
+						dodgeButtonLeft4.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,4);
+								dodged[4] = true;
+								showDodgeRequest();
+							}
+	
+						});
+						flag = true;
+						FF4.add(dodgeButtonLeft4);		
+					} else if (a.getDirection() == 1) {
+						dodgeButtonUp4.setPreferredSize(new Dimension(20,20));
+						dodgeButtonUp4.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,4);
+								dodged[4] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF4.add(dodgeButtonUp4);
+					} else if (a.getDirection() == 2) {
+						dodgeButtonRight4.setPreferredSize(new Dimension(20,20));
+						dodgeButtonRight4.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,4);
+								dodged[4] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF4.add(dodgeButtonRight4);
+					} else if (a.getDirection() == 3) {
+						dodgeButtonDown4.setPreferredSize(new Dimension(20,20));
+						dodgeButtonDown4.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,4);
+								dodged[4] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF4.add(dodgeButtonDown4);
+					}
+				}
+				
+				if(flag) {
+					JButton okButton4 = new JButton("Don't Dodge");
+					okButton4.setPreferredSize(new Dimension(20,20));
+					okButton4.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("OK BUTTON CLICKED");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(null,4);
+							dodged[4] = true;
+							showDodgeRequest();
+						}
+					});
+					FF4.add(okButton4);
+				}
+			}
+			if(menu5) {
+				text5.setText(header5);
+				FF5.add(text5);
+				JButton dodgeButtonLeft5 = new JButton("Dodge left");
+				JButton dodgeButtonUp5 = new JButton("Dodge up");
+				JButton dodgeButtonRight5 = new JButton("Dodge right");
+				JButton dodgeButtonDown5 = new JButton("Dodge down");
+				
+				boolean flag = false;
+				for(actions.Action a : dodgeOptions0) {
+					System.out.println("dodging buttons");
+					if(a.getDirection() == 0) {
+						dodgeButtonLeft5.setPreferredSize(new Dimension(20,20));
+						dodgeButtonLeft5.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,5);
+								dodged[5] = true;
+								showDodgeRequest();
+							}
+	
+						});
+						flag = true;
+						FF5.add(dodgeButtonLeft5);		
+					} else if (a.getDirection() == 1) {
+						dodgeButtonUp5.setPreferredSize(new Dimension(20,20));
+						dodgeButtonUp5.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,5);
+								dodged[5] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF5.add(dodgeButtonUp5);
+					} else if (a.getDirection() == 2) {
+						dodgeButtonRight5.setPreferredSize(new Dimension(20,20));
+						dodgeButtonRight5.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,5);
+								dodged[5] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF5.add(dodgeButtonRight5);
+					} else if (a.getDirection() == 3) {
+						dodgeButtonDown5.setPreferredSize(new Dimension(20,20));
+						dodgeButtonDown5.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								System.out.println("this should not happen");
+								dodgeRequest.hide();
+								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+								sendDodgeAnswer(a,5);
+								dodged[5] = true;
+								showDodgeRequest();
+							}
+						});
+						flag = true;
+						FF5.add(dodgeButtonDown5);
+					}
+				}
+				
+				if(flag) {
+					JButton okButton5 = new JButton("Don't Dodge");
+					okButton5.setPreferredSize(new Dimension(20,20));
+					okButton5.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("OK BUTTON CLICKED");
+							dodgeRequest.hide();
+							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+							sendDodgeAnswer(null,5);
+							dodged[5] = true;
+							showDodgeRequest();
+						}
+					});
+					FF5.add(okButton5);
+				}
+			}
+			
+			
+			if(menu0 && !dodged[0]){
+				gameTPanel.add(FF0);
+			}
+			if(menu1 && !dodged[1]){
+				gameTPanel.add(FF1);
+			}
+			if(menu2 && !dodged[2]){
+				gameTPanel.add(FF2);
+			}
+			if(menu3 && !dodged[3]){
+				gameTPanel.add(FF3);
+			}
+			if(menu4 && !dodged[4]){
+				gameTPanel.add(FF4);
+			}
+			if(menu5 && !dodged[5]){
+				gameTPanel.add(FF5);
+			}
+			
+//			JButton dodgeButton0 = new JButton("Dodge left");
+//			JButton dodgeButton1 = new JButton("Dodge up");
+//			JButton dodgeButton2 = new JButton("Dodge right");
+//			JButton dodgeButton3 = new JButton("Dodge down");
+//			
+//			JPanel responsePanel = new JPanel();
+//			responsePanel.setLayout(new GridLayout(6,1));
+//			boolean flag = false;
+//			for(actions.Action a : dodgeOptions0) {
+//				System.out.println("dodging buttons");
+//				if(a.getDirection() == 0) {
+//					dodgeButton0.setPreferredSize(new Dimension(10,10));
+//					dodgeButton0.addActionListener(new ActionListener() {
+//						@Override
+//						public void actionPerformed(ActionEvent e) {
+//							System.out.println("this should not happen");
+//							dodgeRequest.hide();
+//							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+//							sendDodgeAnswer(a,myIndex);
+//						}
+//
+//					});
+//					flag = true;
+//					responsePanel.add(dodgeButton0);		
+//				} else if (a.getDirection() == 1) {
+//					dodgeButton1.setPreferredSize(new Dimension(10,10));
+//					dodgeButton1.addActionListener(new ActionListener() {
+//						@Override
+//						public void actionPerformed(ActionEvent e) {
+//							System.out.println("this should not happen");
+//							dodgeRequest.hide();
+//							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+//							sendDodgeAnswer(a,myIndex);
+//						}
+//					});
+//					flag = true;
+//					responsePanel.add(dodgeButton1);
+//				} else if (a.getDirection() == 2) {
+//					dodgeButton2.setPreferredSize(new Dimension(10,10));
+//					dodgeButton2.addActionListener(new ActionListener() {
+//						@Override
+//						public void actionPerformed(ActionEvent e) {
+//							System.out.println("this should not happen");
+//							dodgeRequest.hide();
+//							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+//							sendDodgeAnswer(a,myIndex);
+//						}
+//					});
+//					flag = true;
+//					responsePanel.add(dodgeButton2);
+//				} else if (a.getDirection() == 3) {
+//					dodgeButton3.setPreferredSize(new Dimension(10,10));
+//					dodgeButton3.addActionListener(new ActionListener() {
+//						@Override
+//						public void actionPerformed(ActionEvent e) {
+//							System.out.println("this should not happen");
+//							dodgeRequest.hide();
+//							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+//							sendDodgeAnswer(a,myIndex);
+//						}
+//					});
+//					flag = true;
+//					responsePanel.add(dodgeButton3);
+//				}
+//			}
+//			
+//			if(flag) {
+//				JButton okButton = new JButton("Don't Dodge");
+//				okButton.setPreferredSize(new Dimension(10,10));
+//				okButton.addActionListener(new ActionListener() {
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+//						System.out.println("OK BUTTON CLICKED");
+//						dodgeRequest.hide();
+//						dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+//						sendDodgeAnswer(null,myIndex);
+//					}
+//				});
+//				responsePanel.add(okButton);
+//			} 
+			
+			
+			if(dodged[0] && dodged[1] && dodged[2] && dodged[3] && dodged[4] && dodged[5]){
+				JButton okButton = new JButton("OK");
+				okButton.setPreferredSize(new Dimension(10,10));
+				okButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.out.println("OK BUTTON CLICKED");
+						dodgeRequest.hide();
+						dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+					}
+				});
+				gameTPanel.add(okButton);
+			}
 		
 			
 			dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
@@ -5506,12 +6572,6 @@ public class Table {
 			});
 			responsePanel.add(noButton);
 			
-			
-			gameTPanel.setPreferredSize(new Dimension(300,300));
-			gameTPanel.setBackground(tileColorWhite);
-			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
-			gameTPanel.setBorder(blackline);
-			gameTPanel.add(text, BorderLayout.NORTH);
 			gameTPanel.add(responsePanel, BorderLayout.SOUTH);
 			
 			deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
@@ -5663,4 +6723,10 @@ public class Table {
 			
 		}
 		
+		private void resetDodge() {
+			dodged = new boolean[6];
+		}
+		
+		private void resetRode() {
+		}
 }
