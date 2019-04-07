@@ -72,6 +72,12 @@ public class ServerInputThread extends Thread {
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("IO Exception Error");
+			TranObject<User> returnObject;
+			returnObject = new TranObject<User>(TranObjectType.ERROR);
+			for(Player p: serverManager.getLobby().getPlayers()) {
+				OutputThread onOut = map.getById(p.getID());
+				onOut.setMessage(returnObject);
+			}
 			e.printStackTrace();
 		}
 

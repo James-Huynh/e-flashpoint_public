@@ -1,5 +1,6 @@
 package custom_panels;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -8,8 +9,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
@@ -71,13 +77,37 @@ public class FindLobbyPanel extends JPanel {
 	private void initialize() {
 		availLobbies =  clientManager.getLobbyList();
 		
+		if(availLobbies.isEmpty()) {
+			JFrame frame = new JFrame("PROBLEM");
+			JOptionPane.showMessageDialog(null,"Work?");
+			JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
+			/*
+			//JFrame.setDefaultLookAndFeelDecorated(true);
+		    JFrame frame = new JFrame("PROBLEM");
+		    frame.setSize(600, 400);
+		    frame.setTitle("My First Swing Application");
+		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    frame.setResizable(false);
+		    JLabel label = new JLabel("Sorry, No Lobby yet");
+		    frame.add(label);
+		    frame.pack();
+		    frame.setVisible(true);
+		    */
+		}
+		else {
+		
 		createBackButton();
 		createSearchEntries();
 		displaySearchEntries();
+		}
 	}
 
 	private void createSearchEntries() {
 		lobbyEntries = new ArrayList<LobbySearchEntry>();
+		
+		if (availLobbies.isEmpty()) {
+			return;
+		}
 		
 		for (Lobby lobby: availLobbies ) {
 			
@@ -107,6 +137,33 @@ public class FindLobbyPanel extends JPanel {
 	}
 
 	private void displaySearchEntries() {
+		if (lobbyEntries.isEmpty()) {
+			// create a frame 
+//			JFrame.setDefaultLookAndFeelDecorated(true);
+//		    JFrame frame = new JFrame();
+//		    frame.setTitle("My First Swing Application");
+//		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		    JLabel label = new JLabel("Sorry, No Lobby yet");
+//		    frame.add(label);
+//		    frame.pack();
+//		    frame.setVisible(true);
+		    /*
+	        JFrame f = new JFrame("pop");
+	        f.setPreferredSize(new Dimension(175, 100));
+	        f.setVisible(true);
+	        f.dispose();
+			JButton okButton = new JButton("ok");
+			okButton.setPreferredSize(new Dimension(20,20));
+			okButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					f.setVisible(false);
+				}
+			});
+			*/
+			return;
+		}
+		
 		 for (int i = 0 ; i < lobbyEntries.size(); i ++) {
 			 LobbySearchEntry entry = lobbyEntries.get(i);
 			 JPanel entryPanel = entry.getPanel_main();
