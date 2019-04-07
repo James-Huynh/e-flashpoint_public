@@ -37,6 +37,9 @@ public class Player implements Serializable {
     	if(this.indexMarker >= this.myFireFighters.size()) {
     		this.indexMarker = 0;
     	}
+    	if(this.myFireFighters.size() == 0) {
+    		return null;
+    	}
     	return this.myFireFighters.get(indexMarker);
     	
     }
