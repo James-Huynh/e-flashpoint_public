@@ -98,6 +98,33 @@ public class LoadGamePanel extends JPanel {
 		textAreaW = pnl_main.getWidth() - 2*textAreaX;
 
 		listEntries = new ArrayList<JLabel>();
+		
+		
+		
+		//mat
+		for (int i=0; i<savedGames.size(); i++) {
+			JLabel currEntry = new JLabel();
+			currEntry.setBounds(textAreaX, textAreaY + i * (textAreaH + 10), textAreaW, textAreaH);
+			currEntry.setFont(new Font("Open Sans", Font.PLAIN, 14));
+			currEntry.setBackground(Color.white);
+			currEntry.setOpaque(true);
+			entryName = buildEntryNameString(i, "dupa" + i); 
+			currEntry.setText(entryName);
+			currEntry.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (e.getClickCount() == 1) {
+						entryClickedString((JLabel) e.getComponent());
+						raiseEventLoadGameBtn();
+					}
+				}
+			});
+			listEntries.add(currEntry);
+			pnl_main.add(currEntry);
+		}
+		
+		/*
+		
 		//		listEntries.add(entry_1);
 		//		listEntries.add(entry_2);
 		//		listEntries.add(entry_3);
@@ -115,7 +142,7 @@ public class LoadGamePanel extends JPanel {
 			currEntry.setOpaque(true);
 
 
-			entryName = buildEntryName(i); 
+			entryName = buildEntryNameString(i, "dupa"); 
 			currEntry.setText(entryName); // we can give it a more distinct name to be more uniquely identified
 
 
@@ -132,13 +159,14 @@ public class LoadGamePanel extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getClickCount() == 1) {
-						entryClicked((JLabel) e.getComponent());
+						entryClickedString((JLabel) e.getComponent());
 						raiseEventLoadGameBtn();
 					}
 				}
 			});
 			listEntries.add(currEntry);
 			pnl_main.add(currEntry);
+			
 
 		}
 
@@ -158,6 +186,8 @@ public class LoadGamePanel extends JPanel {
 		//		entryTest.setBounds(textAreaX, textAreaY + 0 * (textAreaH + 10) , textAreaW, textAreaH);
 		//		pnl_main.add(entryTest);
 		//		// Testing
+		 
+		 */
 
 	}
 
@@ -175,6 +205,24 @@ public class LoadGamePanel extends JPanel {
 		
 		
 		return (stringbuilder.toString());
+	}
+	
+	private String buildEntryNameString(int i, String st) {
+		StringBuilder stringbuilder = new StringBuilder();
+		GameState currGame =  savedGames.get(i);
+		
+		System.out.println(currGame.getListOfPlayers());
+		stringbuilder.append("Host: " + currGame.getListOfPlayers().get(0).getUserName() + " - " + "Name: " + st );
+//		stringbuilder.append(currGame.get+ " - ");
+		
+		
+		return (stringbuilder.toString());
+	}
+	
+	private void entryClickedString(JLabel entry) {
+		System.out.println(entry.getText());
+		clientManager.loadGameLobbyRequestMat(Character.getNumericValue(entry.getText().charAt(entry.getText().length() - 1)));
+		
 	}
 
 	private void entryClicked(JLabel entry) {

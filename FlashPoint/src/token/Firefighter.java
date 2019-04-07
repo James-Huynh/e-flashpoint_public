@@ -17,7 +17,7 @@ public class Firefighter extends Token implements Serializable {
 	protected int AP;
 	protected int savedAP;
 	protected boolean carryingVictim;
-	protected POI victim;
+	//protected POI victim;
 	//protected Player owner;
 	protected Colour myColour;
 	protected Player myPlayer;
@@ -109,9 +109,9 @@ public class Firefighter extends Token implements Serializable {
 		return this.carryingVictim;
 	}
 	
-	public POI getVictim() {
-		return victim;
-	}
+	//public POI getVictim() {
+	//	return victim;
+	//}
 	
 	public Speciality getSpeciality() {
 		return speciality;
@@ -146,9 +146,9 @@ public class Firefighter extends Token implements Serializable {
 		this.savedAP = AP;
 	}
 	
-	public void setVictim(POI victim) {
-		this.victim = victim;
-	}
+	//public void setVictim(POI victim) {
+	//	this.victim = victim;
+	//}
 	
 	public void setPlayer(Player player) {
 		// TODO Auto-generated method stub
@@ -291,13 +291,12 @@ public class Firefighter extends Token implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Firefighter [AP=" + AP + ", savedAP=" + savedAP + ", carryingVictim=" + carryingVictim + ", victim="
-				+ victim.toString() + ", myColour=" + 
-				myColour.toString() + ", myPlayer=" + 
-				myPlayer.toString() + ", speciality=" 
+		return "Firefighter [AP=" + AP + ", savedAP=" + savedAP + ", carryingVictim=" + carryingVictim + ", victim=" +
+				//victim.toString() + ", myColour=" + 
+				myColour.toString() + ", speciality=" 
 				+ speciality.toString() + ", SP="
 				+ SP + ", canDodge=" + canDodge + ", usedAP=" + usedAP + ", carrying=" + carrying
-				+ ", ifCommandCAPSthisTurn=" + ifCommandCAPSthisTurn + ", x=" + x + ", y=" + y + ", tileOn=" + tileOn.toString()
+				+ ", ifCommandCAPSthisTurn=" + ifCommandCAPSthisTurn + ", x=" + x + ", y=" + y
 				+ "]";
 	}
 
