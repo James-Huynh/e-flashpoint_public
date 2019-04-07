@@ -61,7 +61,7 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
  *Holds a frame, and uses panels to display 'pages' (i.e. login/menu/game etc)
  */
 public class Launcher {
-	private String EricIP = "142.157.30.157";
+	private String EricIP = "142.157.30.54";
 	private String JamesIP = "142.157.105.75";
 	private String JunhaIP = "142.157.65.237";
 	private String ZaidIP = "142.157.144.137";
@@ -70,7 +70,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = "142.157.30.54";
+	private String ServerIP = MatIP;
 
 
 	int port = 8888;

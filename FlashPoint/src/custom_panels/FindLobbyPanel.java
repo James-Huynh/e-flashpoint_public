@@ -1,5 +1,6 @@
 package custom_panels;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -8,8 +9,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
 
@@ -79,6 +85,10 @@ public class FindLobbyPanel extends JPanel {
 	private void createSearchEntries() {
 		lobbyEntries = new ArrayList<LobbySearchEntry>();
 		
+		if (availLobbies.isEmpty()) {
+			return;
+		}
+		
 		for (Lobby lobby: availLobbies ) {
 			
 			currEntry = new LobbySearchEntry(lobby, clientManager);
@@ -106,7 +116,25 @@ public class FindLobbyPanel extends JPanel {
 		panel_main.add(backBtn);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void displaySearchEntries() {
+		if (lobbyEntries.isEmpty()) {
+			// create a frame 
+	        JFrame f = new JFrame("pop");
+	        f.setPreferredSize(new Dimension(175, 100));
+	        f.setVisible(true);
+	        f.dispose();
+	        f.show();
+			JButton okButton = new JButton("ok");
+			okButton.setPreferredSize(new Dimension(20,20));
+			okButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					f.setVisible(false);
+				}
+			});
+		}
+		
 		 for (int i = 0 ; i < lobbyEntries.size(); i ++) {
 			 LobbySearchEntry entry = lobbyEntries.get(i);
 			 JPanel entryPanel = entry.getPanel_main();
