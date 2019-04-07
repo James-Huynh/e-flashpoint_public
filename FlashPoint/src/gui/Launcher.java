@@ -70,7 +70,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = MatIP;
+	private String ServerIP = ZaidIP;
 
 
 	int port = 8888;
