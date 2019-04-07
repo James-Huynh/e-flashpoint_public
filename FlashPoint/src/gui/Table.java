@@ -92,6 +92,8 @@ public class Table {
 		private int[] myFFIndexes;
 		private static boolean host = false;
 		
+		private boolean loadedGame = false;
+		
 		private clientThread listenerThread;
 		private int desiredFFindex;
 		private token.Colour desiredFFindexColour;
@@ -160,6 +162,10 @@ public class Table {
 				}
 			}
 			
+			if(clientManager.getUsersGameState().getFreeFirefighters().size() != 0 ) {
+				this.loadedGame = true;
+			}
+			
 			if(this.myFFIndexes[0] == 0) {
 				this.host = true;
 			}
@@ -217,8 +223,22 @@ public class Table {
 			this.currentBoard = newBoard;
 //			this.playing = playingchange;
 //			this.placing = placingchange;
-			this.gameTiles = newBoard.getMatTiles();
-			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
+			if(this.loadedGame == true && clientManager.getUsersGameState().getFreeFirefighters().size() == 0) {
+				this.myIndex = 0;
+				for(int i = 0; i<clientManager.getUsersGameState().getFireFighterList().size(); i++) {
+					Firefighter f = clientManager.getUsersGameState().getFireFighterList().get(i);
+					firefighterOrder.put(f,i);
+					if(this.clientManager.getUserName().equals(f.getOwner().getUserName())) {
+						this.myFFIndexes[this.myIndex] = i;
+						this.myIndex++;
+					}
+				}
+				this.selectingSpeciality = false;
+				this.placing = false; 
+			}
+			
+			
+			
 			if(clientManager.getUsersGameState().getFreeFirefighters().size() == 0) {
 				selectingFireFighter = false;
 				if(myIndex>6) {
