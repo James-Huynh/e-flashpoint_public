@@ -221,6 +221,7 @@ public class Table {
 		public void refresh(GameState newBoard) {
 			System.out.println("starting refreshing");
 			this.currentBoard = newBoard;
+			gameTiles = currentBoard.getMatTiles();
 //			this.playing = playingchange;
 //			this.placing = placingchange;
 			if(this.loadedGame == true && clientManager.getUsersGameState().getFreeFirefighters().size() == 0) {
@@ -253,12 +254,15 @@ public class Table {
 			} else {
 				selectingFireFighter = true;
 			}
+			
+			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
 			if(this.selectingSpeciality) {
 				for(int i = 0; i<6; i++) {
 					if(this.myFFIndexes[i] != 7) {
 						if(clientManager.getUsersGameState().getFireFighterList().get(i).getSpeciality() == null) {
 							this.myIndex = i;
 							selectingSpeciality = true;
+							
 						} else {
 							
 						}
@@ -1129,6 +1133,7 @@ public class Table {
 				}
 					
 				if(this.connectedTile.containsFirefighter()) {
+					
 					String builder = defaultImagesPath;
 					//Firefighter currentFF = currentBoard.getPlayingFirefighter();
 					Firefighter currentFF;
