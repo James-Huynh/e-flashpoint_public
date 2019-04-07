@@ -221,6 +221,7 @@ public class Table {
 		public void refresh(GameState newBoard) {
 			System.out.println("starting refreshing");
 			this.currentBoard = newBoard;
+			gameTiles = currentBoard.getMatTiles();
 //			this.playing = playingchange;
 //			this.placing = placingchange;
 			if(this.loadedGame == true && clientManager.getUsersGameState().getFreeFirefighters().size() == 0) {
@@ -253,12 +254,15 @@ public class Table {
 			} else {
 				selectingFireFighter = true;
 			}
+			
+			this.selectingSpeciality = clientManager.getUsersGameState().getSpecialitySelecting();
 			if(this.selectingSpeciality) {
 				for(int i = 0; i<6; i++) {
 					if(this.myFFIndexes[i] != 7) {
 						if(clientManager.getUsersGameState().getFireFighterList().get(i).getSpeciality() == null) {
 							this.myIndex = i;
 							selectingSpeciality = true;
+							
 						} else {
 							
 						}
@@ -1129,6 +1133,7 @@ public class Table {
 				}
 					
 				if(this.connectedTile.containsFirefighter()) {
+					
 					String builder = defaultImagesPath;
 					//Firefighter currentFF = currentBoard.getPlayingFirefighter();
 					Firefighter currentFF;
@@ -5784,7 +5789,7 @@ public class Table {
 						case 0:
 							menu0 = true;
 							header0 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[0]).getColour().toString() + " Fireman";
-							dodgeOptions0 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(0));
+							dodgeOptions0 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[0]));
 //							dodged[0] = false;
 							if(dodgeOptions0.size() == 0) {
 								menu0 = false;
@@ -5794,7 +5799,7 @@ public class Table {
 						case 1:
 							menu1 = true;
 							header1 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[1]).getColour().toString() + " Fireman";
-							dodgeOptions1 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(1));
+							dodgeOptions1 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[1]));
 //							dodged[1] = false;
 							if(dodgeOptions1.size() == 0) {
 								menu1 = false;
@@ -5804,7 +5809,7 @@ public class Table {
 						case 2:
 							menu2 = true;
 							header2 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[2]).getColour().toString() + " Fireman";
-							dodgeOptions2 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(2));
+							dodgeOptions2 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[2]));
 //							dodged[2] = false;
 							if(dodgeOptions2.size() == 0) {
 								menu2 = false;
@@ -5814,7 +5819,7 @@ public class Table {
 						case 3:
 							menu3 = true;
 							header3 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[3]).getColour().toString() + " Fireman";
-							dodgeOptions3 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(3));
+							dodgeOptions3 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[3]));
 //							dodged[3] = false;
 							if(dodgeOptions3.size() == 0) {
 								menu3 = false;
@@ -5824,7 +5829,7 @@ public class Table {
 						case 4:
 							menu4 = true;
 							header4 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[4]).getColour().toString() + " Fireman";
-							dodgeOptions4 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(4));
+							dodgeOptions4 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[4]));
 //							dodged[4] = false;
 							if(dodgeOptions4.size() == 0) {
 								menu4 = false;
@@ -5834,7 +5839,7 @@ public class Table {
 						case 5:
 							menu5 = true;
 							header5 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[5]).getColour().toString() + " Fireman";
-							dodgeOptions5 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(5));
+							dodgeOptions5 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[5]));
 //							dodged[5] = false;
 							if(dodgeOptions5.size() == 0) {
 								menu5 = false;
@@ -6533,7 +6538,7 @@ public class Table {
 		
 		
 		public void showDeckGunRequest(actions.Action a) {
-			rideRequest = null;
+			deckGunRequest = null;
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel(new BorderLayout());
 			JTextArea text = new JTextArea();
@@ -6743,10 +6748,11 @@ public class Table {
 			
 		}
 		
-		private void resetDodge() {
+		public void resetDodge() {
 			dodged = new boolean[6];
 		}
 		
-		private void resetRode() {
+		public void resetRode() {
+			rode = new boolean[6];
 		}
 }

@@ -565,6 +565,7 @@ public class ServerInputThread extends Thread {
 				requestObject = (User) read_tranObject.getObject();
 				String name = (String) requestObject.getGameName();
 				System.out.println("WE ARE HERE!" + name);
+				serverManager.getGameState().setSavedGameName(name);
 				serverManager.saveGameMat(serverManager.getGameState(), name);
 				serverManager.setSavedGames();
 				requestObject.setSavedGameStates(serverManager.getSavedGames());

@@ -67,7 +67,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = MatIP;
+	private String ServerIP = BenIP;
 
 
 	int port = 8888;
@@ -571,6 +571,9 @@ public class Launcher {
 			}
 		}
 		
+		table.resetDodge();
+		table.resetRode();
+		
 		if(table.getMyIndex() > 5) {
 			repaint(/*false, table.getMyIndex() == clientManager.getUsersGameState().getActiveFireFighterIndex()*/);
 
@@ -625,6 +628,7 @@ public class Launcher {
 	}
 
 	public boolean sendSaveGameRequest() {
+		
 		// new panel String
 		JTextArea textArea = new JTextArea();
         textArea.setEditable(true);
@@ -632,11 +636,14 @@ public class Launcher {
         scrollPane.requestFocus();
         textArea.requestFocusInWindow();
         scrollPane.setPreferredSize(new Dimension(80, 60));
-        JOptionPane.showInputDialog(this, "Name of the saved game:");
-        String info = textArea.getText();
-		
-		//
-		return clientManager.saveGameRequestString(info);
+        String response = JOptionPane.showInputDialog(this, "Name of the saved game:");
+        System.out.println(response + "RESPONSE");
+        
+        if (response != null) {
+        	clientManager.getUsersGameState().setSavedGameName(response);
+        	return clientManager.saveGameRequestString(response);
+        }
+        return clientManager.saveGameRequestString(response);
 	}
 
 	public static Client getClient() {
