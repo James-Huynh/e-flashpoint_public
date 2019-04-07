@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -29,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 import javax.swing.SpringLayout;
 
 import client.Client;
@@ -67,7 +70,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = BenIP;
+	private String ServerIP = "142.157.30.54";
 
 
 	int port = 8888;
@@ -83,7 +86,9 @@ public class Launcher {
 	private JFrame motherFrame;
 	private Container contentPane;
 	private JMenuBar tableMenuBar = new JMenuBar();
-
+	private PopupFactory popUpHolder;
+	private Popup loginFailedPopUp;
+	private JPanel popUpPanel;
 	private LoginPanel login;
 	private MainMenuPanel mainMenu;
 	private CreateLobbyPanel createLobby;
@@ -173,6 +178,7 @@ public class Launcher {
 		populateMenuBar();
 		addMenuBar();
 		setupLoginPage();
+		createPopUp();
 
 	}
 
@@ -691,6 +697,34 @@ public class Launcher {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
+	}
+
+	private void createPopUp() {
+		popUpPanel = new JPanel(new BorderLayout());
+		popUpHolder = new PopupFactory();
+		
+		JTextArea text = new JTextArea();
+		text.append("PLAYER DISCONNECTED!!!!!!!!!");
+		text.setLineWrap(true);
+		
+		JButton okButton = new JButton("ok");
+		okButton.setPreferredSize(new Dimension(20,20));
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loginFailedPopUp.hide();
+//				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
+			}
+		});
+		popUpPanel.setPreferredSize(new Dimension(300,400));
+		popUpPanel.setBackground(Color.decode("#FFFFFF"));
+		popUpPanel.add(text, BorderLayout.NORTH);
+		popUpPanel.add(okButton, BorderLayout.SOUTH);
+		loginFailedPopUp = popUpHolder.getPopup(popUpPanel, popUpPanel, 500, 400);
+	}
+	
+	public void showPopUp() {
+		loginFailedPopUp.show();
 	}
 
 
