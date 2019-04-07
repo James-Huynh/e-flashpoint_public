@@ -5284,27 +5284,27 @@ public class Table {
 					switch (i) {
 						case 0:
 							menu0 = true;
-							header0 = clientManager.getUsersGameState().getFireFighterList().get(0).getColour().toString() + " Fireman";
+							header0 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[0]).getColour().toString() + " Fireman";
 							break;
 						case 1:
 							menu1 = true;
-							header1 = clientManager.getUsersGameState().getFireFighterList().get(1).getColour().toString() + " Fireman";
+							header1 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[1]).getColour().toString() + " Fireman";
 							break;
 						case 2:
 							menu2 = true;
-							header2 = clientManager.getUsersGameState().getFireFighterList().get(2).getColour().toString() + " Fireman";
+							header2 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[2]).getColour().toString() + " Fireman";
 							break;
 						case 3:
 							menu3 = true;
-							header3 = clientManager.getUsersGameState().getFireFighterList().get(3).getColour().toString() + " Fireman";
+							header3 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[3]).getColour().toString() + " Fireman";
 							break;
 						case 4:
 							menu4 = true;
-							header4 = clientManager.getUsersGameState().getFireFighterList().get(4).getColour().toString() + " Fireman";
+							header4 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[4]).getColour().toString() + " Fireman";
 							break;
 						case 5:
 							menu5 = true;
-							header5 = clientManager.getUsersGameState().getFireFighterList().get(5).getColour().toString() + " Fireman";
+							header5 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[5]).getColour().toString() + " Fireman";
 							break;
 					}
 				} else {
@@ -5318,7 +5318,7 @@ public class Table {
 			}
 			
 			if(menu0) {
-				if(clientManager.getUsersGameState().toDisplayRidePopUp(0)) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(myFFIndexes[0])) {
 					text0.setText(header0);
 					FF0.add(text0);
 					JButton yesButton = new JButton("Yes");
@@ -5327,10 +5327,10 @@ public class Table {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							System.out.println("helloashf");
-							if(sendRideResponse(true, 0)) {
+							if(sendRideResponse(true, myFFIndexes[0])) {
 								rode[0] = true;
 								System.out.println("hello");
-								clientManager.getUsersGameState().setRideOption(true, 0);
+								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[0]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5348,9 +5348,9 @@ public class Table {
 					noButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(false, 0)) {
+							if(sendRideResponse(false, myFFIndexes[0])) {
 								rode[0] = true;
-								clientManager.getUsersGameState().setRideOption(false, 0);
+								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[0]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5373,7 +5373,7 @@ public class Table {
 			} 
 			
 			if(menu1) {
-				if(clientManager.getUsersGameState().toDisplayRidePopUp(1)) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(myFFIndexes[1])) {
 					text1.setText(header1);
 					FF1.add(text1);
 					JButton yesButton = new JButton("Yes");
@@ -5381,9 +5381,9 @@ public class Table {
 					yesButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(true, 0)) {
+							if(sendRideResponse(true, myFFIndexes[1])) {
 								rode[1] = true;
-								clientManager.getUsersGameState().setRideOption(true, 1);
+								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[1]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5400,9 +5400,9 @@ public class Table {
 					noButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(false, 1)) {
+							if(sendRideResponse(false, myFFIndexes[1])) {
 								rode[1] = true;
-								clientManager.getUsersGameState().setRideOption(false, 1);
+								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[1]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5422,7 +5422,7 @@ public class Table {
 				}
 			}
 			if(menu2) {
-				if(clientManager.getUsersGameState().toDisplayRidePopUp(2)) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(myFFIndexes[2])) {
 					text2.setText(header2);
 					FF2.add(text2);
 					JButton yesButton = new JButton("Yes");
@@ -5430,9 +5430,9 @@ public class Table {
 					yesButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(true, 2)) {
+							if(sendRideResponse(true, myFFIndexes[2])) {
 								rode[2] = true;
-								clientManager.getUsersGameState().setRideOption(true, 2);
+								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[2]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5449,9 +5449,9 @@ public class Table {
 					noButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(false, 2)) {
+							if(sendRideResponse(false, myFFIndexes[2])) {
 								rode[2] = true;
-								clientManager.getUsersGameState().setRideOption(false, 2);
+								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[2]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5471,7 +5471,7 @@ public class Table {
 				}
 			}
 			if(menu3) {
-				if(clientManager.getUsersGameState().toDisplayRidePopUp(3)) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(myFFIndexes[3])) {
 					text3.setText(header3);
 					FF3.add(text3);
 					JButton yesButton = new JButton("Yes");
@@ -5479,9 +5479,9 @@ public class Table {
 					yesButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(true, 3)) {
+							if(sendRideResponse(true, myFFIndexes[3])) {
 								rode[3] = true;
-								clientManager.getUsersGameState().setRideOption(true, 3);
+								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[3]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5498,9 +5498,9 @@ public class Table {
 					noButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(false, 3)) {
+							if(sendRideResponse(false, myFFIndexes[3])) {
 								rode[3] = true;
-								clientManager.getUsersGameState().setRideOption(false, 3);
+								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[3]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5520,7 +5520,7 @@ public class Table {
 				}
 			}
 			if(menu4) {
-				if(clientManager.getUsersGameState().toDisplayRidePopUp(4)) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(myFFIndexes[4])) {
 					text4.setText(header4);
 					FF4.add(text4);
 					JButton yesButton = new JButton("Yes");
@@ -5528,9 +5528,9 @@ public class Table {
 					yesButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(true, 4)) {
+							if(sendRideResponse(true, myFFIndexes[4])) {
 								rode[4] = true;
-								clientManager.getUsersGameState().setRideOption(true, 4);
+								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[4]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5547,9 +5547,9 @@ public class Table {
 					noButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(false, 4)) {
+							if(sendRideResponse(false, myFFIndexes[4])) {
 								rode[4] = true;
-								clientManager.getUsersGameState().setRideOption(false, 4);
+								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[4]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5569,7 +5569,7 @@ public class Table {
 				}
 			}
 			if(menu5) {
-				if(clientManager.getUsersGameState().toDisplayRidePopUp(5)) {
+				if(clientManager.getUsersGameState().toDisplayRidePopUp(myFFIndexes[5])) {
 					text5.setText(header5);
 					FF5.add(text5);
 					JButton yesButton = new JButton("Yes");
@@ -5577,9 +5577,9 @@ public class Table {
 					yesButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(true, 5)) {
+							if(sendRideResponse(true, myFFIndexes[5])) {
 								rode[5] = true;
-								clientManager.getUsersGameState().setRideOption(true, 5);
+								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[5]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5596,9 +5596,9 @@ public class Table {
 					noButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(sendRideResponse(false, 5)) {
+							if(sendRideResponse(false, myFFIndexes[5])) {
 								rode[5] = true;
-								clientManager.getUsersGameState().setRideOption(false, 5);
+								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[5]);
 								rideRequest.hide();
 								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
@@ -5763,7 +5763,7 @@ public class Table {
 					switch (i) {
 						case 0:
 							menu0 = true;
-							header0 = clientManager.getUsersGameState().getFireFighterList().get(0).getColour().toString() + " Fireman";
+							header0 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[0]).getColour().toString() + " Fireman";
 							dodgeOptions0 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(0));
 //							dodged[0] = false;
 							if(dodgeOptions0.size() == 0) {
@@ -5773,7 +5773,7 @@ public class Table {
 							break;
 						case 1:
 							menu1 = true;
-							header1 = clientManager.getUsersGameState().getFireFighterList().get(1).getColour().toString() + " Fireman";
+							header1 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[1]).getColour().toString() + " Fireman";
 							dodgeOptions1 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(1));
 //							dodged[1] = false;
 							if(dodgeOptions1.size() == 0) {
@@ -5783,7 +5783,7 @@ public class Table {
 							break;
 						case 2:
 							menu2 = true;
-							header2 = clientManager.getUsersGameState().getFireFighterList().get(2).getColour().toString() + " Fireman";
+							header2 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[2]).getColour().toString() + " Fireman";
 							dodgeOptions2 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(2));
 //							dodged[2] = false;
 							if(dodgeOptions2.size() == 0) {
@@ -5793,7 +5793,7 @@ public class Table {
 							break;
 						case 3:
 							menu3 = true;
-							header3 = clientManager.getUsersGameState().getFireFighterList().get(3).getColour().toString() + " Fireman";
+							header3 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[3]).getColour().toString() + " Fireman";
 							dodgeOptions3 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(3));
 //							dodged[3] = false;
 							if(dodgeOptions3.size() == 0) {
@@ -5803,7 +5803,7 @@ public class Table {
 							break;
 						case 4:
 							menu4 = true;
-							header4 = clientManager.getUsersGameState().getFireFighterList().get(4).getColour().toString() + " Fireman";
+							header4 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[4]).getColour().toString() + " Fireman";
 							dodgeOptions4 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(4));
 //							dodged[4] = false;
 							if(dodgeOptions4.size() == 0) {
@@ -5813,7 +5813,7 @@ public class Table {
 							break;
 						case 5:
 							menu5 = true;
-							header5 = clientManager.getUsersGameState().getFireFighterList().get(5).getColour().toString() + " Fireman";
+							header5 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[5]).getColour().toString() + " Fireman";
 							dodgeOptions5 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(5));
 //							dodged[5] = false;
 							if(dodgeOptions5.size() == 0) {
@@ -5847,7 +5847,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,0);
+								sendDodgeAnswer(a,myFFIndexes[0]);
 								dodged[0] = true;
 								showDodgeRequest();
 							}
@@ -5863,7 +5863,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,0);
+								sendDodgeAnswer(a,myFFIndexes[0]);
 								dodged[0] = true;
 								showDodgeRequest();
 							}
@@ -5878,7 +5878,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,0);
+								sendDodgeAnswer(a,myFFIndexes[0]);
 								dodged[0] = true;
 								showDodgeRequest();
 							}
@@ -5893,7 +5893,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,0);
+								sendDodgeAnswer(a,myFFIndexes[0]);
 								dodged[0] = true;
 								showDodgeRequest();
 							}
@@ -5912,7 +5912,7 @@ public class Table {
 							System.out.println("OK BUTTON CLICKED");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(null,0);
+							sendDodgeAnswer(null,myFFIndexes[0]);
 							dodged[0] = true;
 							showDodgeRequest();
 						}
@@ -5939,7 +5939,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,1);
+								sendDodgeAnswer(a,myFFIndexes[1]);
 								dodged[1] = true;
 								showDodgeRequest();
 							}
@@ -5955,7 +5955,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,1);
+								sendDodgeAnswer(a,myFFIndexes[1]);
 								dodged[1] = true;
 								showDodgeRequest();
 							}
@@ -5970,7 +5970,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,1);
+								sendDodgeAnswer(a,myFFIndexes[1]);
 								dodged[1] = true;
 								showDodgeRequest();
 							}
@@ -5985,7 +5985,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,1);
+								sendDodgeAnswer(a,myFFIndexes[1]);
 								dodged[1] = true;
 								showDodgeRequest();
 							}
@@ -6004,7 +6004,7 @@ public class Table {
 							System.out.println("OK BUTTON CLICKED");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(null,1);
+							sendDodgeAnswer(null,myFFIndexes[1]);
 							dodged[1] = true;
 							showDodgeRequest();
 						}
@@ -6031,7 +6031,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,2);
+								sendDodgeAnswer(a,myFFIndexes[2]);
 								dodged[2] = true;
 								showDodgeRequest();
 							}
@@ -6047,7 +6047,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,2);
+								sendDodgeAnswer(a,myFFIndexes[2]);
 								dodged[2] = true;
 								showDodgeRequest();
 							}
@@ -6062,7 +6062,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,2);
+								sendDodgeAnswer(a,myFFIndexes[2]);
 								dodged[2] = true;
 								showDodgeRequest();
 							}
@@ -6077,7 +6077,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,2);
+								sendDodgeAnswer(a,myFFIndexes[2]);
 								dodged[2] = true;
 								showDodgeRequest();
 							}
@@ -6096,7 +6096,7 @@ public class Table {
 							System.out.println("OK BUTTON CLICKED");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(null,2);
+							sendDodgeAnswer(null,myFFIndexes[2]);
 							dodged[2] = true;
 							showDodgeRequest();
 						}
@@ -6123,7 +6123,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,3);
+								sendDodgeAnswer(a,myFFIndexes[3]);
 								dodged[3] = true;
 								showDodgeRequest();
 							}
@@ -6139,7 +6139,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,3);
+								sendDodgeAnswer(a,myFFIndexes[3]);
 								dodged[3] = true;
 								showDodgeRequest();
 							}
@@ -6154,7 +6154,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,3);
+								sendDodgeAnswer(a,myFFIndexes[3]);
 								dodged[3] = true;
 								showDodgeRequest();
 							}
@@ -6169,7 +6169,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,3);
+								sendDodgeAnswer(a,myFFIndexes[3]);
 								dodged[3] = true;
 								showDodgeRequest();
 							}
@@ -6188,7 +6188,7 @@ public class Table {
 							System.out.println("OK BUTTON CLICKED");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(null,3);
+							sendDodgeAnswer(null,myFFIndexes[3]);
 							dodged[3] = true;
 							showDodgeRequest();
 						}
@@ -6215,7 +6215,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,4);
+								sendDodgeAnswer(a,myFFIndexes[4]);
 								dodged[4] = true;
 								showDodgeRequest();
 							}
@@ -6231,7 +6231,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,4);
+								sendDodgeAnswer(a,myFFIndexes[4]);
 								dodged[4] = true;
 								showDodgeRequest();
 							}
@@ -6246,7 +6246,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,4);
+								sendDodgeAnswer(a,myFFIndexes[4]);
 								dodged[4] = true;
 								showDodgeRequest();
 							}
@@ -6261,7 +6261,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,4);
+								sendDodgeAnswer(a,myFFIndexes[4]);
 								dodged[4] = true;
 								showDodgeRequest();
 							}
@@ -6280,7 +6280,7 @@ public class Table {
 							System.out.println("OK BUTTON CLICKED");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(null,4);
+							sendDodgeAnswer(null,myFFIndexes[4]);
 							dodged[4] = true;
 							showDodgeRequest();
 						}
@@ -6307,7 +6307,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,5);
+								sendDodgeAnswer(a,myFFIndexes[5]);
 								dodged[5] = true;
 								showDodgeRequest();
 							}
@@ -6323,7 +6323,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,5);
+								sendDodgeAnswer(a,myFFIndexes[5]);
 								dodged[5] = true;
 								showDodgeRequest();
 							}
@@ -6338,7 +6338,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,5);
+								sendDodgeAnswer(a,myFFIndexes[5]);
 								dodged[5] = true;
 								showDodgeRequest();
 							}
@@ -6353,7 +6353,7 @@ public class Table {
 								System.out.println("this should not happen");
 								dodgeRequest.hide();
 								dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-								sendDodgeAnswer(a,5);
+								sendDodgeAnswer(a,myFFIndexes[5]);
 								dodged[5] = true;
 								showDodgeRequest();
 							}
@@ -6372,7 +6372,7 @@ public class Table {
 							System.out.println("OK BUTTON CLICKED");
 							dodgeRequest.hide();
 							dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-							sendDodgeAnswer(null,5);
+							sendDodgeAnswer(null,myFFIndexes[5]);
 							dodged[5] = true;
 							showDodgeRequest();
 						}
