@@ -51,9 +51,9 @@ public class ClientManager {
 	public boolean readMessage() throws IOException, ClassNotFoundException {
 		boolean flag = false;
 		System.out.println("Reading on Client side Started");
-		if(inputThread.getInputStream().available() == 0) {
-			return false;
-		}
+//		if(inputThread.getInputStream().available() == 0) {
+//			return false;
+//		}
 		Object readObject = inputThread.readInputStream();
 		if (readObject != null && readObject instanceof TranObject) {
 			TranObject read_tranObject = (TranObject) readObject;

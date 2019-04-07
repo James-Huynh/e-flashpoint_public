@@ -402,41 +402,65 @@ public class ServerManager {
 			System.out.println("Error initializing stream");
 		}
     }
-    public GameState loadGameMat(String name) {
-    	try {
-    		FileInputStream fi = new FileInputStream(new File(defaulGamesPath + name + ".txt"));
+//    public GameState loadGameMat(String name) {
+//    	try {
+//    		FileInputStream fi = new FileInputStream(new File(defaulGamesPath + name + ".txt"));
+//			ObjectInputStream oi = new ObjectInputStream(fi);
+//			// Read objects
+//			GameState gs1 = (GameState) oi.readObject();
+//			GameState gs = GameState.getInstance();
+//			System.out.println(gs1.toString());
+//
+//			oi.close();
+//			fi.close();
+//			
+//			gs.updateGameStateFromObject(gs1);
+//			this.savedGames.add(gs);
+//			
+//			return gs1; //if not void
+//			
+//			} catch (FileNotFoundException e) {
+//				System.out.println("File not found");
+//			} catch (IOException e) {
+//				System.out.println("Error initializing stream");
+//			} catch (ClassNotFoundException e) {
+//				e.printStackTrace();
+//			}
+//    	return null;
+//    }
+	public GameState loadGameMat(int number) {
+		GameState tempGS = null;
+		try {
+			FileInputStream fi = new FileInputStream(new File(defaulGamesPath + number + ".txt"));
 			ObjectInputStream oi = new ObjectInputStream(fi);
-			// Read objects
-			GameState gs1 = (GameState) oi.readObject();
-			GameState gs = GameState.getInstance();
-			System.out.println(gs1.toString());
-
+			
+//			initializeGameManager();
+			tempGS = (GameState) oi.readObject();
+			
+//			this.gameManager.getGameState().updateGameStateFromObject(gameState);
+//			this.gameState = gameManager.getGameState();
+//			this.gameState.setListOfPlayers(this.activeLobby.getPlayers());
 			oi.close();
 			fi.close();
-			
-			gs.updateGameStateFromObject(gs1);
-			this.savedGames.add(gs);
-			
-			return gs1; //if not void
-			
-			} catch (FileNotFoundException e) {
-				System.out.println("File not found");
-			} catch (IOException e) {
-				System.out.println("Error initializing stream");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-    	return null;
-    }
-    
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tempGS;
+	}
     public void setSavedGames() {
     	this.savedGames.clear();
     	String folderPath = defaulGamesPath;
     	File folder = new File(folderPath);
     	File[] listOfFiles = folder.listFiles();
-    	for (File f : listOfFiles) {
-    		GameState gs = GameState.getInstance();
-    		gs = loadGameMat("1");
+    	for (int i = 1; i <= listOfFiles.length; i++) {
+    		GameState gs = loadGameMat(i);
     		System.out.println("im here:" + gs.getSavedVictims());
     		System.out.println("im here:" + gs.getListOfPlayers().get(0).getUserName());
     		this.savedGames.add(gs);
@@ -451,11 +475,11 @@ public class ServerManager {
     	return this.savedGames.size();
     }
     
-    public void removeSavedGame(String name) {
-    	GameState gs = GameState.getInstance();
-    	gs.updateGameStateFromObject(loadGameMat(name + getSavedGamesNumber() + ".txt"));
-    	this.savedGames.remove(gs);
-    }
+//    public void removeSavedGame(String name) {
+//    	GameState gs = GameState.getInstance();
+//    	gs.updateGameStateFromObject(loadGameMat(name + getSavedGamesNumber() + ".txt"));
+//    	this.savedGames.remove(gs);
+//    }
 
 	public void setSpeciality(User person, Speciality desiredSpeciality) {
 		if(gameState.getFreeSpecialities().contains(desiredSpeciality)) {

@@ -167,10 +167,9 @@ public class LoadGamePanel extends JPanel {
 
 	private String buildEntryName(int i) {
 		StringBuilder stringbuilder = new StringBuilder();
-		GameState currGame =  savedGames.get(i); 	// currGame is null
 		
-		System.out.println(currGame.getListOfPlayers());
-		stringbuilder.append("Name: " + currGame.getListOfPlayers().get(0).getUserName() + " - ");
+		GameState currGame =  savedGames.get(i); 	// currGame is null
+		stringbuilder.append((i+1) + ". Name: " + currGame.getListOfPlayers().get(0).getUserName() + " - ");
 //		stringbuilder.append(currGame.get+ " - ");
 		
 		
@@ -180,7 +179,9 @@ public class LoadGamePanel extends JPanel {
 	private void entryClicked(JLabel entry) {
 
 		System.out.println(entry.getText());
-		clientManager.loadGameLobbyRequest(Integer.parseInt(entry.getText().replaceAll("\\D+",""))); //extract int from the entry
+		String substring = entry.getText().substring(0,1);
+		
+		clientManager.loadGameLobbyRequest(Integer.parseInt(substring.replaceAll("\\D+",""))); //extract int from the entry
 
 		// @Eric call loadMethod
 	}
