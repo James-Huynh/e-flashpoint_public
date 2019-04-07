@@ -1,6 +1,5 @@
 package client;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -52,6 +51,9 @@ public class ClientManager {
 	public boolean readMessage() throws IOException, ClassNotFoundException {
 		boolean flag = false;
 		System.out.println("Reading on Client side Started");
+		if(inputThread.getInputStream().available() == 0) {
+			return false;
+		}
 		Object readObject = inputThread.readInputStream();
 		if (readObject != null && readObject instanceof TranObject) {
 			TranObject read_tranObject = (TranObject) readObject;
@@ -234,19 +236,21 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		System.out.println("check!");
 		try {
-			while(readMessage() != true) {
-				
+			System.out.println("3");
+			if(readMessage()) {
+				flag = true;
 			}
-			flag = true;
+			
 		}
 		catch(ClassNotFoundException l) {
-			
+			System.out.println("1");
 		}
 		catch(IOException k) {
-			
+			System.out.println("2");
 		}
 		System.out.println("|2|" + requestObject.getId()); 
 //		System.out.println("|3|" + client.getCurrentState().returnTile(5, 1).getPoiList().get(0).isRevealed()); 
+		System.out.println(flag);
 		return flag;
 	}
 
@@ -611,14 +615,14 @@ public class ClientManager {
 		entity.setMessage(message.getMessage());
 		entity.setDate(MyDate.getComDate());
 		entity.setName(requestObject.getName());
-		Colour colour = null;
+		String colour = "";
 		for(Player p : requestObject.getCurrentLobby().getPlayers()) {
 			if(p.getUserName().equals(requestObject.getName())) {
-				colour = p.getColour();
+				colour = p.getColour().toString();
 			}
 		}
-
-		entity.setColour(colour);
+		System.out.println("sending");
+		//entity.setColour(colour);
 		User a= new User();
 		a.setChat(entity);
 		objectToSend.setObject(a);

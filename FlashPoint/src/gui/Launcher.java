@@ -58,13 +58,13 @@ public class Launcher {
 	private String EricIP = "142.157.30.157";
 	private String JamesIP = "142.157.105.75";
 	private String JunhaIP = "142.157.65.237";
-	private String ZaidIP = "142.157.145.244";
+	private String ZaidIP = "142.157.144.137";
 	private String BenIP = "142.157.58.216";
 	private String MatIP = "142.157.63.60";
 
 	private static Client client;
 
-	private String ServerIP = BenIP;
+	private String ServerIP = MatIP;
 
 
 	int port = 8888;
@@ -144,9 +144,14 @@ public class Launcher {
 		client.start();
 		clientManager = new ClientManager(client.getClientInputThread(), client.getClientOutputThread(), this);
 		listenerThread = new clientThread(this, clientManager, true);
-		if(sendConnectionRequest()) {	
+		boolean connBool = false;
+		while (!connBool) {
+			System.out.println("dupa");
+			connBool = sendConnectionRequest();
+		}
+//		if(sendConnectionRequest()) {	
 			initialize();
-		};
+//		};
 	}
 	/**
 	 * Initialize the contents of the frame.
