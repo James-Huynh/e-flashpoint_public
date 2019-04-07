@@ -625,6 +625,7 @@ public class Launcher {
 	}
 
 	public boolean sendSaveGameRequest() {
+		
 		// new panel String
 		JTextArea textArea = new JTextArea();
         textArea.setEditable(true);
@@ -632,11 +633,14 @@ public class Launcher {
         scrollPane.requestFocus();
         textArea.requestFocusInWindow();
         scrollPane.setPreferredSize(new Dimension(80, 60));
-        JOptionPane.showInputDialog(this, "Name of the saved game:");
-        String info = textArea.getText();
-		
-		//
-		return clientManager.saveGameRequestString(info);
+        String response = JOptionPane.showInputDialog(this, "Name of the saved game:");
+        System.out.println(response + "RESPONSE");
+        
+        if (response != null) {
+        	clientManager.getUsersGameState().setSavedGameName(response);
+        	return clientManager.saveGameRequestString(response);
+        }
+        return clientManager.saveGameRequestString(response);
 	}
 
 	public static Client getClient() {
