@@ -63,7 +63,12 @@ public class ServerManager {
 	
 	public void createGame() {
 //		if(gameState == null) {
+			for(Player p: activeLobby.getPlayers()) {
+				p.reset();
+				
+			}
 			initializeGameManager();
+			
 			gameManager.setup();
 			gameState = gameManager.getGameState();
 			gameState.setActiveFireFighterIndex(-1);
@@ -686,6 +691,7 @@ public class ServerManager {
 			this.activeLobby = null;
 			this.gameState = null;
 			this.gameManager = null;
+			
 			
 		}
 	

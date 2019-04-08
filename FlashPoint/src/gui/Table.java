@@ -415,8 +415,8 @@ public class Table {
 					if(this.currentBoard.getActiveFireFighterIndex() == i) {
 						inputString = "<html> <font size=\"3\", color='"+ffColour+"'><b>" + playerInfo + "</b></font></html>";
 						JLabel currentFFPanel = new JLabel(inputString);
-						Border blackline1 = BorderFactory.createLineBorder(tileColorBlack,1);
-						currentFFPanel.setBackground(currentFFColour);
+						Border blackline1 = BorderFactory.createLineBorder(tileColorRed,2);
+//						currentFFPanel.setBackground(currentFFColour);
 						currentFFPanel.setBorder(blackline1);
 						add(currentFFPanel);
 						
@@ -6615,8 +6615,8 @@ public class Table {
 				}
 			});
 			responsePanel.add(noButton);
-			
-			gameTPanel.add(responsePanel, BorderLayout.SOUTH);
+			gameTPanel.add(text);
+			gameTPanel.add(responsePanel);
 			
 			deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 			

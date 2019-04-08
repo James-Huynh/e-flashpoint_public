@@ -82,6 +82,13 @@ public class Player implements Serializable {
 		return "Player [userName=" + userName + ", password=" + password + ", myColour=" + myColour.toString()
 				+ ", myFireFighters=" + myFireFighters + ", indexMarker=" + indexMarker + ", ID=" + ID + "]";
 	}
+
+
+	public void reset() {
+		myFireFighters.clear();
+		indexMarker = -1;
+		
+	}
     
     
 }
