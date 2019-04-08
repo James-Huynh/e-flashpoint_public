@@ -86,13 +86,16 @@ public class ChatBox extends JPanel{
 		//style = textPane.addStyle("StyleName", null);
 		//that's how u change color
 		StyleConstants.setForeground(attrs, Color.black);
+		
+		textPane.setBackground(new Color(255,230,160));
 		textPane.setBounds(rect_textArea);
-
+		textPane.setEditable(false);
 		scrollPane = new JScrollPane(textPane);
 
 		panel_main.add(scrollPane);
 		scrollPane.setBounds(rect_textArea);
-
+		
+		textField.setBackground(new Color(255,230,160));
 		textField.setBounds(rect_chat);
 		panel_main.add(textField);
 		textField.setColumns(10);
@@ -138,7 +141,7 @@ public class ChatBox extends JPanel{
 //			}
 			for (ChatMsgEntity entity : temp) {
 				finalText.delete(0, finalText.length());
-				finalText.append(entity.getDate());
+				finalText.append("[" + entity.getDate() + "] ");
 				finalText.append(entity.getName() + ": ");
 				finalText.append(entity.getMessage() + "\n");
 				
@@ -146,13 +149,15 @@ public class ChatBox extends JPanel{
 				Colour playerColor = entity.getColour();
 				System.out.println("im here" + playerColor);
 				//change font color here
-				if(playerColor == Colour.GREEN) StyleConstants.setForeground(attrs, Color.GREEN);
+				if(playerColor == Colour.GREEN) StyleConstants.setForeground(attrs, Color.GRAY);
 				if(playerColor == Colour.BLUE) StyleConstants.setForeground(attrs, Color.BLUE);
 				if(playerColor == Colour.RED) StyleConstants.setForeground(attrs, Color.RED);
 				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(attrs, Color.MAGENTA);
 				if(playerColor == Colour.BLACK) StyleConstants.setForeground(attrs, Color.BLACK);
-				if(playerColor == Colour.WHITE) StyleConstants.setForeground(attrs, Color.WHITE);
-				
+				if(playerColor == Colour.WHITE) {
+					StyleConstants.setForeground(attrs, Color.WHITE);
+					
+				}
 				updateChatGUI(finalText.toString());
 			}
 		} else {
@@ -165,13 +170,12 @@ public class ChatBox extends JPanel{
 				Colour playerColor = entity.getColour();
 				System.out.println("im here2" + playerColor);
 				//change font color here
-				if(playerColor == Colour.GREEN) StyleConstants.setForeground(attrs, Color.GREEN);
+				if(playerColor == Colour.GREEN) StyleConstants.setForeground(attrs, Color.GREEN );
 				if(playerColor == Colour.BLUE) StyleConstants.setForeground(attrs, Color.BLUE);
 				if(playerColor == Colour.RED) StyleConstants.setForeground(attrs, Color.RED);
 				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(attrs, Color.MAGENTA);
 				if(playerColor == Colour.BLACK) StyleConstants.setForeground(attrs, Color.BLACK);
 				if(playerColor == Colour.WHITE) StyleConstants.setForeground(attrs, Color.WHITE);
-				
 				
 				updateChatGUI(finalText.toString());
 			}
