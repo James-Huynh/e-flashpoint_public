@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -100,6 +103,19 @@ public class MainMenuPanel extends JPanel {
 				raiseEventLoadBtn();
 			}
 		});
+			btn_LoadGame.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+				panel.setBorder(BorderFactory.createLineBorder(Color.RED));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+				panel.setBorder(null);
+
+			
+		}});
+			
+			
 		btn_LoadGame.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));
 		btn_LoadGame.setBounds(67, 194, 423, 49);
 

@@ -224,6 +224,7 @@ public class ClientManager {
 				
 			case ERROR:
 				System.out.println("SOMEONEDISCONNECTED!!");
+				startGameFlag = 3;
 				flag = true;
 				launcher.showPopUp();
 				break;

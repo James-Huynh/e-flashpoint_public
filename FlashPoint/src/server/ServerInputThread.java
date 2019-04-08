@@ -32,6 +32,7 @@ public class ServerInputThread extends Thread {
 	private boolean isStart = true;
 	ServerManager serverManager;
 	Random rand = new Random();
+	private Object tempory;
 
 	public ServerInputThread(Socket socket, OutputThread out, OutputThreadMap map, ServerManager newServerManager) {
 		this.socket = socket;
@@ -58,7 +59,7 @@ public class ServerInputThread extends Thread {
 				//System.out.println("Looping?");
 //				serverManager.readMessage(out, ois);
 				// JUNHA : this is supposed to be serverManager.readMessage();
-				 readMessage();
+				 readMessage(null);
 
 			}
 			if (ois != null)
@@ -72,6 +73,13 @@ public class ServerInputThread extends Thread {
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("IO Exception Error");
+			this.interrupt();
+			try {
+				serverManager.saveGame();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			TranObject<User> returnObject;
 			returnObject = new TranObject<User>(TranObjectType.ERROR);
 			for(Player p: serverManager.getLobby().getPlayers()) {
@@ -90,7 +98,7 @@ public class ServerInputThread extends Thread {
 	 * @throws ClassNotFoundException
 	 */
 
-	public void readMessage() throws IOException, ClassNotFoundException {
+	public void readMessage(Object o) throws IOException, ClassNotFoundException {
 //		while (true) {
 //		socket.sendUrgentData(0xFF); // å�‘é€�å¿ƒè·³åŒ…
 //		System.out.println("ç›®å‰�æ˜¯å¤„äºŽé“¾æŽ¥çŠ¶æ€�ï¼�");
@@ -98,9 +106,16 @@ public class ServerInputThread extends Thread {
 //} catch (Exception e) {
 //	System.out.println("ç›®å‰�æ˜¯å¤„äºŽæ–­å¼€çŠ¶æ€�ï¼�");
 //			e.printStackTrace();
+		Object readObject;
 //				}
-		
-		Object readObject = ois.readObject();// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå�«è®¹æ‹·å�–é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+		if(o == null) {
+			readObject = ois.readObject();
+		}
+		else {
+			readObject = o;
+		}
+//		Object readObject = ois.readObject();// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå�«è®¹æ‹·å�–é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+//		System.out.println(ois.readObject());
 //		try{ 
 //			socket.sendUrgentData(0xFF); 
 //		}
@@ -115,7 +130,7 @@ public class ServerInputThread extends Thread {
 //				onOut.setMessage(returnObject2);
 //			}
 //		}
-		System.out.println("Insinde readMessage");
+		System.out.println("Insinde readMessage for Thread No # = " + this.getId());
 //		UserDao dao = UserDaoFactory.getInstance();// é€šé”Ÿæ–¤æ‹·daoæ¨¡å¼�é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ•™ï¿½
 		if (readObject != null && readObject instanceof TranObject) {
 		//	System.out.println("Entered IF");
@@ -268,6 +283,7 @@ public class ServerInputThread extends Thread {
 				
 				if(requestObject.getAction().getTitle() == ActionList.Drive) {
 					boolean popUpFlag;
+					boolean endTurnerInvolved;
 					System.out.println("hello we are riding");
 					if(requestObject.getAction().isAmbulance()) {
 						popUpFlag = serverManager.askRelevantFirefighters(Vehicle.Ambulance);
@@ -291,15 +307,74 @@ public class ServerInputThread extends Thread {
 
 					System.out.println("hello should be at the while" + serverManager.hasEveryoneResponded());
 					if(popUpFlag) {
-						while(!serverManager.hasEveryoneResponded()) {
-							
+						endTurnerInvolved = serverManager.isEndTurnerInvolved(serverManager.getPlayer(requestObject.getId()).getFirefighters());
+						if(!endTurnerInvolved) {
+							while(!serverManager.hasEveryoneResponded()) {
+								
+							}
 						}
+						else {
+							while(!serverManager.hasEveryoneResponded()) {
+								tempory = ois.readObject();
+								if(tempory != null) {
+									System.out.println("Trying to read now");
+									try {
+										readMessage(tempory);
+									}
+									catch(Exception e) {
+										System.out.println("EXCEPTION HAPPENED!");
+									}
+								}
+								try {
+									Thread.sleep(1000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
+//						while(true) {
+//							try {
+//								Thread.sleep(15000);
+//							} catch (InterruptedException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							while(!serverManager.hasEveryoneResponded()) {
+//								
+//							}
+//							break;
+//						}
+//						while(!serverManager.hasEveryoneResponded()) {
+//							try {
+//								Thread.sleep(10000);
+//							} catch (InterruptedException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							readMessage();
+//							tempory = ois.readObject();
+//							if(tempory != null) {
+//								System.out.println("Trying to read now");
+//								try {
+//									readMessage(tempory);
+//								}
+//								catch(Exception e) {
+//									System.out.println("EXCEPTION HAPPENED!");
+//								}
+//							}
+//							try {
+//								Thread.sleep(1000);
+//							} catch (InterruptedException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//						}
 						System.out.println("Out of response checking loops");
 					}
 				}
 				
-				
-				
+//				ArrayList<Firefighter> tempList = serverManager.getPlayer(requestObject.getId()).getFirefighters();
 				
 				serverManager.performAction(requestObject.getAction());
 				if (requestObject.getAction().getTitle() == ActionList.Drive) {
@@ -419,18 +494,27 @@ public class ServerInputThread extends Thread {
 								if(serverManager.hasEveryoneDodged()) {
 									break;
 								}
+								tempory = ois.readObject();
+								if(tempory != null) {
+									System.out.println("Trying to read now");
+									try {
+										readMessage(tempory);
+									}
+									catch(Exception e) {
+										System.out.println("EXCEPTION HAPPENED!");
+									}
+								}
 								try {
-									TimeUnit.SECONDS.sleep(15);
+									Thread.sleep(1000);
 								} catch (InterruptedException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-								readMessage();
 							}
+
 //							readMessage();
 //							while(!serverManager.hasEveryoneDodged()) {
-
-								
+//							
 //							}
 							System.out.println("Everyone has responded");
 		        		}
@@ -452,19 +536,28 @@ public class ServerInputThread extends Thread {
 								if(serverManager.hasEveryoneDodged()) {
 									break;
 								}
-								try {
-									TimeUnit.SECONDS.sleep(15);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-									readMessage();
-								}
+									tempory = ois.readObject();
+									if(tempory != null) {
+										System.out.println("Trying to read now");
+										try {
+											readMessage(tempory);
+										}
+										catch(Exception e) {
+											System.out.println("EXCEPTION HAPPENED!");
+										}
+									}
+									try {
+										Thread.sleep(1000);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+							}
 	//							readMessage();
-	//							while(!serverManager.hasEveryoneDodged()) {
-	//
-	//							}
-								System.out.println("Everyone has responded");
+//							while(!serverManager.hasEveryoneDodged()) {
+//	
+//							}
+							System.out.println("Everyone has responded");
 		        		}
 		        	}
 		        	
@@ -485,13 +578,22 @@ public class ServerInputThread extends Thread {
 									if(serverManager.hasEveryoneDodged()) {
 										break;
 									}
+									tempory = ois.readObject();
+									if(tempory != null) {
+										System.out.println("Trying to read now");
+										try {
+											readMessage(tempory);
+										}
+										catch(Exception e) {
+											System.out.println("EXCEPTION HAPPENED!");
+										}
+									}
 									try {
-									TimeUnit.SECONDS.sleep(15);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-									readMessage();
+										Thread.sleep(1000);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 								}
 //								readMessage();
 //								while(!serverManager.hasEveryoneDodged()) {

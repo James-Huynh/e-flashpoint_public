@@ -325,6 +325,17 @@ public class ServerManager {
 		gameState.setRideOption(b, i);
 	}
 	
+	public boolean isEndTurnerInvolved(ArrayList<Firefighter> fList) {
+		boolean flag = false;
+		for(int i=0; i<fList.size();i++) {
+			flag = gameState.getRideMapper().get(fList.get(i))[0];
+			if(flag) {
+				break;
+			}
+		}
+		return flag;
+	}
+	
 	
 	public void saveGame() throws IOException {
 		//@eric take the current game state and save it here

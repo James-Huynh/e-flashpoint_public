@@ -5746,6 +5746,9 @@ public class Table {
 		
 		public void showDodgeRequest() {
 			System.out.println("show dodge request trigged");
+			if(dodgeRequest!= null) {
+				dodgeRequest.hide();
+			}
 			dodgeRequest = null;
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel(new GridLayout(7,1));

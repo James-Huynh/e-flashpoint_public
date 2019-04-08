@@ -6,7 +6,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -123,7 +126,18 @@ public class LoginPanel extends JPanel {
 		loginBtn.setFont(new Font("Avenir", Font.PLAIN, 20));
 		loginBtn.setBounds(89, 182, 117, 35);
 		inputPanel.add(loginBtn);
-
+		loginBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				loginBtn.setBorder(BorderFactory.createLineBorder(Color.RED));
+				loginBtn.setBounds(80,170,133,45);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				loginBtn.setBorder(null);
+				loginBtn.setBounds(89, 182, 117, 35);
+			}
+			});
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Login Clicked");
@@ -145,7 +159,18 @@ public class LoginPanel extends JPanel {
 		registerBtn.setFont(new Font("Avenir", Font.PLAIN, 20));
 		registerBtn.setBounds(245, 182, 117, 35);
 		inputPanel.add(registerBtn);
-
+		registerBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				registerBtn.setBorder(BorderFactory.createLineBorder(Color.RED));
+				registerBtn.setBounds(240,173,130,45);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				registerBtn.setBorder(null);
+				registerBtn.setBounds(245, 182, 117, 35);
+			}
+			});
 		registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(registerRequest(getUsername(), getPassword())) {

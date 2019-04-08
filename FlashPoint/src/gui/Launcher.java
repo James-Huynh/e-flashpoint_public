@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -708,19 +709,34 @@ public class Launcher {
 	private void createPopUp() {
 		popUpPanel = new JPanel(new BorderLayout());
 		popUpHolder = new PopupFactory();
+		Font x = new Font("Serif",0,20);
 		
 		JTextArea text = new JTextArea();
-		text.append("PLAYER DISCONNECTED!!!!!!!!!");
+		text.setFont(x);
+		text.append("PLAYER DISCONNECTED! Game is saved. Return to main page.");
 		text.setLineWrap(true);
 		
 		JButton okButton = new JButton("ok");
 		okButton.setPreferredSize(new Dimension(20,20));
-		okButton.addActionListener(new ActionListener() {
+		okButton.addMouseListener(new MouseAdapter() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				loginFailedPopUp.hide();
-//				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					
+					loginFailedPopUp.hide();
+					createNewThread();
+				}
 			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					
+					loginFailedPopUp.hide();
+					createNewThread();
+				}
+			}
+				
+
 		});
 		popUpPanel.setPreferredSize(new Dimension(300,400));
 		popUpPanel.setBackground(Color.decode("#FFFFFF"));
