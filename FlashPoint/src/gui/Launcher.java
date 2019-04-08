@@ -528,6 +528,7 @@ public class Launcher {
 		//create and make visible mainMenuPage
 		//		setupDummies();
 		//		contentPane.remove(dummyCenterPanel);
+		hideGameTermination();
 		setupMainMenuPage();
 		motherFrame.revalidate();
 	}
@@ -595,6 +596,10 @@ public class Launcher {
 	public void showDodgeRequest() {
 		table.showDodgeRequest();
 
+	}
+	
+	public void hideGameTermination() {
+		table.hideGameTermination();
 	}
 
 	public void showAdvanceFireString(String advFireString) {
