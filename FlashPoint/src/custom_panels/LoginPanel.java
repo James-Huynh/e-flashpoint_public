@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -55,9 +56,12 @@ public class LoginPanel extends JPanel {
 	private JPanel inputPanel;
 	private JPanel headerPanel;
 	private JLabel headerLabel;
-	private PopupFactory popUpHolder;
+	private PopupFactory loginPopUpHolder;
 	private Popup loginFailedPopUp;
-	private JPanel popUpPanel;
+	private JPanel loginPopUpPanel;
+	private PopupFactory registerPopUpHolder;
+	private Popup registerSuccessPopUp;
+	private JPanel registerPopUpPanel;
 	
 	private final EventListenerList REGISTERED_OBJECTS = new EventListenerList();
 
@@ -73,7 +77,8 @@ public class LoginPanel extends JPanel {
 		
 		createHeaderPanel();
 		createInputPanel();
-		createPopUp();
+		createLoginPopUp();
+		createRegisterPopUp();
 //		serverRequest();
 	}
 
@@ -175,6 +180,7 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(registerRequest(getUsername(), getPassword())) {
 					System.out.println("Register Succesful");
+					showRegisterPopUp();
 					raiseEventRegisterBtn();
 				}
 				else {
@@ -202,9 +208,9 @@ public class LoginPanel extends JPanel {
 		headerPanel.add(headerLabel);
 	}
 	
-	private void createPopUp() {
-		popUpPanel = new JPanel(new BorderLayout());
-		popUpHolder = new PopupFactory();
+	private void createLoginPopUp() {
+		loginPopUpPanel = new JPanel(new BorderLayout());
+		loginPopUpHolder = new PopupFactory();
 		
 		JTextArea text = new JTextArea();
 		text.append("Login failed bro");
@@ -219,11 +225,11 @@ public class LoginPanel extends JPanel {
 //				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
 			}
 		});
-		popUpPanel.setPreferredSize(new Dimension(300,400));
-		popUpPanel.setBackground(Color.decode("#FFFFFF"));
-		popUpPanel.add(text, BorderLayout.NORTH);
-		popUpPanel.add(okButton, BorderLayout.SOUTH);
-		loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 500, 400);
+		loginPopUpPanel.setPreferredSize(new Dimension(300,400));
+		loginPopUpPanel.setBackground(Color.decode("#FFFFFF"));
+		loginPopUpPanel.add(text, BorderLayout.NORTH);
+		loginPopUpPanel.add(okButton, BorderLayout.SOUTH);
+		loginFailedPopUp = loginPopUpHolder.getPopup(this, loginPopUpPanel, 500, 400);
 	}
 	
 	private void showPopUp() {
@@ -233,6 +239,36 @@ public class LoginPanel extends JPanel {
 	private void hidePopUp() {
 		loginFailedPopUp.hide();
 	}
+	
+	private void createRegisterPopUp() {
+		registerPopUpPanel = new JPanel(new BorderLayout());
+		registerPopUpHolder = new PopupFactory();
+		
+		JTextArea regText = new JTextArea();
+		regText.append("Congrats! Your account is created");
+		
+		JButton okButton = new JButton("ok");
+		okButton.setPreferredSize(new Dimension(20,20));
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				registerSuccessPopUp.hide();
+//				raiseEventRegisterBtn();
+			}
+		});
+		
+		registerPopUpPanel.setPreferredSize(new Dimension(275,80));
+		registerPopUpPanel.setBackground(Color.decode("#FFFFFF"));
+		registerPopUpPanel.add(regText, BorderLayout.CENTER);
+		registerPopUpPanel.add(okButton, BorderLayout.SOUTH);
+		registerSuccessPopUp = registerPopUpHolder.getPopup(this, registerPopUpPanel, 500, 400);
+	}
+	
+	private void showRegisterPopUp() {
+		registerSuccessPopUp.show();
+	}
+	
+	
 
 	// James
 	/**
