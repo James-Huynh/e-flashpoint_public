@@ -8,6 +8,7 @@ import tile.Tile;
 import token.Firefighter;
 import token.POI;
 import token.Speciality;
+import token.Vehicle;
 
 public class MoveWithVictim extends Move{
 	
@@ -87,14 +88,28 @@ public class MoveWithVictim extends Move{
 		
 		ArrayList<POI> pois = currentPosition.getPoiList(); //This is under the assumption we can have only
 
-		//switch to this from the loop, because you will never be in a space with an unrevealed poi and there fore they will always be a victim. 
-		if(!neighbour.checkInterior()) {
-			POI temp = pois.remove(0);
-			gs.removePOI(temp);
-			gs.updateSavedCount(temp);
+		//switch to this from the loop, because you will never be in a space with an unrevealed poi and there fore they will always be a victim.
+		if (!gs.isExperienced()) {
+			if(!neighbour.checkInterior()) {
+				POI temp = pois.remove(0);
+				gs.removePOI(temp);
+				gs.updateSavedCount(temp);
+			}
+			else {
+				neighbour.addPoi(pois.remove(0)); //smart
+			}
 		}
 		else {
-			neighbour.addPoi(pois.remove(0)); //smart
+			if (neighbour.getParkingSpot() != null) {
+				if (neighbour.getParkingSpot().getParkingType() == Vehicle.Ambulance && neighbour.getParkingSpot().getCar()) {
+					POI temp = pois.remove(0);
+					gs.removePOI(temp);
+					gs.updateSavedCount(temp);
+				}
+			}
+			else {
+				neighbour.addPoi(pois.remove(0)); //smart
+			}
 		}
 		super.perform(gs);
 	}
