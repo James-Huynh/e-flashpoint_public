@@ -277,6 +277,7 @@ public class ServerInputThread extends Thread {
 				
 				if(requestObject.getAction().getTitle() == ActionList.Drive) {
 					boolean popUpFlag;
+					boolean endTurnerInvolved;
 					System.out.println("hello we are riding");
 					if(requestObject.getAction().isAmbulance()) {
 						popUpFlag = serverManager.askRelevantFirefighters(Vehicle.Ambulance);
@@ -300,6 +301,32 @@ public class ServerInputThread extends Thread {
 
 					System.out.println("hello should be at the while" + serverManager.hasEveryoneResponded());
 					if(popUpFlag) {
+						endTurnerInvolved = serverManager.isEndTurnerInvolved(serverManager.getPlayer(requestObject.getId()).getFirefighters());
+						if(!endTurnerInvolved) {
+							while(!serverManager.hasEveryoneResponded()) {
+								
+							}
+						}
+						else {
+							while(!serverManager.hasEveryoneResponded()) {
+								tempory = ois.readObject();
+								if(tempory != null) {
+									System.out.println("Trying to read now");
+									try {
+										readMessage(tempory);
+									}
+									catch(Exception e) {
+										System.out.println("EXCEPTION HAPPENED!");
+									}
+								}
+								try {
+									Thread.sleep(1000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
 //						while(true) {
 //							try {
 //								Thread.sleep(15000);
@@ -312,7 +339,7 @@ public class ServerInputThread extends Thread {
 //							}
 //							break;
 //						}
-						while(!serverManager.hasEveryoneResponded()) {
+//						while(!serverManager.hasEveryoneResponded()) {
 //							try {
 //								Thread.sleep(10000);
 //							} catch (InterruptedException e) {
@@ -320,13 +347,28 @@ public class ServerInputThread extends Thread {
 //								e.printStackTrace();
 //							}
 //							readMessage();
-						}
+//							tempory = ois.readObject();
+//							if(tempory != null) {
+//								System.out.println("Trying to read now");
+//								try {
+//									readMessage(tempory);
+//								}
+//								catch(Exception e) {
+//									System.out.println("EXCEPTION HAPPENED!");
+//								}
+//							}
+//							try {
+//								Thread.sleep(1000);
+//							} catch (InterruptedException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//						}
 						System.out.println("Out of response checking loops");
 					}
 				}
 				
-				
-				
+//				ArrayList<Firefighter> tempList = serverManager.getPlayer(requestObject.getId()).getFirefighters();
 				
 				serverManager.performAction(requestObject.getAction());
 				if (requestObject.getAction().getTitle() == ActionList.Drive) {
@@ -446,23 +488,6 @@ public class ServerInputThread extends Thread {
 								if(serverManager.hasEveryoneDodged()) {
 									break;
 								}
-//								try {
-////									TimeUnit.SECONDS.sleep(15);
-//								} catch (InterruptedException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//								readMessage();
-//								try {
-//									Thread.sleep(10000);
-//								} catch (InterruptedException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//								if(ois.available() > 0) {
-//									System.out.println("Trying to read now");
-//									readMessage();
-//								}
 								tempory = ois.readObject();
 								if(tempory != null) {
 									System.out.println("Trying to read now");
@@ -479,12 +504,11 @@ public class ServerInputThread extends Thread {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-//								System.out.println("Looping here??");
 							}
+
 //							readMessage();
 //							while(!serverManager.hasEveryoneDodged()) {
-
-								
+//							
 //							}
 							System.out.println("Everyone has responded");
 		        		}
@@ -506,23 +530,6 @@ public class ServerInputThread extends Thread {
 								if(serverManager.hasEveryoneDodged()) {
 									break;
 								}
-//								try {
-//									TimeUnit.SECONDS.sleep(15);
-//								} catch (InterruptedException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//									readMessage();
-//								try {
-//									Thread.sleep(10000);
-//								} catch (InterruptedException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//									if(ois.available() > 0) {
-//										System.out.println("Trying to read now");
-//										readMessage();
-//									}
 									tempory = ois.readObject();
 									if(tempory != null) {
 										System.out.println("Trying to read now");
@@ -539,13 +546,12 @@ public class ServerInputThread extends Thread {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
-//									System.out.println("Looping here??");
-								}
+							}
 	//							readMessage();
-	//							while(!serverManager.hasEveryoneDodged()) {
-	//
-	//							}
-								System.out.println("Everyone has responded");
+//							while(!serverManager.hasEveryoneDodged()) {
+//	
+//							}
+							System.out.println("Everyone has responded");
 		        		}
 		        	}
 		        	
@@ -566,22 +572,6 @@ public class ServerInputThread extends Thread {
 									if(serverManager.hasEveryoneDodged()) {
 										break;
 									}
-//									try {
-//									TimeUnit.SECONDS.sleep(15);
-//								} catch (InterruptedException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//									readMessage();
-//									try {
-//										Thread.sleep(10000);
-//									} catch (InterruptedException e) {
-//										e.printStackTrace();
-//									}
-//									if(ois.available() > 0) {
-//										System.out.println("Trying to read now");
-//										readMessage();
-//									}
 									tempory = ois.readObject();
 									if(tempory != null) {
 										System.out.println("Trying to read now");
@@ -598,7 +588,6 @@ public class ServerInputThread extends Thread {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
-//									System.out.println("Looping here??");
 								}
 //								readMessage();
 //								while(!serverManager.hasEveryoneDodged()) {
