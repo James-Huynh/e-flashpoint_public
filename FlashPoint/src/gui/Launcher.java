@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -707,8 +708,10 @@ public class Launcher {
 	private void createPopUp() {
 		popUpPanel = new JPanel(new BorderLayout());
 		popUpHolder = new PopupFactory();
+		Font x = new Font("Serif",0,20);
 		
 		JTextArea text = new JTextArea();
+		text.setFont(x);
 		text.append("PLAYER DISCONNECTED! Game is saved. Return to main page.");
 		text.setLineWrap(true);
 		
