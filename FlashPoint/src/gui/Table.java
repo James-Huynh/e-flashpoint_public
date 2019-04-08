@@ -77,6 +77,7 @@ public class Table {
 		private Color tileColorGreen = Color.decode("#00900B");
 		private Color tileColorAmbulance = Color.decode("#05E1FF");
 		private Color tileColorEngine = Color.decode("#FFFF05");
+		private Color currentFFColour = Color.decode("05FFE8");
 		private Popup advFire;
 		private Popup gameTermination;
 		private Popup rideRequest;
@@ -91,7 +92,7 @@ public class Table {
 		private int myIndex = 7;
 		private int[] myFFIndexes;
 		private static boolean host = false;
-		
+		ChatBox chatBox;
 		private boolean loadedGame = false;
 		
 		private clientThread listenerThread;
@@ -151,7 +152,7 @@ public class Table {
 			this.dodged = new boolean[6];
 			this.rode = new boolean[6];
 
-			
+			this.chatBox = new ChatBox(300, 350, clientManager);
 			for(int i = 0; i<inputBoard.getFireFighterList().size(); i++) {
 				Firefighter f = inputBoard.getFireFighterList().get(i);
 				firefighterOrder.put(f,i);
@@ -295,10 +296,11 @@ public class Table {
 //			boardPanel.drawBoard(newBoard);
 //			rightPanel.drawPanel(newBoard);
 //			leftPanel.drawPanel(newBoard);
+			rightPanel.refreshChat();
 			this.boardPanel = new BoardPanel();
 			this.rightPanel = new RightPanel(this.currentBoard);
 			this.leftPanel = new LeftPanel(this.currentBoard);
-			rightPanel.refreshChat();
+//			rightPanel.refreshChat();
 			
 //			gameFrame.add(boardPanel, BorderLayout.CENTER);
 //			gameFrame.add(rightPanel, BorderLayout.EAST);
@@ -345,7 +347,7 @@ public class Table {
 			GameState currentBoard;
 			InformationPanel infoPanel;
 			JTextArea chatArea;
-			ChatBox chatBox = new ChatBox(300, 350, clientManager);
+//			ChatBox chatBox = new ChatBox(300, 350, clientManager);
 			JPanel chatPanel = chatBox.getPanel_main();
 			RightPanel(GameState updatedBoard){
 				super(new GridLayout(2,1));
@@ -411,13 +413,20 @@ public class Table {
 					//needs fixing
 					String ffColour = currentFF.getColour().toString(currentFF.getColour());
 					if(this.currentBoard.getActiveFireFighterIndex() == i) {
-						inputString = "<html> <font size=\"5\", color='"+ffColour+"'><b>" + playerInfo + "</b></font></html>";
+						inputString = "<html> <font size=\"3\", color='"+ffColour+"'><b>" + playerInfo + "</b></font></html>";
+						JLabel currentFFPanel = new JLabel(inputString);
+						Border blackline1 = BorderFactory.createLineBorder(tileColorBlack,1);
+						currentFFPanel.setBackground(currentFFColour);
+						currentFFPanel.setBorder(blackline1);
+						add(currentFFPanel);
+						
 					} 
 					else {
 						inputString = "<html> <font size =\"3\", color='"+ ffColour + "'>" + playerInfo + "</font></html>";
+						add(new JLabel(inputString));
 					}
 					
-					add(new JLabel(inputString));
+//					add(new JLabel(inputString));
 					
 				}
 				String inputString = "<html> <font size=\"5\"> Current Wall Damage: " + currentBoard.getDamageCounter() + "</font></html>";
@@ -5251,16 +5260,16 @@ public class Table {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					advFire.hide();
-					advFire = gameLogPopup.getPopup(rightPanel, gameLog, 1140, 50);
+					advFire = gameLogPopup.getPopup(rightPanel, gameLog, 1100, 50);
 				}
 			});
-			gameLog.setPreferredSize(new Dimension(300,400));
+			gameLog.setPreferredSize(new Dimension(350,400));
 			gameLog.setBackground(tileColorWhite);
 			Border blackline = BorderFactory.createLineBorder(tileColorBlack,10);
 			gameLog.setBorder(blackline);
 			gameLog.add(scroll, BorderLayout.NORTH);
 			gameLog.add(okButton, BorderLayout.SOUTH);
-			advFire = gameLogPopup.getPopup(rightPanel, gameLog, 1140, 50);
+			advFire = gameLogPopup.getPopup(rightPanel, gameLog, 1100, 50);
 			
 			advFire.show();
 		}
@@ -6557,6 +6566,7 @@ public class Table {
 			text.setLineWrap(true);
 			JPanel responsePanel = new JPanel();
 			responsePanel.setLayout(new GridLayout(3,1));
+			responsePanel.setPreferredSize(new Dimension(500,500));
 			
 			if(redReRoll) {
 				JButton redButton = new JButton("Reroll Red Dice");

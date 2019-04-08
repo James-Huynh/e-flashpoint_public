@@ -322,6 +322,29 @@ public class User implements Serializable {
 	public void setGameName(String s) {
 		this.gameName = s;
 	}
+	
+	public void resetUserAfterGame() {
+		this.currentState = null;
+		this.currentChat = null;
+		this.matTiles = null;
+		this.coords = null;
+		this.placed = false;
+		this.rideResponse = false;
+		this.action = null;
+		this.currentLobbies = null;
+		this.currentLobby = null;
+		this.message = null;
+		this.vehicleIndex = 5;
+		this.vehicleType = null;
+		this.myFFIndex = 7;
+		this.ridingObject = null;
+		this.dodgeAction = null;
+		this.desiredFirefighter = 7;
+		this.desiredFirefighterColour = null;
+		this.desiredSpeciality = null;
+		this.dices = null;
+		
+	}
 
 //	public int getImg() {
 //		return img;
