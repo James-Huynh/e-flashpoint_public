@@ -169,6 +169,8 @@ public class Table {
 			
 			if(this.myFFIndexes[0] == 0) {
 				this.host = true;
+			} else {
+				this.host = false;
 			}
 			
 			for(; this.myIndex<6;this.myIndex++) {
