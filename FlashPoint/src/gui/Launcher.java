@@ -709,17 +709,30 @@ public class Launcher {
 		popUpHolder = new PopupFactory();
 		
 		JTextArea text = new JTextArea();
-		text.append("PLAYER DISCONNECTED!!!!!!!!!");
+		text.append("PLAYER DISCONNECTED! Game is saved. Return to main page.");
 		text.setLineWrap(true);
 		
 		JButton okButton = new JButton("ok");
 		okButton.setPreferredSize(new Dimension(20,20));
-		okButton.addActionListener(new ActionListener() {
+		okButton.addMouseListener(new MouseAdapter() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				loginFailedPopUp.hide();
-//				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					
+					loginFailedPopUp.hide();
+					createNewThread();
+				}
 			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					
+					loginFailedPopUp.hide();
+					createNewThread();
+				}
+			}
+				
+
 		});
 		popUpPanel.setPreferredSize(new Dimension(300,400));
 		popUpPanel.setBackground(Color.decode("#FFFFFF"));
