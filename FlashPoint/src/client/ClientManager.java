@@ -145,9 +145,12 @@ public class ClientManager {
 			case FINDLOBBYSUCCESS:
 				System.out.println("Successful findlobby request");
 				requestObject = (User) read_tranObject.getObject();
-				flag = true;
-				System.out.println(requestObject.getLobbyList().get(0).getPlayers().get(0).getUserName());
-				break;
+				if (!requestObject.getLobbyList().isEmpty()) {
+					flag = true;
+					System.out.println(requestObject.getLobbyList().get(0).getPlayers().get(0).getUserName());
+					break;
+				}
+				
 			case JOINLOBBYSUCCESS:
 				System.out.println("Successful joinlobby request");
 				//currentLobby = (Lobby) read_tranObject.getObject();

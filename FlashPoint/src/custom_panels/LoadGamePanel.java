@@ -36,9 +36,6 @@ public class LoadGamePanel extends JPanel {
 	private int textAreaY = 60;
 	private JLabel entryTest, entry_1, entry_2, entry_3, entry_4, entry_5;
 	private ArrayList<JLabel> listEntries;
-	private PopupFactory popUpHolder;
-	private Popup lobbyFailedPopUp;
-	private JPanel popUpPanel;
 
 	private ArrayList<GameState> savedGames;
 
@@ -66,8 +63,7 @@ public class LoadGamePanel extends JPanel {
 
 		initializePanels(); // create LoadGamePanel/Load Game Label
 
-		intializeEntries(); 
-		createPopUp();
+		intializeEntries();
 	}
 
 	private void initializePanels() {
@@ -286,58 +282,5 @@ public class LoadGamePanel extends JPanel {
 		for (BackListener listener: REGISTERED_OBJECTS.getListeners(BackListener.class)) {
 			listener.clickBack();
 		}
-	}
-	
-	private void createPopUp() {
-		popUpPanel = new JPanel(new BorderLayout());
-		popUpHolder = new PopupFactory();
-		
-		JTextArea text = new JTextArea();
-		text.append("Login failed bro");
-		text.setLineWrap(true);
-		
-		JButton okButton = new JButton("ok");
-		okButton.setPreferredSize(new Dimension(20,20));
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				lobbyFailedPopUp.hide();
-//				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
-			}
-		});
-		popUpPanel.setPreferredSize(new Dimension(300,400));
-		popUpPanel.setBackground(Color.decode("#FFFFFF"));
-		popUpPanel.add(text, BorderLayout.NORTH);
-		popUpPanel.add(okButton, BorderLayout.SOUTH);
-		lobbyFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 500, 400);
-	}
-	
-	
-	private void createPopUpLobby() {
-		popUpPanel = new JPanel(new BorderLayout());
-		popUpHolder = new PopupFactory();
-		
-		JTextArea text = new JTextArea();
-		text.append("No Lobby yet...");
-		text.setLineWrap(true);
-		
-		JButton okButton = new JButton("ok");
-		okButton.setPreferredSize(new Dimension(20,20));
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				lobbyFailedPopUp.hide();
-//				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
-			}
-		});
-		popUpPanel.setPreferredSize(new Dimension(300,400));
-		popUpPanel.setBackground(Color.decode("#FFFFFF"));
-		popUpPanel.add(text, BorderLayout.NORTH);
-		popUpPanel.add(okButton, BorderLayout.SOUTH);
-		lobbyFailedPopUp = popUpHolder.getPopup(popUpPanel, popUpPanel, 500, 400);
-	}
-	
-	public void showPopUpLobby() {
-		lobbyFailedPopUp.show();
 	}
 }

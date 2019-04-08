@@ -1,5 +1,6 @@
 package custom_panels;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
 import javax.swing.event.EventListenerList;
@@ -48,6 +50,10 @@ public class FindLobbyPanel extends JPanel {
 	private int positionMultiplier = 150;
 
 	private JButton backBtn;
+	
+	private PopupFactory popUpHolder;
+	private Popup lobbyFailedPopUp;
+	private JPanel popUpPanel;
 	
 	
 	/**
@@ -99,15 +105,12 @@ public class FindLobbyPanel extends JPanel {
 		createBackButton();
 		createSearchEntries();
 		displaySearchEntries();
+		createPopUpLobby();
 		}
 	}
 
 	private void createSearchEntries() {
 		lobbyEntries = new ArrayList<LobbySearchEntry>();
-		
-		if (availLobbies.isEmpty()) {
-			return;
-		}
 		
 		for (Lobby lobby: availLobbies ) {
 			
@@ -138,29 +141,7 @@ public class FindLobbyPanel extends JPanel {
 
 	private void displaySearchEntries() {
 		if (lobbyEntries.isEmpty()) {
-			// create a frame 
-//			JFrame.setDefaultLookAndFeelDecorated(true);
-//		    JFrame frame = new JFrame();
-//		    frame.setTitle("My First Swing Application");
-//		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		    JLabel label = new JLabel("Sorry, No Lobby yet");
-//		    frame.add(label);
-//		    frame.pack();
-//		    frame.setVisible(true);
-		    /*
-	        JFrame f = new JFrame("pop");
-	        f.setPreferredSize(new Dimension(175, 100));
-	        f.setVisible(true);
-	        f.dispose();
-			JButton okButton = new JButton("ok");
-			okButton.setPreferredSize(new Dimension(20,20));
-			okButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					f.setVisible(false);
-				}
-			});
-			*/
+			showPopUpLobby();
 			return;
 		}
 		
@@ -200,6 +181,34 @@ public class FindLobbyPanel extends JPanel {
 		for (BackListener listener: REGISTERED_OBJECTS.getListeners(BackListener.class)) {
 			listener.clickBack();
 		}
+	}
+	
+	private void createPopUpLobby() {
+		popUpPanel = new JPanel(new BorderLayout());
+		popUpHolder = new PopupFactory();
+		
+		JTextArea text = new JTextArea();
+		text.append("No Lobby yet...");
+		text.setLineWrap(true);
+		
+		JButton okButton = new JButton("ok");
+		okButton.setPreferredSize(new Dimension(20,20));
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lobbyFailedPopUp.hide();
+//				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
+			}
+		});
+		popUpPanel.setPreferredSize(new Dimension(300,400));
+		popUpPanel.setBackground(Color.decode("#FFFFFF"));
+		popUpPanel.add(text, BorderLayout.NORTH);
+		popUpPanel.add(okButton, BorderLayout.SOUTH);
+		lobbyFailedPopUp = popUpHolder.getPopup(popUpPanel, popUpPanel, 500, 400);
+	}
+	
+	public void showPopUpLobby() {
+		lobbyFailedPopUp.show();
 	}
 	
 }
