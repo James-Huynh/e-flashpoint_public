@@ -50,6 +50,7 @@ public class ChatBox extends JPanel{
 	private StyledDocument documento;
 	MutableAttributeSet attrs;
 	//private Style style;
+	private int globalTracker;
 
 	private ClientManager clientManager;
 	private List<ChatMsgEntity> mDataArrays;
@@ -58,6 +59,7 @@ public class ChatBox extends JPanel{
 		setLayout(null);
 
 		this.clientManager = myClientManager;
+		this.globalTracker = 0;
 				
 		rect_main = new Rectangle(0, 0, x, y);
 		createRectangles();
@@ -139,7 +141,31 @@ public class ChatBox extends JPanel{
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
-			for (ChatMsgEntity entity : temp) {
+			
+//			for (ChatMsgEntity entity : temp) {
+//				finalText.delete(0, finalText.length());
+//				finalText.append("[" + entity.getDate() + "] ");
+//				finalText.append(entity.getName() + ": ");
+//				finalText.append(entity.getMessage() + "\n");
+//				
+//				
+//				Colour playerColor = entity.getColour();
+//				System.out.println("im here" + playerColor);
+//				//change font color here
+//				if(playerColor == Colour.GREEN) StyleConstants.setForeground(attrs, Color.GRAY);
+//				if(playerColor == Colour.BLUE) StyleConstants.setForeground(attrs, Color.BLUE);
+//				if(playerColor == Colour.RED) StyleConstants.setForeground(attrs, Color.RED);
+//				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(attrs, Color.MAGENTA);
+//				if(playerColor == Colour.BLACK) StyleConstants.setForeground(attrs, Color.BLACK);
+//				if(playerColor == Colour.WHITE) {
+//					StyleConstants.setForeground(attrs, Color.WHITE);
+//					
+//				}
+//				updateChatGUI(finalText.toString());
+//			}
+			
+			for(int i=globalTracker;i<temp.size();i++) {
+				ChatMsgEntity entity = temp.get(i);
 				finalText.delete(0, finalText.length());
 				finalText.append("[" + entity.getDate() + "] ");
 				finalText.append(entity.getName() + ": ");
@@ -159,6 +185,8 @@ public class ChatBox extends JPanel{
 					
 				}
 				updateChatGUI(finalText.toString());
+				
+				globalTracker = i+1;
 			}
 		} else {
 			if(!mDataArrays.isEmpty()) {
@@ -204,7 +232,7 @@ public class ChatBox extends JPanel{
 			exc.printStackTrace();
 		}
 
-		textField.setText("");
+//		textField.setText("");
 		textField.requestFocus();
 	}
 
