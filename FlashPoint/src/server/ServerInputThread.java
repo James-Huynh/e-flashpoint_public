@@ -32,6 +32,7 @@ public class ServerInputThread extends Thread {
 	private boolean isStart = true;
 	ServerManager serverManager;
 	Random rand = new Random();
+	private Object tempory;
 
 	public ServerInputThread(Socket socket, OutputThread out, OutputThreadMap map, ServerManager newServerManager) {
 		this.socket = socket;
@@ -58,7 +59,7 @@ public class ServerInputThread extends Thread {
 				//System.out.println("Looping?");
 //				serverManager.readMessage(out, ois);
 				// JUNHA : this is supposed to be serverManager.readMessage();
-				 readMessage();
+				 readMessage(null);
 
 			}
 			if (ois != null)
@@ -72,6 +73,7 @@ public class ServerInputThread extends Thread {
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("IO Exception Error");
+			this.interrupt();
 			TranObject<User> returnObject;
 			returnObject = new TranObject<User>(TranObjectType.ERROR);
 			for(Player p: serverManager.getLobby().getPlayers()) {
@@ -90,7 +92,7 @@ public class ServerInputThread extends Thread {
 	 * @throws ClassNotFoundException
 	 */
 
-	public void readMessage() throws IOException, ClassNotFoundException {
+	public void readMessage(Object o) throws IOException, ClassNotFoundException {
 //		while (true) {
 //		socket.sendUrgentData(0xFF); // å�‘é€�å¿ƒè·³åŒ…
 //		System.out.println("ç›®å‰�æ˜¯å¤„äºŽé“¾æŽ¥çŠ¶æ€�ï¼�");
@@ -98,9 +100,16 @@ public class ServerInputThread extends Thread {
 //} catch (Exception e) {
 //	System.out.println("ç›®å‰�æ˜¯å¤„äºŽæ–­å¼€çŠ¶æ€�ï¼�");
 //			e.printStackTrace();
+		Object readObject;
 //				}
-		
-		Object readObject = ois.readObject();// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå�«è®¹æ‹·å�–é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+		if(o == null) {
+			readObject = ois.readObject();
+		}
+		else {
+			readObject = o;
+		}
+//		Object readObject = ois.readObject();// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå�«è®¹æ‹·å�–é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+//		System.out.println(ois.readObject());
 //		try{ 
 //			socket.sendUrgentData(0xFF); 
 //		}
@@ -115,7 +124,7 @@ public class ServerInputThread extends Thread {
 //				onOut.setMessage(returnObject2);
 //			}
 //		}
-		System.out.println("Insinde readMessage");
+		System.out.println("Insinde readMessage for Thread No # = " + this.getId());
 //		UserDao dao = UserDaoFactory.getInstance();// é€šé”Ÿæ–¤æ‹·daoæ¨¡å¼�é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ•™ï¿½
 		if (readObject != null && readObject instanceof TranObject) {
 		//	System.out.println("Entered IF");
@@ -291,8 +300,26 @@ public class ServerInputThread extends Thread {
 
 					System.out.println("hello should be at the while" + serverManager.hasEveryoneResponded());
 					if(popUpFlag) {
+//						while(true) {
+//							try {
+//								Thread.sleep(15000);
+//							} catch (InterruptedException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							while(!serverManager.hasEveryoneResponded()) {
+//								
+//							}
+//							break;
+//						}
 						while(!serverManager.hasEveryoneResponded()) {
-							
+//							try {
+//								Thread.sleep(10000);
+//							} catch (InterruptedException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							readMessage();
 						}
 						System.out.println("Out of response checking loops");
 					}
@@ -419,13 +446,40 @@ public class ServerInputThread extends Thread {
 								if(serverManager.hasEveryoneDodged()) {
 									break;
 								}
+//								try {
+////									TimeUnit.SECONDS.sleep(15);
+//								} catch (InterruptedException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//								readMessage();
+//								try {
+//									Thread.sleep(10000);
+//								} catch (InterruptedException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//								if(ois.available() > 0) {
+//									System.out.println("Trying to read now");
+//									readMessage();
+//								}
+								tempory = ois.readObject();
+								if(tempory != null) {
+									System.out.println("Trying to read now");
+									try {
+										readMessage(tempory);
+									}
+									catch(Exception e) {
+										System.out.println("EXCEPTION HAPPENED!");
+									}
+								}
 								try {
-									TimeUnit.SECONDS.sleep(15);
+									Thread.sleep(1000);
 								} catch (InterruptedException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-								readMessage();
+//								System.out.println("Looping here??");
 							}
 //							readMessage();
 //							while(!serverManager.hasEveryoneDodged()) {
@@ -452,13 +506,40 @@ public class ServerInputThread extends Thread {
 								if(serverManager.hasEveryoneDodged()) {
 									break;
 								}
-								try {
-									TimeUnit.SECONDS.sleep(15);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-									readMessage();
+//								try {
+//									TimeUnit.SECONDS.sleep(15);
+//								} catch (InterruptedException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//									readMessage();
+//								try {
+//									Thread.sleep(10000);
+//								} catch (InterruptedException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//									if(ois.available() > 0) {
+//										System.out.println("Trying to read now");
+//										readMessage();
+//									}
+									tempory = ois.readObject();
+									if(tempory != null) {
+										System.out.println("Trying to read now");
+										try {
+											readMessage(tempory);
+										}
+										catch(Exception e) {
+											System.out.println("EXCEPTION HAPPENED!");
+										}
+									}
+									try {
+										Thread.sleep(1000);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+//									System.out.println("Looping here??");
 								}
 	//							readMessage();
 	//							while(!serverManager.hasEveryoneDodged()) {
@@ -485,13 +566,39 @@ public class ServerInputThread extends Thread {
 									if(serverManager.hasEveryoneDodged()) {
 										break;
 									}
+//									try {
+//									TimeUnit.SECONDS.sleep(15);
+//								} catch (InterruptedException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//									readMessage();
+//									try {
+//										Thread.sleep(10000);
+//									} catch (InterruptedException e) {
+//										e.printStackTrace();
+//									}
+//									if(ois.available() > 0) {
+//										System.out.println("Trying to read now");
+//										readMessage();
+//									}
+									tempory = ois.readObject();
+									if(tempory != null) {
+										System.out.println("Trying to read now");
+										try {
+											readMessage(tempory);
+										}
+										catch(Exception e) {
+											System.out.println("EXCEPTION HAPPENED!");
+										}
+									}
 									try {
-									TimeUnit.SECONDS.sleep(15);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-									readMessage();
+										Thread.sleep(1000);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+//									System.out.println("Looping here??");
 								}
 //								readMessage();
 //								while(!serverManager.hasEveryoneDodged()) {

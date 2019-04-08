@@ -650,7 +650,7 @@ public class GameManager {
     	Tile targetTile = gs.returnTile(0,0);
     	int[] tempCoords = targetTile.getCoords();
     	while(true) {       // all tiles
-    		System.out.println("in hazmat explosion loop");
+//    		System.out.println("in hazmat explosion loop");
     		tempCoords = targetTile.getCoords();
     		if(targetTile.getFire() == 2 && targetTile.containsHazmat()) {
     			while(targetTile.containsHazmat()) {
@@ -696,7 +696,7 @@ public class GameManager {
     	int[] coords = targetTile.getCoords();
     
     	while(true){	
-    		System.out.println("in knockdown loop");
+//    		System.out.println("in knockdown loop");
     		int curFire = targetTile.getFire();
     		coords = targetTile.getCoords();
     		boolean fire = false;
@@ -778,7 +778,7 @@ public class GameManager {
         Tile targetTile = gs.rollForTile();
         int count = 0;
         while (currentPOI < 3) {
-        	System.out.println("in POI loop");
+//        	System.out.println("in POI loop");
         	boolean containsPOI = targetTile.containsPOI();
         	boolean containsFireFighter = targetTile.containsFirefighter();
         	int curFire = targetTile.getFire();
