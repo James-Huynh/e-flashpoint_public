@@ -59,6 +59,7 @@ public class Command extends Action {
 		Firefighter captain = gs.getPlayingFirefighter();
 		int captain_i = gs.getActiveFireFighterIndex();
 		Firefighter toObey = gs.getFireFighterList().get(this.index);
+		//if (toObey.getSpeciality() == Speciality.DOG) return false ???
 		if (captain.getSpeciality() == Speciality.CAPTAIN) {
 			if (action.getTitle().equals((ActionList.Handle)) || action.getTitle().equals((ActionList.Move)) || 
 					action.getTitle().equals(ActionList.MoveWithHazmat) || action.getTitle().equals(ActionList.MoveWithVictim)) {
