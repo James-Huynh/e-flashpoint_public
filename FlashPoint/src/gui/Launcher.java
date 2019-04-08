@@ -62,16 +62,16 @@ import personalizedlisteners.mainMenuListeners.MainMenuListener;
  *Holds a frame, and uses panels to display 'pages' (i.e. login/menu/game etc)
  */
 public class Launcher {
-	private String EricIP = "142.157.30.54";
+	private String EricIP = "142.157.31.183";
 	private String JamesIP = "142.157.105.75";
 	private String JunhaIP = "142.157.65.237";
 	private String ZaidIP = "142.157.144.137";
-	private String BenIP = "142.157.58.216";
+	private String BenIP = "142.157.59.231";
 	private String MatIP = "142.157.63.60";
 
 	private static Client client;
 
-	private String ServerIP = ZaidIP;
+	private String ServerIP = EricIP;
 
 
 	int port = 8888;
@@ -692,12 +692,12 @@ public class Launcher {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
-					showMenu(e);
+					
 				}
 			}
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
-					showMenu(e);
+					popUpPanel.hide();
 				}
 			}
 			private void showMenu(MouseEvent e) {
@@ -718,26 +718,33 @@ public class Launcher {
 		
 		JButton okButton = new JButton("ok");
 		okButton.setPreferredSize(new Dimension(20,20));
-		okButton.addMouseListener(new MouseAdapter() {
-			
+		okButton.addActionListener(new ActionListener() {
 			@Override
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					
-					loginFailedPopUp.hide();
-					createNewThread();
-				}
+			public void actionPerformed(ActionEvent e) {
+				popUpPanel.hide();
+//				raiseEventRegisterBtn();
 			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					
-					loginFailedPopUp.hide();
-					createNewThread();
-				}
-			}
-				
-
 		});
+//		okButton.addMouseListener(new MouseAdapter() {
+//			
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				if (e.isPopupTrigger()) {
+//					
+//					loginFailedPopUp.hide();
+//					createNewThread();
+//				}
+//			}
+//			public void mouseReleased(MouseEvent e) {
+//				if (e.isPopupTrigger()) {
+//					
+//					loginFailedPopUp.hide();
+//					createNewThread();
+//				}
+//			}
+				
+//
+//		});
 		popUpPanel.setPreferredSize(new Dimension(300,400));
 		popUpPanel.setBackground(Color.decode("#FFFFFF"));
 		popUpPanel.add(text, BorderLayout.NORTH);
