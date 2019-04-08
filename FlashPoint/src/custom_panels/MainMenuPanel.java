@@ -103,17 +103,17 @@ public class MainMenuPanel extends JPanel {
 				raiseEventLoadBtn();
 			}
 		});
-			btn_LoadGame.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent e) {
-				panel.setBorder(BorderFactory.createLineBorder(Color.RED));
-				}
-				@Override
-				public void mouseExited(MouseEvent e) {
-				panel.setBorder(null);
-
-			
-		}});
+//			btn_LoadGame.addMouseListener(new MouseAdapter() {
+//				@Override
+//				public void mouseEntered(MouseEvent e) {
+//				panel.setBorder(BorderFactory.createLineBorder(Color.RED));
+//				}
+//				@Override
+//				public void mouseExited(MouseEvent e) {
+//				panel.setBorder(null);
+//
+//			
+//		}});
 			
 			
 		btn_LoadGame.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 18));

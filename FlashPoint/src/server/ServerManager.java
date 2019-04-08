@@ -600,13 +600,38 @@ public class ServerManager {
 				
 				
 				
-				if(player.getFirefighter()!=null) {
+				if(player.getFirefighters().size() != 0) {
+//					if(gameState.getListOfPlayers().size() == gameState.getFireFighterList().size()) {
+//						gameState.getFreeFirefighters().add(player.getFirefighter());
+//						player.setFirefighter(gameState.getFreeFirefighters().get(desiredFF));
+//						gameState.getFreeFirefighters().get(desiredFF).setPlayer(player);
+//						gameState.getFreeFirefighters().remove(desiredFF);
+//					}
+					boolean selectAgain = true;
+					for(Player p: gameState.getListOfPlayers()) {
+						if(p.getFirefighters().size() == 0) {
+							selectAgain = false; 
+						}
+					}
+					boolean replace = false;
 					if(gameState.getListOfPlayers().size() == gameState.getFireFighterList().size()) {
-						gameState.getFreeFirefighters().add(player.getFirefighter());
+						replace = true;
+					}
+					
+					if(selectAgain) {
 						player.setFirefighter(gameState.getFreeFirefighters().get(desiredFF));
 						gameState.getFreeFirefighters().get(desiredFF).setPlayer(player);
 						gameState.getFreeFirefighters().remove(desiredFF);
+					} else {
+						if(replace) {
+							gameState.getFreeFirefighters().add(player.getFirefighters().remove(0));
+							player.setFirefighter(gameState.getFreeFirefighters().get(desiredFF));
+							gameState.getFreeFirefighters().get(desiredFF).setPlayer(player);
+							gameState.getFreeFirefighters().remove(desiredFF);
+						}
 					}
+					
+					
 				} else {
 					System.out.println("were here");
 					player.setFirefighter(gameState.getFreeFirefighters().get(desiredFF));

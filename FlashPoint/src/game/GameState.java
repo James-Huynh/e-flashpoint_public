@@ -123,9 +123,12 @@ public class GameState implements Serializable {
 
 	public void updateGameStateFromObject(GameState copy) {
 		System.out.println("hello we are testing variables");
-		System.out.println(copy.MAX_WALL_DMGD);
-		System.out.println(copy.activeFireFighterIndex);
-		System.out.println(copy.listOfFirefighters.size());
+		if(copy == null) {
+			return;
+		}
+//		System.out.println(copy.MAX_WALL_DMGD);
+//		System.out.println(copy.activeFireFighterIndex);
+//		System.out.println(copy.listOfFirefighters.size());
 		this.remainingVictims = copy.remainingVictims;
 		this.remainingFalseAlarms = copy.remainingFalseAlarms;
 		this.wallsDamaged = copy.wallsDamaged;

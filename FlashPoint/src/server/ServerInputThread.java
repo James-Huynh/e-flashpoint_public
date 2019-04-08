@@ -411,6 +411,7 @@ public class ServerInputThread extends Thread {
 				requestObject.setLobbyList(serverManager.getLobbyList());
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
+				System.out.println("leaving");
 				break;
 			case JOINLOBBY:
 //				System.out.println("In join lobby");
@@ -671,7 +672,7 @@ public class ServerInputThread extends Thread {
 				System.out.println("WE ARE HERE!" + name);
 				serverManager.getGameState().setSavedGameName(name);
 				serverManager.saveGameMat(serverManager.getGameState(), name);
-				serverManager.setSavedGames();
+				serverManager.getSavedGames().add(serverManager.getGameState());
 				requestObject.setSavedGameStates(serverManager.getSavedGames());
 				
 			case REQUESTSAVEDLIST:
