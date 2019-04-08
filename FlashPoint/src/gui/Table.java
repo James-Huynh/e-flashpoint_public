@@ -77,7 +77,7 @@ public class Table {
 		private Color tileColorGreen = Color.decode("#00900B");
 		private Color tileColorAmbulance = Color.decode("#05E1FF");
 		private Color tileColorEngine = Color.decode("#FFFF05");
-		private Color currentFFColour = Color.decode("05FFE8");
+		private Color currentFFColour = Color.decode("#05FFE8");
 		private Popup advFire;
 		private Popup gameTermination;
 		private Popup rideRequest;
