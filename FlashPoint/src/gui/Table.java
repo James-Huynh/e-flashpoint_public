@@ -4936,7 +4936,7 @@ public class Table {
 				String builder = "";
 				JMenuItem info;
 				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 0) {
-					builder = clientManager.getUsersGameState().getFreeFirefighters().get(0).getOwner().getUserName();
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(0).getOwner().getUserName() + "|" + clientManager.getUsersGameState().getFreeFirefighters().get(0).getColour().toString();
 					info = new JMenuItem(builder);
 					
 					info.addActionListener(new ActionListener() {
@@ -4951,7 +4951,7 @@ public class Table {
 					firefighterMenu.add(info);
 				}
 				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 1) {
-					builder = clientManager.getUsersGameState().getFreeFirefighters().get(1).getOwner().getUserName();
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(1).getOwner().getUserName() + "|" + clientManager.getUsersGameState().getFreeFirefighters().get(1).getColour().toString();
 					info = new JMenuItem(builder);
 					
 					info.addActionListener(new ActionListener() {
@@ -4966,7 +4966,7 @@ public class Table {
 					firefighterMenu.add(info);
 				}
 				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 2) {
-					builder = clientManager.getUsersGameState().getFreeFirefighters().get(2).getOwner().getUserName();
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(2).getOwner().getUserName() + "|" + clientManager.getUsersGameState().getFreeFirefighters().get(2).getColour().toString();
 					info = new JMenuItem(builder);
 					
 					info.addActionListener(new ActionListener() {
@@ -4981,7 +4981,7 @@ public class Table {
 					firefighterMenu.add(info);
 				}
 				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 3) {
-					builder = clientManager.getUsersGameState().getFreeFirefighters().get(3).getOwner().getUserName();
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(3).getOwner().getUserName()+ "|" + clientManager.getUsersGameState().getFreeFirefighters().get(3).getColour().toString();
 					info = new JMenuItem(builder);
 					
 					info.addActionListener(new ActionListener() {
@@ -4996,7 +4996,7 @@ public class Table {
 					firefighterMenu.add(info);
 				}
 				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 4) {
-					builder = clientManager.getUsersGameState().getFreeFirefighters().get(4).getOwner().getUserName();
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(4).getOwner().getUserName()+ "|" + clientManager.getUsersGameState().getFreeFirefighters().get(4).getColour().toString();
 					info = new JMenuItem(builder);
 					
 					info.addActionListener(new ActionListener() {
@@ -5011,7 +5011,7 @@ public class Table {
 					firefighterMenu.add(info);
 				}
 				if(clientManager.getUsersGameState().getFreeFirefighters().size() > 5) {
-					builder = clientManager.getUsersGameState().getFreeFirefighters().get(5).getOwner().getUserName();
+					builder = clientManager.getUsersGameState().getFreeFirefighters().get(5).getOwner().getUserName()+ "|" + clientManager.getUsersGameState().getFreeFirefighters().get(5).getColour().toString();
 					info = new JMenuItem(builder);
 					
 					info.addActionListener(new ActionListener() {

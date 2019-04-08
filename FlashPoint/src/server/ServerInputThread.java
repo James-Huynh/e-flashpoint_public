@@ -78,10 +78,10 @@ public class ServerInputThread extends Thread {
 			serverManager.saveGameMat(serverManager.getGameState(), "Interrupted " + serverManager.getSavedGamesNumber());
 			TranObject<User> returnObject;
 			returnObject = new TranObject<User>(TranObjectType.ERROR);
-			for(Player p: serverManager.getLobby().getPlayers()) {
-				OutputThread onOut = map.getById(p.getID());
-				onOut.setMessage(returnObject);
-			}
+//			for(Player p: serverManager.getLobby().getPlayers()) {
+//				OutputThread onOut = map.getById(p.getID());
+//				onOut.setMessage(returnObject);
+//			}
 			e.printStackTrace();
 		}
 
@@ -141,9 +141,9 @@ public class ServerInputThread extends Thread {
 				System.out.println("In connect request");
 				returnObject = new TranObject<User>(TranObjectType.SUCCESS);
 				requestObject = (User) read_tranObject.getObject();
-				idGenerator = rand.nextInt(10);
+				idGenerator = rand.nextInt(1000);
 				while(serverManager.getPlayers().containsKey(Integer.valueOf(idGenerator))) {
-					idGenerator = rand.nextInt(10);
+					idGenerator = rand.nextInt(1000);
 				}
 				requestObject.setId(Integer.valueOf(idGenerator));
 				returnObject.setObject(requestObject);
@@ -411,6 +411,7 @@ public class ServerInputThread extends Thread {
 				requestObject.setLobbyList(serverManager.getLobbyList());
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
+				System.out.println("leaving");
 				break;
 			case JOINLOBBY:
 //				System.out.println("In join lobby");
@@ -671,7 +672,7 @@ public class ServerInputThread extends Thread {
 				System.out.println("WE ARE HERE!" + name);
 				serverManager.getGameState().setSavedGameName(name);
 				serverManager.saveGameMat(serverManager.getGameState(), name);
-				serverManager.setSavedGames();
+				serverManager.getSavedGames().add(serverManager.getGameState());
 				requestObject.setSavedGameStates(serverManager.getSavedGames());
 				
 			case REQUESTSAVEDLIST:

@@ -83,10 +83,12 @@ public class FindLobbyPanel extends JPanel {
 	private void initialize() {
 		availLobbies =  clientManager.getLobbyList();
 		
-		if(availLobbies.isEmpty()) {
-			JFrame frame = new JFrame("PROBLEM");
-			JOptionPane.showMessageDialog(null,"Work?");
-			JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
+		//if(availLobbies.isEmpty()) {
+			//JFrame frame = new JFrame("PROBLEM");
+			//JOptionPane.showMessageDialog(null,"Work?");
+			//JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
+			//showPopUpLobby();
+			
 			/*
 			//JFrame.setDefaultLookAndFeelDecorated(true);
 		    JFrame frame = new JFrame("PROBLEM");
@@ -99,31 +101,38 @@ public class FindLobbyPanel extends JPanel {
 		    frame.pack();
 		    frame.setVisible(true);
 		    */
-		}
-		else {
+		//}
+		//else {
 		
+		createPopUpLobby();
 		createBackButton();
 		createSearchEntries();
 		displaySearchEntries();
-		createPopUpLobby();
-		}
+		
+		//}
 	}
 
 	private void createSearchEntries() {
 		lobbyEntries = new ArrayList<LobbySearchEntry>();
 		
-		for (Lobby lobby: availLobbies ) {
-			
-			currEntry = new LobbySearchEntry(lobby, clientManager);
-			currEntry.addSelectionPiecesListenerListener(new SearchEntryListener() {
-				@Override
-				public void clickSearchEntry() {
-					raiseEventCallSetUpLobby();
-				}
-			});
-			
-			lobbyEntries.add(currEntry);
+		if(!availLobbies.isEmpty()) {
+			for (Lobby lobby: availLobbies ) {
+				
+				currEntry = new LobbySearchEntry(lobby, clientManager);
+				currEntry.addSelectionPiecesListenerListener(new SearchEntryListener() {
+					@Override
+					public void clickSearchEntry() {
+						raiseEventCallSetUpLobby();
+					}
+				});
+				
+				lobbyEntries.add(currEntry);
+			}
 		}
+		else {
+			showPopUpLobby();
+		}
+		
 		
 	}
 	
@@ -140,19 +149,18 @@ public class FindLobbyPanel extends JPanel {
 	}
 
 	private void displaySearchEntries() {
-		if (lobbyEntries.isEmpty()) {
-			showPopUpLobby();
-			return;
+		if (!availLobbies.isEmpty()) {
+			for (int i = 0 ; i < lobbyEntries.size(); i ++) {
+				 LobbySearchEntry entry = lobbyEntries.get(i);
+				 JPanel entryPanel = entry.getPanel_main();
+		
+				 entryPanel.setLocation(new Point (0, positionMultiplier * i));
+				 panel_main.add(entryPanel);
+				 // how to place the entries in the right location?
+			} 
+			 
 		}
 		
-		 for (int i = 0 ; i < lobbyEntries.size(); i ++) {
-			 LobbySearchEntry entry = lobbyEntries.get(i);
-			 JPanel entryPanel = entry.getPanel_main();
-	
-			 entryPanel.setLocation(new Point (0, positionMultiplier * i));
-			 panel_main.add(entryPanel);
-			 // how to place the entries in the right location?
-		} 
 		 
 		 
 //		dummyEntry = new LobbySearchEntry(dummyLobby, clientManager);
@@ -197,6 +205,7 @@ public class FindLobbyPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				lobbyFailedPopUp.hide();
+				
 //				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
 			}
 		});

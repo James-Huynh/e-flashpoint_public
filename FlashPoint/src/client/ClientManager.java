@@ -150,6 +150,8 @@ public class ClientManager {
 					System.out.println(requestObject.getLobbyList().get(0).getPlayers().get(0).getUserName());
 					break;
 				}
+				flag = false;
+				break;
 				
 			case JOINLOBBYSUCCESS:
 				System.out.println("Successful joinlobby request");
@@ -498,8 +500,13 @@ public class ClientManager {
 		outputThread.setMsg(objectToSend);
 		
 		try {
-			while(readMessage() != true) {
-				
+			boolean stop = readMessage();
+			while(stop != true) {
+				if(stop == false) {
+					flag = false;
+					break;
+				}
+				stop = readMessage();
 			}
 			if(requestObject.getIsOnline() == 1) {
 				flag = true;
