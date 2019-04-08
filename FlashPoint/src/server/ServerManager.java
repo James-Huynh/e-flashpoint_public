@@ -489,6 +489,9 @@ public class ServerManager {
     	String folderPath = defaulGamesPath;
     	File folder = new File(folderPath);
     	File[] listOfFiles = folder.listFiles();
+    	if (listOfFiles.length == 0) {
+    		return;
+    	}
     	for (File f : listOfFiles) {
     		try {
         		FileInputStream fi = new FileInputStream(new File(defaulGamesPath + f.getName()));
