@@ -67,13 +67,21 @@ public class Command extends Action {
 					gs.setPlayingFirefighter(toObey);
 					if (action.validate(gs)) {
 						//request and permission from toObey.
-						if (!captain.getIfCommandCAPSthisTurn() && !(toObey.getSpeciality()==Speciality.CAFS && action.APcost>1)) {
+						if (toObey.getSpeciality() == Speciality.CAFS) {
+							if (captain.getIfCommandCAPSthisTurn() || this.APcost >= 2 ) {
+								//flag = false;
+							}
+							else {
+								flag = true;
+							}
+						}
+						else {
 							flag = true;
 						}
 					}
+					gs.setPlayingFirefighter(captain);
 				}
-			}
-			gs.setPlayingFirefighter(captain);
+			}	
 		}
 		
 		return flag;

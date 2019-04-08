@@ -181,7 +181,7 @@ public class Firefighter extends Token implements Serializable {
 		if (speciality == Speciality.CAPTAIN) {
 			this.AP = 4;
 			this.SP = 2;
-			this.ifCommandCAPSthisTurn = true;
+			this.ifCommandCAPSthisTurn = false;
 			
 		}
 		else if (speciality == Speciality.CAFS) {
