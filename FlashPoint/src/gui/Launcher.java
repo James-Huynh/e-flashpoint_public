@@ -88,6 +88,7 @@ public class Launcher {
 	private JMenuBar tableMenuBar = new JMenuBar();
 	private PopupFactory popUpHolder;
 	private Popup loginFailedPopUp;
+	private Popup lobbyFailedPopUp;
 	private JPanel popUpPanel;
 	private LoginPanel login;
 	private MainMenuPanel mainMenu;
