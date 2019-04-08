@@ -73,15 +73,16 @@ public class ServerInputThread extends Thread {
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("IO Exception Error");
+			
+			TranObject<User> returnObject;
+			returnObject = new TranObject<User>(TranObjectType.ERROR);
+			for(Player p: serverManager.getLobby().getPlayers()) {
+				OutputThread onOut = map.getById(p.getID());
+				onOut.setMessage(returnObject);
+			}
 			this.interrupt(); //ERIC - sorry for modifications but those caused the problems!
 			//you had IO exception in IO exception
 			serverManager.saveGameMat(serverManager.getGameState(), "Interrupted " + serverManager.getSavedGamesNumber());
-			TranObject<User> returnObject;
-			returnObject = new TranObject<User>(TranObjectType.ERROR);
-//			for(Player p: serverManager.getLobby().getPlayers()) {
-//				OutputThread onOut = map.getById(p.getID());
-//				onOut.setMessage(returnObject);
-//			}
 			e.printStackTrace();
 		}
 
