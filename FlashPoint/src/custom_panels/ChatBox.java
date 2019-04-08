@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -84,7 +85,7 @@ public class ChatBox extends JPanel{
 		attrs = textPane.getInputAttributes();
 		//style = textPane.addStyle("StyleName", null);
 		//that's how u change color
-		StyleConstants.setForeground(attrs, Color.GREEN);
+		StyleConstants.setForeground(attrs, Color.black);
 		textPane.setBounds(rect_textArea);
 
 		scrollPane = new JScrollPane(textPane);
@@ -128,28 +129,29 @@ public class ChatBox extends JPanel{
 		mDataArrays = clientManager.getChatArray();
 		
 		if(b) {
+			List<ChatMsgEntity> temp = reverseList(mDataArrays);
 //			try {
 //				document.remove(0, document.getLength());
 //			} catch (BadLocationException e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
-			for (ChatMsgEntity entity : mDataArrays) {
+			for (ChatMsgEntity entity : temp) {
 				finalText.delete(0, finalText.length());
 				finalText.append(entity.getDate());
 				finalText.append(entity.getName() + ": ");
 				finalText.append(entity.getMessage() + "\n");
 				
 				
-//				Colour playerColor = entity.getColour();
-//				System.out.println("im here" + playerColor);
-//				//change font color here
-//				if(playerColor == Colour.GREEN) StyleConstants.setForeground(attrs, Color.GREEN);
-//				if(playerColor == Colour.BLUE) StyleConstants.setForeground(attrs, Color.BLUE);
-//				if(playerColor == Colour.RED) StyleConstants.setForeground(attrs, Color.RED);
-//				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(attrs, Color.MAGENTA);
-//				if(playerColor == Colour.BLACK) StyleConstants.setForeground(attrs, Color.BLACK);
-//				if(playerColor == Colour.WHITE) StyleConstants.setForeground(attrs, Color.WHITE);
+				Colour playerColor = entity.getColour();
+				System.out.println("im here" + playerColor);
+				//change font color here
+				if(playerColor == Colour.GREEN) StyleConstants.setForeground(attrs, Color.GREEN);
+				if(playerColor == Colour.BLUE) StyleConstants.setForeground(attrs, Color.BLUE);
+				if(playerColor == Colour.RED) StyleConstants.setForeground(attrs, Color.RED);
+				if(playerColor == Colour.PURPLE) StyleConstants.setForeground(attrs, Color.MAGENTA);
+				if(playerColor == Colour.BLACK) StyleConstants.setForeground(attrs, Color.BLACK);
+				if(playerColor == Colour.WHITE) StyleConstants.setForeground(attrs, Color.WHITE);
 				
 				updateChatGUI(finalText.toString());
 			}
@@ -242,5 +244,10 @@ public class ChatBox extends JPanel{
 	}
 	public void setPanel_main(JPanel panel_main) {
 		this.panel_main = panel_main;
+	}
+	public List<ChatMsgEntity> reverseList(List<ChatMsgEntity> someList){
+		List<ChatMsgEntity> tempList = new ArrayList<ChatMsgEntity>(someList);
+		Collections.reverse(tempList);
+		return tempList;
 	}
 }
