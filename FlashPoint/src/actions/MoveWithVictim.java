@@ -106,6 +106,9 @@ public class MoveWithVictim extends Move{
 					gs.removePOI(temp);
 					gs.updateSavedCount(temp);
 				}
+				else {
+					neighbour.addPoi(pois.remove(0)); //smart
+				}
 			}
 			else {
 				neighbour.addPoi(pois.remove(0)); //smart
