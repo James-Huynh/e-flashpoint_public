@@ -5314,7 +5314,7 @@ public class Table {
 		public void showTurnPopUp() {
 			for(int i=0;i<6;i++) {
 				if(myFFIndexes[i] == currentBoard.getActiveFireFighterIndex()) {
-					showTurnNotifier(i);
+					showTurnNotifier(myFFIndexes[i]);
 				}
 			}
 		}

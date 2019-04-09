@@ -229,6 +229,7 @@ public class ServerInputThread extends Thread {
 				
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
+				
 				break;
 			
 			case STARTGAMESTATE:
