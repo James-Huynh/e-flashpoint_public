@@ -133,7 +133,7 @@ public class ClientManager {
 				System.out.println("Successful saved game lobby request");
 				requestObject = (User) read_tranObject.getObject();
 				currentLobby = requestObject.getCurrentLobby();
-
+				
 				System.out.println("setting up lobby page" + currentLobby.getDifficulty());
 				flag = true;
 				//startGameFlag = 2;
@@ -149,7 +149,7 @@ public class ClientManager {
 				requestObject = (User) read_tranObject.getObject();
 				if (!requestObject.getLobbyList().isEmpty()) {
 					flag = true;
-					System.out.println(requestObject.getLobbyList().get(0).getPlayers().get(0).getUserName());
+					//System.out.println(requestObject.getLobbyList().get(0).getPlayers().get(0).getUserName());
 					break;
 				}
 				flag = false;
@@ -635,6 +635,7 @@ public class ClientManager {
 		
 		Lobby lobby = new Lobby();
 		lobby.setIsLoadGame(true);
+		
 		//lobby.setCapacity(capacity)
 		
 		
