@@ -222,7 +222,8 @@ public class LoginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginFailedPopUp.hide();
-//				loginFailedPopUp = popUpHolder.getPopup(this, popUpPanel, 1140, 50);
+				createLoginPopUp();
+				//loginFailedPopUp = loginPopUpHolder.getPopup(this, loginPopUpPanel, 500, 400);
 			}
 		});
 		loginPopUpPanel.setPreferredSize(new Dimension(300,400));
@@ -238,6 +239,7 @@ public class LoginPanel extends JPanel {
 	
 	private void hidePopUp() {
 		loginFailedPopUp.hide();
+		//loginPopUpHolder.getPopup(owner, contents, x, y)
 	}
 	
 	private void createRegisterPopUp() {
@@ -253,15 +255,14 @@ public class LoginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				registerSuccessPopUp.hide();
-//				raiseEventRegisterBtn();
 			}
 		});
 		
-		registerPopUpPanel.setPreferredSize(new Dimension(275,80));
+		registerPopUpPanel.setPreferredSize(new Dimension(300,200));
 		registerPopUpPanel.setBackground(Color.decode("#FFFFFF"));
 		registerPopUpPanel.add(regText, BorderLayout.CENTER);
 		registerPopUpPanel.add(okButton, BorderLayout.SOUTH);
-		registerSuccessPopUp = registerPopUpHolder.getPopup(this, registerPopUpPanel, 500, 400);
+		registerSuccessPopUp = registerPopUpHolder.getPopup(this, registerPopUpPanel, 430, 300);
 	}
 	
 	private void showRegisterPopUp() {

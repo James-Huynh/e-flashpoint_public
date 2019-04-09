@@ -423,9 +423,10 @@ public class ServerManager {
     	//for (int ind=0; ind<this.savedGames.size(); ind++) {
     		GameState gs = savedGames.get(index);
     		initializeGameManager();
-			this.gameManager.getGameState().updateGameStateFromObject(gs);
+			this.gameManager.getGameState().updateGameStateFromObject(gs);			
 			this.gameState = gameManager.getGameState();
 			this.gameState.setListOfPlayers(this.activeLobby.getPlayers());
+			generateActions();
 			return gs; 
     	//}
     	/*

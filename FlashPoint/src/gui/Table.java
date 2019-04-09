@@ -169,6 +169,8 @@ public class Table {
 			
 			if(this.myFFIndexes[0] == 0) {
 				this.host = true;
+			} else {
+				this.host = false;
 			}
 			
 			for(; this.myIndex<6;this.myIndex++) {
@@ -225,6 +227,8 @@ public class Table {
 			gameTiles = currentBoard.getMatTiles();
 //			this.playing = playingchange;
 //			this.placing = placingchange;
+			resetDodge();
+			resetRode();
 			if(this.loadedGame == true && clientManager.getUsersGameState().getFreeFirefighters().size() == 0) {
 				this.myIndex = 0;
 				for(int i = 0; i<clientManager.getUsersGameState().getFireFighterList().size(); i++) {
@@ -6426,21 +6430,27 @@ public class Table {
 			
 			
 			if(menu0 && !dodged[0]){
+				System.out.println("d0" + dodged[0]);
 				gameTPanel.add(FF0);
 			}
 			if(menu1 && !dodged[1]){
+				System.out.println("d1" + dodged[1]);
 				gameTPanel.add(FF1);
 			}
 			if(menu2 && !dodged[2]){
+				System.out.println("d2" + dodged[2]);
 				gameTPanel.add(FF2);
 			}
 			if(menu3 && !dodged[3]){
+				System.out.println("d3" + dodged[3]);
 				gameTPanel.add(FF3);
 			}
 			if(menu4 && !dodged[4]){
+				System.out.println("d4" + dodged[4]);
 				gameTPanel.add(FF4);
 			}
 			if(menu5 && !dodged[5]){
+				System.out.println("d5" + dodged[5]);
 				gameTPanel.add(FF5);
 			}
 			
