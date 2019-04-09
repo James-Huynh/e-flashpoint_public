@@ -219,11 +219,11 @@ public class ServerInputThread extends Thread {
 				System.out.println("load request received");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setLobby(requestObject.getCurrentLobby());
-				//set the capcity of the servermanager's current lobby (gets the capacity from right saved game in saved game list in server Manager 
-				serverManager.getLobby().setCapacity(serverManager.getSavedGames().get(requestObject.getLoadIndex()).getFireFighterList().size()); 
+				//set the capcity/name/board/mode/..etc. of the servermanager's current lobby 
+				serverManager.updateLobbyForLoadGame(requestObject.getLoadIndex());
 				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
 				requestObject.setCurrentLobby(serverManager.getLobby());
-				//serverManager.getLobby().setCapacity(serverManager.getGameState().getListOfPlayers().size());
+			    //serverManager.getLobby().setCapacity(serverManager.getGameState().getListOfPlayers().size());
 				//serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));  //
 				//serverManager.getLobby().setDifficulty("serverManager.getGameState().getDifficulty()");
 				//serverManager.getLobby().setMode("mode");
@@ -689,6 +689,7 @@ public class ServerInputThread extends Thread {
 				serverManager.saveGameMat(serverManager.getGameState(), name);
 				serverManager.getSavedGames().add(serverManager.getGameState());
 				requestObject.setSavedGameStates(serverManager.getSavedGames());
+				break;
 				
 			case REQUESTSAVEDLIST:
 				System.out.println("request saved game state objects");

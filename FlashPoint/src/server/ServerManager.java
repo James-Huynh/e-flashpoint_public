@@ -698,5 +698,20 @@ public class ServerManager {
 			
 			
 		}
+		public void updateLobbyForLoadGame(int savedIndex) {
+			this.activeLobby.setCapacity( getSavedGames().get(savedIndex).getFireFighterList().size() ); 
+			if(getSavedGames().get(savedIndex).getRandomBoard() == -1) {
+				this.activeLobby.setBoard("Ramdom Board");
+			}else {
+				this.activeLobby.setBoard("Board 1 or 2");
+			}
+			this.activeLobby.setName(getSavedGames().get(savedIndex).getSavedGameName());
+//			this.activeLobby.setDifficulty(getSavedGames().get(savedIndex).getDifficulty());
+			if(getSavedGames().get(savedIndex).isExperienced()) {
+				this.activeLobby.setMode("Experienced");
+			}else {
+				this.activeLobby.setMode("Family");
+			}
+		}
 	
 }
