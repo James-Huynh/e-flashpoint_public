@@ -47,6 +47,7 @@ public class ClientManager {
 		this.inputThread = input;
 		this.outputThread = output;
 		this.launcher = myLauncher;
+		this.dodgeRefreshFlag = true;
 		
 	}
 	
