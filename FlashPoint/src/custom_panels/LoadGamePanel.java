@@ -100,7 +100,6 @@ public class LoadGamePanel extends JPanel {
 		String entryName = "";
 
 		textAreaW = pnl_main.getWidth() - 2*textAreaX;
-
 		listEntries = new ArrayList<JLabel>();
 		
 		

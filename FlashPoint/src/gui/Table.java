@@ -5287,7 +5287,9 @@ public class Table {
 			PopupFactory turnPopUp = new PopupFactory();
 			JPanel turnLog = new JPanel(new BorderLayout());
 			JTextArea turnText = new JTextArea();
-			String notification = "It's your turn!" + "\n" + "Please make a turn for Firefighter " + clientManager.getUsersGameState().getFireFighterList().get(i).getColour().toString(); //Edit this to have FF details
+			String notification = "It's your turn!" + "\n" + "Please make a turn for Firefighter " + 
+					clientManager.getUsersGameState().getFireFighterList().get(i).getColour().toString() + " - " + 
+					clientManager.getUsersGameState().getFireFighterList().get(i).getOwner().getUserName().toString(); //Edit this to have FF details
 			turnText.append(notification);
 			turnText.setFont(new Font("AvantGarde", Font.PLAIN, 20));
 			turnText.setLineWrap(true);
