@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -69,6 +71,7 @@ public class ChatBox extends JPanel{
 		panel_main.setLayout(null);
 
 		textField = new JTextField();
+		
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -233,7 +236,9 @@ public class ChatBox extends JPanel{
 		}
 
 //		textField.setText("");
+//		doesnt work
 		textField.requestFocus();
+		textPane.setCaretPosition(textPane.getSelectionEnd());
 	}
 
 	/*
