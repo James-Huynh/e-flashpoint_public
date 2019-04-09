@@ -148,6 +148,7 @@ public class LoginPanel extends JPanel {
 				System.out.println("Login Clicked");
 				if(loginRequest(getUsername(), getPassword())) {
 					System.out.println("Login succesful");
+					registerSuccessPopUp.hide();
 					raiseEventLoginBtn();
 				}
 				else {
