@@ -1315,7 +1315,10 @@ public class Table {
 				if(this.connectedTile.containsHotSpot()) {
 					try {
 						final BufferedImage POIimage = ImageIO.read(new File(defaultImagesPath + "HOTSPOT.gif"));
-						add(new JLabel(new ImageIcon(POIimage)));	
+						add(new JLabel(new ImageIcon(POIimage)));
+						if (connectedTile.containsFirefighter()) {
+							SoundEffectDemo sd = new SoundEffectDemo();
+						}
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edge.Edge;
 import game.GameState;
+import gui.SoundEffectDemo;
 import tile.Tile;
 import token.Firefighter;
 import token.POI;
@@ -213,9 +214,15 @@ public class Move extends Action {
         				gs.removePOI(neighbour.getPoiList().get(0));
         				gs.updateSavedCount(neighbour.getPoiList().get(0));
         				neighbour.getPoiList().remove(0);
+        				playingFirefighter.setCarriedPOI(null);
         			}
         		}
         	}
+        }
+        
+        //sound effect
+        if(neighbour.containsHotSpot()) {
+        	//SoundEffectDemo sd = new SoundEffectDemo();
         }
 
 //        	neighbour.getPoiList().add(playingFirefighter.getCarriedPOI());s
