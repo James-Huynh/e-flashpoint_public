@@ -111,6 +111,7 @@ public class LoadGamePanel extends JPanel {
 			currEntry.setFont(new Font("Open Sans", Font.PLAIN, 14));
 			currEntry.setBackground(Color.white);
 			currEntry.setOpaque(true);
+			entryName = "";
 			entryName = buildEntryNameString(i, savedGames.get(i).getSavedGameName() + " " + i); 
 			currEntry.setText(entryName);
 			currEntry.addMouseListener(new MouseAdapter() {
