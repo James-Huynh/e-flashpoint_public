@@ -45,25 +45,32 @@ public class Extinguish extends Action {
     @Override
     public boolean validate(GameState gs) {
         boolean flag = false;
+        
         Firefighter playingFirefighter = gs.getPlayingFirefighter();
         int extraPoints = 0;
-        if (playingFirefighter.getSpeciality() == Speciality.CAFS) {
+        
+        Speciality s = gs.getPlayingFirefighter().getSpeciality();
+        int cost = this.APcost;
+        
+        if (s == (Speciality.PARAMEDIC) || s == (Speciality.RESCUE_SPECIALIST)) {
+			this.APcost = 2*this.APcost;
+		}
+        
+        if (s == Speciality.CAFS) {
         	extraPoints = playingFirefighter.getSP();
         }
+        
+        if (s == Speciality.DOG) {
+			return false;
+		}
+        
         int aP = playingFirefighter.getAP();
         Tile currentPosition = playingFirefighter.getCurrentPosition();
         Tile neighbour = gs.getNeighbour(currentPosition, this.direction);
         if(neighbour == null) { //If exterior, this direction isn't valid
         	return false;
         }
-		Speciality s = gs.getPlayingFirefighter().getSpeciality();
-		if (s == (Speciality.PARAMEDIC) || s == (Speciality.RESCUE_SPECIALIST)) {
-			this.APcost = 2*this.APcost;
-		}
-		if (s == Speciality.DOG) {
-			return false;
-		}
-        int cost = this.APcost; //help variable: all FFs now have the same measure of determining how much to estinguish, but different APcost
+		
         if (playingFirefighter.getSpeciality() == (Speciality.PARAMEDIC) || 
         		playingFirefighter.getSpeciality() == (Speciality.RESCUE_SPECIALIST)) {
         	cost /= 2;
@@ -72,27 +79,27 @@ public class Extinguish extends Action {
         int fire = neighbour.getFire();
 
         //smart anticipation
-        if(fire > 0 && currentPosition.getFire() == 2 && neighbour != currentPosition && aP + extraPoints == cost) {
+        if(fire > 0 && currentPosition.getFire() == 2 && neighbour != currentPosition && aP + extraPoints == APcost) {
         	return false;
         }
         
         if (fire >= 1 && fire >= cost) { 
             if (currentPosition.equals(neighbour)) { //in other words: direction -1
-                if (aP + extraPoints >= cost) {
+                if (aP + extraPoints >= APcost) {
                     flag = true;
                 }
             }
             else {
             	Edge edge = currentPosition.getEdge(this.direction);
             	if (edge.isBlank()) {
-                    if (aP + extraPoints >= cost) {
+                    if (aP + extraPoints >= APcost) {
                         flag = true;
                     }
             	}
             	else if (edge.isDoor()) {
                     boolean status = edge.getStatus();
                     if (status == true || edge.isDestroyed()) {
-                        if (aP + extraPoints >= cost) {
+                        if (aP + extraPoints >= APcost) {
                             flag = true;
                         }
                     }
@@ -100,7 +107,7 @@ public class Extinguish extends Action {
             	else if (edge.isWall()) { 
                     int damage = edge.getDamage();
                     if (damage == 0) {
-                        if (aP + extraPoints >= cost) {
+                        if (aP + extraPoints >= APcost) {
                             flag = true;
                         }
                     }
@@ -149,10 +156,10 @@ public class Extinguish extends Action {
     
 	@Override
 	public void adjustAction(GameState gs) {
-		Speciality s = gs.getPlayingFirefighter().getSpeciality();
-		if (s == (Speciality.PARAMEDIC) || s == (Speciality.RESCUE_SPECIALIST)) {
-			this.APcost = 2*this.APcost;
-		}
+		//Speciality s = gs.getPlayingFirefighter().getSpeciality();
+		//if (s == (Speciality.PARAMEDIC) || s == (Speciality.RESCUE_SPECIALIST)) {
+		//	this.APcost = 2*this.APcost;
+		//}
 	}
 
 	@Override
