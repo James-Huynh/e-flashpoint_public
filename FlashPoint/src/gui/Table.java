@@ -78,7 +78,7 @@ public class Table {
 		private Color tileColorGreen = Color.decode("#00900B");
 		private Color tileColorAmbulance = Color.decode("#05E1FF");
 		private Color tileColorEngine = Color.decode("#FFFF05");
-		private Color currentFFColour = Color.decode("#05FFE8");
+		private Color currentFFColour = Color.decode("#FF00DE");
 		private Popup advFire;
 		private Popup gameTermination;
 		private Popup rideRequest;
@@ -1043,6 +1043,12 @@ public class Table {
 				connectedTile = gameTiles[coords[0]][coords[1]];
 				assignFires();
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack);
+				for(int i = 0; i<6; i++) {
+					if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
+						System.out.println("helloaohdaosuhdasjohds");
+						blackline = BorderFactory.createLineBorder(currentFFColour,3);
+					}
+				}
 				setBorder(blackline);
 				assignTokens();
 				
@@ -5724,6 +5730,12 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						rideRequest.hide();
 						rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						for(int i = 0; i<6; i++) {
+							if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
+								sendRefreshRequest();
+							}
+						}
+
 					}
 				});
 				
