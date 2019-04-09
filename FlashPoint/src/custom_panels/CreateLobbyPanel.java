@@ -403,7 +403,7 @@ public class CreateLobbyPanel extends JPanel {
 
 	// James
 	private boolean createLobbyRequest() {
-		return clientManager.createLobbyRequest(lobbyName, gameMode, nbPlayers, gameDifficulty, gameBoard);
+		return clientManager.createLobbyRequest(clientManager.getUserName(), gameMode, nbPlayers, gameDifficulty, gameBoard);
 	}
 
 	public void addSelectionPiecesListenerListener(CreateListener obj) {
