@@ -1045,8 +1045,12 @@ public class Table {
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack);
 				for(int i = 0; i<6; i++) {
 					if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
-						System.out.println("helloaohdaosuhdasjohds");
-						blackline = BorderFactory.createLineBorder(currentFFColour,3);
+						for(Firefighter f: connectedTile.getFirefighterList()) {
+							if(f == clientManager.getUsersGameState().getPlayingFirefighter()) {
+								System.out.println("helloaohdaosuhdasjohds");
+								blackline = BorderFactory.createLineBorder(currentFFColour,3);
+							}
+						}
 					}
 				}
 				setBorder(blackline);
