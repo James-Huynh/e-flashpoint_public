@@ -219,6 +219,8 @@ public class ServerInputThread extends Thread {
 				System.out.println("load request received");
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setLobby(requestObject.getCurrentLobby());
+				//set the capcity of the servermanager's current lobby (gets the capacity from right saved game in saved game list in server Manager 
+				serverManager.getLobby().setCapacity(serverManager.getSavedGames().get(requestObject.getLoadIndex()).getFireFighterList().size()); 
 				serverManager.addPlayerToLobby(serverManager.getPlayer(requestObject.getId()));
 				requestObject.setCurrentLobby(serverManager.getLobby());
 				//serverManager.getLobby().setCapacity(serverManager.getGameState().getListOfPlayers().size());
