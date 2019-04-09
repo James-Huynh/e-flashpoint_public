@@ -205,18 +205,26 @@ public class Move extends Action {
         	playingFirefighter.getCarriedPOI().setCurrentPosition(neighbour);
 //        	currentPosition.getPoiList().remove(playingFirefighter.getCarriedPOI());
         	for(int i=0; i<currentPosition.getPoiList().size();i++) {
-        		POI p = currentPosition.getPoiList().get(i);
-//        		System.out.println(p.getLeader());
-        		if(p.getLeader().getColour() == playingFirefighter.getColour()) {
-//        			currentPosition.getPoiList().remove(i);
-        			neighbour.getPoiList().add(currentPosition.getPoiList().remove(i));
-        			if(!neighbour.checkInterior()) {
-        				gs.removePOI(neighbour.getPoiList().get(0));
-        				gs.updateSavedCount(neighbour.getPoiList().get(0));
-        				neighbour.getPoiList().remove(0);
-        				playingFirefighter.setCarriedPOI(null);
+        		for (POI p: currentPosition.getPoiList()) {
+        			if(p.getLeader() == null) {
+        				continue;
+        			}
+        			else {
+        				if(p.getLeader().getColour() == playingFirefighter.getColour()) {
+//        					currentPosition.getPoiList().remove(i);
+        					neighbour.getPoiList().add(currentPosition.getPoiList().remove(i));
+        					if(!neighbour.checkInterior()) {
+        						gs.removePOI(neighbour.getPoiList().get(0));
+        						gs.updateSavedCount(neighbour.getPoiList().get(0));
+        						neighbour.getPoiList().remove(0);
+        						playingFirefighter.setCarriedPOI(null);
+        					}
+        				}
         			}
         		}
+        		//POI p = currentPosition.getPoiList().get(i); not anymore
+//        		System.out.println(p.getLeader());
+        		
         	}
         }
         
