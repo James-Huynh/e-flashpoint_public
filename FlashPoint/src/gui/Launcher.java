@@ -71,7 +71,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = EricIP;
+	private String ServerIP = ZaidIP;
 
 
 	int port = 8888;
@@ -556,6 +556,7 @@ public class Launcher {
 	public void refreshBoard() {
 		table.hideRidePanel();
 		table.hideDeckGunPanel();
+		table.hideTurnPanel();
 		if(!clientManager.getUsersGameState().getIsDodging()) {
 			table.hideDodgePanel();
 		}
@@ -576,6 +577,7 @@ public class Launcher {
 			else {
 				System.out.println("end turn trigger hit this part");
 				showAdvanceFireString(clientManager.getUsersGameState().getAdvFireString());
+				table.showTurnPopUp();
 				clientManager.setEndTurnTrigger(false);
 			}
 		}
@@ -697,7 +699,7 @@ public class Launcher {
 			}
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
-					popUpPanel.hide();
+//					popUpPanel.hide();
 				}
 			}
 			private void showMenu(MouseEvent e) {
