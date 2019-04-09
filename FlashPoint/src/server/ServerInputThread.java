@@ -654,6 +654,11 @@ public class ServerInputThread extends Thread {
 				serverManager.updateDodgeRespone(requestObject.getDodgeAction(), requestObject.getMyFFIndex());
 				
 				break;
+			case REFRESH:
+				System.out.println("Refresh Request");
+//				returnGameState = new TranObject<GameState>(TranObjectType.REFRESHSUCCESS);
+//				returnGameState.setObject(serverManager.getGameState());
+				break;
 			case SAVEGAME:
 				System.out.println("save game");
 				returnObject = new TranObject<User>(TranObjectType.SAVEGAMESUCCESS);

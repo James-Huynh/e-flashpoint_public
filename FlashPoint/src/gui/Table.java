@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -83,6 +84,7 @@ public class Table {
 		private Popup rideRequest;
 		private Popup deckGunRequest;
 		private Popup dodgeRequest;
+		private Popup turnNotifier;
 		private static boolean placing;
 		private static boolean playing;
 		private static boolean selectingFireFighter;
@@ -94,6 +96,8 @@ public class Table {
 		private static boolean host = false;
 		ChatBox chatBox;
 		private boolean loadedGame = false;
+		
+		private boolean refreshers;
 		
 		private clientThread listenerThread;
 		private int desiredFFindex;
@@ -5276,12 +5280,55 @@ public class Table {
 			advFire.show();
 		}
 		
+		public void showTurnNotifier(int i) {
+			turnNotifier = null;
+			PopupFactory turnPopUp = new PopupFactory();
+			JPanel turnLog = new JPanel(new BorderLayout());
+			JTextArea turnText = new JTextArea();
+			String notification = "It's your turn!" + "\n" + "Please make a turn for Firefighter " + clientManager.getUsersGameState().getFireFighterList().get(i).getColour().toString(); //Edit this to have FF details
+			turnText.append(notification);
+			turnText.setFont(new Font("AvantGarde", Font.PLAIN, 20));
+			turnText.setLineWrap(true);
+			
+			JButton okButton = new JButton("ok");
+			okButton.setPreferredSize(new Dimension(20,20));
+			okButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					turnNotifier.hide();
+					turnNotifier = turnPopUp.getPopup(rightPanel, turnLog, 450, 200);
+				}
+			});
+			
+			turnLog.setPreferredSize(new Dimension(500,150));
+			turnLog.setBackground(tileColorWhite);
+			turnLog.add(okButton, BorderLayout.SOUTH);
+			turnLog.add(turnText, BorderLayout.CENTER);
+			turnNotifier = turnPopUp.getPopup(rightPanel, turnLog, 450, 200);
+			
+			turnNotifier.show();
+		}
+		
+		public void showTurnPopUp() {
+			for(int i=0;i<6;i++) {
+				if(myFFIndexes[i] == currentBoard.getActiveFireFighterIndex()) {
+					showTurnNotifier(i);
+				}
+			}
+		}
+		
 		public void hideAdvPanel() {
 			if(advFire != null) {
 				advFire.hide();
 			}
 			
-		}	
+		}
+		
+		public void hideTurnPanel() {
+			if(turnNotifier != null) {
+				turnNotifier.hide();
+			}
+		}
 		
 		public void showRideRequest() {
 			rideRequest = null;
@@ -5803,11 +5850,15 @@ public class Table {
 			ArrayList<actions.Action> dodgeOptions5 = new ArrayList<actions.Action>();
 			
 			boolean menu0 = false, menu1 = false, menu2 = false, menu3 = false, menu4 = false, menu5 = false;
+			
+			boolean refresh = false;
+			boolean isendTurner = false;
 			for(int i = 0; i< 6; i ++) {
 				if(myFFIndexes[i] != 7) {
 					switch (i) {
 						case 0:
 							menu0 = true;
+							refresh = true;
 							header0 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[0]).getColour().toString() + " Fireman";
 							dodgeOptions0 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[0]));
 //							dodged[0] = false;
@@ -5818,6 +5869,7 @@ public class Table {
 							break;
 						case 1:
 							menu1 = true;
+							refresh = true;
 							header1 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[1]).getColour().toString() + " Fireman";
 							dodgeOptions1 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[1]));
 //							dodged[1] = false;
@@ -5828,6 +5880,7 @@ public class Table {
 							break;
 						case 2:
 							menu2 = true;
+							refresh = true;
 							header2 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[2]).getColour().toString() + " Fireman";
 							dodgeOptions2 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[2]));
 //							dodged[2] = false;
@@ -5838,6 +5891,7 @@ public class Table {
 							break;
 						case 3:
 							menu3 = true;
+							refresh = true;
 							header3 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[3]).getColour().toString() + " Fireman";
 							dodgeOptions3 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[3]));
 //							dodged[3] = false;
@@ -5848,6 +5902,7 @@ public class Table {
 							break;
 						case 4:
 							menu4 = true;
+							refresh = true;
 							header4 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[4]).getColour().toString() + " Fireman";
 							dodgeOptions4 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[4]));
 //							dodged[4] = false;
@@ -5858,6 +5913,7 @@ public class Table {
 							break;
 						case 5:
 							menu5 = true;
+							refresh = true;
 							header5 = clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[5]).getColour().toString() + " Fireman";
 							dodgeOptions5 = clientManager.getUsersGameState().getDodgingHashMap().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[5]));
 //							dodged[5] = false;
@@ -5870,6 +5926,10 @@ public class Table {
 				}
 				else {
 					dodged[i] = true;
+				}
+				
+				if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
+					isendTurner = true;
 				}
 			}
 			
@@ -6535,7 +6595,14 @@ public class Table {
 			
 			
 			if(dodged[0] && dodged[1] && dodged[2] && dodged[3] && dodged[4] && dodged[5]){
-				JButton okButton = new JButton("OK");
+				JButton okButton; 
+				if(refresh && isendTurner) {
+					okButton = new JButton("REFRESH");
+					refreshers = true;
+				} else {
+					okButton = new JButton("OK");
+					refreshers = false;
+				}
 				okButton.setPreferredSize(new Dimension(10,10));
 				okButton.addActionListener(new ActionListener() {
 					@Override
@@ -6543,6 +6610,10 @@ public class Table {
 						System.out.println("OK BUTTON CLICKED");
 						dodgeRequest.hide();
 						dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
+						if(refreshers) {
+							sendRefreshRequest();
+						}
+						
 					}
 				});
 				gameTPanel.add(okButton);
@@ -6552,6 +6623,7 @@ public class Table {
 			dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
 			
 			dodgeRequest.show();
+			refreshers = false;
 		}
 		
 		public void hideDodgePanel() {
@@ -6773,6 +6845,10 @@ public class Table {
 		private boolean sendDodgeAnswer(Action a, int myIndex) {
 			return clientManager.dodgeAnswer(a,myIndex);
 			
+		}
+		
+		private void sendRefreshRequest() {
+			clientManager.sendRefreshRequest();
 		}
 		
 		public void resetDodge() {

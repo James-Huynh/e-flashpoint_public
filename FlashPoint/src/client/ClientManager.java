@@ -824,4 +824,10 @@ public class ClientManager {
 		
 	}
 	
+	public void sendRefreshRequest() {
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REFRESH);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
+	}
+	
 }

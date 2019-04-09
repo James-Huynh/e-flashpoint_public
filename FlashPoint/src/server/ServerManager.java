@@ -196,7 +196,9 @@ public class ServerManager {
 	}
 	
 	public void addPlayerToLobby(Player additionalPlayer) {
-		this.activeLobby.addPlayer(additionalPlayer);
+		if(this.activeLobby.getPlayers().size() < this.activeLobby.getCapacity()) {
+			this.activeLobby.addPlayer(additionalPlayer);
+		}
 	}
 	
 	public Lobby getLobby() {
