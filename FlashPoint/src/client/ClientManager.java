@@ -835,10 +835,14 @@ public class ClientManager {
 	}
 	
 	public void sendRefreshRequest() {
-		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REFRESH);
-		objectToSend.setObject(requestObject);
-		outputThread.setMsg(objectToSend);
-		System.out.println("Refresh request being sent in CM");
+		if(this.dodgeRefreshFlag) {
+			TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REFRESH);
+			objectToSend.setObject(requestObject);
+			outputThread.setMsg(objectToSend);
+			System.out.println("Refresh request being sent in CM");
+		} else {
+			
+		}
 	}
 
 	public boolean getDodgeRefreshFlag() {
