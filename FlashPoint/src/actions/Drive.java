@@ -10,6 +10,7 @@ import game.GameState;
 import tile.ParkingSpot;
 import tile.Tile;
 import token.Firefighter;
+import token.POI;
 import token.Speciality;
 import token.Vehicle;
 
@@ -70,6 +71,16 @@ public class Drive extends Action {
         	ParkingSpot nextAmbulance = gs.getAmbulances()[ (index+direction+4)%4 ];
     	    nextAmbulance.setCar(true);
     	    parking.setCar(false);
+    	    for (int j=0; j<=1; j++) {
+    			if (!nextAmbulance.getTiles()[j].getPoiList().isEmpty()) {
+    				for (int ind=0; ind<nextAmbulance.getTiles()[j].getPoiList().size(); ind++) {
+    					//assume victims!
+    					POI temp = nextAmbulance.getTiles()[j].getPoiList().remove(ind);
+    					gs.removePOI(temp);
+    					gs.updateSavedCount(temp);
+    				}
+    			}
+    		}
         	
         	obtainTravellers(gs);
         	
@@ -110,6 +121,16 @@ public class Drive extends Action {
     	        		nextAmbulance.setCar(true);
     	        		parking.setCar(false);
     	        		target = nextAmbulance.getTiles()[whichOne];
+    	        		for (int j=0; j<=1; j++) {
+    	        			if (!nextAmbulance.getTiles()[j].getPoiList().isEmpty()) {
+    	        				for (int ind=0; ind<nextAmbulance.getTiles()[j].getPoiList().size(); ind++) {
+    	        					//assume victims!
+    	        					POI temp = nextAmbulance.getTiles()[j].getPoiList().remove(ind);
+    	        					gs.removePOI(temp);
+    	        					gs.updateSavedCount(temp);
+    	        				}
+    	        			}
+    	        		}
     	        	}
     	        }
             }

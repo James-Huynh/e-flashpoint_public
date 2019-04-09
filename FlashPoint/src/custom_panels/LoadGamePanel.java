@@ -113,6 +113,7 @@ public class LoadGamePanel extends JPanel {
 			currEntry.setOpaque(true);
 			entryName = "";
 			entryName = buildEntryNameString(i, savedGames.get(i).getSavedGameName() + " " + i); 
+			System.out.println(savedGames.get(i).getSavedGameName());
 			currEntry.setText(entryName);
 			currEntry.addMouseListener(new MouseAdapter() {
 				@Override
