@@ -51,6 +51,7 @@ public class User implements Serializable {
     private int[] dices;
     private actions.Action dodgeAction;
     private token.Colour desiredFirefighterColour;
+    private boolean dodgeResponseBoolean;
     
     private List<ChatMsgEntity> mDataArrays = new ArrayList<ChatMsgEntity>();
 	private String gameName;
@@ -344,6 +345,14 @@ public class User implements Serializable {
 		this.desiredSpeciality = null;
 		this.dices = null;
 		
+	}
+
+	public boolean getDodgeResponseBoolean() {
+		return dodgeResponseBoolean;
+	}
+
+	public void setDodgeResponseBoolean(boolean dodgeResponseBoolean) {
+		this.dodgeResponseBoolean = dodgeResponseBoolean;
 	}
 
 //	public int getImg() {

@@ -47,6 +47,13 @@ public class clientThread implements Runnable{
 					myLauncher.showDodgeRequest();
 					toggle = false;
 				}else if(myClientManager.listenForResponses() == 1) {
+					if(!myClientManager.getDodgeRefreshFlag()) {
+						myLauncher.refreshDodgePanel();
+					}
+//					else if(myClientManager.getDodgeRefreshFlag() == true) { //Not entirely sure about this part and how it fits in with below
+//						myLauncher.refreshBoard();							// Pls have a look 
+//						myClientManager.setDodgeRefreshFlag(false); //reset it to false for next time + actions etc
+//					}
 					System.out.println("hello we are not riding");
 					myLauncher.refreshBoard();
 					toggle = true;

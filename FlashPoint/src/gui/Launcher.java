@@ -602,6 +602,10 @@ public class Launcher {
 
 	}
 	
+	public void refreshDodgePanel() {
+		table.showRefreshDodge();
+	}
+	
 	public void hideGameTermination() {
 		table.hideGameTermination();
 	}

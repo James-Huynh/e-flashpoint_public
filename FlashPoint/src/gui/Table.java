@@ -5931,8 +5931,7 @@ public class Table {
 				}
 				
 				if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
-					isendTurner = true;
-				}
+ 				}
 			}
 			
 			if(menu0) {
@@ -6609,13 +6608,12 @@ public class Table {
 				okButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						System.out.println("OK BUTTON CLICKED");
+						System.out.println("OK BUTTON CLICKED" + refreshers);
+//						if(refreshers) {
+						sendRefreshRequest();
+//						}
 						dodgeRequest.hide();
 						dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
-						if(refreshers) {
-							sendRefreshRequest();
-						}
-						
 					}
 				});
 				gameTPanel.add(okButton);
@@ -6635,6 +6633,10 @@ public class Table {
 			}
 			
 		}	
+		
+		public void showRefreshDodge() {
+			dodgeRequest.show();
+		}
 		
 		
 		public void showDeckGunRequest(actions.Action a) {
@@ -6850,7 +6852,11 @@ public class Table {
 		}
 		
 		private void sendRefreshRequest() {
-			clientManager.sendRefreshRequest();
+//			if(refreshers) {
+				System.out.println("In Table REQUEST");
+				clientManager.sendRefreshRequest();
+//			}
+//			refreshers = false;
 		}
 		
 		public void resetDodge() {

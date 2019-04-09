@@ -41,6 +41,7 @@ public class ClientManager {
 	private String gameName;
 	
 	private boolean endTurnTrigger = false;
+	private boolean dodgeRefreshFlag;
 	
 	public ClientManager(ClientInputThread input, ClientOutputThread output, Launcher myLauncher) {
 		this.inputThread = input;
@@ -240,6 +241,13 @@ public class ClientManager {
 				startGameFlag = 3;
 				flag = true;
 				launcher.createNewThread();
+				break;
+			case REFRESHSUCCESS:
+				System.out.println("Succesful refresh request");
+				requestObject = (User) read_tranObject.getObject();
+				setDodgeRefreshFlag(requestObject.getDodgeResponseBoolean());
+				startGameFlag = 1;
+				flag = true;
 				break;
 			}
 		}
@@ -828,6 +836,15 @@ public class ClientManager {
 		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REFRESH);
 		objectToSend.setObject(requestObject);
 		outputThread.setMsg(objectToSend);
+		System.out.println("Refresh request being sent in CM");
+	}
+
+	public boolean getDodgeRefreshFlag() {
+		return dodgeRefreshFlag;
+	}
+
+	public void setDodgeRefreshFlag(boolean dodgeRefreshFlag) {
+		this.dodgeRefreshFlag = dodgeRefreshFlag;
 	}
 	
 }

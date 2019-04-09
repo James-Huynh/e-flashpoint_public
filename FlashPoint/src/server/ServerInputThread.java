@@ -82,7 +82,7 @@ public class ServerInputThread extends Thread {
 			//}
 			this.interrupt(); //ERIC - sorry for modifications but those caused the problems!
 			//you had IO exception in IO exception
-			serverManager.saveGameMat(serverManager.getGameState(), "Interrupted " + serverManager.getSavedGamesNumber());
+			//serverManager.saveGameMat(serverManager.getGameState(), "Interrupted " + serverManager.getSavedGamesNumber());
 			e.printStackTrace();
 		}
 
@@ -656,8 +656,14 @@ public class ServerInputThread extends Thread {
 				break;
 			case REFRESH:
 				System.out.println("Refresh Request");
-//				returnGameState = new TranObject<GameState>(TranObjectType.REFRESHSUCCESS);
-//				returnGameState.setObject(serverManager.getGameState());
+				requestObject = (User) read_tranObject.getObject();
+				requestObject.setDodgeResponseBoolean(serverManager.hasEveryoneDodged()); //Set the response boolean
+				
+				returnObject = new TranObject<User>(TranObjectType.REFRESHSUCCESS); 
+				returnObject.setObject(requestObject);
+				//Send it back to only the one who made the request
+				OutputThread sendTo = map.getById(requestObject.getId());
+				sendTo.setMessage(returnObject);
 				break;
 			case SAVEGAME:
 				System.out.println("save game");
@@ -927,11 +933,11 @@ public class ServerInputThread extends Thread {
 				break;
 			case ENDGAME:
 				returnObject=new TranObject<User>(TranObjectType.ENDGAME);
-				requestObject = (User) read_tranObject.getObject();
+//				requestObject = (User) read_tranObject.getObject();
 				ArrayList<Player> temp = serverManager.getGameState().getListOfPlayers();
 				serverManager.resetForNewGame();
 				
-				returnObject.setObject(requestObject);
+//				returnObject.setObject(requestObject);
 				for(Player p: temp) {
 					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnObject);
