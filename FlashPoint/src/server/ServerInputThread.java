@@ -940,7 +940,7 @@ public class ServerInputThread extends Thread {
 //				requestObject = (User) read_tranObject.getObject();
 				ArrayList<Player> temp = serverManager.getGameState().getListOfPlayers();
 				serverManager.resetForNewGame();
-				
+				serverManager.getChatArray().clear();
 //				returnObject.setObject(requestObject);
 				for(Player p: temp) {
 					OutputThread onOut = map.getById(p.getID());
