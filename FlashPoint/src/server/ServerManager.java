@@ -501,8 +501,9 @@ public class ServerManager {
     	if (listOfFiles.length == 0) {
     		return;
     	}
-    	for (File f : listOfFiles) {
+    	for (int len=0; len < listOfFiles.length; len++) {
     		try {
+    			File f = listOfFiles[len];
         		FileInputStream fi = new FileInputStream(new File(defaulGamesPath + f.getName()));
     			ObjectInputStream oi = new ObjectInputStream(fi);
     			// Read objects

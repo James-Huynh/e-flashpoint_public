@@ -6663,7 +6663,7 @@ public class Table {
 		public void showDeckGunRequest(actions.Action a) {
 			deckGunRequest = null;
 			PopupFactory gameT = new PopupFactory();
-			JPanel gameTPanel = new JPanel(new BorderLayout());
+			JPanel gameTPanel = new JPanel(new GridLayout(2,1));
 			JTextArea text = new JTextArea();
 			String deckGunPrompt = "The result of the die roll was red: "+ redDice +  " black: " + blackDice + ". \nWould you like to reroll either dice?";
 			
