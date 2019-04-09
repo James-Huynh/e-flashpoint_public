@@ -23,7 +23,8 @@ public class Lobby implements Serializable  {
 	private ArrayList<Player> players;
 	private ArrayList<token.Colour> assignableColours;
 
-	private String mode, name, difficulty, board;
+	private String mode, name, board;
+	private String difficulty = "NotSelected";
 	private int capacity;
 	private int randomGame;
 
