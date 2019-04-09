@@ -189,6 +189,7 @@ public class ServerManager {
 	public void setLobby(Lobby newLobby) {
 		this.activeLobby = newLobby;
 		this.currentLobbies.add(this.activeLobby);
+		this.randomBoards = newLobby.getRandomBoards();
 	}
 	
 	public Player getPlayer(Integer inputInteger) {

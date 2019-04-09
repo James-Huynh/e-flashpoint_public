@@ -65,6 +65,7 @@ public class Command extends Action {
 					action.getTitle().equals(ActionList.MoveWithHazmat) || action.getTitle().equals(ActionList.MoveWithVictim)) {
 				if (captain.getSP() + captain.getAP() >= action.APcost) {
 					gs.setPlayingFirefighter(toObey);
+					gs.getPlayingFirefighter().setAP(gs.getPlayingFirefighter().getAP() + 5);
 					if (action.validate(gs)) {
 						//request and permission from toObey.
 						if (toObey.getSpeciality() == Speciality.CAFS) {
@@ -79,6 +80,8 @@ public class Command extends Action {
 							flag = true;
 						}
 					}
+
+					gs.getPlayingFirefighter().setAP(gs.getPlayingFirefighter().getAP() - 5);
 					gs.setPlayingFirefighter(captain);
 				}
 			}	

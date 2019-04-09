@@ -1379,6 +1379,7 @@ public class GameState implements Serializable {
 			// if vinicity
 			if (flag) {
 				f.setCanDodge(true);
+				f.setUsedAP(false);
 				f.setAP(f.getAP() + 1);
 			}
 		}

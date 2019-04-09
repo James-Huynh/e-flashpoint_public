@@ -287,6 +287,7 @@ public class Firefighter extends Token implements Serializable {
 			this.SP = 0;
 			this.canDodge = false;
 		}
+		this.setUsedAP(usedAP);
 	}
 	
 
