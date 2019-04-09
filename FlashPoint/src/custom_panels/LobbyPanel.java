@@ -63,7 +63,7 @@ public class LobbyPanel extends JPanel {
 		initialize();
 		createHeaderPanel();
 		createStartButton();
-		createLeaveButton();
+		//createLeaveButton();
 		createLobbyDescription();
 		createPlayersPanel();
 		createChatBox();
@@ -138,8 +138,9 @@ public class LobbyPanel extends JPanel {
 		lobbyDescPanel = new JPanel();
 		lobbyDescPanel.setBounds(195, 563, 426, 84);
 		lobbyDescPanel.setLayout(null);
+		if (!targetLobby.getIsLoadGame()) {
 		this.add(lobbyDescPanel);
-		
+		}
 		createTextBoxes();
 	}
 	
@@ -150,12 +151,19 @@ public class LobbyPanel extends JPanel {
 		textRules.setBounds(0, 0, 200, 100);
 		textRules.setEditable(false);
 		textRules.setLineWrap(true);
+		
 		lobbyDescPanel.add(textRules);
 		
 		String mode = "Mode: " + targetLobby.getMode();
-		String difficulty = "Difficulty: " + targetLobby.getDifficulty();
 		String board = "Board: " + targetLobby.getBoard();
+		if(targetLobby.getDifficulty() != null) {
+		String difficulty = "Difficulty: " + targetLobby.getDifficulty();
 		textGameDesc = new JTextArea(mode + "\n" + difficulty + "\n" + board);
+		}else {
+			String difficulty = "Difficulty: Not Applicable";
+			textGameDesc = new JTextArea(mode + "\n" + difficulty + "\n" + board);
+		}
+		
 //		textGameDesc = new JTextArea(mode + "\n" + "hello");
 		textGameDesc.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textGameDesc.setBounds(220, 0, 200, 100);

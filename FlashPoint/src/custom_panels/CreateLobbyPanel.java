@@ -310,8 +310,8 @@ public class CreateLobbyPanel extends JPanel {
 		rulesPanel.setBounds(139, 493, 202, 98);
 		rulesPanel.setLayout(null);
 		this.add(rulesPanel);
-		createRulesHeader();
-		createCheckBoxes();
+		//createRulesHeader();
+		//createCheckBoxes();
 	}
 
 	private void createRulesHeader() {

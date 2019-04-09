@@ -24,10 +24,10 @@ public class Lobby implements Serializable  {
 	private ArrayList<token.Colour> assignableColours;
 
 	private String mode, name, board;
-	private String difficulty = "NotSelected";
+	private String difficulty;
 	private int capacity;
 	private int randomGame;
-
+	
 	private TemplateGame template;
 	private static final long serialVersionUID = 1L;
 	
