@@ -71,7 +71,7 @@ public class Launcher {
 
 	private static Client client;
 
-	private String ServerIP = ZaidIP;
+	private String ServerIP = JamesIP;
 
 
 	int port = 8888;
@@ -211,7 +211,7 @@ public class Launcher {
 		}
 
 		lbl_logoImage = new JLabel();
-		lbl_logoImage.setBounds((int) OUTER_FRAME_DIMENSION.getWidth() -bckgImage.getWidth() - 18, -400 + bckgImage.getHeight()/2 , 200, 800); // doesnt work		
+		lbl_logoImage.setBounds((int) OUTER_FRAME_DIMENSION.getWidth() - 2*bckgImage.getWidth(), -400 + bckgImage.getHeight()/2 , 200, 800); // doesnt work		
 
 
 		// TMP
