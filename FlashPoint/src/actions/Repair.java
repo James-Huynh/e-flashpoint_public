@@ -35,7 +35,7 @@ public class Repair extends Action {
 		
 		gs.updateDamageCounterRepair();
 		edge.build();
-		if (APcost == 2) {
+		if (APcost == 4) {
 			edge.build();
 			gs.updateDamageCounterRepair();
 		}

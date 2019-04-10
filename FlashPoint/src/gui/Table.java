@@ -2074,7 +2074,7 @@ public class Table {
 			    	
 			    	//MAT
 			    	else if(actionTitle == ActionList.Repair) {
-			    		if(a.getCost() == 1) {
+			    		if(a.getCost() == 2) {
 			    		if(a.getDirection() == 0) {
 			    			builder = "Left, APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
@@ -2129,7 +2129,7 @@ public class Table {
 			    	        twoRepairCheck = true;
 			    		} 
 			    		}
-			    		if(a.getCost() == 2) {
+			    		if(a.getCost() == 4) {
 				    		if(a.getDirection() == 0) {
 				    			builder = "Left, APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
