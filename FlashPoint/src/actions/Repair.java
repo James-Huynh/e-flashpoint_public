@@ -33,7 +33,10 @@ public class Repair extends Action {
 		
 		current.setAP(current.getAP() - APcost);
 		gs.updateDamageCounterRepair();
-		edge.build();
+		if (APcost == 2) {
+			edge.build();
+			gs.updateDamageCounterRepair();
+		}
 		current.setUsedAP(true);
 		
 	}

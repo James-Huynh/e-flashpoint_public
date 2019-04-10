@@ -1276,6 +1276,15 @@ public class Table {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
+						} else if(check.getSpeciality() == Speciality.BOBTHEBUILDER) {
+							try {
+								builder = builder + "BLUE_FIREMAN_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						} else {
 							try {
 								builder = builder + "GREEN_FIREMAN_";
@@ -1369,13 +1378,14 @@ public class Table {
 					System.out.println(act.getClass());
 				}
 				
-				boolean moveCheck = false, moveWVCheck = false, completeCheck = false, toSmokeCheck = false, oneChopCheck = false, twoChopCheck = false, doorCheck = false; 
+				boolean moveCheck = false, moveWVCheck = false, completeCheck = false, toSmokeCheck = false, oneChopCheck = false, twoChopCheck = false, doorCheck = false, oneRepairCheck = false, twoRepairCheck = false; 
 				
 				JMenu moveMenu = new JMenu("Move");
 			    JMenu extinguishMenu = new JMenu("Extinguish"); 
 			    JMenu toSmokeMenu = new JMenu("To Smoke/Smoke");
 			    JMenu completelyMenu = new JMenu("Completely");
 			    JMenu chopMenu = new JMenu("Chop");
+			    JMenu repairMenu = new JMenu("Repair");
 			    JMenu onceMenu = new JMenu("Once");
 			    JMenu twiceMenu = new JMenu("Twice");
 			    JMenu handleMenu = new JMenu("Toggle Door");
@@ -2059,7 +2069,127 @@ public class Table {
 			    	        handleMenu.add(newAction);
 			    	        doorCheck = true;
 			    		} 
-			    	} else if(actionTitle == ActionList.Move) {
+			    		
+			    	} 
+			    	
+			    	//MAT
+			    	else if(actionTitle == ActionList.Repair) {
+			    		if(a.getCost() == 1) {
+			    		if(a.getDirection() == 0) {
+			    			builder = "Left, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+			    					}
+			    				}
+			    			});
+			    	        repairMenu.add(newAction);
+			    	        oneRepairCheck = true;
+			    		} else if(a.getDirection() == 1) {
+			    			builder = "Up, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+			    					}
+			    				}
+			    			});
+			    	        repairMenu.add(newAction);
+			    	        oneRepairCheck = true;
+			    		} else if(a.getDirection() == 2) {
+			    			builder = "Right, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+			    					}
+			    				}
+			    			});
+			    	        repairMenu.add(newAction);
+			    	        oneRepairCheck = true;
+			    		} else if(a.getDirection() == 3) {
+			    			builder = "Down, APC: " + APCost;
+			    			newAction = new JMenuItem(builder);
+			    	        newAction.addActionListener(new ActionListener() {
+			    				@Override
+			    				public void actionPerformed(ActionEvent e) {
+			    					if(sendActionRequest(a)) {
+										System.out.println("this is the print that board is refreshing");
+			    					}
+			    				}
+			    			});
+			    	        repairMenu.add(newAction);
+			    	        twoRepairCheck = true;
+			    		} 
+			    		}
+			    		if(a.getCost() == 2) {
+				    		if(a.getDirection() == 0) {
+				    			builder = "Left, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+				    					}
+				    				}
+				    			});
+				    	        repairMenu.add(newAction);
+				    	        twoRepairCheck = true;
+				    		} else if(a.getDirection() == 1) {
+				    			builder = "Up, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+				    					}
+				    				}
+				    			});
+				    	        repairMenu.add(newAction);
+				    	        twoRepairCheck = true;
+				    		} else if(a.getDirection() == 2) {
+				    			builder = "Right, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+				    					}
+				    				}
+				    			});
+				    	        repairMenu.add(newAction);
+				    	        twoRepairCheck = true;
+				    		} else if(a.getDirection() == 3) {
+				    			builder = "Down, APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+				    					}
+				    				}
+				    			});
+				    	        repairMenu.add(newAction);
+				    	        twoRepairCheck = true;
+				    		} 
+				    		}
+			    	
+			    	}
+			    	
+			    	
+			    	
+			    	else if(actionTitle == ActionList.Move) {
 			    		if(a.getDirection() == 0) {
 			    			builder = "Left, APC: " + APCost;
 			    			newAction = new JMenuItem(builder);
@@ -2326,6 +2456,21 @@ public class Table {
 				    					if(sendActionRequest(a)) {
 											System.out.println("this is the print that board is refreshing");
 
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.BOBTHEBUILDER) {
+			    				builder = "To Bob The Builder. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+	
 										}
 				    					
 				    				}
@@ -4355,7 +4500,16 @@ public class Table {
 		        	chopMenu.add(onceMenu);
 			        chopMenu.addSeparator();
 		        }
+		        
 		        if(twoChopCheck)chopMenu.add(twiceMenu);
+		        
+		        if(oneRepairCheck) {
+		        	//repairMenu.add(onceMenu);
+		        	//repairMenu.addSeparator();
+		        }
+		        if(twoRepairCheck) {
+		        	//repairMenu.add(twiceMenu);
+		        }
 		        
 		        if(toSmokeCheck || completeCheck) {
 		        	popupMenu.add(extinguishMenu);
@@ -4364,6 +4518,11 @@ public class Table {
 		        
 		        if(oneChopCheck || twoChopCheck) {
 		        	popupMenu.add(chopMenu);
+			        popupMenu.addSeparator();
+		        }
+		        
+		        if(oneRepairCheck || twoRepairCheck) {
+		        	popupMenu.add(repairMenu);
 			        popupMenu.addSeparator();
 		        }
 		        
