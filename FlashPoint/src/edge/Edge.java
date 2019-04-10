@@ -46,6 +46,7 @@ public abstract class Edge  implements Serializable{
     public abstract int getDamage();	//If getType done properly, then in if/else checks we can intialize of that object and then make edge specific checks
     									//wouldn't need to declare edge specific methods here								
     public abstract void chop();
+    public abstract void build();
     public abstract void destroyDoor();
     public abstract void destroyWall();
     public abstract void change();

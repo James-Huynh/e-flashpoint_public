@@ -13,7 +13,8 @@ public enum Speciality {
 		RESCUE_SPECIALIST,
 		DRIVER,
 		DOG,
-		VETERAN;
+		VETERAN,
+		BOBTHEBUILDER;
 		
 		public String toString() {
 			if(this == PARAMEDIC) {
@@ -36,6 +37,8 @@ public enum Speciality {
 				return "Dog";
 			} else if (this == VETERAN) {
 				return "Veteran";
+			} else if (this == BOBTHEBUILDER) {
+				return "Bob The Builder";
 			} else {
 				return "None";
 			}

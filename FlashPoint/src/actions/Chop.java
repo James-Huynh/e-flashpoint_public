@@ -26,7 +26,6 @@ public class Chop extends Action {
     //for advanced
     @Override
     public void adjustAction(GameState gs) {
-    	Firefighter current = gs.getPlayingFirefighter();
 
     }
     

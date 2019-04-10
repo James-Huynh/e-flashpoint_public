@@ -224,6 +224,7 @@ public class GameState implements Serializable {
 			this.freeSpecialities.add(Speciality.PARAMEDIC);
 			this.freeSpecialities.add(Speciality.RESCUE_SPECIALIST);
 			this.freeSpecialities.add(Speciality.VETERAN);
+			this.freeSpecialities.add(Speciality.BOBTHEBUILDER);
 			this.specialitySelecting = true;
 			this.isDodging = false;
 			this.dodgingHashMap = new HashMap<Firefighter, ArrayList<actions.Action>>();
@@ -388,6 +389,10 @@ public class GameState implements Serializable {
 
 	public void updateDamageCounter() {
 		this.wallsDamaged = this.wallsDamaged + 1;
+	}
+	
+	public void updateDamageCounterRepair() {
+		this.wallsDamaged = this.wallsDamaged - 1;
 	}
 
 //changed this class, we need to have an array list that is not of fixed size in order to make the advance fire work - ben

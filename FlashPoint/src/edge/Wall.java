@@ -35,6 +35,12 @@ public class Wall extends Edge{
         	damage--;
         }
     }
+    
+    public void build() {
+    	if (damage < 2) {
+    		damage++;
+    	}
+    }
 
 
     public void destroyWall() {

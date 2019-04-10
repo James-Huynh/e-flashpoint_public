@@ -43,6 +43,10 @@ public class MoveWithVictim extends Move{
 				}
 			}
 	        
+	        if (playingFirefighter.getSpeciality() == Speciality.BOBTHEBUILDER) {
+	        	return false;
+	        }
+	        
 			if(currentPosition.containsPOI()) {
 				ArrayList<POI> pois = currentPosition.getPoiList();
 				if(fire < 2) {
