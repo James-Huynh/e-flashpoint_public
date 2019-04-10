@@ -5390,7 +5390,7 @@ public class Table {
 					gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 				}
 			} else if(clientManager.getUsersGameState().isGameWon()) {
-				gameTPanel.setLayout(new BorderLayout());
+				gameTPanel.setLayout(new GridLayout(3,1));
 				gameTPanel.setPreferredSize(new Dimension(300,300));
 				gameTPanel.setBackground(tileColorGreen);
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack,15);
@@ -5412,8 +5412,22 @@ public class Table {
 					}
 				});
 				
-				gameTPanel.add(text, BorderLayout.NORTH);
-				gameTPanel.add(backToMenuButton, BorderLayout.SOUTH);
+				JButton continueMenuButton = new JButton("Continue");
+				continueMenuButton.setPreferredSize(new Dimension(40,40));
+				continueMenuButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						gameTermination.hide();
+						launcher.backToMainMenu();
+						sendGameContinueRequest();
+						//return back to menu
+					}
+
+					
+				});
+				
+				gameTPanel.add(text);
+				gameTPanel.add(continueMenuButton);
+				gameTPanel.add(backToMenuButton);
 				gameTermination = gameT.getPopup(rightPanel, gameTPanel, 1140, 50);
 			}
 			
@@ -5464,7 +5478,8 @@ public class Table {
 			JTextArea turnText = new JTextArea();
 			String notification = "It's your turn!" + "\n" + "Please make a turn for Firefighter " + 
 					clientManager.getUsersGameState().getFireFighterList().get(i).getColour().toString() + " - " + 
-					clientManager.getUsersGameState().getFireFighterList().get(i).getOwner().getUserName().toString(); //Edit this to have FF details
+					clientManager.getUsersGameState().getFireFighterList().get(i).getOwner().getUserName().toString() //Edit this to have FF details
+					+ "\n\n Please right click on the highlighted tile to pick an action." ;
 			turnText.append(notification);
 			turnText.setFont(new Font("AvantGarde", Font.PLAIN, 20));
 			turnText.setLineWrap(true);
@@ -5611,7 +5626,7 @@ public class Table {
 								System.out.println("hello");
 								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[0]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								
 								} else {
@@ -5631,7 +5646,7 @@ public class Table {
 								rode[0] = true;
 								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[0]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 									
 								} else {
@@ -5664,7 +5679,7 @@ public class Table {
 								rode[1] = true;
 								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[1]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								} else {
 									showRideRequest();
@@ -5683,7 +5698,7 @@ public class Table {
 								rode[1] = true;
 								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[1]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								} else {
 									showRideRequest();
@@ -5713,7 +5728,7 @@ public class Table {
 								rode[2] = true;
 								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[2]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								} else {
 									showRideRequest();
@@ -5732,7 +5747,7 @@ public class Table {
 								rode[2] = true;
 								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[2]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								} else {
 									showRideRequest();
@@ -5762,7 +5777,7 @@ public class Table {
 								rode[3] = true;
 								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[3]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								} else {
 									showRideRequest();
@@ -5781,7 +5796,7 @@ public class Table {
 								rode[3] = true;
 								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[3]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								} else {
 									showRideRequest();
@@ -5811,7 +5826,7 @@ public class Table {
 								rode[4] = true;
 								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[4]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								} else {
 									showRideRequest();
@@ -5830,7 +5845,7 @@ public class Table {
 								rode[4] = true;
 								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[4]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 
 								} else {
@@ -5860,7 +5875,7 @@ public class Table {
 								rode[5] = true;
 								clientManager.getUsersGameState().setRideOption(true, myFFIndexes[5]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								} else {
 									showRideRequest();
@@ -5879,7 +5894,7 @@ public class Table {
 								rode[5] = true;
 								clientManager.getUsersGameState().setRideOption(false, myFFIndexes[5]);
 								rideRequest.hide();
-								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+								rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 								if(clientManager.getUsersGameState().hasEveryoneResponded()) {
 								} else {
 									showRideRequest();
@@ -5908,7 +5923,7 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						rideRequest.hide();
-						rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 						boolean onlyDriving = false;
 						for(int i = 0; i<6; i++) {
 							if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
@@ -5996,7 +6011,7 @@ public class Table {
 //				
 //			}
 			
-			rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+			rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 150);
 			
 			rideRequest.show();
 		}
@@ -6857,14 +6872,15 @@ public class Table {
 			JPanel gameTPanel = new JPanel(new GridLayout(4,1));
 			JTextArea text = new JTextArea();
 			String deckGunPrompt = "The result of the die roll was red: "+ redDice +  " black: " + blackDice + ". \nWould you like to reroll either dice?";
-			
+			Border blackline1 = BorderFactory.createLineBorder(Color.BLACK,2);
+			gameTPanel.setBorder(blackline1);
 			text.setText(deckGunPrompt);
 			text.setLineWrap(true);
 //			JPanel responsePanel = new JPanel();
 //			responsePanel.setLayout(new GridLayout(3,1));
 //			responsePanel.setPreferredSize(new Dimension(200,200));
 //			text.setPreferredSize(new Dimension(40, 40));
-			gameTPanel.setPreferredSize(new Dimension(200,300));
+			gameTPanel.setPreferredSize(new Dimension(250,300));
 			gameTPanel.add(text);
 			
 			if(redReRoll) {
@@ -6874,7 +6890,7 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						deckGunRequest.hide();
-						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 50, 50);
+						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 40, 50);
 						if(rerollDice(1, a)) {
 //							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
@@ -6891,7 +6907,7 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						deckGunRequest.hide();
-						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 50, 50);
+						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 40, 50);
 						if(rerollDice(2, a)) {
 //							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
@@ -6907,7 +6923,7 @@ public class Table {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					deckGunRequest.hide();
-					deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+					deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 40, 50);
 					if(rerollDice(0, a)) {
 //						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 					}
@@ -6917,7 +6933,8 @@ public class Table {
 			
 //			gameTPanel.add(responsePanel);
 			
-			deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+			
+			deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 40, 50);
 			
 			deckGunRequest.show();
 		}
@@ -7083,5 +7100,9 @@ public class Table {
 		
 		public void resetRode() {
 			rode = new boolean[6];
+		}
+		private void sendGameContinueRequest() {
+			clientManager.sendContinueGameRequest();
+						
 		}
 }

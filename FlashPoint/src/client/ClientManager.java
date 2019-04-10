@@ -863,5 +863,10 @@ public class ClientManager {
 	public void setDodgeRefreshFlag(boolean dodgeRefreshFlag) {
 		this.dodgeRefreshFlag = dodgeRefreshFlag;
 	}
+
+	public void sendContinueGameRequest() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
