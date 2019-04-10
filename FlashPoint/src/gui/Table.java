@@ -5422,6 +5422,9 @@ public class Table {
 				} else {
 					rode[i] = true;
 				}
+				if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
+					rode[i] = true;
+				}
 			}
 			
 			if(menu0 || menu1 || menu2 || menu3 || menu4 || menu5) {
