@@ -5425,6 +5425,11 @@ public class Table {
 				if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
 					rode[i] = true;
 				}
+				else if(myFFIndexes[i] != 7) {
+					if(clientManager.getUsersGameState().getRideMapper().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[i]))[0] == false) {
+						rode[i] = true;
+					}
+				}	
 			}
 			
 			if(menu0 || menu1 || menu2 || menu3 || menu4 || menu5) {
@@ -5745,23 +5750,19 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						rideRequest.hide();
 						rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
-						boolean onlyDriving = true;
+						boolean onlyDriving = false;
 						for(int i = 0; i<6; i++) {
 							if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
-								for(int j = 0; i<6; i++) {
-									if(myFFIndexes[j] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
-										
-									} else if(myFFIndexes[j] != 7) {
-										if(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[j]).getCurrentPosition().getParkingSpot()!=null) {
-											if(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[j]).getCurrentPosition().getParkingSpot() == clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[i]).getCurrentPosition().getParkingSpot()) {
-												onlyDriving = false;
-											}
+								for(int j = 0; j<6; j++) {
+									if(j!=i && myFFIndexes[j] != 7) {
+										if(clientManager.getUsersGameState().getRideMapper().get(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[j]))[0]){
+											onlyDriving = true;
 										}
 									}
 								}
 							} 
 						}
-						if(!onlyDriving) {
+						if(onlyDriving) {
 							sendRefreshRequest(myFFIndexes);
 						}
 
