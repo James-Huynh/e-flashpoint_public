@@ -225,7 +225,7 @@ public class GameState implements Serializable {
 			this.freeSpecialities.add(Speciality.PARAMEDIC);
 			this.freeSpecialities.add(Speciality.RESCUE_SPECIALIST);
 			this.freeSpecialities.add(Speciality.VETERAN);
-			//this.freeSpecialities.add(Speciality.BOBTHEBUILDER);
+			this.freeSpecialities.add(Speciality.BOBTHEBUILDER);
 			this.specialitySelecting = true;
 			this.isDodging = false;
 			this.dodgingHashMap = new HashMap<Firefighter, ArrayList<actions.Action>>();
