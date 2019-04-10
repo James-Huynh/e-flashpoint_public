@@ -233,7 +233,7 @@ public class ServerManager {
 	public void setFFNextTurn() {
 		gameManager.setFirstAction(true);
 		int newIndex = (gameState.getActiveFireFighterIndex() + 1);
-		if (gameManager.getGameState().isExperienced()) {
+		if (gameManager.getGameState().isExperienced()) { //is it really working?
 			if (gameManager.getGameState().getPlayingFirefighter().getSpeciality() == Speciality.VETERAN) {
 				
 			}
