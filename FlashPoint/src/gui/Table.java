@@ -5742,7 +5742,7 @@ public class Table {
 						rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						for(int i = 0; i<6; i++) {
 							if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
-								sendRefreshRequest();
+								sendRefreshRequest(myFFIndexes);
 							}
 						}
 
@@ -6639,7 +6639,7 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						System.out.println("OK BUTTON CLICKED" + refreshers);
 //						if(refreshers) {
-						sendRefreshRequest();
+						sendRefreshRequest(myFFIndexes);
 //						}
 						dodgeRequest.hide();
 						dodgeRequest = gameT.getPopup(rightPanel, gameTPanel, 400, 50);
@@ -6890,10 +6890,10 @@ public class Table {
 			
 		}
 		
-		private void sendRefreshRequest() {
+		private void sendRefreshRequest(int[] myFFIndexes2) {
 //			if(refreshers) {
 				System.out.println("In Table REQUEST");
-				clientManager.sendRefreshRequest();
+				clientManager.sendRefreshRequest(myFFIndexes2);
 //			}
 //			refreshers = false;
 		}
