@@ -29,6 +29,8 @@ public class Sound {
 	         // Open audio clip and load samples from the audio input stream.
 	         clip.open(audioInputStream);
 	         */
+	    	  
+	    	  // NOW WORKSSSSSSS!!
 	    	    File yourFile = new File(soundFileName);
 	    	    AudioInputStream stream;
 	    	    AudioFormat format;
