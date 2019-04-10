@@ -5729,6 +5729,8 @@ public class Table {
 				}
 			}
 			
+			System.out.println("ride checkingerererer" + rode[0] + "|" + rode[1] + "|" + rode[2] + "|" + rode[3] + "|" +rode[4] + "|" +rode[5] + "|");
+			
 			if(rode[0] && rode[1] && rode[2] && rode[3] && rode[4] && rode[5]) {
 				System.out.println(clientManager.getUsersGameState().toDisplayRidePopUp(myIndex));
 				text.setText(rideInform);
