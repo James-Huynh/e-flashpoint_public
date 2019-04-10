@@ -839,7 +839,7 @@ public class ClientManager {
 	}
 	
 	public void sendRefreshRequest() {
-		if(this.dodgeRefreshFlag) {
+		if(!this.dodgeRefreshFlag) {
 			TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REFRESH);
 			objectToSend.setObject(requestObject);
 			outputThread.setMsg(objectToSend);
