@@ -5745,10 +5745,24 @@ public class Table {
 					public void actionPerformed(ActionEvent e) {
 						rideRequest.hide();
 						rideRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						boolean onlyDriving = true;
 						for(int i = 0; i<6; i++) {
 							if(myFFIndexes[i] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
-								sendRefreshRequest(myFFIndexes);
-							}
+								for(int j = 0; i<6; i++) {
+									if(myFFIndexes[j] == clientManager.getUsersGameState().getActiveFireFighterIndex()) {
+										
+									} else if(myFFIndexes[j] != 7) {
+										if(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[j]).getCurrentPosition().getParkingSpot()!=null) {
+											if(clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[j]).getCurrentPosition().getParkingSpot() == clientManager.getUsersGameState().getFireFighterList().get(myFFIndexes[i]).getCurrentPosition().getParkingSpot()) {
+												onlyDriving = false;
+											}
+										}
+									}
+								}
+							} 
+						}
+						if(!onlyDriving) {
+							sendRefreshRequest(myFFIndexes);
 						}
 
 					}
