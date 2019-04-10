@@ -843,7 +843,7 @@ public class ServerInputThread extends Thread {
 				//serverManager.getGameManager().end();
 				break;
 			case CONTINUEGAME:
-				TranObject returnGameStateContinue = new TranObject<GameState>(TranObjectType.ENDTURNSUCCESS);
+				TranObject returnGameStateContinue = new TranObject<GameState>(TranObjectType.GAMECONTINUED);
 				serverManager.setGameContinue();
 				returnGameStateContinue.setObject(serverManager.getGameState());
 				for(Player p: serverManager.getGameState().getListOfPlayers()) {
