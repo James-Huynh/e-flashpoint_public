@@ -343,8 +343,8 @@ public class GameManager {
     		allPossibleActions.add(new Chop(dir, 4));
     		allPossibleActions.add(new Handle(dir));
     		allPossibleActions.add(new MoveWithHazmat(dir));
-    		allPossibleActions.add(new Repair(dir, 1));
     		allPossibleActions.add(new Repair(dir, 2));
+    		allPossibleActions.add(new Repair(dir, 4));
     	}
     	
     	//extinguish
