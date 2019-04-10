@@ -48,6 +48,7 @@ public class User implements Serializable {
     private int loadNum;
     private int loadIndex;
     private ArrayList<GameState> savedGameStates;
+    private ArrayList<String> savedNamesGameStates;
     private int[] dices;
     private actions.Action dodgeAction;
     private token.Colour desiredFirefighterColour;
@@ -264,6 +265,14 @@ public class User implements Serializable {
 	
 	public ArrayList<GameState> getsavedGameStates(){
 		return this.savedGameStates;
+	}
+	
+	public void setSavedNamesGameStates(ArrayList<String> savedNamesGameStates) {
+		this.savedNamesGameStates = savedNamesGameStates;
+	}
+	
+	public ArrayList<String> getSavedNamesGameStates(){
+		return this.savedNamesGameStates;
 	}
 
 	public void setDesiredFirefighter(int i) {

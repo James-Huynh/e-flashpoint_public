@@ -38,6 +38,7 @@ public class LoadGamePanel extends JPanel {
 	private ArrayList<JLabel> listEntries;
 
 	private ArrayList<GameState> savedGames;
+	private ArrayList<String> savedNamesGames;
 
 	private final EventListenerList REGISTERED_OBJECTS;
 
@@ -53,7 +54,8 @@ public class LoadGamePanel extends JPanel {
 		this.clientManager = clientmanager;
 		clientmanager.savedGameListRequest();
 		savedGames = clientmanager.getSavedGameStates();
-		System.out.println("list length is: " + savedGames.size() );
+		savedNamesGames = clientmanager.getSavedNamesGameStates();
+		System.out.println("list length is: " + savedNamesGames.size() );
 
 		setPreferredSize(new Dimension(1000,800));
 		setLayout(null);
@@ -105,15 +107,15 @@ public class LoadGamePanel extends JPanel {
 		
 		
 		//mat
-		for (int i=0; i<savedGames.size(); i++) {
+		for (int i=0; i<savedNamesGames.size(); i++) {
 			JLabel currEntry = new JLabel();
 			currEntry.setBounds(textAreaX, textAreaY + i * (textAreaH + 10), textAreaW, textAreaH);
 			currEntry.setFont(new Font("Open Sans", Font.PLAIN, 14));
 			currEntry.setBackground(Color.white);
 			currEntry.setOpaque(true);
 			entryName = "";
-			entryName = buildEntryNameString(i, savedGames.get(i).getSavedGameName() + " " + i); 
-			System.out.println(savedGames.get(i).getSavedGameName());
+			entryName = buildEntryNameString(i, savedNamesGames.get(i) + " " + i); 
+			System.out.println(savedNamesGames.get(i));
 			currEntry.setText(entryName);
 			currEntry.addMouseListener(new MouseAdapter() {
 				@Override
@@ -203,8 +205,10 @@ public class LoadGamePanel extends JPanel {
 	private String buildEntryName(int i) {
 		StringBuilder stringbuilder = new StringBuilder();
 		
-		GameState currGame =  savedGames.get(i); 	// currGame is null
-		stringbuilder.append((i+1) + ". Name: " + currGame.getListOfPlayers().get(0).getUserName() + " - ");
+		//update!!
+		
+		// GameState currGame =  savedGames.get(i); 	// currGame is null
+		stringbuilder.append((i+1) + ". Name: " + "we don't know yet " + " - "); // currGame.getListOfPlayers().get(0).getUserName() + " - ");
 //		stringbuilder.append(currGame.get+ " - ");
 		
 		
@@ -213,10 +217,10 @@ public class LoadGamePanel extends JPanel {
 	
 	private String buildEntryNameString(int i, String st) {
 		StringBuilder stringbuilder = new StringBuilder();
-		GameState currGame =  savedGames.get(i);
+		String currGameName =  savedNamesGames.get(i);
 		
-		System.out.println(currGame.getListOfPlayers());
-		stringbuilder.append("Host: " + currGame.getListOfPlayers().get(0).getUserName() + " - " + "Name: " + st );
+		System.out.println(currGameName);
+		stringbuilder.append("Host: " + currGameName + " - " + "Name: " + st );
 //		stringbuilder.append(currGame.get+ " - ");
 		
 		

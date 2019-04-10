@@ -696,9 +696,9 @@ public class ServerInputThread extends Thread {
 				returnObject = new TranObject<User>(TranObjectType.REQUESTSAVEDLISTSUCCESS);
 				requestObject = (User) read_tranObject.getObject();
 				serverManager.setSavedGames();
-				requestObject.setSavedGameStates(serverManager.getSavedGames());
+				requestObject.setSavedNamesGameStates(serverManager.getSavedNameGames());
 
-				System.out.println("list length is: " + requestObject.getsavedGameStates().size() );
+				System.out.println("list length is: " + requestObject.getSavedNamesGameStates().size() );
 				returnObject.setObject(requestObject);
 				out.setMessage(returnObject);
 				break;

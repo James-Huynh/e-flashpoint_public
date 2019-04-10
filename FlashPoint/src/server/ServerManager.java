@@ -32,6 +32,7 @@ public class ServerManager {
 	private HashMap<Integer, Player> onlinePlayers;
 	private ArrayList<Lobby> currentLobbies;
 	private ArrayList<GameState> savedGames;
+	private ArrayList<String> savedNameGames;
 	private static String defaulGamesPath = "savedGames/";
 	private static String currentPath = System.getProperty("user.dir");
 	private boolean firstTurn; //should be in game state?
@@ -51,6 +52,7 @@ public class ServerManager {
 		accounts.put("Zaid", "apple");
 		accounts.put("me", "aa");
 		savedGames = new ArrayList<GameState>();
+		savedNameGames = new ArrayList<String>();
 		setSavedGames();
 		randomBoards = new ArrayList<Integer>();
 		randomBoards.add(6);
@@ -423,6 +425,9 @@ public class ServerManager {
     }
     public GameState loadGameMat(int index) {
     	//for (int ind=0; ind<this.savedGames.size(); ind++) {
+    	
+    	/* THAT WAS EARLIER
+    	
     		GameState gs = savedGames.get(index);
     		initializeGameManager();
 			this.gameManager.getGameState().updateGameStateFromObject(gs);			
@@ -430,6 +435,37 @@ public class ServerManager {
 			this.gameState.setListOfPlayers(this.activeLobby.getPlayers());
 			generateActions();
 			return gs; 
+			
+		*/
+    	
+    	String folderPath = defaulGamesPath;
+    	File folder = new File(folderPath);
+    	File[] listOfFiles = folder.listFiles();
+    	GameState gs1 = GameState.getInstance();
+    	
+    		try {
+        		FileInputStream fi = new FileInputStream(new File(defaulGamesPath + listOfFiles[index].getName()));
+    			ObjectInputStream oi = new ObjectInputStream(fi);
+    			
+    			// Read objects
+    			GameState gs = (GameState) oi.readObject();
+    			
+    			gs1.updateGameStateFromObject(gs);
+    			System.out.println(gs1.getDamageCounter());
+
+    			oi.close();
+    			fi.close();
+    			
+    		} catch (FileNotFoundException e) {
+				System.out.println("File not found");
+			} catch (IOException e) {
+				System.out.println("Error initializing stream");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+    	return gs1;
+			
     	//}
     	/*
     	try {
@@ -479,7 +515,8 @@ public class ServerManager {
 			oi.close();
 			fi.close();
 			
-			this.savedGames.add(gs1);
+			// this.savedGames.add(gs1);
+			this.savedNameGames.add(name+".txt");
 			
 			return gs1;
 			
@@ -495,6 +532,7 @@ public class ServerManager {
     
     public void setSavedGames() {
     	this.savedGames.clear();
+    	this.savedNameGames.clear();
     	String folderPath = defaulGamesPath;
     	File folder = new File(folderPath);
     	File[] listOfFiles = folder.listFiles();
@@ -502,8 +540,11 @@ public class ServerManager {
     		return;
     	}
     	for (int len=0; len < listOfFiles.length; len++) {
-    		try {
+    		//try {
     			File f = listOfFiles[len];
+    			this.savedNameGames.add(f.getName());
+    			
+    			/*
         		FileInputStream fi = new FileInputStream(new File(defaulGamesPath + f.getName()));
     			ObjectInputStream oi = new ObjectInputStream(fi);
     			// Read objects
@@ -517,6 +558,7 @@ public class ServerManager {
     			
     			this.savedGames.add(gs1);
     			
+    			
     		} catch (FileNotFoundException e) {
     			System.out.println("File not found");
     		} catch (IOException e) {
@@ -524,6 +566,7 @@ public class ServerManager {
     		} catch (ClassNotFoundException e) {
     			e.printStackTrace();
     		}
+    		*/
     		
     			
     		//GameState gs = GameState.getInstance();
@@ -547,6 +590,15 @@ public class ServerManager {
     	this.savedGames.remove(index);
     }
 
+    public ArrayList<String> getSavedNameGames(){
+    	return savedNameGames;
+    }
+    
+    public void setSavedNameGames(ArrayList<String> savedNameGames) {
+    	this.savedNameGames = savedNameGames;
+    }
+    
+    
 	public void setSpeciality(User person, Speciality desiredSpeciality) {
 		if(gameState.getFreeSpecialities().contains(desiredSpeciality)) {
 			Player player = onlinePlayers.get(person.getId());
@@ -701,19 +753,21 @@ public class ServerManager {
 		}
 		public void updateLobbyForLoadGame(int savedIndex) {
 			
-			this.activeLobby.setCapacity( getSavedGames().get(savedIndex).getFireFighterList().size() ); 
+			this.gameState = loadGameMat(savedIndex);
 			
-			if(getSavedGames().get(savedIndex).getRandomBoard() == -1) {
-				this.activeLobby.setBoard("Ramdom Board");
+			this.activeLobby.setCapacity( this.gameState.getFireFighterList().size() ); 
+			
+			if(this.gameState.getRandomBoard() == -1) {
+				this.activeLobby.setBoard("Standard Board");
 			}else {
-				this.activeLobby.setBoard("Board 1 or 2");
+				this.activeLobby.setBoard("Random Board");
 			}
 			
-			this.activeLobby.setName(getSavedGames().get(savedIndex).getSavedGameName());
+			this.activeLobby.setName(this.gameState.getSavedGameName());
 			
 //			this.activeLobby.setDifficulty(getSavedGames().get(savedIndex).getDifficulty());
 			
-			if(getSavedGames().get(savedIndex).isExperienced()) {
+			if(this.gameState.isExperienced()) {
 				this.activeLobby.setMode("Experienced");
 			}else {
 				this.activeLobby.setMode("Family");
