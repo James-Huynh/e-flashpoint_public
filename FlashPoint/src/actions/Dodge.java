@@ -16,7 +16,7 @@ public class Dodge extends Move {
 
 	@Override
 	public void perform(GameState gs) {
-		if (direction==0) {
+		if (direction==-1) {
 			// no AP removal!
 			return;
 		}

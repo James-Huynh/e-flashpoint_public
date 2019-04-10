@@ -235,42 +235,27 @@ public class Firefighter extends Token implements Serializable {
 	
 	public void endOfTurn() {
 		if (speciality == Speciality.CAPTAIN) {
-			if (canDodge && !usedAP) {
-				this.AP = Math.max(0, AP-1);
-			}
 			this.AP = Math.min(8, this.AP + 4);
 			this.SP = 2;
 			this.canDodge = false;
 			this.ifCommandCAPSthisTurn = false;
 		}
 		else if (speciality == Speciality.CAFS) {
-			if (canDodge && !usedAP) {
-				this.AP = Math.max(0, AP-1);
-			}
 			this.AP = Math.min(8, this.AP + 3);
 			this.SP = 3;
 			this.canDodge = false;
 		}
 		else if (speciality == Speciality.GENERALIST) {
-			if (canDodge && !usedAP) {
-				this.AP = Math.max(0, AP-1);
-			}
 			this.AP = Math.min(8, this.AP + 5);
 			this.SP = 0;
 			this.canDodge = false;
 		}
 		else if (speciality == Speciality.RESCUE_SPECIALIST) {
-			if (canDodge && !usedAP) {
-				this.AP = Math.max(0, AP-1);
-			}
 			this.AP = Math.min(8, this.AP + 4);
 			this.SP = 3;
 			this.canDodge = false;
 		}
 		else if (speciality == Speciality.DOG) {
-			if (canDodge && !usedAP) {
-				this.AP = Math.max(0, AP-1);
-			}
 			this.AP = Math.min(18, this.AP + 12);
 			this.SP = 0;
 			this.canDodge = false;
@@ -280,9 +265,6 @@ public class Firefighter extends Token implements Serializable {
 			this.SP = 0;
 		}
 		else {
-			if (canDodge && !usedAP) {
-				this.AP = Math.max(0, AP-1);
-			}
 			this.AP = Math.min(8, this.AP + 4);
 			this.SP = 0;
 			this.canDodge = false;

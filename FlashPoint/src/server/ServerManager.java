@@ -233,6 +233,17 @@ public class ServerManager {
 	public void setFFNextTurn() {
 		gameManager.setFirstAction(true);
 		int newIndex = (gameState.getActiveFireFighterIndex() + 1);
+		if (gameManager.getGameState().isExperienced()) {
+			if (gameManager.getGameState().getPlayingFirefighter().getSpeciality() == Speciality.VETERAN) {
+				
+			}
+			else {
+				if (!firstTurn && gameManager.getGameState().getPlayingFirefighter().getCanDodge() && !gameManager.getGameState().getPlayingFirefighter().getUsedAP()) {
+					gameManager.getGameState().getPlayingFirefighter().setAP( Math.max(0, gameManager.getGameState().getPlayingFirefighter().getAP()-1) ) ;
+				}
+			}
+		}
+		
 		if (newIndex >= gameState.getFireFighterList().size()) {
 			firstTurn = false;
 		}
