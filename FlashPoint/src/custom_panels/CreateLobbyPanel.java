@@ -361,7 +361,8 @@ public class CreateLobbyPanel extends JPanel {
 			}
 		});
 		plyrSlider.setPaintTicks(true);
-		plyrSlider.setValue(0);
+		plyrSlider.setValue(1);
+		plyrSlider.setMinimum(1);
 		plyrSlider.setMaximum(6);
 		plyrSlider.setBounds(10, 28, 190, 29);
 		playerPanel.add(plyrSlider);
