@@ -838,15 +838,19 @@ public class ClientManager {
 		
 	}
 	
-	public void sendRefreshRequest() {
-		if(!this.dodgeRefreshFlag) {
+	public void sendRefreshRequest(int[] myFFIndexes2) {
+		boolean b = false;
+		for(int i = 0; i<6; i++) {
+			if(myFFIndexes2[i] == getUsersGameState().getActiveFireFighterIndex()) {
+				b = true;
+			}
+		}
+		if(b) {
 			TranObject<User> objectToSend = new TranObject<User>(TranObjectType.REFRESH);
 			objectToSend.setObject(requestObject);
 			outputThread.setMsg(objectToSend);
 			System.out.println("Refresh request being sent in CM");
-		} else {
-			
-		}
+		} 
 	}
 
 	public boolean getDodgeRefreshFlag() {
