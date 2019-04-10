@@ -47,7 +47,7 @@ public class clientThread implements Runnable{
 					myLauncher.showDodgeRequest();
 					toggle = false;
 				}else if(myClientManager.listenForResponses() == 1) {
-					if(!myClientManager.getDodgeRefreshFlag()) {
+					if(!myClientManager.getDodgeRefreshFlag() && !myClientManager.getUsersGameState().getInRideMode()) {
 						myLauncher.refreshDodgePanel();
 						myClientManager.setDodgeRefreshFlag(true);
 					}
