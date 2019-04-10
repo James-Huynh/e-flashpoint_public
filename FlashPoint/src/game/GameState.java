@@ -1411,8 +1411,8 @@ public class GameState implements Serializable {
 				+ ", revealedFalseAlarmsList=" + revealedFalseAlarmsList + ", freeSpecialities=" + freeSpecialities
 				+ ", freeFirefighters=" + freeFirefighters + ", lostHazmat=" + lostHazmat + ", disposedHazmat="
 				+ disposedHazmat + ", rideMapper=" + rideMapper + ", inRideMode=" + inRideMode + ", remainingHotSpots="
-				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + ", specialitySelecting="
-				+ specialitySelecting + ", proposedDices=" + Arrays.toString(proposedDices) + ", isDodging=" + isDodging
+				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + ", experiencedModeMode=" + experiencedModeMode +
+				", specialitySelecting=" + specialitySelecting + ", proposedDices=" + Arrays.toString(proposedDices) + ", isDodging=" + isDodging
 				+ ", dodgingHashMap=" + dodgingHashMap + ", randomGame=" + randomGame + ", savedGameName=" + savedGameName + "]";
 	}
 
