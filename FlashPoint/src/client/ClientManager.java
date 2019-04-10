@@ -468,6 +468,10 @@ public class ClientManager {
 		return requestObject.getsavedGameStates();
 	}
 	
+	public ArrayList<String> getSavedNamesGameStates(){
+		return requestObject.getSavedNamesGameStates();
+	}
+	
 	public GameState getUsersGameState() {
 		return requestObject.getCurrentState();
 	}

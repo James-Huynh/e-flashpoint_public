@@ -769,6 +769,7 @@ public class ServerManager {
 			
 			if(this.gameState.isExperienced()) {
 				this.activeLobby.setMode("Experienced");
+				this.activeLobby.setDifficulty(this.gameState.getExperiencedModeMode());
 			}else {
 				this.activeLobby.setMode("Family");
 			}
