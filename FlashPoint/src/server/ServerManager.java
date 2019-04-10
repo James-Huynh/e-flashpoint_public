@@ -798,5 +798,10 @@ public class ServerManager {
 				this.activeLobby.setMode("Family");
 			}
 		}
+
+		public void setGameContinue() {
+			gameState.continueGame();
+			
+		}
 	
 }

@@ -250,6 +250,13 @@ public class ClientManager {
 				startGameFlag = 1;
 				flag = true;
 				break;
+			case GAMECONTINUED:
+				System.out.println("Succesful game continue request");
+				requestObject.setCurrentState((GameState) read_tranObject.getObject());
+				startGameFlag = 1;
+				flag = true;
+				break;
+				
 			}
 		}
 		return flag;
@@ -865,7 +872,9 @@ public class ClientManager {
 	}
 
 	public void sendContinueGameRequest() {
-		// TODO Auto-generated method stub
+		TranObject<User> objectToSend = new TranObject<User>(TranObjectType.CONTINUEGAME);
+		objectToSend.setObject(requestObject);
+		outputThread.setMsg(objectToSend);
 		
 	}
 	

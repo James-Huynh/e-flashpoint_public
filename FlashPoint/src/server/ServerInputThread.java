@@ -842,6 +842,15 @@ public class ServerInputThread extends Thread {
 //				out.setMessage(returnObject);
 				//serverManager.getGameManager().end();
 				break;
+			case CONTINUEGAME:
+				TranObject returnGameStateContinue = new TranObject<GameState>(TranObjectType.ENDTURNSUCCESS);
+				serverManager.setGameContinue();
+				returnGameStateContinue.setObject(serverManager.getGameState());
+				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+					OutputThread onOut = map.getById(p.getID());
+					onOut.setMessage(returnGameStateContinue);
+				}
+				break;
 			default:
 				break;
 			}

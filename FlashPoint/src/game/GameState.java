@@ -1094,6 +1094,10 @@ public class GameState implements Serializable {
 		this.gameWon = true;
 	}
 
+	public void continueGame() {
+		this.gameWon = false;
+	}
+	
 	public void setTiles(Tile[][] matTiles2) {
 		this.matTiles = matTiles2;
 
