@@ -5417,7 +5417,7 @@ public class Table {
 				continueMenuButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						gameTermination.hide();
-						launcher.backToMainMenu();
+//						launcher.backToMainMenu();
 						sendGameContinueRequest();
 						//return back to menu
 					}
