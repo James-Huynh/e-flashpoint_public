@@ -348,6 +348,9 @@ public class ClientManager {
 		boolean flag = false;
 		
 //		Lobby lobby = requestObject.getCurrentLobby();
+		if(difficulty.equals("notSelected")) {
+			difficulty = "Recruit";
+		}
 		Lobby lobby = new Lobby();
 		lobby.setName(name);
 		lobby.setMode(mode);
