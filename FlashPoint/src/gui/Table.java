@@ -1276,6 +1276,15 @@ public class Table {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
+						} else if(check.getSpeciality() == Speciality.BOBTHEBUILDER) {
+							try {
+								builder = builder + "BOBTHEBUILDER_";
+								int numberFF = this.connectedTile.getFirefighterList().size();
+								final BufferedImage FFimage = ImageIO.read(new File(builder + numberFF +".gif"));
+								add(new JLabel(new ImageIcon(FFimage)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						} else {
 							try {
 								builder = builder + "GREEN_FIREMAN_";
@@ -2319,6 +2328,21 @@ public class Table {
 				    	        changeCheck = true;
 			    			} else if (a.getToSpecialty() == Speciality.VETERAN) {
 			    				builder = "To Veteran. APC: " + APCost;
+				    			newAction = new JMenuItem(builder);
+				    	        newAction.addActionListener(new ActionListener() {
+				    				@Override
+				    				public void actionPerformed(ActionEvent e) {
+				    					if(sendActionRequest(a)) {
+											System.out.println("this is the print that board is refreshing");
+
+										}
+				    					
+				    				}
+				    			});
+				    	        changeMenu.add(newAction);
+				    	        changeCheck = true;
+			    			} else if (a.getToSpecialty() == Speciality.BOBTHEBUILDER) {
+			    				builder = "To Bob The Builder. APC: " + APCost;
 				    			newAction = new JMenuItem(builder);
 				    	        newAction.addActionListener(new ActionListener() {
 				    				@Override
