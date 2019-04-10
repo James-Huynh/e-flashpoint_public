@@ -1130,6 +1130,9 @@ public class Table {
 				removeAll();
 				assignFires();
 				Border blackline = BorderFactory.createLineBorder(tileColorBlack);
+				if(connectedTile.getX() == redDice && connectedTile.getY() == blackDice) {
+					blackline = BorderFactory.createLineBorder(Color.BLUE,5);
+				}
 				setBorder(blackline);
 				assignTokens();
 				revalidate();
@@ -5348,6 +5351,9 @@ public class Table {
 		}
 		
 		public void showRideRequest() {
+			if(rideRequest != null) {
+				rideRequest.hide();
+			}
 			rideRequest = null;
 			PopupFactory gameT = new PopupFactory();
 			JPanel gameTPanel = new JPanel(new GridLayout(7,1));
@@ -6661,17 +6667,24 @@ public class Table {
 		
 		
 		public void showDeckGunRequest(actions.Action a) {
+			boardPanel.boardTiles.get(redDice * 10 + blackDice).tilePanel.drawTile(clientManager.getUsersGameState());
+			if(deckGunRequest != null ) {
+				deckGunRequest.hide();
+			}
 			deckGunRequest = null;
 			PopupFactory gameT = new PopupFactory();
-			JPanel gameTPanel = new JPanel(new GridLayout(2,1));
+			JPanel gameTPanel = new JPanel(new GridLayout(4,1));
 			JTextArea text = new JTextArea();
 			String deckGunPrompt = "The result of the die roll was red: "+ redDice +  " black: " + blackDice + ". \nWould you like to reroll either dice?";
 			
 			text.setText(deckGunPrompt);
 			text.setLineWrap(true);
-			JPanel responsePanel = new JPanel();
-			responsePanel.setLayout(new GridLayout(3,1));
-			responsePanel.setPreferredSize(new Dimension(500,500));
+//			JPanel responsePanel = new JPanel();
+//			responsePanel.setLayout(new GridLayout(3,1));
+//			responsePanel.setPreferredSize(new Dimension(200,200));
+//			text.setPreferredSize(new Dimension(40, 40));
+			gameTPanel.setPreferredSize(new Dimension(200,300));
+			gameTPanel.add(text);
 			
 			if(redReRoll) {
 				JButton redButton = new JButton("Reroll Red Dice");
@@ -6680,16 +6693,16 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						deckGunRequest.hide();
-						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 50, 50);
 						if(rerollDice(1, a)) {
 //							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 
 				});
-				responsePanel.add(redButton);
+				gameTPanel.add(redButton);
 			}
-			
+
 			if(blackReRoll) {
 				JButton blackButton = new JButton("Reroll Black Dice");
 				blackButton.setPreferredSize(new Dimension(40,40));
@@ -6697,18 +6710,18 @@ public class Table {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						deckGunRequest.hide();
-						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
+						deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 50, 50);
 						if(rerollDice(2, a)) {
 //							deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 						}
 					}
 
 				});
-				responsePanel.add(blackButton);
+				gameTPanel.add(blackButton);
 			}
 			
 			JButton noButton = new JButton("No");
-			noButton.setPreferredSize(new Dimension(75,75));
+			noButton.setPreferredSize(new Dimension(40,40));
 			noButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -6719,9 +6732,9 @@ public class Table {
 					}
 				}
 			});
-			responsePanel.add(noButton);
-			gameTPanel.add(text);
-			gameTPanel.add(responsePanel);
+			gameTPanel.add(noButton);
+			
+//			gameTPanel.add(responsePanel);
 			
 			deckGunRequest = gameT.getPopup(rightPanel, gameTPanel, 500, 50);
 			
@@ -6803,6 +6816,8 @@ public class Table {
 		
 		private boolean rerollDice(int i, actions.Action a) {
 			int[] quadCoords = clientManager.getUsersGameState().getPlayingFirefighter().getCurrentPosition().getCoords();
+			int oldRed = redDice;
+			int oldBlack = blackDice;
 			int xShift = 0;
 			int yShift = 0;
 			System.out.println("init: red die" + redDice + " black die " + blackDice);
@@ -6863,7 +6878,8 @@ public class Table {
 				
 				break;
 			}
-			
+			System.out.println("After reroll RED :-" + redDice + " BLACK :-  " + blackDice);
+			boardPanel.boardTiles.get(oldRed*10+oldBlack).tilePanel.drawTile(clientManager.getUsersGameState());
 			return true;
 		}
 		
