@@ -105,8 +105,16 @@ public class ServerManager {
 //	}
 	
 	public void placeFirefighter(int[] coords, Integer userId) {
-		gameState.placeFireFighter(onlinePlayers.get(userId).getFirefighter(), gameState.returnTile(coords[0],coords[1]));
-		placedFF++;
+		boolean canPlace = false;
+		for(Firefighter f: onlinePlayers.get(userId).getFirefighters()) {
+			if(f.getCurrentPosition() == null) {
+				canPlace = true;
+			}
+		}
+		if(canPlace) {
+			gameState.placeFireFighter(onlinePlayers.get(userId).getFirefighter(), gameState.returnTile(coords[0],coords[1]));
+			placedFF++;
+		}
 		if(placedFF == gameState.getFireFighterList().size()) {
 			if(!gameState.isExperienced()) {
 				gameState.setActiveFireFighterIndex(0);
