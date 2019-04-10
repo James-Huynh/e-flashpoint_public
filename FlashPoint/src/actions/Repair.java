@@ -53,7 +53,7 @@ public class Repair extends Action {
     	if (current.getSpeciality() == Speciality.BOBTHEBUILDER) {
     		if (edge.isWall()) {
     			if (current.getAP() >= APcost) {
-    				if (edge.getDamage() + APcost <= 2 && gs.getDamageCounter() >= 0 ) {
+    				if (edge.getDamage() + APcost/2 <= 2 && gs.getDamageCounter() >= 0 ) {
     					flag = true;
     				}
     			}
