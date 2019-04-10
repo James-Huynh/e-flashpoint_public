@@ -2129,61 +2129,61 @@ public class Table {
 			    	        twoRepairCheck = true;
 			    		} 
 			    		}
-			    		if(a.getCost() == 4) {
-				    		if(a.getDirection() == 0) {
-				    			builder = "Left, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-				    					}
-				    				}
-				    			});
-				    	        repairMenu.add(newAction);
-				    	        twoRepairCheck = true;
-				    		} else if(a.getDirection() == 1) {
-				    			builder = "Up, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-				    					}
-				    				}
-				    			});
-				    	        repairMenu.add(newAction);
-				    	        twoRepairCheck = true;
-				    		} else if(a.getDirection() == 2) {
-				    			builder = "Right, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-				    					}
-				    				}
-				    			});
-				    	        repairMenu.add(newAction);
-				    	        twoRepairCheck = true;
-				    		} else if(a.getDirection() == 3) {
-				    			builder = "Down, APC: " + APCost;
-				    			newAction = new JMenuItem(builder);
-				    	        newAction.addActionListener(new ActionListener() {
-				    				@Override
-				    				public void actionPerformed(ActionEvent e) {
-				    					if(sendActionRequest(a)) {
-											System.out.println("this is the print that board is refreshing");
-				    					}
-				    				}
-				    			});
-				    	        repairMenu.add(newAction);
-				    	        twoRepairCheck = true;
-				    		} 
-				    		}
+//			    		if(a.getCost() == 4) {
+//				    		if(a.getDirection() == 0) {
+//				    			builder = "Left, APC: " + APCost;
+//				    			newAction = new JMenuItem(builder);
+//				    	        newAction.addActionListener(new ActionListener() {
+//				    				@Override
+//				    				public void actionPerformed(ActionEvent e) {
+//				    					if(sendActionRequest(a)) {
+//											System.out.println("this is the print that board is refreshing");
+//				    					}
+//				    				}
+//				    			});
+//				    	        repairMenu.add(newAction);
+//				    	        twoRepairCheck = true;
+//				    		} else if(a.getDirection() == 1) {
+//				    			builder = "Up, APC: " + APCost;
+//				    			newAction = new JMenuItem(builder);
+//				    	        newAction.addActionListener(new ActionListener() {
+//				    				@Override
+//				    				public void actionPerformed(ActionEvent e) {
+//				    					if(sendActionRequest(a)) {
+//											System.out.println("this is the print that board is refreshing");
+//				    					}
+//				    				}
+//				    			});
+//				    	        repairMenu.add(newAction);
+//				    	        twoRepairCheck = true;
+//				    		} else if(a.getDirection() == 2) {
+//				    			builder = "Right, APC: " + APCost;
+//				    			newAction = new JMenuItem(builder);
+//				    	        newAction.addActionListener(new ActionListener() {
+//				    				@Override
+//				    				public void actionPerformed(ActionEvent e) {
+//				    					if(sendActionRequest(a)) {
+//											System.out.println("this is the print that board is refreshing");
+//				    					}
+//				    				}
+//				    			});
+//				    	        repairMenu.add(newAction);
+//				    	        twoRepairCheck = true;
+//				    		} else if(a.getDirection() == 3) {
+//				    			builder = "Down, APC: " + APCost;
+//				    			newAction = new JMenuItem(builder);
+//				    	        newAction.addActionListener(new ActionListener() {
+//				    				@Override
+//				    				public void actionPerformed(ActionEvent e) {
+//				    					if(sendActionRequest(a)) {
+//											System.out.println("this is the print that board is refreshing");
+//				    					}
+//				    				}
+//				    			});
+//				    	        repairMenu.add(newAction);
+//				    	        twoRepairCheck = true;
+//				    		} 
+//				    		}
 			    	
 			    	}
 			    	
