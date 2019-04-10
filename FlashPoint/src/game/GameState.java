@@ -165,6 +165,7 @@ public class GameState implements Serializable {
 		this.randomGame = copy.getRandomBoard();
 		this.host = copy.getHost();
 		this.savedGameName = copy.savedGameName;
+		this.dodgingHashMap = copy.dodgingHashMap;
 		
 		//for loading and selecting, may need to change
 		System.out.println(this.listOfFirefighters.size());
@@ -224,7 +225,7 @@ public class GameState implements Serializable {
 			this.freeSpecialities.add(Speciality.PARAMEDIC);
 			this.freeSpecialities.add(Speciality.RESCUE_SPECIALIST);
 			this.freeSpecialities.add(Speciality.VETERAN);
-			this.freeSpecialities.add(Speciality.BOBTHEBUILDER);
+			//this.freeSpecialities.add(Speciality.BOBTHEBUILDER);
 			this.specialitySelecting = true;
 			this.isDodging = false;
 			this.dodgingHashMap = new HashMap<Firefighter, ArrayList<actions.Action>>();

@@ -1242,6 +1242,10 @@ public class GameManager {
 
 	public boolean generateDodgeActions() {
 		boolean flag = false;
+		if (dodgeResponseChecker == null) {
+		//if (dodgeResponseChecker.length < gs.getFireFighterList().size() ) {
+			dodgeResponseChecker = new boolean[gs.getFireFighterList().size()];
+		}
 		Firefighter inturn = gs.getPlayingFirefighter();
 		
 		for(Firefighter f : gs.getFireFighterList()) {
