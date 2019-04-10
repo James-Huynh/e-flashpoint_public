@@ -32,7 +32,9 @@ public class Repair extends Action {
 		Edge edge = current.getCurrentPosition().getEdge(this.direction);
 		
 		current.setAP(current.getAP() - APcost);
+		
 		gs.updateDamageCounterRepair();
+		edge.build();
 		if (APcost == 2) {
 			edge.build();
 			gs.updateDamageCounterRepair();
