@@ -74,6 +74,7 @@ public class GameState implements Serializable {
 
 	protected int remainingHotSpots; //this includes all unplaced hotspots. gets initialized during game init. This does not include hotspots on the board.
 	protected boolean experiencedMode;
+	protected String experiencedModeMode;
 	protected boolean specialitySelecting;
 	protected int[] proposedDices;
 	
@@ -158,6 +159,7 @@ public class GameState implements Serializable {
 		this.rideMapper = copy.rideMapper;
 		this.remainingHotSpots = copy.remainingHotSpots;
 		this.experiencedMode = copy.experiencedMode;
+		this.experiencedModeMode = copy.experiencedModeMode;
 		this.specialitySelecting = copy.specialitySelecting;
 		this.proposedDices = copy.proposedDices;
 		this.randomGame = copy.getRandomBoard();
@@ -209,6 +211,7 @@ public class GameState implements Serializable {
 		this.numFirefighters = lobby.getCapacity();
 		if(lobby.getMode().equals("Experienced")) {
 			this.experiencedMode = true;
+			this.experiencedModeMode = lobby.getDifficulty();
 			rideMapper = new HashMap<Firefighter, Boolean[]>();
 			this.inRideMode = false;
 			this.freeSpecialities.add(Speciality.CAFS);
@@ -1120,6 +1123,14 @@ public class GameState implements Serializable {
 		return this.experiencedMode;
 	}
 	
+	public String getExperiencedModeMode() {
+		return this.experiencedModeMode;
+	}
+	
+	public void setExperiencedModeMode(String experiencedModeMode) {
+		this.experiencedModeMode = experiencedModeMode;
+	}
+	
 	//so this method put all relevant FF to the map right? when we change if they don't want to ride?
 	public boolean createFFToAsk(Vehicle type) {
 		boolean flag = false;
@@ -1400,8 +1411,8 @@ public class GameState implements Serializable {
 				+ ", revealedFalseAlarmsList=" + revealedFalseAlarmsList + ", freeSpecialities=" + freeSpecialities
 				+ ", freeFirefighters=" + freeFirefighters + ", lostHazmat=" + lostHazmat + ", disposedHazmat="
 				+ disposedHazmat + ", rideMapper=" + rideMapper + ", inRideMode=" + inRideMode + ", remainingHotSpots="
-				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + ", specialitySelecting="
-				+ specialitySelecting + ", proposedDices=" + Arrays.toString(proposedDices) + ", isDodging=" + isDodging
+				+ remainingHotSpots + ", experiencedMode=" + experiencedMode + ", experiencedModeMode=" + experiencedModeMode +
+				", specialitySelecting=" + specialitySelecting + ", proposedDices=" + Arrays.toString(proposedDices) + ", isDodging=" + isDodging
 				+ ", dodgingHashMap=" + dodgingHashMap + ", randomGame=" + randomGame + ", savedGameName=" + savedGameName + "]";
 	}
 
