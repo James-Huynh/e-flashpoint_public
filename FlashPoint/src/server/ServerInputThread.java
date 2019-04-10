@@ -252,6 +252,7 @@ public class ServerInputThread extends Thread {
 				requestObject = (User) read_tranObject.getObject();
 				System.out.println(requestObject.getNum());
 				serverManager.loadGameMat(requestObject.getLoadIndex());
+				serverManager.getGameState().setListOfPlayers(serverManager.getLobby().getPlayers());
 				returnGameState = new TranObject<GameState>(TranObjectType.STARTSAVEDGAMESTATESUCCESS);
 				returnGameState.setObject(serverManager.getGameState()); // this was already done earlier
 				for (OutputThread onOut : map.getAll()) {
@@ -756,7 +757,7 @@ public class ServerInputThread extends Thread {
 				serverManager.setFirefighter(requestObject);
 				returnGameState = new TranObject<GameState>(TranObjectType.FIREFIGHTERSELECTED);
 				returnGameState.setObject(serverManager.getGameState());
-				for(Player p: serverManager.getGameState().getListOfPlayers()) {
+				for(Player p: serverManager.getLobby().getPlayers()){   // .getGameState().getListOfPlayers()) {
 					OutputThread onOut = map.getById(p.getID());
 					onOut.setMessage(returnGameState);
 				}

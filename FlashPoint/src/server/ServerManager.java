@@ -402,7 +402,6 @@ public class ServerManager {
 			
 			initializeGameManager();
 			this.gameState = (GameState) oi.readObject();
-			
 			this.gameManager.getGameState().updateGameStateFromObject(gameState);
 			this.gameState = gameManager.getGameState();
 			this.gameState.setListOfPlayers(this.activeLobby.getPlayers());
@@ -462,6 +461,8 @@ public class ServerManager {
     	File[] listOfFiles = folder.listFiles();
     	GameState gs1 = GameState.getInstance();
     	
+    	
+    	
     		try {
         		FileInputStream fi = new FileInputStream(new File(defaulGamesPath + listOfFiles[index].getName()));
     			ObjectInputStream oi = new ObjectInputStream(fi);
@@ -470,7 +471,11 @@ public class ServerManager {
     			GameState gs = (GameState) oi.readObject();
     			
     			gs1.updateGameStateFromObject(gs);
+    			this.gameState = gs1;
     			System.out.println(gs1.getDamageCounter());
+    			
+    			initializeGameManager();
+    	    	this.gameManager.getGameState().updateGameStateFromObject(gs1);
 
     			oi.close();
     			fi.close();
