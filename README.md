@@ -1,1 +1,1 @@
-# f2018-group11
+# Flashpoint: The Board Game Digitalized
