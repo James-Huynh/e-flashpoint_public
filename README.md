@@ -1,6 +1,6 @@
-# Flashpoint: The Board Game Digitalized
+# E-Flashpoint: The Board Game Digitalized
 
-Developpers
+<strong>Developpers</strong>
 <ul>
 <li>James Huynh</li>
 <li>Junha Park</li>
