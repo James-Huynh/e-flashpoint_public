@@ -9,3 +9,5 @@
 <li> Cao Ruoyu</li>
 <li>Zaid Yahya</li>
 </ul>
+
+<strong>Superviser</strong>: Jörg Kienzle
