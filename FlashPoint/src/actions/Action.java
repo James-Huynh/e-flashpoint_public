@@ -26,7 +26,7 @@ public abstract class Action implements Serializable {
     /*
      * GETTERS
      */
-    
+   
     public int getCost() {
         return APcost;
     }
