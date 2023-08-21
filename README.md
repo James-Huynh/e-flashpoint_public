@@ -10,4 +10,4 @@
 <li>Zaid Yahya</li>
 </ul>
 
-<strong>Superviser</strong>: Jörg Kienzle
+<strong>Supervisor</strong>: Jörg Kienzle
